@@ -1,0 +1,24 @@
+<!-- filepath: c:\Users\kelly\Desktop\RRHH_Jere\nucleo\templates\nucleo\alta_empleado_exito.html -->
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/alta_empleado.css' %}">
+{% endblock %}
+{% block main %}
+<div class="alta-empleado-container">
+    <h2>¡Empleado {{ empleado_nombre }} guardado con éxito!</h2>
+    <div class="modal">
+        <div>
+            <p>Las credenciales generadas son:</p>
+            <ul>
+                <li><b>Usuario:</b> {{ username }}</li>
+                <li><b>Contraseña:</b> {{ password }}</li>
+                <li><b>Email:</b> {{ email }}</li>
+            </ul>
+            <p><b>ID Empleado:</b> {{ idempleado }}</p>
+            <p style="color: green; font-weight: bold;">El email con las credenciales fue enviado automáticamente.</p>
+            <a href="{% url 'nucleo:dashboard_gestor' %}" class="btn-back" style="margin-top:16px; display:inline-block;">Volver al Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

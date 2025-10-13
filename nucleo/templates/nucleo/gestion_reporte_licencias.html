@@ -1,0 +1,314 @@
+{% extends "base_dashboard.html" %}
+{% load static dict_filters %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/gestion_reporte_licencias.css' %}">
+<link rel="stylesheet" href="{% static 'nucleo/css/mensajes-django.css' %}?v=20250902-1100">
+{% endblock %}
+{% block extra_js %}
+<!-- Módulos JavaScript -->
+<script src="{% static 'nucleo/js/buscador-empleados.js' %}?v=20251012"></script>
+<script src="{% static 'nucleo/js/modules/mensajes.js' %}?v=20250922-2315"></script>
+<script src="{% static 'nucleo/js/modules/autoaprobacion.js' %}?v=20250922-2315"></script>
+<script src="{% static 'nucleo/js/modules/gestion-reporte-licencias.js' %}?v=20251012"></script>
+<script src="{% static 'nucleo/js/modules/gestion-reporte-licencias-init.js' %}?v=20251012"></script>
+<script>
+    window.urlBuscarEmpleados = window.urlBuscarEmpleados || "{% url 'nucleo:buscar_empleados_ajax' %}";
+</script>
+<!-- Meta datos para JavaScript -->
+<meta name="user-id" content="{{ request.user.id }}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box" data-gestion-licencias data-url-base="{% url 'nucleo:gestion_reporte_licencias' %}">
+    <h2>Gestión Licencias / Vacaciones</h2>
+    
+    <!-- Eliminamos mensajes de aquí arriba, se mostrarán solo después de la tabla -->
+    {# mensajes renderizados sólo en la sección inferior (mensaje_unico / mensajes_error) #}
+    {# Eliminado bloque de mensajes duplicado, los mensajes se mostrarán solo después de la paginación #}
+    <form method="get" class="filtros-form">
+    <select name="anio" style="width:86px;">
+            <option value="">Todos los años</option>
+            {% now "Y" as current_year %}
+            {% for a in anios %}
+                <option value="{{ a.year }}" {% if filtros.anio %}
+                    {% if filtros.anio == a.year|stringformat:"s" %}selected{% endif %}
+                {% else %}
+                    {% if a.year|stringformat:"s" == current_year %}selected{% endif %}
+                {% endif %}>{{ a.year }}</option>
+            {% endfor %}
+        </select>
+        <div class="busqueda-empleado-box filtro-empleado">
+            <input type="text" id="busqueda-empleado" autocomplete="off" placeholder="Buscar por ID, Apellido o Nombre" value="{{ filtros.empleado_display|default_if_none:'' }}">
+            <input type="hidden" id="empleado-filtro" name="empleado" value="{{ filtros.empleado_id|default_if_none:'' }}" data-origin="{% if filtros.empleado_display and filtros.empleado_id and filtros.empleado_display != filtros.empleado_id %}buscador{% else %}manual{% endif %}">
+            <div id="resultados-autocomplete" class="autocomplete-dropdown"></div>
+            <button type="button" id="limpiar-empleado" class="btn-limpiar-autocomplete" title="Limpiar búsqueda">&times;</button>
+        </div>
+    <select name="tipo" style="width:160px;margin-left:6px;">
+            <option value="">Todos los tipos</option>
+            {% for t in tipos %}
+                <option value="{{ t.id_licencia }}" {% if filtros.tipo_id == t.id_licencia|stringformat:"s" %}selected{% endif %}>{{ t.descripcion }}</option>
+            {% endfor %}
+        </select>
+        <select name="estado">
+            <option value="">Todos los estados</option>
+            {% for e in estados %}
+                <option value="{{ e.estado }}" {% if filtros.estado == e.estado %}selected{% endif %}>{{ e.estado }}</option>
+            {% endfor %}
+        </select>
+        <!-- Filtro por fecha: single date con opción a rango (compacto) -->
+        <div class="filtro-fecha" style="display:inline-block;margin-left:8px;">
+            <label for="fecha_desde">Fecha</label>
+            <input type="date" id="fecha_desde" name="fecha_desde" value="{{ filtros.fecha_desde|default:'' }}" style="margin:0 6px 0 6px; padding:2px 4px; height:28px;">
+            <label style="margin-right:6px;">
+                <input type="checkbox" id="fecha_rango_chk" name="fecha_rango" value="1" {% if filtros.fecha_rango %}checked{% endif %}>
+                Rango
+            </label>
+            <input type="date" id="fecha_hasta" name="fecha_hasta" value="{{ filtros.fecha_hasta|default:'' }}" style="margin-left:6px; padding:2px 4px; height:28px; {% if not filtros.fecha_rango and not filtros.fecha_hasta %}display:none;{% endif %}">
+        </div>
+        <button type="submit">Filtrar</button>
+        <div class="export-buttons-group">
+            <!-- PDF button -->
+            <button type="button" id="export-licencias-pdf" class="btn-pdf export-btn" data-export-target="#tabla-licencias-excel" data-export-filename="licencias.pdf" data-export-format="pdf" title="Descargar PDF">
+                <img src="{% static 'nucleo/icons/pdf-descarga-icono.png' %}" alt="PDF" class="pdf-icon-full">
+            </button>
+            <!-- Excel button -->
+            <button type="button" id="export-licencias" class="btn-excel export-btn" data-export-target="#tabla-licencias-excel" data-export-filename="licencias.xls" data-export-format="excel" title="Descargar Excel">
+                <img src="{% static 'nucleo/icons/excel-descargar-icon.ico' %}" alt="Excel" class="excel-icon">
+            </button>
+        </div>
+    </form>
+    <table id="tabla-licencias-completa" class="tabla-licencias">
+        <tbody>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Empleado</th>
+                <th>Tipo</th>
+                <th>Desde</th>
+                <th>Hasta</th>
+                <th>Días</th>
+                <th>Estado</th>
+                <th>Acciones</th>
+                <th class="btn-eliminar-cell"></th> {# columna para el botón eliminar a la derecha #}
+            </tr>
+        </thead>
+            {% for s in page_obj %}
+            <tr class="{% if s.id_licencia.descripcion|lower == 'vacaciones' %}vacaciones-row{% endif %}">
+                <td>{{ s.idempleado_id }}</td>
+                <td>{{ s.idempleado.nombres }} {{ s.idempleado.apellido }}</td>
+                <td>
+                                    {% if s.id_licencia %}
+                                        {{ s.id_licencia.descripcion }}
+                                    {% else %}
+                                        Vacaciones
+                                    {% endif %}
+                </td>
+                <td>{{ s.fecha_desde|date:"d/m/Y" }}</td>
+                <td>{{ s.fecha_hasta|date:"d/m/Y" }}</td>
+                <td>{{ s.dias }}</td>
+                <td>
+                    {% if s.id_estado.estado|lower == "aceptada" %}
+                        <span class="estado-aceptada">Aceptada</span>
+                    {% elif s.id_estado.estado|lower == "rechazada" %}
+                        <span class="estado-rechazada">Rechazada</span>
+                    {% elif s.id_estado.estado|lower == "en espera" %}
+                        <span class="estado-espera">
+                            En espera
+                            {% with colisiones=colisiones_por_solicitud|get_item:s.pk %}
+                                {% if colisiones %}
+                                    <span class="tooltip-advertencia">
+                                        <img src="{% static 'nucleo/icons/Advertencia.png' %}" alt="Advertencia" style="width:18px;vertical-align:middle;">
+                                        <span class="tooltip-text">
+                                            {% for c in colisiones %}
+                                                Esta licencia colisionará con la de {{ c }}<br>
+                                            {% endfor %}
+                                        </span>
+                                    </span>
+                                {% endif %}
+                            {% endwith %}
+                        </span>
+                    {% else %}
+                        <span>{{ s.id_estado.estado }}</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="post" action="{% url 'nucleo:gestionar_estado_solicitud' %}" style="display:inline;">
+                        {% csrf_token %}
+                        <input type="hidden" name="solicitud_id" value="{{ s.pk }}">
+                        <input type="hidden" name="tipo_solicitud" value="{% if s.id_licencia and s.id_licencia.descripcion|lower == 'vacaciones' %}vacacion{% else %}licencia{% endif %}">
+                        <!-- Preservar filtros actuales -->
+                        {% if filtros.anio %}<input type="hidden" name="filter_anio" value="{{ filtros.anio }}">{% endif %}
+                        {% if filtros.empleado_id %}<input type="hidden" name="filter_empleado" value="{{ filtros.empleado_id }}">{% endif %}
+                        {% if filtros.tipo_id %}<input type="hidden" name="filter_tipo" value="{{ filtros.tipo_id }}">{% endif %}
+                        {% if filtros.estado %}<input type="hidden" name="filter_estado" value="{{ filtros.estado }}">{% endif %}
+                        {% if filtros.fecha_desde %}<input type="hidden" name="filter_fecha_desde" value="{{ filtros.fecha_desde }}">{% endif %}
+                        {% if filtros.fecha_hasta %}<input type="hidden" name="filter_fecha_hasta" value="{{ filtros.fecha_hasta }}">{% endif %}
+                        {% if filtros.fecha_rango %}<input type="hidden" name="filter_fecha_rango" value="{{ filtros.fecha_rango }}">{% endif %}
+                        {% if request.GET.page %}<input type="hidden" name="filter_page" value="{{ request.GET.page }}">{% endif %}
+                        {% if s.id_estado.estado|lower == "en espera" %}
+                            <button name="accion" value="aprobar" class="btn-aprobar">
+                                Aprobar
+                            </button>
+                            <button type="button" class="btn-rechazar" onclick="abrirModalRechazo({{ s.pk }})">Rechazar</button>
+                        {% endif %}
+                    </form>
+                    {% if s.id_licencia and s.id_licencia.descripcion|lower != 'vacaciones' %}
+                        <a href="{% url 'nucleo:detalle_licencia' s.pk %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="btn-ver-archivo">Ver</a>
+                    {% elif s.id_licencia and s.id_licencia.descripcion|lower == 'vacaciones' or not s.id_licencia %}
+                        <a href="#" class="btn-ver-archivo" onclick="abrirModalComentarios({{ s.pk }}, '{{ s.comentario|escape }}'); return false;">Ver</a>
+                    {% endif %}
+                </td>
+                <td class="btn-eliminar-cell" style="text-align:center;">
+                    {# Botón eliminar desplazado a columna derecha para mejor visibilidad #}
+                    <form method="post" action="{% url 'nucleo:eliminar_solicitud' %}" style="display:inline;" class="form-eliminar">
+                        {% csrf_token %}
+                        <input type="hidden" name="solicitud_id" value="{{ s.pk }}">
+                        <!-- Preservar filtros actuales -->
+                        {% if filtros.anio %}<input type="hidden" name="filter_anio" value="{{ filtros.anio }}">{% endif %}
+                        {% if filtros.empleado_id %}<input type="hidden" name="filter_empleado" value="{{ filtros.empleado_id }}">{% endif %}
+                        {% if filtros.tipo_id %}<input type="hidden" name="filter_tipo" value="{{ filtros.tipo_id }}">{% endif %}
+                        {% if filtros.estado %}<input type="hidden" name="filter_estado" value="{{ filtros.estado }}">{% endif %}
+                        {% if filtros.fecha_desde %}<input type="hidden" name="filter_fecha_desde" value="{{ filtros.fecha_desde }}">{% endif %}
+                        {% if filtros.fecha_hasta %}<input type="hidden" name="filter_fecha_hasta" value="{{ filtros.fecha_hasta }}">{% endif %}
+                        {% if filtros.fecha_rango %}<input type="hidden" name="filter_fecha_rango" value="{{ filtros.fecha_rango }}">{% endif %}
+                        {% if request.GET.page %}<input type="hidden" name="filter_page" value="{{ request.GET.page }}">{% endif %}
+                        {% with estado_lower=s.id_estado.estado|lower %}
+                            {% if estado_lower == 'en espera' or estado_lower == 'aceptada' or estado_lower == 'aprobada' or estado_lower == 'rechazada' %}
+                                {% if request.user.pk == s.idempleado.idempleado or request.user.is_staff %}
+                                    <button type="submit" title="Eliminar solicitud" class="btn-eliminar" style="background:transparent;border:none;cursor:pointer;padding:6px;">
+                                        <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:#ddd;color:#333;text-align:center;line-height:22px;font-weight:bold;">×</span>
+                                    </button>
+                                {% endif %}
+                            {% endif %}
+                        {% endwith %}
+                    </form>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="9" style="text-align:center;">No hay solicitudes.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- Modal compartido para motivo de rechazo (un único elemento) -->
+    <div id="modal-rechazo" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);z-index:999;align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:24px 18px;border-radius:8px;max-width:350px;width:90%;box-shadow:0 2px 12px #0002;position:relative;">
+            <span id="cerrar-modal-rechazo" style="position:absolute;top:8px;right:12px;cursor:pointer;font-size:1.5em;font-weight:bold;">&times;</span>
+            <h3 style="margin-top:0;font-size:1.1em;">¿Cuál es el motivo del rechazo de la licencia?</h3>
+            <input type="hidden" id="modal-solicitud-id" value="">
+            <textarea id="motivo-rechazo" rows="3" style="width:100%;margin:12px 0 18px 0;resize:vertical;" placeholder="Escribe el motivo aquí..."></textarea>
+            <button id="confirmar-rechazo" class="btn-rechazar" style="width:100%;">Rechazar</button>
+        </div>
+    </div>
+    
+    <!-- Modal para ver comentarios de vacaciones -->
+    <div id="modal-comentarios" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);z-index:999;align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:24px 18px;border-radius:8px;max-width:450px;width:90%;box-shadow:0 2px 12px #0002;position:relative;">
+            <span id="cerrar-modal-comentarios" style="position:absolute;top:8px;right:12px;cursor:pointer;font-size:1.5em;font-weight:bold;">&times;</span>
+            <h3 style="margin-top:0;font-size:1.2em;">Comentarios de la Solicitud</h3>
+            <div id="comentarios-contenido" style="margin:12px 0;padding:12px;background:#f8f9fa;border-radius:4px;border:1px solid #dee2e6;max-height:200px;overflow-y:auto;">
+                <!-- Aquí se cargarán los comentarios -->
+            </div>
+            <div style="text-align:right;margin-top:18px;">
+                <button id="cerrar-modal-comentarios-btn" class="btn-aprobar" style="padding:8px 16px;">Cerrar</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="paginacion">
+        {% if page_obj.has_previous %}
+            <button onclick="window.location='?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.previous_page_number }}'">Anterior</button>
+        {% else %}
+            <button disabled>Anterior</button>
+        {% endif %}
+        Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}
+        {% if page_obj.has_next %}
+            <button onclick="window.location='?{% for key, value in request.GET.items %}{% if key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}page={{ page_obj.next_page_number }}'">Siguiente</button>
+        {% else %}
+            <button disabled>Siguiente</button>
+        {% endif %}
+    </div>
+
+    <!-- Mensajes únicos después de la tabla -->
+    {% if request.GET.msg_exito or request.GET.msg_error or messages or mensajes_error %}
+        <div style="margin-top:18px;" id="mensajes-principales">
+            
+            <!-- Mensaje de éxito desde GET (redirect tras acción POST) -->
+            {% if request.GET.msg_exito %}
+                <div class="mensaje-exito mensaje-cerrable"><span class="cerrar-mensaje">&times;</span>{{ request.GET.msg_exito }}</div>
+            {% endif %}
+            
+            <!-- Mensaje de error desde GET (redirect tras error POST) -->
+            {% if request.GET.msg_error %}
+                <div class="mensaje-error mensaje-cerrable"><span class="cerrar-mensaje">&times;</span>{{ request.GET.msg_error }}</div>
+            {% endif %}
+            
+            <!-- Mensajes de Django framework (fallback) -->
+            {% if not request.GET.msg_exito and not request.GET.msg_error %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' or message.tags == 'exito' %}
+                        <div class="mensaje-exito mensaje-cerrable"><span class="cerrar-mensaje">&times;</span>{{ message }}</div>
+                    {% elif message.tags == 'error' %}
+                        <div class="mensaje-error mensaje-cerrable"><span class="cerrar-mensaje">&times;</span>{{ message }}</div>
+                    {% else %}
+                        <div class="mensaje-exito mensaje-cerrable"><span class="cerrar-mensaje">&times;</span>{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+                
+                {% for msg in mensajes_error %}
+                    <div class="mensaje-error mensaje-cerrable"><span class="cerrar-mensaje">&times;</span>{{ msg }}</div>
+                {% endfor %}
+            {% endif %}
+            
+        </div>
+    {% endif %}
+
+</div>
+<!-- Tabla oculta para exportar todo -->
+<table id="tabla-licencias-excel" style="display:none;">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Empleado</th>
+            <th>Tipo</th>
+            <th>Desde</th>
+            <th>Hasta</th>
+            <th>Días</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for s in solicitudes_completas %}
+        <tr class="{% if s.id_licencia.descripcion|lower == 'vacaciones' %}vacaciones-row{% endif %}">
+            <td>{{ s.idempleado_id }}</td>
+            <td>{{ s.idempleado.nombres }} {{ s.idempleado.apellido }}</td>
+            <td>
+              {% if s.id_licencia %}
+                {{ s.id_licencia.descripcion }}
+              {% else %}
+                Vacaciones
+              {% endif %}
+            </td>
+            <td>{{ s.fecha_desde|date:"d/m/Y" }}</td>
+            <td>{{ s.fecha_hasta|date:"d/m/Y" }}</td>
+            <td>{{ s.dias }}</td>
+            <td>
+                {% if s.id_estado.estado|lower == "aceptada" %}
+                    Aceptada
+                {% elif s.id_estado.estado|lower == "rechazada" %}
+                    Rechazada
+                {% elif s.id_estado.estado|lower == "en espera" %}
+                    En espera
+                {% else %}
+                    {{ s.id_estado.estado }}
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+    <script src="{% static 'nucleo/js/exportar_excel.js' %}"></script>
+    <script src="{% static 'nucleo/js/html2canvas.min.js' %}"></script>
+    <script src="{% static 'nucleo/js/exportar_pdf.js' %}"></script>
+    <script src="{% static 'nucleo/js/export-utils.js' %}"></script>
+{% endblock %}

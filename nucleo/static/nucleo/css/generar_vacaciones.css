@@ -1,0 +1,85 @@
+.generar-vacaciones-box {
+    max-width: 1600px;
+    margin: 40px auto 0 auto;
+    background: #f7fbff;
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(25, 118, 210, 0.13), 0 1.5px 4px 0 rgba(25, 118, 210, 0.10);
+    padding: 24px 24px 18px 24px;
+}
+
+.generar-vacaciones-titulo {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #1976d2;
+    font-weight: 700;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #1976d2;
+    padding-bottom: 8px;
+}
+
+.generar-vacaciones-info {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #333;
+    font-size: 1.08em;
+}
+
+.generar-vacaciones-form {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.btn-generar {
+    background: #2196f3;
+    color: #fff;
+    padding: 10px 30px;
+    font-size: 1.1em;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.btn-generar:hover {
+    background: #1769aa;
+}
+
+/* Ensure modal buttons use the primary blue and white text even if other modal/button rules exist */
+#modal-sobrescribir .btn-generar,
+#modal-sobrescribir .btn-generar:hover {
+    background: #2196f3 !important;
+    color: #fff !important;
+}
+
+.tabla-wrapper {
+    overflow-x: auto;
+}
+
+.tabla-licencias {
+    min-width: 700px;
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #1976d2;
+    background: #fff;
+}
+
+.tabla-licencias th,
+.tabla-licencias td {
+    border: 1px solid #1976d2;
+    padding: 8px;
+    text-align: center;
+}
+
+.tabla-licencias th {
+    background: #1976d2;
+    color: #fff;
+    font-weight: 600;
+}
+
+.mensaje-exito {
+    text-align: center;
+    color: green;
+    font-weight: bold;
+    margin-top: 18px;
+}

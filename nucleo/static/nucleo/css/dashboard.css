@@ -1,0 +1,282 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url("/static/nucleo/fonts/roboto/Roboto-Regular.ttf") format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'Roboto';
+    src: url("/static/nucleo/fonts/roboto/Roboto-Bold.ttf") format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+body {
+    margin: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background: #f9f9f9;
+}
+.topbar {
+    width: 100vw;
+    min-width: 100%;
+    height: 32px;
+    background: #355c86;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    border-bottom: 2px solid #111; /* Línea negra inferior */
+}
+
+.sidebar {
+    width: 220px;
+    background: #355c86;
+    color: #fff;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    margin-top: 32px; /* Para que no tape la franja superior */
+    border-right: 2px solid #111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Quita el padding-top */
+    overflow-y: auto; /* Agregar scroll vertical cuando sea necesario */
+    overflow-x: hidden; /* Evitar scroll horizontal */
+}
+
+/* Personalizar la barra de scroll para que se vea mejor */
+.sidebar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: #2a4b6b;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: #1e3a5f;
+    border-radius: 4px;
+}
+
+.sidebar::-webkit-scrollbar-thumb:hover {
+    background: #15304a;
+}
+
+.logo-container {
+    width: 100%;
+    height: 64px; /* Ajusta según el alto real de tu logo */
+    background: #355c86;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Logo pegado arriba */
+    border-bottom: 2px solid #111;
+    margin-bottom: 0;
+    padding: 0;
+    position: relative;
+}
+
+.logo-img {
+    display: block;
+    width: 165px; /* 220px * 0.75 = 165px (sidebar es 220px) */
+    max-width: 75%;
+    margin: 0 auto;
+    margin-top: 0;
+}
+.logo-box {
+    display: inline-block;
+    background: #63aed5;
+    border-radius: 6px;
+    padding: 5px 18px 5px 18px;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #111;
+}
+.sidebar .nav {
+    list-style: none;
+    padding: 0;
+    margin: 60px 0 0 0; 
+    padding-bottom: 60px; /* Espacio extra al final para evitar que la barra de tareas tape el último elemento */
+}
+.sidebar .nav li a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    padding: 18px 25px 18px 18px;
+    border-bottom: 1px solid #234365;
+    font-size: 17px;
+    transition: background 0.2s;
+}
+.sidebar .nav li a:hover {
+    background: #234365;
+}
+.main-content {
+    margin-left: 240px;
+    padding: 40px 45px;
+    margin-top: 32px; /* Para que el contenido no quede debajo de la franja */
+}
+.dashboard-box {
+    background: #f7fbff;
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(25, 118, 210, 0.13), 0 1.5px 4px 0 rgba(25, 118, 210, 0.10);
+    padding: 24px 24px 18px 24px;
+    margin-top: 40px;
+}
+.dashboard-box h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+}
+.dashboard-box hr {
+    border: none;
+    border-top: 2px solid #222;
+    margin-bottom: 24px;
+}
+.submenu { position: relative; }
+.submenu-list {
+    list-style-type: none;
+    padding-left: 20px;
+    margin: 0;
+    background: #34577b;
+}
+.submenu-list li a {
+    color: #fff;
+    display: block;
+    padding: 5px 0;
+}
+.submenu:hover .submenu-list {
+    display: block !important;
+}
+.logo-float-container {
+    position: fixed;
+    top: 6px; /* Más arriba, ajusta según lo que necesites */
+    left: 0;
+    width: 220px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    z-index: 3000;
+    pointer-events: none;
+}
+.logo-float-img {
+    width: 165px;
+    max-width: 75%;
+    margin: 0 auto;
+    display: block;
+}
+
+/* Dashboard layout y cajas principales */
+.dashboard-main-box {
+    /* Increase max-width so three charts can fit side-by-side on wide screens */
+    max-width: 1000px;
+    margin: 24px 0 0 32px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 2px 4px 12px 0 rgba(44, 62, 80, 0.13);
+    padding: 18px 18px 32px 18px;
+}
+.dashboard-main-box h2 {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    
+}
+.dashboard-main-box hr {
+    border: none;
+    border-top: 2px solid #222;
+    margin-bottom: 24px;
+}
+.dashboard-charts {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    margin-bottom: 24px;
+}
+.dashboard-charts {
+    /* allow wrapping if the container becomes narrow (responsive) */
+    flex-wrap: wrap;
+}
+.dashboard-bar {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+}
+.dashboard-charts > div,
+.dashboard-bar {
+    max-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+    /* prefer a consistent base width for the charts so they align nicely */
+    flex-basis: 260px;
+}
+
+.dashboard-charts canvas,
+.dashboard-bar canvas {
+    max-width: 100%;
+    height: auto !important;
+    display: block;
+    margin: 0 auto;
+}
+@media (max-width: 900px) {
+    .main-content {
+        margin-left: 0;
+        padding: 10px;
+    }
+    .sidebar {
+        position: static;
+        width: 100%;
+        height: auto;
+    }
+    .dashboard-box {
+        margin-top: 10px;
+    }
+    .dashboard-main-box {
+        margin: 10px;
+        padding: 10px;
+    }
+    .dashboard-charts {
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+    }
+    .dashboard-bar {
+        margin-top: 10px;
+    }
+}
+
+/* Modal de logout */
+#logout-modal {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+.logout-modal-content {
+    background: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    max-width: 300px;
+    margin: auto;
+    text-align: center;
+}
+.logout-modal-content button {
+    margin: 0 10px;
+    padding: 8px 22px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    background: #337ab7;
+    color: #fff;
+}
+.logout-modal-content button:last-child {
+    background: #e0e0e0;
+    color: #222;
+}

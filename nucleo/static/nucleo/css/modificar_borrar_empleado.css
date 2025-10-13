@@ -1,0 +1,341 @@
+.form-group {
+    position: relative;
+}
+.modificar-empleado-container {
+    max-width: 1060px;
+    margin: 8px 0 0 16px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    padding: 0.8em 1.5em 1.2em 1.5em; /* slightly more top padding to fully enclose inner boxes */
+    border: 3px solid #29a8df;
+}
+
+.modificar-empleado-container h2 {
+    margin-top: 0.14em;   /* casi pegado arriba */
+    margin-bottom: 0.7em;
+    font-size: 1.5em;
+    text-align: center;
+}
+
+.busqueda-empleado-box {
+    position: relative;
+    width: 100%;
+    max-width: 880px;
+    margin-bottom: 18px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.busqueda-empleado-box input[type="text"] {
+    width: 100%;
+    background: #e7f1fb;
+    border-radius: 20px;
+    border: none;
+    padding: 8px 16px;
+    font-size: 1.1em;
+    box-sizing: border-box;
+}
+
+.autocomplete-dropdown {
+    position: absolute;
+    z-index: 10;
+    background: #fff;
+    border: 1px solid #b3d1f7;
+    border-radius: 0 0 10px 10px;
+    width: 100%;
+    display: none;
+    box-shadow: 0 2px 8px #0001;
+}
+
+.autocomplete-dropdown ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.autocomplete-dropdown li {
+    padding: 8px 14px;
+    cursor: pointer;
+}
+.autocomplete-dropdown li:hover {
+    background: #e7f1fb;
+}
+
+.form-fields-grid.recuadro-celeste {
+    background: #e9f5fe;
+    border: 2px solid #97badb;
+    border-radius: 7px;
+    padding: 18px 13px;
+    margin-bottom: 12px;
+    box-sizing: border-box;
+    /* use the available width of the white container instead of a fixed max-width */
+    width: 100%;
+    max-width: none;
+    margin: 0 0 12px 0;
+}
+
+.modulo-formulario {
+    background: none;
+    border: solid #222; 
+    border-radius: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modulo-formulario legend {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 6px;
+    border: none;
+    padding: 0;
+}
+
+.form-flex {
+    display: flex;
+    gap: 22px;
+}
+
+.datos-personales {
+    flex: 1.2;
+    min-width: 250px;
+}
+.datos-personales legend {
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.datos-personales-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.datos-laborales {
+    flex: 1;
+    min-width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    justify-content: stretch;
+}
+
+.laborales-izq {
+    flex: 1;
+    min-width: 120px;
+    max-width: 180px;
+}
+.laborales-der {
+    flex: 1;
+    min-width: 120px;
+    max-width: 180px;
+}
+.laborales-puesto {
+    flex: 0 0 60%;
+    max-width: 60%;
+    margin-right: 8px;
+}
+.laborales-gestor {
+    /* force a narrow box that cannot be expanded by its children */
+    flex: 0 0 48px;      /* fixed basis */
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;
+    display: flex;
+    gap: 6px;
+    align-items: center;       /* vertical centering */
+    justify-content: flex-start; /* stick to left edge of this small container */
+    padding-left: 0;
+    margin-top: 0;
+    overflow: visible; /* allow label to sit visually but keep box small */
+}
+
+.label-gestor {
+    margin-bottom: 0;
+    margin-right: 6px;
+    font-weight: 500;
+    vertical-align: middle;
+    white-space: nowrap;      /* don't wrap the word 'Gestor' */
+    font-size: 0.95em;        /* slightly smaller so it fits better */
+    flex: 0 0 auto;           /* don't let label stretch container */
+}
+.laborales-gestor input[type="checkbox"] {
+    vertical-align: middle;
+    margin-top: 0;
+    width: 18px;
+    height: 18px;
+}
+
+.form-fields-grid.laborales {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 0;
+    background: none;
+    border: none;
+    padding: 0;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+/* constrain specific laboral inputs to avoid forcing row wrapping */
+.form-fields-grid.laborales .form-group select,
+.form-fields-grid.laborales .form-group input[type="text"],
+.form-fields-grid.laborales .form-group input[type="date"],
+.form-fields-grid.laborales .form-group input[type="number"] {
+    max-width: 160px;
+    box-sizing: border-box;
+}
+
+.form-row-puesto-gestor {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.horario-row {
+    align-items: flex-end;
+}
+
+.semana-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 0px;
+}
+.semana-container label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: #e4eaf6;
+    border: 1px solid #c8d9ed;
+    padding: 2px 4px 2px 3px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.semana-container input[type="checkbox"] {
+    accent-color: #121e2a;
+    margin-left: 2px;
+    width: 18px;
+    height: 18px;
+}
+
+.botones-accion {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+}
+
+.btn-actualizar, .btn-borrar {
+    border: none;
+    padding: 8px 38px;
+    font-size: 17px;
+    border-radius: 24px;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 0 2px #888;
+    cursor: pointer;
+    background: #1976d2;
+    transition: background 0.2s;
+}
+.btn-actualizar:hover {
+    background: #0056b3;
+}
+.btn-borrar {
+    background: #e53935;
+}
+.btn-borrar:hover {
+    background: #b71c1c;
+}
+.btn-modal {
+    min-width: 90px;
+}
+
+/* Django messages styling */
+.mensaje-success,
+.mensaje-info,
+.mensaje-warning,
+.mensaje-error {
+    margin-top: 12px;
+    margin-bottom: 6px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-weight: 600;
+    text-align: center;
+}
+.mensaje-success {
+    background: #e8f5e9;
+    border: 1px solid #2e7d32;
+    color: #1b5e20;
+}
+.mensaje-info {
+    background: #e3f2fd;
+    border: 1px solid #1976d2;
+    color: #0d47a1;
+}
+.mensaje-warning {
+    background: #fff8e1;
+    border: 1px solid #f9a825;
+    color: #8d6e63;
+}
+.mensaje-error {
+    background: #ffebee;
+    border: 1px solid #e53935;
+    color: #b71c1c;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 10000;
+    left: 0; top: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.3);
+    align-items: center;
+    justify-content: center;
+}
+.modal-contenido {
+    background: #fff;
+    border-radius: 10px;
+    padding: 32px 28px;
+    max-width: 400px;
+    margin: auto;
+    box-shadow: 0 2px 12px #0003;
+    text-align: center;
+}
+
+.btn-actualizar:disabled {
+    background: #bdbdbd !important;
+    color: #f5f5f5 !important;
+    cursor: not-allowed;
+    border: none;
+    opacity: 0.85;
+}
+.btn-actualizar.completo {
+    background: #1976d2 !important;
+    color: #fff !important;
+    cursor: pointer;
+    opacity: 1;
+}
+
+@media (max-width: 900px) {
+    .modificar-empleado-container {
+        max-width: 98vw;
+        margin-left: 2vw;
+        padding: 0.7em 0.5em;
+    }
+}
+/* New CSS content from /root/gestion_rrhh/Local funcional/modificar_borrar_empleado.css */
+/* Add the actual content of the new CSS file here */

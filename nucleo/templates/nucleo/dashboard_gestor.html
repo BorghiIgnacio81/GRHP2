@@ -1,0 +1,162 @@
+{% extends "base_dashboard.html" %}
+
+{% block title %}Dashboard Gestor - GRHP{% endblock %}
+
+{% block main %}
+<div class="dashboard-box dashboard-main-box">
+    <h2>Dashboard Gestor</h2>
+    <hr>
+    <div class="dashboard-charts" style="display: flex; flex-direction: row; gap: 64px; justify-content: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 24px;">
+            <canvas id="licenciasPie" width="260" height="260" style="cursor:pointer;"></canvas>
+            {% if show_mis_licencias %}
+            <canvas id="misLicenciasPie" width="260" height="260" style="cursor:pointer;"></canvas>
+            {% endif %}
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 24px;">
+            <canvas id="vacacionesPie" width="260" height="260" style="cursor:pointer;"></canvas>
+            {% if show_mis_licencias %}
+            <canvas id="misVacacionesPie" width="260" height="260" style="cursor:pointer;"></canvas>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+// Plugin robusto para texto centrado con saltos de línea y mejor centrado vertical
+const centerTextPlugin = {
+    id: 'centerText',
+    beforeDraw: function(chart) {
+        if (chart.config.options.plugins && chart.config.options.plugins.centerText) {
+            const ctx = chart.ctx;
+            const width = chart.width;
+            const height = chart.height;
+            const centerText = chart.config.options.plugins.centerText.text;
+            if (!centerText) return;
+            ctx.save();
+            ctx.font = 'bold 18px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = '#222';
+            // Soporte para saltos de línea
+            const lines = centerText.split('\n');
+            const lineHeight = 22;
+            const totalHeight = lineHeight * lines.length;
+            // Subimos el texto 22px
+            let y = height / 2 - totalHeight / 2 + lineHeight / 2 - 22;
+            lines.forEach(line => {
+                ctx.fillText(line, width / 2, y);
+                y += lineHeight;
+            });
+            ctx.restore();
+        }
+    }
+};
+
+// Status Licencias
+const licenciasPieCanvas = document.getElementById('licenciasPie');
+const licenciasPie = licenciasPieCanvas.getContext('2d');
+new Chart(licenciasPie, {
+    type: 'doughnut',
+    data: {
+        labels: ['Aprobadas', 'En espera', 'Rechazadas'],
+        datasets: [{
+            data: [{{ lic_aprobadas }}, {{ lic_espera }}, {{ lic_rechazadas }}],
+            backgroundColor: ['#4caf50', '#ffe066', '#e57373']
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { position: 'bottom' },
+            centerText: { text: 'Status\nLicencias' }
+        },
+        cutout: '68%'
+    },
+    plugins: [centerTextPlugin]
+});
+licenciasPieCanvas.addEventListener('click', function() {
+    window.location.href = '{% url "nucleo:gestion_reporte_licencias" %}';
+});
+
+// Mis Licencias
+{% if show_mis_licencias %}
+const misLicenciasPieCanvas = document.getElementById('misLicenciasPie');
+const misLicenciasPie = misLicenciasPieCanvas.getContext('2d');
+new Chart(misLicenciasPie, {
+    type: 'doughnut',
+    data: {
+        labels: ['Aprobadas', 'En espera', 'Rechazadas'],
+        datasets: [{
+            data: [{{ mis_lic_aprobadas }}, {{ mis_lic_espera }}, {{ mis_lic_rechazadas }}],
+            backgroundColor: ['#4caf50', '#ffe066', '#e57373']
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { position: 'bottom' },
+            centerText: { text: 'Mis\nLicencias' }
+        },
+        cutout: '68%'
+    },
+    plugins: [centerTextPlugin]
+});
+misLicenciasPieCanvas.addEventListener('click', function() {
+    window.location.href = '{% url "nucleo:consultar_licencia" %}';
+});
+{% endif %}
+
+// Vacaciones Anuales (Disponibles / Aprobadas / En espera)
+const vacacionesPieCanvas = document.getElementById('vacacionesPie');
+const vacacionesPie = vacacionesPieCanvas.getContext('2d');
+new Chart(vacacionesPie, {
+    type: 'doughnut',
+    data: {
+        labels: ['Disponibles', 'Aprobadas', 'En espera'],
+        datasets: [{
+            data: [{{ dias_disponibles|default:0 }}, {{ vac_aprobadas|default:0 }}, {{ vac_espera|default:0 }}],
+            backgroundColor: ['#1976d2', '#4caf50', '#ffe066']
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { position: 'bottom' },
+            centerText: { text: 'Vacaciones\nEmpleados' }
+        },
+        cutout: '68%'
+    },
+    plugins: [centerTextPlugin]
+});
+vacacionesPieCanvas.addEventListener('click', function() {
+    window.location.href = '{% url "nucleo:gestion_reporte_licencias" %}?tipo={{ 7 }}&estado={{ "En espera"|urlencode }}';
+});
+
+// Mis Vacaciones
+{% if show_mis_licencias %}
+const misVacacionesPieCanvas = document.getElementById('misVacacionesPie');
+const misVacacionesPie = misVacacionesPieCanvas.getContext('2d');
+new Chart(misVacacionesPie, {
+    type: 'doughnut',
+    data: {
+        labels: ['Disponibles', 'Aprobadas', 'En espera'],
+        datasets: [{
+            data: [{{ mis_vac_disponibles|default:0 }}, {{ mis_vac_aprobadas|default:0 }}, {{ mis_vac_espera|default:0 }}],
+            backgroundColor: ['#1976d2', '#4caf50', '#ffe066']
+        }]
+    },
+    options: {
+        plugins: {
+            legend: { position: 'bottom' },
+            centerText: { text: 'Mis\nVacaciones' }
+        },
+        cutout: '68%'
+    },
+    plugins: [centerTextPlugin]
+});
+misVacacionesPieCanvas.addEventListener('click', function() {
+    // Redirect to consultar_licencia filtered by vacaciones type
+    window.location.href = '{% url "nucleo:consultar_licencia" %}?filtro_tipo=vacaciones';
+});
+{% endif %}
+</script>
+{% endblock %}

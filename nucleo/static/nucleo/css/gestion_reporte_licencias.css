@@ -1,0 +1,346 @@
+.filtros-form {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.filtro-empleado {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    max-width: 280px;
+}
+
+.filtro-empleado input[type="text"] {
+    padding-right: 28px;
+    width: 100%;
+}
+
+.filtro-empleado .autocomplete-dropdown {
+    position: absolute;
+    top: 36px;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+.btn-limpiar-autocomplete {
+    position: absolute;
+    right: 6px;
+    background: transparent;
+    border: none;
+    color: #666;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0;
+}
+
+.btn-limpiar-autocomplete:hover {
+    color: #000;
+}
+
+.filtros-form button[type="submit"] {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+
+.btn-excel {
+    background: #1d6f42;
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    /* removed auto margin so PDF can sit to its left */
+    margin-left: 6px;
+    transition: background 0.2s;
+    height: 56px;
+    width: 56px;
+}
+
+.btn-excel:hover {
+    background: #218c4a;
+}
+
+.excel-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Ensure pdf icon behaves like emitir_certificado design */
+.btn-pdf {
+    background: #1d6f42; /* match excel green */
+    border: none;
+    border-radius: 10px;
+    padding: 0;
+    width: 56px;
+    height: 56px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+    color: #fff;
+}
+.btn-pdf:hover {
+    background: #218c4a;
+}
+.btn-pdf .pdf-icon-full {
+    width: 100%; /* icon should occupy the full button, no green background visible */
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Group the export buttons and align them to the right edge of the table */
+.export-buttons-group {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+    position: absolute;
+    right: 48px; /* aligns with the table's right padding/margin */
+    top: 18px; /* visually matches the filter bar */
+}
+.export-btn {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.tabla-licencias {
+    border-collapse: collapse;
+    width: 100%;
+    margin-right: 48px;
+}
+.tabla-licencias th, .tabla-licencias td {
+    border: 1px solid #b0b0b0;
+    padding: 8px;
+    text-align: center;
+}
+.tabla-licencias th {
+    background: #e6f0fa;
+}
+
+.estado-aceptada {
+    color: #4caf50;
+    font-weight: bold;
+}
+.estado-rechazada {
+    color: #e74c3c;
+    font-weight: bold;
+}
+.estado-espera {
+    color: #ffc107;
+    font-weight: bold;
+}
+
+.btn-aprobar {
+    background: #4caf50;
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-right: 4px;
+    cursor: pointer;
+}
+.btn-rechazar {
+    background: #e74c3c;
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-ver-archivo {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 4px;
+    text-decoration: none;
+}
+
+.btn-ver-archivo:hover {
+    background: #1565c0;
+    text-decoration: none;
+}
+
+.modal-ver-archivo {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    justify-content: center;
+    align-items: center;
+}
+.modal-contenido {
+    background: #fff;
+    padding: 24px 32px;
+    position: relative;
+    max-width: 600px;
+    width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.18);
+}
+.cerrar-modal-ver {
+    position: absolute;
+    top: 12px;
+    right: 18px;
+    font-size: 1.6em;
+    cursor: pointer;
+}
+.modal-archivo-contenido {
+    text-align: center;
+}
+.modal-comentario {
+    margin-top: 18px;
+    color: #333;
+    font-size: 1.1em;
+}
+
+.dashboard-box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 4px 8px 12px 0 rgba(44, 62, 80, 0.18);
+    padding: 24px 32px;
+    min-width: 900px;
+    max-width: 1500px;
+    border: 3px solid #7ec6f7;
+    position: absolute;
+    top: 60px;
+    left: 260px;
+    margin: 0;
+}
+
+.tabla-licencias tr.vacaciones-row {
+    /* Cambiado a celeste claro (was rosa) */
+    background: #e6f7ff !important;
+}
+.tabla-licencias td.btn-eliminar-cell,
+.tabla-licencias th.btn-eliminar-cell {
+    border-left: none !important;
+    border-right: none !important;
+}
+.tabla-licencias tr:first-child td.btn-eliminar-cell {
+    background: transparent !important;
+}
+.btn-eliminar-cell {
+    border: none !important;
+    background: transparent !important;
+    padding: 6px 8px !important;
+    vertical-align: middle;
+}
+.btn-eliminar-transparente {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+}
+.btn-eliminar-icon {
+    display: inline-block;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ddd;
+    color: #333;
+    text-align: center;
+    line-height: 22px;
+    font-weight: bold;
+}
+.btn-eliminar-center {
+    text-align: center;
+}
+.icon-advertencia {
+    width: 18px;
+    vertical-align: middle;
+}
+
+.paginacion {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 18px;
+    font-size: 1.1em;
+}
+.paginacion button {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 6px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+.paginacion button:disabled {
+    background: #b0b0b0;
+    color: #fff;
+    cursor: not-allowed;
+}
+
+.mensaje-exito {
+    background: #e0ffe0;
+    color: #207520;
+    border: 1.5px solid #4caf50;
+    border-radius: 6px;
+    padding: 10px 18px;
+    margin-bottom: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+.mensaje-error {
+    background: #ffe0e0;
+    color: #a32020;
+    border: 1.5px solid #e74c3c;
+    border-radius: 6px;
+    padding: 10px 18px;
+    margin-bottom: 18px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.tooltip-advertencia {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+.tooltip-advertencia .tooltip-text {
+    visibility: hidden;
+    width: 260px;
+    background: #fffbe6;
+    color: #222;
+    text-align: left;
+    border-radius: 6px;
+    border: 1px solid #fbc02d;
+    padding: 8px;
+    position: absolute;
+    z-index: 10;
+    left: 110%;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    font-size: 0.95em;
+}
+.tooltip-advertencia:hover .tooltip-text {
+    visibility: visible;
+}

@@ -1,0 +1,393 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/alta_empleado.css' %}">
+<link rel="stylesheet" href="{% static 'nucleo/css/modal_nueva_localidad.css' %}">
+{% endblock %}
+{% block main %}
+<div class="alta-empleado-container">
+    <h2>Alta nuevo Empleado</h2>
+    <div class="tabs">
+        <div class="tab {% if wizard.steps.current == 'personales' %}active{% endif %}">Datos Personales</div>
+        <div class="tab {% if wizard.steps.current == 'laborales' %}active{% endif %}">Datos laborales Y Datos Sucursal</div>
+        <div class="tab {% if wizard.steps.current == 'confirmado' %}active{% endif %}">Confirmado</div>
+    </div>
+    {% if wizard.steps.current == 'personales' %}
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fg" style="width: 33%;"></div>
+        </div>
+    {% elif wizard.steps.current == 'laborales' %}
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fg" style="width: 67%;"></div>
+        </div>
+    {% else %}
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fg" style="width: 100%;"></div>
+        </div>
+    {% endif %}
+
+    <form method="post" autocomplete="off">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+        {{ form.non_field_errors }}
+
+        <div class="form-fields-grid personales recuadro-celeste">
+            <div class="form-group"><label for="id_nombres">Nombres</label>{{ form.nombres }}{{ form.nombres.errors }}</div>
+            <div class="form-group"><label for="id_apellido">Apellido</label>{{ form.apellido }}{{ form.apellido.errors }}</div>
+            <div class="form-group"><label for="id_dni">DNI</label>{{ form.dni }}{{ form.dni.errors }}</div>
+            <div class="form-group"><label for="id_fecha_nac">Fecha de Nacimiento</label>{{ form.fecha_nac }}{{ form.fecha_nac.errors }}</div>
+            <div class="form-group"><label for="id_id_sexo">Sexo</label>{{ form.id_sexo }}{{ form.id_sexo.errors }}</div>
+            <div class="form-group"><label for="id_id_nacionalidad">Nacionalidad</label>{{ form.id_nacionalidad }}{{ form.id_nacionalidad.errors }}</div>
+            <div class="form-group"><label for="id_id_civil">Estado Civil</label>{{ form.id_civil }}{{ form.id_civil.errors }}</div>
+            <div class="form-group"><label for="id_num_hijos">Cantidad Hijos</label>{{ form.num_hijos }}{{ form.num_hijos.errors }}</div>
+            <div class="form-group">
+                <label for="id_provincia">Provincia</label>
+                <select id="id_provincia" name="provincia">
+                    <option value="">---------</option>
+                    {% for provincia in provincias %}
+                        <option value="{{ provincia.id }}" {% if provincia_seleccionada|stringformat:'s' == provincia.id|stringformat:'s' %}selected{% endif %}>{{ provincia.provincia }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group" style="position:relative;">
+                <label for="input_localidad">Localidad</label>
+                <input type="text" id="input_localidad" name="localidad" class="form-control" maxlength="100" autocomplete="off" placeholder="Escriba una localidad..." value="{{ localidad_nombre|default:'' }}">
+                <input type="hidden" id="id_localidad" name="personales-id_localidad" value="{{ localidad_id|default:'' }}">
+                <div id="dropdown_localidad" class="autocomplete-dropdown" style="display:none; position:absolute; z-index:10; width:100%; background:#fff; border:1px solid #ccc; max-height:180px; overflow-y:auto;"></div>
+                {{ form.id_localidad.errors }}
+            </div>
+            <div class="form-group"><label for="id_dr_personal">Dirección</label>{{ form.dr_personal }}{{ form.dr_personal.errors }}</div>
+            <div class="form-group"><label for="id_telefono">Teléfono</label>{{ form.telefono }}{{ form.telefono.errors }}</div>
+            <div class="form-group"><label for="id_cuil">CUIL</label>{{ form.cuil }}{{ form.cuil.errors }}</div>
+            <div class="form-group"><label for="id_email">Email</label>{{ form.email }}{{ form.email.errors }}</div>
+        </div>
+
+        <div class="wizard-buttons">
+            {% if wizard.steps.prev %}
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn-back" formnovalidate>Atrás</button>
+            {% endif %}
+            <button type="submit" class="btn-next">Siguiente</button>
+        </div>
+    </form>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // --- CUIL automático y readonly ---
+    var cuilInput = document.getElementById('id_cuil') || document.getElementById('id_personales-cuil');
+    if (cuilInput) {
+        cuilInput.readOnly = true;
+        cuilInput.style.background = '#f2f2f7';
+        cuilInput.tabIndex = -1;
+    }
+    const dniInput = document.getElementById('id_dni') || document.getElementById('id_personales-dni');
+    const sexoInput = document.getElementById('id_id_sexo') || document.getElementById('id_personales-id_sexo');
+    function calcularCuil(dni, sexo) {
+        let prefijo = 20;
+        if (sexo == '2') prefijo = 27;
+        if (sexo != '1' && sexo != '2') prefijo = 23;
+        let dni_str = String(dni).padStart(8, '0');
+        let base = String(prefijo) + dni_str;
+        let pesos = [5,4,3,2,7,6,5,4,3,2];
+        let suma = 0;
+        for (let i = 0; i < 10; i++) suma += parseInt(base[i]) * pesos[i];
+        let resto = suma % 11;
+        let verificador = 11 - resto;
+        if (verificador === 11) verificador = 0;
+        else if (verificador === 10) {
+            prefijo = 23;
+            base = String(prefijo) + dni_str;
+            suma = 0;
+            for (let i = 0; i < 10; i++) suma += parseInt(base[i]) * pesos[i];
+            resto = suma % 11;
+            verificador = 11 - resto;
+            if (verificador === 11) verificador = 0;
+        }
+        return `${prefijo}-${dni_str}-${verificador}`;
+    }
+    function actualizarCuil() {
+        if (!dniInput || !sexoInput || !cuilInput) return;
+        let dni = dniInput.value.replace(/\D/g, '');
+        let sexo = sexoInput.value;
+        if (dni.length === 8 && sexo) {
+            cuilInput.value = calcularCuil(dni, sexo);
+        } else {
+            cuilInput.value = '';
+        }
+    }
+    if (dniInput && sexoInput && cuilInput) {
+        dniInput.addEventListener('input', actualizarCuil);
+        sexoInput.addEventListener('change', actualizarCuil);
+        setTimeout(actualizarCuil, 100);
+    }
+
+    // --- Máscara y validación DNI ---
+    if (dniInput) {
+        dniInput.addEventListener('input', function(e) {
+            let value = this.value.replace(/\D/g, '').substring(0, 8);
+            let formatted = '';
+            if (value.length > 5) {
+                formatted = value.substring(0, 2) + '.' + value.substring(2, 5) + '.' + value.substring(5);
+            } else if (value.length > 2) {
+                formatted = value.substring(0, 2) + '.' + value.substring(2);
+            } else {
+                formatted = value;
+            }
+            this.value = formatted;
+        });
+    }
+
+    // --- Localidad autocomplete AJAX ---
+    const inputLocalidad = document.getElementById('input_localidad');
+    const hiddenIdLocalidad = document.getElementById('id_localidad');
+    const provinciaSelect = document.getElementById('id_provincia');
+    const dropdown = document.getElementById('dropdown_localidad');
+    let timeoutAutocomplete = null;
+    let lastResults = [];
+
+    function limpiarDropdown() {
+        dropdown.innerHTML = '';
+        dropdown.style.display = 'none';
+    }
+
+    function mostrarDropdown(items) {
+        if (!items.length) {
+            limpiarDropdown();
+            return;
+        }
+        dropdown.innerHTML = '';
+        items.forEach(function(item, idx) {
+            const div = document.createElement('div');
+            div.className = 'autocomplete-item';
+            div.textContent = item.localidad;
+            div.dataset.id = item.id;
+            div.style.padding = '6px 12px';
+            div.style.cursor = 'pointer';
+            div.tabIndex = -1;
+            div.addEventListener('mousedown', function(e) {
+                inputLocalidad.value = item.localidad;
+                hiddenIdLocalidad.value = item.id;
+                hiddenIdLocalidad.setAttribute('value', item.id);
+                limpiarDropdown();
+                inputLocalidad.focus();
+            });
+            // Navegación por teclado en cada ítem
+            div.addEventListener('keydown', function(e) {
+                const items = Array.from(dropdown.querySelectorAll('.autocomplete-item'));
+                let idx = items.findIndex(item => item === document.activeElement);
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (idx === items.length - 1) {
+                        inputLocalidad.focus();
+                    } else {
+                        items[idx + 1].focus();
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (idx <= 0) {
+                        inputLocalidad.focus();
+                    } else {
+                        items[idx - 1].focus();
+                    }
+                } else if (e.key === 'Enter' || e.key === 'Tab') {
+                    inputLocalidad.value = div.textContent;
+                    hiddenIdLocalidad.value = div.dataset.id;
+                    hiddenIdLocalidad.setAttribute('value', div.dataset.id);
+                    limpiarDropdown();
+                    inputLocalidad.focus();
+                    if (e.key === 'Enter') e.preventDefault();
+                } else if (e.key === 'Escape') {
+                    limpiarDropdown();
+                    inputLocalidad.focus();
+                }
+            });
+            dropdown.appendChild(div);
+        });
+        // Posicionar el dropdown justo debajo del input
+        dropdown.style.position = 'absolute';
+        dropdown.style.top = (inputLocalidad.offsetTop + inputLocalidad.offsetHeight) + 'px';
+        dropdown.style.left = inputLocalidad.offsetLeft + 'px';
+        dropdown.style.width = inputLocalidad.offsetWidth + 'px';
+        dropdown.style.display = 'block';
+        // Navegación por teclado desde el input
+        inputLocalidad.onkeydown = function(e) {
+            if (dropdown.style.display !== 'block') return;
+            const items = Array.from(dropdown.querySelectorAll('.autocomplete-item'));
+            if (!items.length) return;
+            let idx = items.findIndex(item => item === document.activeElement);
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (idx === -1 || idx === items.length - 1) {
+                    items[0].focus();
+                } else {
+                    items[idx + 1].focus();
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (idx <= 0) {
+                    inputLocalidad.focus();
+                } else {
+                    items[idx - 1].focus();
+                }
+            } else if (e.key === 'Escape') {
+                limpiarDropdown();
+            }
+        };
+    }
+    // Modal para crear localidad
+    function mostrarModalCrearLocalidad(nombre, provincia, onConfirm) {
+        let modal = document.getElementById('modal-crear-localidad');
+        if (!modal) {
+            modal = document.createElement('div');
+            modal.id = 'modal-crear-localidad';
+            modal.className = 'modal';
+            modal.innerHTML = `<div class="modal-contenido">
+                <div class="mensaje-modal-localidad">La localidad <b></b> no existe en la provincia <b></b>.<br>¿Desea crear una nueva localidad?</div>
+                <button id="btn-modal-localidad-si" class="btn-confirmar-verde">Sí</button>
+                <button id="btn-modal-localidad-no" class="btn-borrar">No</button>
+            </div>`;
+            document.body.appendChild(modal);
+        }
+        const mensaje = modal.querySelector('.mensaje-modal-localidad');
+        mensaje.innerHTML = `La localidad <b>${nombre}</b> no existe en la provincia <b>${provincia}</b>.<br>¿Desea crear una nueva localidad?`;
+        modal.style.display = 'flex';
+        document.getElementById('btn-modal-localidad-si').onclick = function() {
+            modal.style.display = 'none';
+            onConfirm(true);
+        };
+        document.getElementById('btn-modal-localidad-no').onclick = function() {
+            modal.style.display = 'none';
+            onConfirm(false);
+        };
+    }
+
+    inputLocalidad.addEventListener('input', function(e) {
+        const texto = inputLocalidad.value.trim();
+        hiddenIdLocalidad.value = '';
+        if (timeoutAutocomplete) clearTimeout(timeoutAutocomplete);
+        if (texto.length < 2 || !provinciaSelect.value) {
+            limpiarDropdown();
+            return;
+        }
+        timeoutAutocomplete = setTimeout(function() {
+            fetch(`/ajax/localidades/?provincia_id=${provinciaSelect.value}&q=${encodeURIComponent(texto)}`)
+                .then(resp => resp.json())
+                .then(data => {
+                    lastResults = data;
+                    mostrarDropdown(data);
+                });
+        }, 200);
+    });
+
+    // Navegación con teclado en el dropdown
+    inputLocalidad.addEventListener('keydown', function(e) {
+        if (dropdown.style.display !== 'block') return;
+        const items = Array.from(dropdown.querySelectorAll('.autocomplete-item'));
+        if (!items.length) return;
+        let idx = items.findIndex(item => item === document.activeElement);
+        if (e.key === 'ArrowDown') {
+            e.preventDefault();
+            if (idx === -1 || idx === items.length - 1) {
+                items[0].focus();
+            } else {
+                items[idx + 1].focus();
+            }
+        } else if (e.key === 'ArrowUp') {
+            e.preventDefault();
+            if (idx <= 0) {
+                inputLocalidad.focus();
+            } else {
+                items[idx - 1].focus();
+            }
+        } else if (e.key === 'Enter') {
+            if (idx >= 0) {
+                // Selecciona la localidad y setea el id, pero NO dispara modal
+                inputLocalidad.value = items[idx].textContent;
+                hiddenIdLocalidad.value = items[idx].dataset.id;
+                hiddenIdLocalidad.setAttribute('value', items[idx].dataset.id);
+                limpiarDropdown();
+                e.preventDefault();
+            }
+        }
+    });
+
+    // Validar localidad solo al cambiar de campo (focusout), pero no si el nuevo foco está en el dropdown
+    inputLocalidad.addEventListener('focusout', function(e) {
+        setTimeout(function() {
+            if (document.activeElement === dropdown || dropdown.contains(document.activeElement)) return;
+            if (hiddenIdLocalidad.value) return;
+            if (!inputLocalidad.value.trim()) return;
+            // Solo aquí puede aparecer el modal
+            const texto = inputLocalidad.value.trim();
+            const match = lastResults.find(l => l.localidad.toLowerCase() === texto.toLowerCase());
+            if (match) {
+                inputLocalidad.value = match.localidad;
+                hiddenIdLocalidad.value = match.id;
+                hiddenIdLocalidad.setAttribute('value', match.id);
+                return;
+            }
+            const provinciaNombre = provinciaSelect.options[provinciaSelect.selectedIndex].text;
+            mostrarModalCrearLocalidad(texto, provinciaNombre, function(confirmar) {
+                if (confirmar) {
+                    fetch('/ajax/crear_localidad/', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({localidad: texto, provincia_id: provinciaSelect.value})
+                    })
+                    .then(resp => resp.json())
+                    .then(data => {
+                        if (data.success) {
+                            inputLocalidad.value = data.localidad;
+                            hiddenIdLocalidad.value = data.id;
+                            hiddenIdLocalidad.setAttribute('value', data.id);
+                        } else {
+                            alert(data.error || 'Error al crear localidad');
+                            inputLocalidad.value = '';
+                            hiddenIdLocalidad.value = '';
+                            hiddenIdLocalidad.setAttribute('value', '');
+                        }
+                    });
+                } else {
+                    inputLocalidad.value = '';
+                    hiddenIdLocalidad.value = '';
+                    hiddenIdLocalidad.setAttribute('value', '');
+                }
+            });
+        }, 200);
+    });
+
+    // Si el usuario hace click fuera, cerrar dropdown
+    document.addEventListener('mousedown', function(e) {
+        if (!dropdown.contains(e.target) && e.target !== inputLocalidad) {
+            limpiarDropdown();
+        }
+    });
+
+    // Si el usuario selecciona provincia, limpiar localidad
+    provinciaSelect.addEventListener('change', function() {
+        inputLocalidad.value = '';
+        hiddenIdLocalidad.value = '';
+        hiddenIdLocalidad.setAttribute('value', '');
+        limpiarDropdown();
+    // Validar localidad al hacer submit: solo dejar pasar si hay un id válido (número)
+    const form = inputLocalidad.closest('form');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (!hiddenIdLocalidad.value || isNaN(Number(hiddenIdLocalidad.value))) {
+                e.preventDefault();
+                inputLocalidad.focus();
+                alert('Debe seleccionar una localidad válida.');
+            }
+        });
+    }
+    });
+
+    // --- Fecha Nacimiento: mínimo 16 años ---
+    const fechaNacInput = document.getElementById('id_personales-fecha_nac');
+    if (fechaNacInput) {
+        const hoy = new Date();
+        const minYear = hoy.getFullYear() - 16;
+        const maxFecha = new Date(minYear, hoy.getMonth(), hoy.getDate());
+        fechaNacInput.max = maxFecha.toISOString().split('T')[0];
+    }
+});
+</script>
+{% endblock %}

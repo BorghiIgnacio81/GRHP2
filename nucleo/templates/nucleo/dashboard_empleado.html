@@ -1,0 +1,59 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+
+{% block title %}Dashboard Empleado - GRHP{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'nucleo/js/modules/dashboard-empleado.js' %}?v=20251011-modular"></script>
+{% endblock %}
+
+{% block main %}
+    <div class="dashboard-box dashboard-main-box">
+        <h2>Dashboard Empleado</h2>
+        <hr>
+    <div class="dashboard-charts">
+        <div>
+            <canvas id="misLicenciasPie" width="260" height="260" style="cursor:pointer;"></canvas>
+        </div>
+        <div>
+            <canvas id="misVacacionesPie" width="260" height="260" style="cursor:pointer;"></canvas>
+            <!-- metrics removed: restored original UI -->
+        </div>
+    </div>
+    </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    if (window.DashboardEmpleadoModule) {
+        const dashboardConfig = {
+            licenciasData: {
+                labels: ['Aprobadas', 'En espera', 'Rechazadas'],
+                datasets: [{
+                    data: [{{ mis_licencias.aprobadas|default:0 }}, {{ mis_licencias.espera|default:0 }}, {{ mis_licencias.rechazadas|default:0 }}],
+                    backgroundColor: ['#4caf50', '#ffe066', '#e57373']
+                }]
+            },
+            licenciasCenterText: 'Mis\nLicencias',
+            licenciasElementId: 'misLicenciasPie',
+            licenciasUrl: '{% url "nucleo:consultar_licencia" %}?filtro_tipo=licencias',
+
+            vacacionesData: {
+                labels: ['Disponibles', 'En Espera', 'Aprobadas'],
+                datasets: [{
+                    data: [{{ mis_vacaciones.disponibles|default:0 }}, {{ mis_vacaciones.espera|default:0 }}, {{ mis_vacaciones.aprobadas|default:0 }}],
+                    backgroundColor: ['#007bff', '#ffc107', '#28a745']
+                }]
+            },
+            vacacionesCenterText: 'Mis\nVacaciones',
+            vacacionesElementId: 'misVacacionesPie',
+            vacacionesUrl: '{% url "nucleo:consultar_licencia" %}?filtro_tipo=vacaciones'
+        };
+
+        new DashboardEmpleadoModule(dashboardConfig);
+    } else {
+        console.error('DashboardEmpleadoModule no está disponible');
+    }
+});
+</script>
+{% endblock %}

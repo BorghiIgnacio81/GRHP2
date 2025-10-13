@@ -1,0 +1,247 @@
+<!-- filepath: c:\Users\kelly\Desktop\RRHH_Jere\nucleo\templates\nucleo\modificar_borrar_empleado.html -->
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/modificar_borrar_empleado.css' %}?v=20250902-1100">
+<link rel="stylesheet" href="{% static 'nucleo/css/mensajes-django.css' %}?v=20250902-1100">
+{% endblock %}
+{% block extra_js %}
+<script src="{% static 'nucleo/js/buscador-empleados.js' %}?v=20250902"></script>
+<script src="{% static 'nucleo/js/empleados/modificar_empleado_maestro.js' %}?v=20250902"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    window.urlBuscarEmpleados = window.urlBuscarEmpleados || "{% url 'nucleo:buscar_empleados_ajax' %}";
+    if (window.ModificarEmpleadoMaestro) {
+        const maestro = new ModificarEmpleadoMaestro();
+        maestro.init();
+    }
+});
+</script>
+{% endblock %}
+{% block main %}
+<div class="modificar-empleado-container" {% if empleado %}data-empleado-id="{{ empleado.pk }}"{% endif %}>
+    <h2>Actualizar/Borrar Empleado</h2>
+    <div class="busqueda-empleado-box">
+        <input type="text" id="busqueda-empleado" name="buscar_texto"
+               class="form-control"
+               placeholder="Buscar por ID, Apellido o Nombre"
+               autocomplete="off" />
+        <div id="resultados-autocomplete" class="autocomplete-dropdown"></div>
+    </div>
+    {% if form.errors %}
+      <div class="mensaje-error">
+        {{ form.errors }}
+      </div>
+    {% endif %}
+    {% if form_laboral.errors %}
+      <div class="mensaje-error">
+        {{ form_laboral.errors }}
+      </div>
+    {% endif %}
+    <form method="post" id="form-actualizar" {% if empleado %}data-empleado-cargado="true"{% endif %}>
+        {% csrf_token %}
+        <fieldset class="form-fields-grid recuadro-celeste">
+            <div class="form-flex">
+                <div class="datos-personales">
+                    <fieldset class="modulo-formulario">
+                        <legend>Datos Personales</legend>
+                        <div class="datos-personales-grid">
+                            <div class="form-group">
+                                <label for="{{ form.nombres.id_for_label }}">{{ form.nombres.label }}</label>
+                                {{ form.nombres }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.apellido.id_for_label }}">{{ form.apellido.label }}</label>
+                                {{ form.apellido }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.dni.id_for_label }}">{{ form.dni.label }}</label>
+                                {{ form.dni }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.fecha_nac.id_for_label }}">{{ form.fecha_nac.label }}</label>
+                                {{ form.fecha_nac }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.id_nacionalidad.id_for_label }}">{{ form.id_nacionalidad.label }}</label>
+                                {{ form.id_nacionalidad }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.id_civil.id_for_label }}">{{ form.id_civil.label }}</label>
+                                {{ form.id_civil }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.num_hijos.id_for_label }}">{{ form.num_hijos.label }}</label>
+                                {{ form.num_hijos }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.id_sexo.id_for_label }}">{{ form.id_sexo.label }}</label>
+                                {{ form.id_sexo }}
+                            </div>
+                            <div class="form-group">
+                                <label for="provincia">Provincia</label>
+                                <select name="provincia" id="provincia" class="form-control">
+                                    <option value="">---------</option>
+                                    {% for p in provincias %}
+                                        <option value="{{ p.id }}" {% if provincia_actual and provincia_actual.id == p.id %}selected{% endif %}>{{ p.provincia }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group" style="position:relative;">
+                                <label for="{{ form.id_localidad.id_for_label }}">{{ form.id_localidad.label }}</label>
+                                <div style="position:relative; display:inline-block; width:100%;">
+                                    <input type="text" id="input_localidad" name="localidad" class="form-control" maxlength="100" autocomplete="off" placeholder="Buscar localidad..."
+                                        value="{% if empleado and empleado.id_localidad %}{{ empleado.id_localidad.localidad }}{% elif form.initial.id_localidad and form.initial.id_localidad.localidad %}{{ form.initial.id_localidad.localidad }}{% elif form.instance.id_localidad and form.instance.id_localidad.localidad %}{{ form.instance.id_localidad.localidad }}{% endif %}">
+                                    <input type="hidden" id="id_localidad" name="id_localidad"
+                                        value="{% if empleado and empleado.id_localidad %}{{ empleado.id_localidad.id }}{% elif form.initial.id_localidad and form.initial.id_localidad.id %}{{ form.initial.id_localidad.id }}{% elif form.instance.id_localidad and form.instance.id_localidad.id %}{{ form.instance.id_localidad.id }}{% endif %}">
+                                    <div id="dropdown_localidad" class="autocomplete-dropdown"></div>
+                                </div>
+                                {{ form.id_localidad.errors }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.dr_personal.id_for_label }}">{{ form.dr_personal.label }}</label>
+                                {{ form.dr_personal }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.telefono.id_for_label }}">{{ form.telefono.label }}</label>
+                                {{ form.telefono }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.cuil.id_for_label }}">{{ form.cuil.label }}</label>
+                                {{ form.cuil }}
+                            </div>
+                            <div class="form-group">
+                                <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                                {{ form.email }}
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="datos-laborales">
+                    <fieldset class="modulo-formulario">
+                        <legend>Datos Laborales</legend>
+                        <div class="form-row">
+                            <div class="form-group laborales-izq">
+                                <label for="{{ form_laboral.id_estado.id_for_label }}">{{ form_laboral.id_estado.label }}</label>
+                                {{ form_laboral.id_estado }}
+                            </div>
+                            <div class="form-group laborales-der">
+                                <label for="{{ form_laboral.fecha_est.id_for_label }}">{{ form_laboral.fecha_est.label }}</label>
+                                {{ form_laboral.fecha_est }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group laborales-izq">
+                                <label for="{{ form_laboral.id_convenio.id_for_label }}">{{ form_laboral.id_convenio.label }}</label>
+                                {{ form_laboral.id_convenio }}
+                            </div>
+                            <div class="form-group laborales-der">
+                                <label for="{{ form_laboral.alta_ant.id_for_label }}">{{ form_laboral.alta_ant.label }}</label>
+                                {{ form_laboral.alta_ant }}
+                            </div>
+                        </div>
+                        <div class="form-row form-row-puesto-gestor" style="display: flex; gap: 12px; align-items: center; flex-wrap: nowrap;">
+                            <div class="form-group laborales-puesto" style="flex: 0 0 60%; max-width: 60%;">
+                                <label for="{{ form_laboral.id_puesto.id_for_label }}">{{ form_laboral.id_puesto.label }}</label>
+                                {{ form_laboral.id_puesto }}
+                            </div>
+                            <div class="form-group laborales-gestor" style="flex: 0 0 48px; width:48px; max-width:48px; display: flex; align-items: center; justify-content: flex-start; padding-left: 0; margin-top: 0;">
+                                <label for="id_is_staff" class="label-gestor" style="margin-bottom: 0; margin-right: 6px;">Gestor</label>
+                                <input type="checkbox" id="id_is_staff" name="is_staff" value="true" {% if is_staff_val %}checked{% endif %}>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="modulo-formulario">
+                        <legend>Días y horario Laboral</legend>
+                        <div class="form-row horario-row">
+                            <div class="semana-container">
+                                <label>L<br><input type="checkbox" name="Lunes" {% if plan.lunes %}checked{% endif %}></label>
+                                <label>M<br><input type="checkbox" name="Martes" {% if plan.martes %}checked{% endif %}></label>
+                                <label>M<br><input type="checkbox" name="Miercoles" {% if plan.miercoles %}checked{% endif %}></label>
+                                <label>J<br><input type="checkbox" name="Jueves" {% if plan.jueves %}checked{% endif %}></label>
+                                <label>V<br><input type="checkbox" name="Viernes" {% if plan.viernes %}checked{% endif %}></label>
+                                <label>S<br><input type="checkbox" name="Sabado" {% if plan.sabado %}checked{% endif %}></label>
+                                <label>D<br><input type="checkbox" name="Domingo" {% if plan.domingo %}checked{% endif %}></label>
+                            </div>
+                            <div class="form-group">
+                                <label>Horario trabajo inicio</label>
+                                <input type="time" name="start_time" value="{{ plan.start_time|time:'H:i' }}">
+                            </div>
+                            <div class="form-group">
+                                <label>Horario trabajo Fin</label>
+                                <input type="time" name="end_time" value="{{ plan.end_time|time:'H:i' }}">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group doble">
+                                <label>Selección Sucursal</label>
+                                <select name="id_sucursal">
+                                    {% for s in sucursales %}
+                                        <option value="{{ s.pk }}" {% if sucursal and sucursal.pk == s.pk %}selected{% endif %}>{{ s }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </fieldset>
+                </div>
+            </div>
+        </fieldset>
+        <div class="botones-accion">
+            <button type="submit" name="accion" value="actualizar" class="btn-actualizar">Actualizar</button>
+            <button type="button" onclick="abrirModalBorrar()" class="btn-borrar">Borrar</button>
+        </div>
+        {% if messages %}
+            {% for message in messages %}
+                <div class="mensaje-{{ message.tags|default:'info' }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    </form>
+</div>
+
+{% if mostrar_modal_actualizar %}
+<div id="modal-actualizar" class="modal" style="display:flex;">
+  <div class="modal-contenido">
+    <p>Se están a punto de modificar los siguientes datos del empleado <b>{{ empleado.nombres }} {{ empleado.apellido }}</b>:</p>
+    <ul>
+      {% for cambio in cambios %}
+        <li>{{ cambio }}</li>
+      {% endfor %}
+    </ul>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="confirmar_actualizar" value="1">
+      <input type="hidden" name="post_data_json" value="{{ post_data_json }}">
+      <input type="hidden" name="cambios_json" value="{{ cambios_json }}">
+      <input type="hidden" name="cambios_laboral_json" value="{{ cambios_laboral_json }}">
+      <button type="submit" name="confirmar" value="si" class="btn-actualizar btn-modal">Sí</button>
+      <button type="submit" name="confirmar" value="no" class="btn-borrar btn-modal">No</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+{% if empleado %}
+    {% if deletion_blocked %}
+    <div id="modal-borrar" class="modal" style="display:flex;">
+        <div class="modal-contenido">
+            <p>El empleado en cuestion no se puede eliminar por tener licencias/vacaciones cargadas.</p>
+            <div style="text-align: right; margin-top: 12px;">
+                <button type="button" class="btn-actualizar btn-modal" onclick="cerrarModalBorrar();">Ok</button>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div id="modal-borrar" class="modal">
+        <div class="modal-contenido">
+            <p>Está a punto de borrar al empleado <b>{{ empleado.nombres }} {{ empleado.apellido }}</b>.<br>¿Confirmar?</p>
+            <form method="post" id="form-borrar-confirmado" action="{% url 'nucleo:modificar_borrar_empleado_id' empleado.pk %}">
+                {% csrf_token %}
+                <input type="hidden" name="confirmar_borrado" value="1">
+                <button type="submit" name="confirmar" value="si" class="btn-actualizar btn-modal">Sí</button>
+                <button type="submit" name="confirmar" value="no" class="btn-borrar btn-modal">No</button>
+            </form>
+        </div>
+    </div>
+    {% endif %}
+{% endif %}
+{% endblock %}

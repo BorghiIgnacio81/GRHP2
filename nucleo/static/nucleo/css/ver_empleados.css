@@ -1,0 +1,219 @@
+.empleados-box {
+    max-width: 1600px;
+    margin: 30px auto 0 auto;
+    background: #fff;
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(25, 118, 210, 0.10), 0 1.5px 4px 0 rgba(25, 118, 210, 0.10);
+    padding: 24px 24px 12px 24px;
+}
+
+.titulo-empleados {
+    text-align: center;
+    margin-bottom: 18px;
+    color: #101111;
+    font-weight: 700;
+    font-size: 1.7rem;
+}
+
+.barra-superior-empleados {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.input-busqueda-empleado {
+    padding: 6px 12px;
+    width: 220px;
+    border: 1.5px solid #1976d2;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+/* El input real en la plantilla usa id="busqueda-empleado"; duplicar su ancho */
+#busqueda-empleado {
+    padding: 6px 12px;
+    width: 440px; /* doble de 220px */
+    border: 1.5px solid #1976d2;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.label-vista-ampliada {
+    margin-left: 10px;
+    font-weight: 500;
+    color: #0d0d0e;
+}
+
+.btn-exportar-excel {
+    margin-left: auto;
+    background: #43a047;
+    color: #fff !important;
+    border: none;
+    border-radius: 6px;
+    padding: 7px 18px;
+    font-size: 1rem;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(67,160,71,0.08);
+    transition: background 0.2s;
+    text-decoration: none;
+    display: inline-block;
+}
+.btn-exportar-excel:hover {
+    background: #388e3c;
+    color: #fff !important;
+}
+
+.tabla-empleados-scroll {
+    overflow-x: auto;
+}
+
+.tabla-empleados {
+    min-width: 600px;
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid #1976d2;
+    background: #fff;
+    margin-bottom: 0;
+}
+
+.tabla-empleados thead tr {
+    background: #1976d2;
+    color: #fff;
+}
+
+.tabla-empleados th, .tabla-empleados td {
+    padding: 7px 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 0.98rem;
+}
+
+/* Columnas con contenido largo en vista ampliada - usar clases en lugar de nth-child */
+.tabla-empleados th.col-puesto, .tabla-empleados td.col-puesto,
+.tabla-empleados th.col-sucursal, .tabla-empleados td.col-sucursal,
+.tabla-empleados th.col-sucursal-direccion, .tabla-empleados td.col-sucursal-direccion,
+.tabla-empleados th.col-domicilio-pers-juridica, .tabla-empleados td.col-domicilio-pers-juridica,
+.tabla-empleados th.col-direccion, .tabla-empleados td.col-direccion {
+    min-width: 200px;
+    max-width: 400px;
+    word-break: break-word;
+}
+
+/* Columna Editar: ancho mínimo y máximo ajustado */
+.tabla-empleados th.col-acciones,
+.tabla-empleados td.col-acciones,
+.tabla-empleados th:last-child,
+.tabla-empleados td:last-child {
+    min-width: 70px;
+    max-width: 110px;
+    width: 1%;
+    text-align: center;
+}
+
+.tabla-empleados tr:nth-child(even) {
+    background: #f5faff;
+}
+
+.btn-editar {
+    background: #ffe066;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-editar.editando,
+.btn-editar:active {
+    background: #4caf50 !important;
+}
+
+.editable input, .editable select {
+    width: 100%;
+    padding: 2px 4px;
+    box-sizing: border-box;
+}
+
+.expand-icon-btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+    box-shadow: none;
+}
+
+.export-buttons-group {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.btn-excel, .btn-pdf {
+    border-radius: 8px;
+    border: 2px solid #43a047;
+    background: #fff;
+    padding: 2px;
+    box-shadow: 0 2px 8px rgba(67,160,71,0.10);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-excel:hover, .btn-pdf:hover {
+    background: #e8f5e9;
+    border-color: #388e3c;
+}
+
+.btn-pdf {
+    border-color: #f44336;
+    box-shadow: 0 2px 8px rgba(244,67,54,0.10);
+}
+
+.btn-pdf:hover {
+    background: #ffebee;
+    border-color: #d32f2f;
+}
+
+.excel-icon-full, .pdf-icon-full {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    display: block;
+}
+
+/* Filter buttons styling - matching solicitar_licencia and log_auditoria design */
+.btn-filter {
+    display: inline-block;
+    padding: 8px 16px;
+    margin: 0 4px;
+    border: 1px solid #4FC3F7;
+    border-radius: 4px;
+    background: #4FC3F7;
+    color: white;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    min-height: 32px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.btn-filter:hover {
+    background: #29B6F6;
+    border-color: #29B6F6;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}

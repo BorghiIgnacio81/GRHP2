@@ -1,0 +1,207 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/alta_empleado.css' %}?v=2025-09-03-6">
+{% endblock %}
+{% block main %}
+<div class="alta-empleado-container">
+    <h2>Alta nuevo Empleado</h2>
+    <div class="tabs">
+        <div class="tab {% if wizard.steps.current == 'personales' %}active{% endif %}" id="tab-personales">Datos Personales</div>
+        <div class="tab {% if wizard.steps.current == 'laborales' %}active{% endif %}" id="tab-laborales">Datos laborales Y Datos Sucursal</div>
+        <div class="tab {% if wizard.steps.current == 'confirmado' %}active{% endif %}" id="tab-validado">Validado <img id="icono-check" src="{% static 'nucleo/icons/icono_check.ico' %}" style="display:none;vertical-align:middle;width:16px;height:16px;margin-left:4px;" alt="ok"></div>
+    </div>
+    <div class="progress-bar-bg">
+        <div class="progress-bar-fg" id="progress-bar-fg" style="width: 66%;"></div>
+    </div>
+
+    <form method="post" autocomplete="off" id="form-laborales">
+        {% csrf_token %}
+        {{ wizard.management_form }}
+        {{ form.non_field_errors }}
+        <div id="laborales-container">
+            <div class="form-fields-grid laborales recuadro-celeste" style="display: flex; flex-direction: column; gap: 0;" id="recuadro-celeste">
+            <div>
+                <h3 class="seccion-titulo">Datos Laborales</h3>
+                <div class="form-row row-laborales-1">
+                    <div class="form-group">
+                        <label for="{{ form.id_estado.id_for_label }}">{{ form.id_estado.label }}</label>
+                        {{ form.id_estado }}{{ form.id_estado.errors }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.fecha_est.id_for_label }}">{{ form.fecha_est.label }}</label>
+                        {{ form.fecha_est }}{{ form.fecha_est.errors }}
+                    </div>
+                    <div class="form-group">
+                        <label for="{{ form.id_convenio.id_for_label }}">{{ form.id_convenio.label }}</label>
+                        {{ form.id_convenio }}{{ form.id_convenio.errors }}
+                    </div>
+                </div>
+                <div class="form-row row-laborales-2">
+                    <div class="form-group">
+                        <label for="{{ form.alta_ant.id_for_label }}">{{ form.alta_ant.label }}</label>
+                        {{ form.alta_ant }}{{ form.alta_ant.errors }}
+                    </div>
+                    <div class="form-group col-puesto">
+                        <label for="{{ form.id_puesto.id_for_label }}">{{ form.id_puesto.label }}</label>
+                        {{ form.id_puesto }}{{ form.id_puesto.errors }}
+                    </div>
+            <div class="form-group gestor-group">
+                <label for="id_is_staff">Gestor</label>
+                        <input type="checkbox" id="id_is_staff" name="is_staff" value="true" style="margin: 0 auto;" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="seccion-titulo">Días y Horario Laboral</h3>
+                <div class="dias-horario-row">
+                    <div class="semana-container">
+                        <label><span class="semana-letter">L</span> {{ form.lunes }}</label>
+                        <label><span class="semana-letter">M</span> {{ form.martes }}</label>
+                        <label><span class="semana-letter">M</span> {{ form.miercoles }}</label>
+                        <label><span class="semana-letter">J</span> {{ form.jueves }}</label>
+                        <label><span class="semana-letter">V</span> {{ form.viernes }}</label>
+                        <label><span class="semana-letter">S</span> {{ form.sabado }}</label>
+                        <label><span class="semana-letter">D</span> {{ form.domingo }}</label>
+                    </div>
+                    <div class="horario-inline">
+                        <span>
+                            <label for="{{ form.start_time.id_for_label }}">{{ form.start_time.label }}</label>
+                            {{ form.start_time }}{{ form.start_time.errors }}
+                        </span>
+                        <span>
+                            <label for="{{ form.end_time.id_for_label }}">{{ form.end_time.label }}</label>
+                            {{ form.end_time }}{{ form.end_time.errors }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="seccion-titulo">Datos Sucursal</h3>
+                <div class="form-row row-sucursal-1">
+                    <div class="form-group">
+                        <label for="{{ form.id_sucursal.id_for_label }}">{{ form.id_sucursal.label }}</label>
+                        {{ form.id_sucursal }}{{ form.id_sucursal.errors }}
+                    </div>
+                    <div class="form-group">
+                            <label for="id_direccion_sucursal">Dirección</label>
+                        <input type="text" id="id_direccion_sucursal" readonly>
+                    </div>
+                </div>
+                <div class="form-row row-sucursal-2">
+                    <div class="form-group">
+                            <label for="id_mail_sucursal">Email</label>
+                        <input type="text" id="id_mail_sucursal" readonly>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        <div id="validado-container"></div>
+
+        <div class="wizard-buttons">
+            {% if wizard.steps.prev %}
+                <button name="wizard_goto_step" type="submit" value="{{ wizard.steps.prev }}" class="btn-back" formnovalidate>Atrás</button>
+            {% endif %}
+            <button type="submit" id="btn-confirmar" class="btn-next" disabled>Guardar</button>
+        </div>
+    </form>
+</div>
+<script>
+// --- Checkbox Gestor ---
+document.addEventListener('DOMContentLoaded', function() {
+    const puestoSelect = document.getElementById('id_laborales-id_puesto');
+    const gestorCheckbox = document.getElementById('id_is_staff');
+    // IDs de puestos que deben marcar gestor por defecto
+    const puestosGestor = ['4', '5'];
+    function actualizarGestorCheckbox() {
+        if (!puestoSelect.value) {
+            gestorCheckbox.checked = false;
+            gestorCheckbox.disabled = true;
+        } else {
+            gestorCheckbox.disabled = false;
+            if (puestosGestor.includes(puestoSelect.value)) {
+                gestorCheckbox.checked = true;
+            } else {
+                gestorCheckbox.checked = false;
+            }
+        }
+    }
+    if (puestoSelect && gestorCheckbox) {
+        puestoSelect.addEventListener('change', actualizarGestorCheckbox);
+        // Inicializar estado al cargar
+        actualizarGestorCheckbox();
+    }
+});
+function validarFormulario() {
+    let valido = true;
+    const camposObligatorios = [
+        'id_laborales-id_estado', 'id_laborales-id_convenio', 'id_laborales-alta_ant', 'id_laborales-id_puesto',
+        'id_laborales-start_time', 'id_laborales-end_time', 'id_sucursal'
+    ];
+    for (const id of camposObligatorios) {
+        const campo = document.getElementById(id);
+        if (!campo || campo.value === "" || campo.value === null) {
+            valido = false;
+            break;
+        }
+    }
+    const dias = ['lunes','martes','miercoles','jueves','viernes','sabado','domingo'];
+    const algunDia = dias.some(dia => {
+        const checkbox = document.getElementById('id_laborales-' + dia);
+        return checkbox && checkbox.checked;
+    });
+    if (!algunDia) valido = false;
+
+    const btn = document.getElementById('btn-confirmar');
+    const progress = document.getElementById('progress-bar-fg');
+    const recuadro = document.getElementById('recuadro-celeste');
+    const tabValidado = document.getElementById('tab-validado');
+    const tabLaborales = document.getElementById('tab-laborales');
+    const iconoCheck = document.getElementById('icono-check');
+    if (btn && progress && recuadro && tabValidado && tabLaborales && iconoCheck) {
+        if (valido) {
+            btn.disabled = false;
+            btn.classList.remove('btn-next');
+            btn.classList.add('btn-confirmar-verde');
+            progress.style.width = "100%";
+            tabValidado.classList.add('tab-validado-activo');
+            tabLaborales.classList.remove('tab-active-visual');
+            iconoCheck.style.display = 'inline-block';
+        } else {
+            btn.disabled = true;
+            btn.classList.remove('btn-confirmar-verde');
+            btn.classList.add('btn-next');
+            progress.style.width = "66%";
+            tabValidado.classList.remove('tab-validado-activo');
+            tabLaborales.classList.add('tab-active-visual');
+            iconoCheck.style.display = 'none';
+        }
+    }
+}
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('input, select').forEach(function(input) {
+        input.addEventListener('input', validarFormulario);
+        input.addEventListener('change', validarFormulario);
+    });
+    validarFormulario();
+    // Script para cargar dirección y mail de sucursal
+    const sucursalSelect = document.getElementById("id_sucursal");
+    const direccionInput = document.getElementById("id_direccion_sucursal");
+    const mailInput = document.getElementById("id_mail_sucursal");
+    if (sucursalSelect) {
+        sucursalSelect.addEventListener('change', function() {
+            fetch(`/ajax/direccion_sucursal/?sucursal_id=${this.value}`)
+            .then(response => response.json())
+            .then(data => {
+                direccionInput.value = data.direccion || "";
+                mailInput.value = data.mail || "";
+                validarFormulario();
+            });
+        });
+    }
+});
+</script>
+{% endblock %}

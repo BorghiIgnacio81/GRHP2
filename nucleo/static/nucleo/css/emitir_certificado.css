@@ -1,0 +1,225 @@
+.certificado-container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    min-height: 90vh;
+    position: absolute;
+    top: 60px;
+    left: 260px;
+    width: auto;
+}
+
+.certificado-box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 16px #0002;
+    padding: 32px 24px;
+    max-width: 600px;
+    width: 100%;
+    border: 3px solid #7ec6f7;
+}
+
+.certificado-titulo {
+    text-align: center;
+    margin-bottom: 8px;
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.certificado-separador {
+    margin-bottom: 18px;
+}
+
+.certificado-cuerpo {
+    border: 2px solid #222;
+    border-radius: 12px;
+    padding: 18px 18px 32px 18px;
+    margin-bottom: 18px;
+}
+
+.certificado-cuerpo-titulo {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.certificado-cuerpo-texto {
+    font-size: 1.1em;
+    margin-bottom: 32px;
+}
+
+.certificado-firma-area {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.certificado-firma {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.firma-img {
+    height: 48px;
+}
+
+.firma-nombre {
+    font-size: 0.95em;
+    margin-top: 4px;
+}
+
+.certificado-acciones {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-pdf {
+    background: #fff;
+    border: 1px solid #e53935;
+    color: #e53935;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    transition: background 0.2s, color 0.2s;
+}
+
+.btn-pdf:hover {
+    background: #ffeaea;
+    color: #b71c1c;
+}
+
+.btn-pdf-icon {
+    background: #fff;
+    border: 1.5px solid #e53935;
+    border-radius: 10px;
+    padding: 8px;
+    height: 48px;
+    width: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-pdf-icon:hover {
+    background: #ffeaea;
+    border-color: #b71c1c;
+}
+
+.pdf-icon {
+    height: 18px;
+    vertical-align: middle;
+    margin-right: 6px;
+}
+
+.pdf-icon-only {
+    height: 32px;
+    width: 32px;
+    display: block;
+}
+
+.btn-imprimir {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 24px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background 0.2s;
+}
+
+.btn-imprimir:hover {
+    background: #1251a3;
+}
+
+.expand-icon-btn {
+    padding: 0;
+    border: none;
+    background: transparent;
+    width: 64px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.expand-icon-btn .pdf-icon-full {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Solo mostrar el certificado al imprimir */
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 8mm 12mm;
+    }
+
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+
+    body * {
+        visibility: hidden !important;
+    }
+
+    .certificado-container,
+    .certificado-container * {
+        visibility: visible !important;
+    }
+
+    .certificado-container {
+        position: fixed !important;
+        inset: 0 !important;
+        display: flex !important;
+        justify-content: center !important;
+        align-items: flex-start !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        width: 100% !important;
+        background: transparent !important;
+        box-sizing: border-box !important;
+    }
+
+    .certificado-box {
+        box-shadow: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 142mm !important;
+        max-width: 100% !important;
+        background: transparent !important;
+    }
+
+    .certificado-cuerpo {
+        border: 2px solid #222 !important;
+        border-radius: 12px !important;
+        margin: 0 auto !important;
+        padding: 8mm 8mm 10mm 8mm !important;
+        width: 100% !important;
+        background: #fff !important;
+        box-shadow: none !important;
+    }
+
+    .certificado-acciones,
+    .certificado-box > hr,
+    .certificado-box > h2,
+    .certificado-titulo {
+        display: none !important;
+    }
+}

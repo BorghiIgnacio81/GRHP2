@@ -1,0 +1,214 @@
+.consultar-licencia-container {
+    display: block;
+    position: absolute;
+    top: 60px;
+    left: 260px;
+    width: auto;
+}
+
+.consultar-licencia-box {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 4px 8px 12px 0 rgba(44, 62, 80, 0.18);
+    padding: 24px 32px;
+    min-width: 600px;
+    border: 3px solid #7ec6f7;
+}
+
+.consultar-licencia-box h2 {
+    text-align: center;
+    margin-bottom: 18px;
+    font-size: 1.25em;
+}
+
+/* Filtros horizontales - consistente con el resto del repositorio */
+.filtros-box {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid #dee2e6;
+}
+
+.filtros-form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    margin: 0;
+}
+
+.filtro-grupo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filtro-grupo label {
+    font-weight: 500;
+    color: #495057;
+    margin: 0;
+    white-space: nowrap;
+}
+
+.filtro-grupo select,
+.filtro-grupo input[type="date"],
+.filtro-grupo input[type="number"] {
+    padding: 6px 10px;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 120px;
+}
+
+.filtro-grupo select:focus,
+.filtro-grupo input:focus {
+    outline: none;
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.filtros-actions {
+    display: flex;
+    gap: 10px;
+}
+
+/* Botones filtros - estilo consistente con el repositorio */
+.filtros-actions .btn-editar {
+    background: linear-gradient(180deg, #4fc3f7, #22a6df);
+    color: #062427;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(79, 195, 247, 0.3);
+}
+
+.filtros-actions .btn-editar:hover {
+    background: linear-gradient(180deg, #1ea0d9, #0b7fb3);
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(79, 195, 247, 0.4);
+    transform: translateY(-1px);
+}
+
+/* Botón limpiar - celeste más claro */
+.filtros-actions .btn-cancelar {
+    background: linear-gradient(180deg, #b3e5fc, #81d4fa);
+    color: #0277bd;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 6px rgba(179, 229, 252, 0.3);
+    text-decoration: none;
+    display: inline-block;
+}
+
+.filtros-actions .btn-cancelar:hover {
+    background: linear-gradient(180deg, #81d4fa, #4fc3f7);
+    color: #01579b;
+    box-shadow: 0 4px 10px rgba(179, 229, 252, 0.4);
+    transform: translateY(-1px);
+    text-decoration: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .filtros-form {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .filtro-grupo {
+        flex-wrap: wrap;
+    }
+}
+
+/* Estilos originales de tabla */
+.licencias-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #f8f9fa;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.licencias-table th, .licencias-table td {
+    padding: 8px;
+    text-align: left;
+    font-size: 1em;
+}
+
+.licencias-table thead tr {
+    border-bottom: 1.5px solid #222;
+    background: #f3f3f3;
+}
+
+.licencias-table tbody tr {
+    border-bottom: 1px solid #eee;
+}
+
+.licencia-badge {
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.95em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.licencia-badge.aprobada { background: #4caf50; color: #fff; }
+.licencia-badge.rechazada { background: #e74c3c; color: #fff; }
+.licencia-badge.espera { background: #ffc107; color: #222; }
+
+.sin-solicitudes {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+}
+
+.mensaje-exito {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.mensaje-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.mensaje-aviso {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+    padding: 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
+
+.mensaje-cerrable {
+    position: relative;
+}
+
+.cerrar-mensaje {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2em;
+}

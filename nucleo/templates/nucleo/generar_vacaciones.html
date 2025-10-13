@@ -1,0 +1,88 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/generar_vacaciones.css' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box generar-vacaciones-box">
+    <h2 class="generar-vacaciones-titulo">Generar Vacaciones</h2>
+    <div class="generar-vacaciones-info">
+        <span>Se generan desde noviembre</span>
+    </div>
+    <form method="post" class="generar-vacaciones-form">
+        {% csrf_token %}
+        <button type="submit" id="btn-generar" class="btn-generar">Generar {{ year }}</button>
+    </form>
+    {% if already_generated %}
+    <!-- Modal confirmación sobrescribir -->
+    <div id="modal-sobrescribir" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.4);z-index:999;align-items:center;justify-content:center;">
+        <div style="background:#fff;padding:20px;border-radius:8px;max-width:420px;width:90%;">
+            <h3>Las vacaciones de {{ year }} ya se han generado</h3>
+            <p>Si continua las sobreescribirá. ¿Desea continuar?</p>
+            <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px;">
+                <button type="button" id="btn-cancelar-sobrescribir" class="btn-generar" style="background:#2196f3;color:#fff">No</button>
+                <button type="button" id="btn-confirmar-sobrescribir" class="btn-generar" style="background:#2196f3;color:#fff">Sí, sobrescribir</button>
+            </div>
+        </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var btn = document.getElementById('btn-generar');
+        btn.addEventListener('click', function(e) {
+            // Evitar submit inmediato y mostrar modal
+            e.preventDefault();
+            document.getElementById('modal-sobrescribir').style.display = 'flex';
+        });
+        document.getElementById('btn-cancelar-sobrescribir').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('modal-sobrescribir').style.display = 'none';
+        });
+        document.getElementById('btn-confirmar-sobrescribir').addEventListener('click', function(e) {
+            e.preventDefault();
+            // Crear formulario con flag force y submit
+            var form = document.querySelector('.generar-vacaciones-form');
+            var input = document.createElement('input');
+            input.type = 'hidden';
+            input.name = 'force';
+            input.value = '1';
+            form.appendChild(input);
+            form.submit();
+        });
+    });
+    </script>
+    {% endif %}
+    {% if already_generated %}
+    <div class="mensaje-info">Vacaciones ya generadas para {{ year }}; si las vuelve a generar se sobrescribirán.</div>
+    {% endif %}
+    {% if empleados %}
+    <div class="tabla-wrapper">
+    <table class="tabla-licencias">
+        <thead>
+            <tr>
+                <th>Nombre y Apellido</th>
+                <th>Alta</th>
+                <th>Antiguedad reconocida</th>
+                <th>Días Otorgados</th>
+                <th>Días Consumidos</th>
+                <th>Días Disponibles</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in empleados %}
+            <tr>
+                <td>{{ emp.nombre_apellido }}</td>
+                <td>{{ emp.alta|date:"d/m/Y" }}</td>
+                <td>{{ emp.antiguedad_reconocida }}</td>
+                <td>{{ emp.dias_otorgados }}</td>
+                <td>{{ emp.dias_consumidos }}</td>
+                <td>{{ emp.dias_disponibles }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    {% elif generado %}
+        <div class="mensaje-exito">Vacaciones generadas correctamente.</div>
+    {% endif %}
+</div>
+{% endblock %}

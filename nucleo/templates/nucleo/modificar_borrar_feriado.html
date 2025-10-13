@@ -1,0 +1,102 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/feriados.css' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box feriado-box">
+    <h2 class="feriado-titulo">Modificar/Borrar Feriado</h2>
+    <!-- Formulario GET para filtrar y seleccionar -->
+    <form method="get" class="form-alta-feriado">
+        <label>Año
+            <select name="anio" id="anio-select">
+                <option value="">Todos</option>
+                {% for a in anios %}
+                    <option value="{{ a.year }}" {% if a.year|stringformat:"s" == selected_anio %}selected{% endif %}>{{ a.year }}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Buscar Feriado
+            <select name="id_feriado" id="feriado-select" onchange="this.form.submit()">
+                <option value="">Seleccione...</option>
+                {% for f in feriados %}
+                    <option value="{{ f.id_feriado }}" {% if f.id_Feriado|stringformat:"s" == selected_id %}selected{% endif %}>
+                        {{ f.descripcion }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+        <button type="submit" style="display:none;">Buscar</button>
+    </form>
+    <!-- Formulario POST para editar/borrar -->
+    <form method="post" class="form-alta-feriado" style="margin-top:10px;">
+        {% csrf_token %}
+        {% if feriado %}
+        <input type="hidden" name="id_feriado" value="{{ feriado.id_feriado }}">
+        <label>Nombre de Feriado
+            <input type="text" name="descripcion" value="{{ feriado.descripcion }}" required>
+        </label>
+        <label>Fecha
+            <input type="date" name="fecha" required value="{% if request.POST.fecha %}{{ request.POST.fecha }}{% else %}{{ feriado.fecha|date:'Y-m-d' }}{% endif %}">
+        </label>
+        <div class="botones-accion">
+            <button type="submit" name="accion" value="actualizar" class="btn-actualizar">Actualizar</button>
+            <button type="submit" name="accion" value="borrar" class="btn-borrar">Borrar</button>
+        </div>
+        {% endif %}
+    </form>
+    {% if mensaje_exito %}
+    <div class="mensaje-exito">
+        {{ mensaje_exito }}
+    </div>
+    {% endif %}
+    {% if mensaje_error %}
+    <div class="mensaje-error">
+        {{ mensaje_error }}
+    </div>
+    {% endif %}
+</div>
+<script>
+    // Al cambiar el año, resetea el select de feriado y envía el filtro automáticamente
+    document.addEventListener('DOMContentLoaded', function() {
+        const anioSelect = document.getElementById('anio-select');
+        const feriadoSelect = document.getElementById('feriado-select');
+        if (!anioSelect || !feriadoSelect) return;
+
+        anioSelect.addEventListener('change', function() {
+            feriadoSelect.selectedIndex = 0;
+            if (anioSelect.form) {
+                anioSelect.form.submit();
+            }
+        });
+    });
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nombre = document.querySelector('input[name="descripcion"]');
+    const fecha = document.querySelector('input[name="fecha"]');
+    const btn = document.querySelector('.btn-actualizar');
+    if (!nombre || !fecha || !btn) return;
+
+    const nombreOriginal = nombre.value;
+    const fechaOriginal = fecha.value;
+
+    function checkCambios() {
+        if (
+            nombre.value.trim() !== nombreOriginal.trim() ||
+            fecha.value !== fechaOriginal
+        ) {
+            btn.disabled = false;
+            btn.classList.add('completo');
+        } else {
+            btn.disabled = true;
+            btn.classList.remove('completo');
+        }
+    }
+
+    nombre.addEventListener('input', checkCambios);
+    fecha.addEventListener('input', checkCambios);
+    checkCambios();
+});
+</script>
+{% endblock %}

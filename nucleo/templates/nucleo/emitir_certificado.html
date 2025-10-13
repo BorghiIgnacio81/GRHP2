@@ -1,0 +1,40 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/emitir_certificado.css' %}">
+{% endblock %}
+{% block main %}
+<div class="certificado-container">
+  <div id="certificado-box" class="certificado-box">
+    <h2 class="certificado-titulo">Certificado Laboral</h2>
+    <hr class="certificado-separador">
+    <div class="certificado-cuerpo">
+      <h3 class="certificado-cuerpo-titulo">Certificado Laboral</h3>
+      <p class="certificado-cuerpo-texto">
+        Certificamos que el sr/sra <b>{{ empleado.nombres }} {{ empleado.apellido }}</b> DNI <b>{{ empleado.dni }}</b> se encuentra trabajando en la empresa <b>{{ empresa }}</b>{% if sucursal %}, Sucursal {{ sucursal }}{% endif %} en el cargo de <b>{{ puesto }}</b> desde el día <b>{{ fecha_ant }}</b>{% if convenio|default:'' %}{% if convenio == 'CCT430/05' %}, bajo convenio CCT430/05{% elif convenio == 'Fuera de convenio' %}, fuera de convenio{% else %}, bajo convenio {{ convenio }}{% endif %}{% endif %}.<br><br>
+        A ser presentado a quien corresponda el día <b>{{ fecha_emision_larga }}</b>.
+      </p>
+      <div class="certificado-firma-area">
+        <div class="certificado-firma">
+          <img src="{% static 'nucleo/images/firma.png' %}" alt="Firma" class="firma-img">
+          <div class="firma-nombre">Gómez Ana María<br>Responsable de farmacia</div>
+        </div>
+        <div></div>
+      </div>
+    </div>
+    <div class="certificado-acciones">
+      <button type="button" class="expand-icon-btn" title="Descargar PDF" data-export-target=".certificado-cuerpo" data-export-filename="certificado.pdf" data-export-format="pdf">
+        <img src="{% static 'nucleo/icons/pdf-descarga-icono.png' %}" alt="PDF" class="pdf-icon-full">
+      </button>
+      <button onclick="window.print()" class="btn-imprimir">
+        Imprimir
+      </button>
+    </div>
+  </div>
+</div>
+<script src="{% static 'nucleo/js/html2canvas.min.js' %}"></script>
+<!-- jsPDF: use CDN because local dist/jspdf.umd.min.js is missing in the repo -->
+<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+<script src="{% static 'nucleo/js/exportar_pdf.js' %}"></script>
+<script src="{% static 'nucleo/js/export-utils.js' %}"></script>
+{% endblock %}

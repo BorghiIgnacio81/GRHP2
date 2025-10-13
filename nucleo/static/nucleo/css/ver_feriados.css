@@ -1,0 +1,227 @@
+.feriados-box {
+    max-width: fit-content;
+    width: auto;
+    margin: 30px 0 0 0;
+    background: #fff;
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(25, 118, 210, 0.10), 0 1.5px 4px 0 rgba(25, 118, 210, 0.10);
+    padding: 24px 24px 12px 24px;
+}
+
+.titulo-feriados {
+    text-align: center;
+    margin-bottom: 18px;
+    color: #101111;
+    font-weight: 700;
+    font-size: 1.7rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.year-selector-container {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.year-input {
+    background: #fff;
+    border: 2px solid #1976d2;
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: #101111;
+    width: 80px;
+    text-align: center;
+    outline: none;
+    cursor: default;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.year-input:focus {
+    border-color: #1565c0;
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2);
+}
+
+.year-arrows {
+    display: flex;
+    flex-direction: column;
+    margin-left: 5px;
+    gap: 1px;
+}
+
+.year-arrow {
+    background: #1976d2;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    width: 20px;
+    height: 16px;
+    font-size: 10px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+
+.year-arrow:hover {
+    background: #1565c0;
+}
+
+.year-arrow:active {
+    background: #0d47a1;
+    transform: scale(0.95);
+}
+
+.year-up {
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+}
+
+.year-down {
+    border-top-left-radius: 1px;
+    border-top-right-radius: 1px;
+}
+
+.barra-superior-feriados {
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    justify-content: flex-end;
+}
+
+.tabla-feriados-scroll {
+    overflow-x: auto;
+}
+
+.tabla-feriados {
+    width: auto;
+    min-width: auto;
+    border-collapse: collapse;
+    border: 2px solid #1976d2;
+    background: #fff;
+    margin-bottom: 0;
+    table-layout: auto;
+}
+
+.tabla-feriados thead tr {
+    background: #1976d2;
+    color: #fff;
+}
+
+.tabla-feriados th, .tabla-feriados td {
+    padding: 7px 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 0.98rem;
+}
+
+.tabla-feriados tr:nth-child(even) {
+    background: #f5faff;
+}
+
+.btn-editar {
+    background: #ffe066;
+    border: none;
+    border-radius: 4px;
+    padding: 4px 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-editar:hover {
+    background: #ffd54f;
+}
+
+.btn-editar.editando,
+.btn-editar:active {
+    background: #4caf50 !important;
+}
+
+/* Estilos específicos para cada columna */
+/* Columna Feriado - se ajusta al contenido */
+.tabla-feriados th:nth-child(1),
+.tabla-feriados td:nth-child(1) {
+    width: auto;
+    white-space: nowrap;
+    padding: 7px 12px;
+}
+
+/* Columna Fecha - ancho mínimo */
+.tabla-feriados th:nth-child(2),
+.tabla-feriados td:nth-child(2) {
+    width: auto;
+    text-align: center;
+    white-space: nowrap;
+    padding: 7px 8px;
+}
+
+/* Columna Editar - ancho mínimo */
+.tabla-feriados th:last-child,
+.tabla-feriados td:last-child {
+    width: auto;
+    text-align: center;
+    white-space: nowrap;
+    padding: 7px 8px;
+}
+
+.export-buttons-group {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+}
+
+.btn-excel, .btn-pdf {
+    border-radius: 8px;
+    border: 2px solid #43a047;
+    background: #fff;
+    padding: 2px;
+    box-shadow: 0 2px 8px rgba(67,160,71,0.10);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-excel:hover, .btn-pdf:hover {
+    background: #e8f5e9;
+    border-color: #388e3c;
+}
+
+.btn-pdf {
+    border-color: #f44336;
+    box-shadow: 0 2px 8px rgba(244,67,54,0.10);
+}
+
+.btn-pdf:hover {
+    background: #ffebee;
+    border-color: #d32f2f;
+}
+
+.excel-icon-full, .pdf-icon-full {
+    width: 42px;
+    height: 42px;
+    object-fit: contain;
+    display: block;
+}

@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}GRHP Dashboard{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'nucleo/css/dashboard.css' %}">
+    <link rel="stylesheet" href="{% static 'nucleo/css/alta_empleado.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'nucleo/icons/favicon.ico' %}">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <div class="logo-float-container">
+        <img src="{% static 'nucleo/icons/logorecortado.png' %}" alt="Logo GRHP" class="logo-float-img">
+    </div>
+    <div class="topbar"></div>
+    <div class="sidebar">
+        <ul class="nav">
+            {% if request.user.is_authenticated %}
+                {% with idemp=request.user.empleado.idempleado_id %}
+                    {% if request.user.is_staff %}
+                        <li><a href="{% url 'nucleo:dashboard_gestor' %}">Dashboard</a></li>
+                        {% if idemp != 1 %} {# Gestor #}
+                            <li><a href="{% url 'nucleo:solicitar_licencia' %}">Solicitar Licencias</a></li>
+                            <li><a href="{% url 'nucleo:consultar_licencia' %}">Mis Licencias</a></li>
+                            {% if empleado_id %}
+                                <li><a href="{% url 'nucleo:emitir_certificado' empleado_id %}">Emitir certificado</a></li>
+                            {% endif %}
+                        {% endif %}
+                        <li><a href="{% url 'nucleo:gestion_reporte_licencias' %}">Gestión y Reporte Licencias</a></li>
+                        <li class="submenu">
+                            <a href="#">Gestión Empleados</a>
+                            <ul class="submenu-list" style="display: none;">
+                                <li><a href="{% url 'nucleo:alta_empleado' %}">Crear Empleado</a></li>
+                                <li><a href="{% url 'nucleo:modificar_borrar_empleado' %}">Actualizar/Borrar Empleado</a></li>
+                                <li><a href="{% url 'nucleo:ver_empleados' %}">Ver Empleados</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#">Gestión tipo Licencias</a>
+                            <ul class="submenu-list" style="display: none;">
+                                <li><a href="{% url 'nucleo:alta_tipo_licencia' %}">Crear Licencia</a></li>
+                                <li><a href="{% url 'nucleo:modificar_borrar_licencia' %}">Modificar/Borrar Licencia</a></li>
+                                <li><a href="{% url 'nucleo:ver_tipo_licencia' %}">Ver tipo Licencias</a></li>
+                            </ul>
+                        </li>
+                        <li class="submenu">
+                            <a href="#">Gestión Feriados</a>
+                            <ul class="submenu-list" style="display: none;">
+                                <li><a href="{% url 'nucleo:alta_feriado' %}">Crear Feriado</a></li>
+                                <li><a href="{% url 'nucleo:modificar_borrar_feriado' %}">Modificar/Borrar Feriado</a></li>
+                                <li><a href="{% url 'nucleo:ver_feriados' %}">Ver Feriados</a></li>
+                            </ul>
+                        </li>
+                        <li><a href="{% url 'nucleo:generar_vacaciones' %}">Generar Vacaciones</a></li>
+                        <li><a href="{% url 'nucleo:log_auditoria' %}">Log Auditoria</a></li>
+                        <li><a href="{% url 'nucleo:mi_perfil' %}">Mi Perfil</a></li>
+                    {% else %} {# Empleado #}
+                        <li><a href="{% url 'nucleo:dashboard_empleado' %}">Dashboard</a></li>
+                        <li><a href="{% url 'nucleo:solicitar_licencia' %}">Solicitar Licencias</a></li>
+                        <li><a href="{% url 'nucleo:consultar_licencia' %}">Mis Licencias</a></li>
+                        {% if empleado_id %}
+                            <li><a href="{% url 'nucleo:emitir_certificado' empleado_id %}">Emitir certificado</a></li>
+                        {% endif %}
+                            <li><a href="{% url 'nucleo:mi_perfil' %}">Mi Perfil</a></li>
+                    {% endif %}
+                {% endwith %}
+                <li>
+                    <a href="#" id="logout-btn">Cerrar Sesión</a>
+                </li>
+                <!-- marker removed -->
+            {% endif %}
+        </ul>
+    </div>
+    <div class="main-content">
+        {% block main %}
+        {% endblock %}
+    </div>
+
+    <!-- Modal de confirmación de logout -->
+    <div id="logout-modal" style="display:none;">
+        <div class="logout-modal-content">
+            <p>Está a punto de cerrar sesión. ¿Desea continuar?</p>
+            <button id="confirm-logout">Sí</button>
+            <button id="cancel-logout">No</button>
+        </div>
+    </div>
+    <form id="logout-form" method="post" action="{% url 'nucleo:logout' %}" style="display:none;">
+        {% csrf_token %}
+    </form>
+
+
+    <script>
+        document.getElementById('logout-btn').onclick = function(e) {
+            e.preventDefault();
+            document.getElementById('logout-modal').style.display = 'flex';
+        };
+        document.getElementById('cancel-logout').onclick = function() {
+            document.getElementById('logout-modal').style.display = 'none';
+        };
+        document.getElementById('confirm-logout').onclick = function() {
+            window.__logout_in_progress = true;
+            document.getElementById('logout-form').submit();
+        };
+        window.addEventListener('beforeunload', function(e) {
+            if (!window.__logout_in_progress) {
+                window.location.href = "{% url 'nucleo:login' %}?logout_modal=1";
+            }
+        });
+        window.addEventListener("pageshow", function(event) {
+            if (
+                (event.persisted || (window.performance && window.performance.getEntriesByType("navigation")[0].type === "back_forward")) &&
+                window.location.pathname === "/login/"
+            ) {
+                window.location.replace("{% url 'nucleo:login' %}?logout_modal=1");
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

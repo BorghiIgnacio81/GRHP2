@@ -1,0 +1,4 @@
+{% load static %}
+<button type="button" {% if btn_id %}id="{{ btn_id }}"{% endif %} class="btn-excel" title="{{ title|default:'Exportar Excel' }}" {% if onclick %}onclick="{{ onclick }}"{% endif %} aria-label="{{ title|default:'Exportar Excel' }}" style="border:none;background:transparent;padding:0;display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:8px;">
+  <img src="{% static 'nucleo/icons/excel-descargar-icon.ico' %}" alt="{{ title|default:'Excel' }}" class="excel-icon" style="width:90%;height:90%;object-fit:contain;display:block;">
+</button>

@@ -1,0 +1,114 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Cache-Control" content="no-store" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+  <title>Ingreso a GRHP</title>
+  <link rel="stylesheet" href="{% static 'nucleo/css/login.css' %}">
+  <script src="{% static 'nucleo/js/modules/login.js' %}?v=20251011-modularized"></script>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-left">
+            <div style="margin-bottom:30px;"></div>
+            <div class="login-title">Ingreso a GRHP</div>
+            <div class="login-sub">Ingrese usuario y contraseña</div>
+            <form method="post">
+                {% csrf_token %}
+                <div class="input-group">
+                    <input class="login-input" type="text" name="username" placeholder="Usuario" required autocomplete="off">
+                </div>
+                <div class="input-group">
+                    <input class="login-input" type="password" name="password" placeholder="Password" required autocomplete="off">
+                </div>
+        {% if error_message %}
+          <p class="login-error">{{ error_message }}</p>
+        {% endif %}
+        {% if blocked_message %}
+          <p class="login-error">{{ blocked_message }}</p>
+        {% endif %}
+                <button class="login-btn" type="submit">Ingrese</button>
+            </form>
+            <div class="forgot">
+                Olvidó su contraseña? <a href="{% url 'nucleo:password_reset' %}">Enviar mail</a>
+            </div>
+        </div>
+        <div class="login-right">
+            <div class="logo-bg-square">
+                <img src="{% static 'nucleo/icons/GRHP.png' %}" alt="GRHP Logo" class="grhp-logo-img">
+            </div>
+        </div>
+    </div>
+    {% if show_logout_modal %}
+    <div id="logout-modal" class="modal-overlay" style="display:flex;">
+      <div class="modal">
+        <p>Está a punto de cerrar sesión con el usuario <b>{{ current_user.username }}</b>. ¿Desea continuar?</p>
+        <button id="confirm-logout">Sí</button>
+        <button id="cancel-logout">No</button>
+      </div>
+    </div>
+    <form id="logout-form" method="post" action="{% url 'nucleo:logout' %}" style="display:none;">
+      {% csrf_token %}
+    </form>
+    {% endif %}
+
+    {% if blocked_message %}
+    <div id="blocked-modal" class="modal-overlay" style="display:flex;">
+      <div class="modal">
+        <p style="white-space:pre-wrap;">{{ blocked_message }}</p>
+        <button id="blocked-ok">OK</button>
+      </div>
+    </div>
+    {% endif %}
+    {% if show_block_modal %}
+    <div id="block-modal" class="modal-overlay" style="display:flex;">
+      <div class="modal">
+        <p>Ha excedido el número máximo de intentos de inicio de sesión.</p>
+        <p>Por seguridad, su acceso ha sido temporalmente bloqueado.</p>
+        <p>Si necesita recuperar su contraseña, puede usar el siguiente enlace:</p>
+        <button id="block-reset-password">Recuperar Contraseña</button>
+        <button id="block-ok">OK</button>
+      </div>
+    </div>
+    {% endif %}
+    {% if password_reset_success %}
+    <div id="success-modal" class="modal-overlay" style="display:flex;">
+      <div class="modal">
+        <p>Contraseña nueva enviada al email del usuario</p>
+        <button id="success-ok">OK</button>
+      </div>
+    </div>
+    {% endif %}
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginConfig = {
+            urls: {
+                login: "{% url 'nucleo:login' %}",
+                loginWithLogoutModal: "{% url 'nucleo:login' %}?logout_modal=1",
+                logout: "{% url 'nucleo:logout' %}",
+                passwordReset: "{% url 'nucleo:password_reset' %}",
+                dashboardGestor: "{% url 'nucleo:dashboard_gestor' %}",
+                dashboardEmpleado: "{% url 'nucleo:dashboard_empleado' %}"
+            },
+            user: {
+                isStaff: {% if current_user and current_user.is_staff %}true{% else %}false{% endif %}
+            },
+            flags: {
+                isAuthenticated: {% if request.user.is_authenticated %}true{% else %}false{% endif %},
+                showLogoutModal: {% if show_logout_modal %}true{% else %}false{% endif %},
+                blockedMessage: {% if blocked_message %}true{% else %}false{% endif %},
+                showBlockModal: {% if show_block_modal %}true{% else %}false{% endif %},
+                passwordResetSuccess: {% if password_reset_success %}true{% else %}false{% endif %}
+            }
+        };
+        if (typeof initLoginModule === 'function') {
+            initLoginModule(loginConfig);
+        }
+    });
+    </script>
+</body>
+</html>

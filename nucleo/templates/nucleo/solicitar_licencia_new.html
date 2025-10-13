@@ -1,0 +1,215 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/solicitar_licencia.css' %}">
+{% endblock %}
+{% block main %}
+<div class="solicitar-licencia-container">
+    <form method="post" enctype="multipart/form-data" class="solicitar-licencia-form" id="licencia-form">
+        {% csrf_token %}
+        <h2>Solicitar licencia</h2>
+        <div class="form-inner-box">
+            <div class="form-group">
+                <label for="id_licencia">Tipo de licencia</label>
+                <select name="id_licencia" id="id_licencia" required onchange="onTipoLicenciaChange()">
+                    <option value="">Seleccione...</option>
+                    {% for licencia in tipos_licencia %}
+                        <option value="{{ licencia.id_licencia }}">{{ licencia.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <!-- Tablita solo para vacaciones -->
+            <div id="vacaciones-info" style="display:none;">
+                <table class="vacaciones-table" id="vacaciones-table-client">
+                    <thead>
+                        <tr>
+                            <th>Año</th>
+                            <th>Días Otorgados</th>
+                            <th>Días Consumidos</th>
+                            <th>Días Disponibles</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Filas renderizadas por JS desde vacacionesInfo.periods -->
+                    </tbody>
+                </table>
+            </div>
+            <!-- Label solo para otras licencias -->
+            <div class="form-group" id="dias-disponibles-group" style="display:none;">
+                <label><b>Días disponibles:</b> <span id="dias-disponibles-span"></span></label>
+            </div>
+            <div class="form-group fechas-group">
+                <div class="fecha-desde">
+                    <label for="fecha_desde">Fecha Desde</label>
+                    <input type="date" name="fecha_desde" id="fecha_desde" required>
+                </div>
+                <div class="fecha-hasta">
+                    <label for="fecha_hasta">Fecha Hasta</label>
+                    <input type="date" name="fecha_hasta" id="fecha_hasta" required>
+                    <div id="fecha-hasta-error" class="field-errors" style="display: none;"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="comentario">Comentarios</label>
+                <textarea name="comentario" id="comentario" rows="2" maxlength="200"></textarea>
+            </div>
+            <div class="form-group" id="adjuntar-archivo-group">
+                <label for="archivo">Adjuntar Certificado</label>
+                <input type="file" name="archivo" id="archivo" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+            </div>
+        </div>
+        <div class="form-actions">
+            <button type="submit" class="btn-solicitar">Solicitar</button>
+        </div>
+    </form>
+    {% if mensaje_exito %}
+    <div style="margin-top:18px;text-align:center;color:green;font-weight:bold;">
+        {{ mensaje_exito|safe }}
+        {% if mensaje_advertencia %}<br><span style="color:orange;">{{ mensaje_advertencia|safe }}</span>{% endif %}
+    </div>
+    {% endif %}
+    {% if mensaje_advertencia and not mensaje_exito %}
+    <div style="margin-top:10px;text-align:center;color:orange;font-weight:bold;">
+        {{ mensaje_advertencia|safe }}
+    </div>
+    {% endif %}
+    {% if mensaje_error %}
+    <div style="margin-top:10px;text-align:center;color:red;font-weight:bold;">
+        {{ mensaje_error|safe }}
+    </div>
+    {% endif %}
+</div>
+<script>
+const diasPorLicencia = {{ dias_por_licencia|safe }};
+const vacacionesInfo = {{ vacaciones_info_json|safe }};
+const year = {{ year|default:"null" | safe }};
+const currAvailable = {{ curr_available|default:0 }};
+const currConsumed = {{ curr_consumed|default:0 }};
+const currDiff = {{ curr_diff|default:0 }};
+const prevDiff = {{ prev_diff|default:0 }};
+const feriados = [{% for f in feriados %}"{{ f.fecha|date:'Y-m-d' }}",{% endfor %}];
+
+function onTipoLicenciaChange() {
+    const select = document.getElementById('id_licencia');
+    const licenciaSeleccionada = select.options[select.selectedIndex].text.trim().toLowerCase();
+    const vacacionesDiv = document.getElementById('vacaciones-info');
+    const diasDisponiblesGroup = document.getElementById('dias-disponibles-group');
+    const diasDisponiblesSpan = document.getElementById('dias-disponibles-span');
+    const adjuntarArchivo = document.getElementById('adjuntar-archivo-group');
+    
+    document.querySelectorAll('.form-inner-box input, .form-inner-box textarea, .form-inner-box button').forEach(el => el.disabled = false);
+
+    if (licenciaSeleccionada === "vacaciones") {
+        vacacionesDiv.style.display = "block";
+        diasDisponiblesGroup.style.display = "none";
+        adjuntarArchivo.style.display = "none";
+        renderVacacionesTable();
+    } else if (select.value) {
+        vacacionesDiv.style.display = "none";
+        diasDisponiblesGroup.style.display = "block";
+        adjuntarArchivo.style.display = "block";
+        const diasVal = diasPorLicencia[select.value];
+        if (diasVal === null || typeof diasVal === 'undefined') {
+            diasDisponiblesSpan.textContent = 'Libre';
+        } else {
+            diasDisponiblesSpan.textContent = diasVal || '';
+        }
+    } else {
+        vacacionesDiv.style.display = "none";
+        diasDisponiblesGroup.style.display = "none";
+        adjuntarArchivo.style.display = "block";
+    }
+    
+    document.getElementById('fecha_hasta').value = "";
+}
+
+function renderVacacionesTable() {
+    const table = document.getElementById('vacaciones-table-client');
+    if (!table) return;
+    const tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+    
+    const periods = (vacacionesInfo && vacacionesInfo.periods) ? vacacionesInfo.periods : [];
+    const byYear = {};
+    
+    periods.forEach(p => {
+        const anio = p.anio || (new Date(p.inicio_consumo)).getFullYear();
+        const otorg = (p.dias_otorgados != null) ? p.dias_otorgados : ((p.dias_disponibles || 0) + (p.dias_consumidos || 0));
+        const consum = p.dias_consumidos || 0;
+        const disponRest = (typeof p.dias_disponibles_rest !== 'undefined') ? p.dias_disponibles_rest : Math.max((p.dias_disponibles || 0) - consum, 0);
+        
+        if (!byYear[anio]) byYear[anio] = {anio: anio, dias_otorgados: 0, dias_consumidos: 0, dias_disponibles: 0};
+        byYear[anio].dias_otorgados += otorg;
+        byYear[anio].dias_consumidos += consum;
+        byYear[anio].dias_disponibles += disponRest;
+    });
+
+    const rowsAll = Object.values(byYear);
+    const rows = rowsAll.filter(y => (y.dias_disponibles || 0) !== 0 || y.anio === (new Date()).getFullYear());
+    rows.sort((a,b) => a.anio - b.anio);
+
+    rows.forEach(row => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${row.anio}</td>
+            <td>${row.dias_otorgados}</td>
+            <td>${row.dias_consumidos}</td>
+            <td>${row.dias_disponibles}</td>
+        `;
+        tbody.appendChild(tr);
+    });
+}
+
+function actualizarFechaHasta() {
+    const fechaDesde = document.getElementById('fecha_desde').value;
+    const fechaHastaInput = document.getElementById('fecha_hasta');
+    const select = document.getElementById('id_licencia');
+    
+    if (!fechaDesde) {
+        fechaHastaInput.value = "";
+        fechaHastaInput.removeAttribute('min');
+        fechaHastaInput.removeAttribute('max');
+        return;
+    }
+
+    const dias = diasPorLicencia[select.value];
+    if (dias && !isNaN(dias)) {
+        // Autocompletar para licencias con días específicos
+        const desde = new Date(fechaDesde);
+        desde.setDate(desde.getDate() + dias - 1);
+        const yyyy = desde.getFullYear();
+        const mm = String(desde.getMonth() + 1).padStart(2, '0');
+        const dd = String(desde.getDate()).padStart(2, '0');
+        fechaHastaInput.value = `${yyyy}-${mm}-${dd}`;
+        fechaHastaInput.min = fechaDesde;
+        fechaHastaInput.max = `${yyyy}-${mm}-${dd}`;
+    } else {
+        // Licencia libre o vacaciones
+        const minHasta = new Date(fechaDesde);
+        minHasta.setDate(minHasta.getDate() + 1);
+        const minY = minHasta.getFullYear();
+        const minM = String(minHasta.getMonth() + 1).padStart(2, '0');
+        const minD = String(minHasta.getDate()).padStart(2, '0');
+        fechaHastaInput.min = `${minY}-${minM}-${minD}`;
+        fechaHastaInput.removeAttribute('max');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    onTipoLicenciaChange();
+    
+    document.getElementById('id_licencia').addEventListener('change', function() {
+        onTipoLicenciaChange();
+        actualizarFechaHasta();
+    });
+    
+    document.getElementById('fecha_desde').addEventListener('change', actualizarFechaHasta);
+    
+    document.getElementById('fecha_desde').addEventListener('input', function() {
+        if (feriados.includes(this.value)) {
+            alert("La fecha seleccionada es un feriado.");
+        }
+    });
+});
+</script>
+{% endblock %}

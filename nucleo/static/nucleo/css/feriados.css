@@ -1,0 +1,119 @@
+.feriado-box {
+    width: 400px;
+    max-width: 95vw;
+    position: absolute;
+    top: 40px;
+    left: 260px;
+    background: #f7fbff;
+    border: 2px solid #1976d2;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px 0 rgba(25, 118, 210, 0.13), 0 1.5px 4px 0 rgba(25, 118, 210, 0.10);
+    padding: 24px 24px 18px 24px;
+    z-index: 10;
+}
+
+.feriado-titulo {
+    text-align: center;
+    margin-bottom: 16px;
+    color: #1976d2;
+    font-weight: 700;
+    font-size: 1.3rem;
+    border-bottom: 2px solid #1976d2;
+    padding-bottom: 8px;
+}
+
+.form-alta-feriado {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.form-alta-feriado label {
+    font-weight: 500;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.form-alta-feriado input[type="text"],
+.form-alta-feriado input[type="date"],
+.form-alta-feriado select {
+    padding: 7px 10px;
+    border: 1.5px solid #1976d2;
+    border-radius: 6px;
+    font-size: 1rem;
+    background: #fff;
+}
+
+.botones-accion {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.btn-guardar,
+.btn-actualizar {
+    background: #2196f3;
+    color: #fff;
+    padding: 8px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.08em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-guardar:hover,
+.btn-actualizar:hover {
+    background: #1769aa;
+}
+
+.btn-borrar {
+    background: #e74c3c;
+    color: #fff;
+    padding: 8px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.08em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-borrar:hover {
+    background: #b71c1c;
+}
+
+.mensaje-exito {
+    margin-top: 18px;
+    text-align: center;
+    color: green;
+    font-weight: bold;
+}
+
+.mensaje-error {
+    margin-top: 18px;
+    text-align: center;
+    color: red;
+    font-weight: bold;
+}
+
+/* Botón verde cuando el formulario está completo */
+.btn-guardar.completo {
+    background: #43a047 !important;
+    color: #fff !important;
+}
+.btn-guardar.completo:hover {
+    background: #388e3c !important;
+}
+
+.btn-actualizar:disabled {
+    background: #bdbdbd !important;
+    color: #f5f5f5 !important;
+    cursor: not-allowed;
+    border: none;
+    opacity: 0.85;
+}

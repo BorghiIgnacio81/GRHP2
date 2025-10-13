@@ -1,0 +1,468 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/ver_empleados.css' %}?v={% now 'YmdHis' %}">
+<style>
+.historical-record {
+    background-color: #f8f9fa !important;
+    opacity: 0.8;
+}
+
+.label-historial-filtro {
+    margin-left: 15px;
+    font-weight: normal;
+    color: #333;
+}
+.label-historial-filtro input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+/* Ajustes de ancho de columnas */
+.col-direccion {
+    width: 120px !important;
+    max-width: 120px !important;
+}
+
+th.col-fecha-estado,
+.col-fecha-estado {
+    width: 110px !important;
+    max-width: 110px !important;
+}
+</style>
+{% endblock %}
+{% block main %}
+<div class="dashboard-box empleados-box">
+    <h2 class="titulo-empleados">Gestión empleados</h2>
+    <div class="barra-superior-empleados">
+        <div class="busqueda-empleado-box">
+            <input type="text" id="busqueda-empleado" name="buscar_texto"
+                   class="form-control"
+                   placeholder="Buscar por ID, Apellido o Nombre"
+                   autocomplete="off" />
+            <div id="resultados-autocomplete" class="autocomplete-dropdown"></div>
+        </div>
+        <div class="filtros-box" style="display:flex;align-items:center;gap:10px;">
+            <label>Filtrar por:</label>
+            <select id="filtro-tipo">
+                <option value="">-- ninguno --</option>
+                <option value="edad">Edad</option>
+                <option value="nacionalidad">Nacionalidad</option>
+                <option value="estado_civil">Estado Civil</option>
+                <option value="sexo">Sexo</option>
+                <option value="provincia">Provincia</option>
+                <option value="estado">Estado</option>
+                <option value="year_fecha_estado">Año/Mes Fecha Estado</option>
+            </select>
+            <div id="filtro-controles" style="display:inline-block"></div>
+            <button id="aplicar-filtro" class="btn-filter" title="Aplicar filtro">
+                Filtrar
+            </button>
+            <button id="limpiar-filtro" class="btn-filter" title="Limpiar filtro">
+                Limpiar
+            </button>
+        </div>
+        <label class="label-vista-ampliada">
+            <input type="checkbox" id="vista-ampliada" {% if vista_ampliada %}checked{% endif %}>
+            Vista Ampliada
+        </label>
+        <label class="label-historial-filtro">
+            <input type="checkbox" id="solo-estado-actual" {% if solo_estado_actual %}checked{% endif %}>
+            Solo estado/puesto actual
+        </label>
+        <div class="export-buttons-group">
+            <!-- Excel button - removing server URL to force client-side export - Updated Oct 1 2025 -->
+            <button type="button" class="btn-excel export-btn" title="Exportar Excel" data-export-target=".tabla-empleados" data-export-filename="empleados.xls" data-export-format="excel">
+                <img src="{% static 'nucleo/icons/excel-descargar-icon.ico' %}" alt="Excel" class="excel-icon-full">
+            </button>
+            <!-- PDF button -->
+            <button type="button" class="btn-pdf export-btn" title="Exportar PDF" data-export-target=".tabla-empleados" data-export-filename="empleados.pdf" data-export-format="pdf">
+                <img src="{% static 'nucleo/icons/pdf-descarga-icono.png' %}" alt="PDF" class="pdf-icon-full">
+            </button>
+        </div>
+    </div>
+    <div class="tabla-empleados-scroll">
+    <table class="tabla-licencias tabla-empleados">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>DNI</th>
+                <th>Fecha Nacimiento</th>
+                <th>Email</th>
+                <th>Puesto</th>
+                <th>Estado Civil</th>
+                <th>Sexo</th>
+                <th class="col-localidad">Localidad</th>
+                <th class="col-direccion">Dirección</th>
+                <th>Estado</th>
+                <th class="col-fecha-estado">Fecha Estado</th>
+                {% if vista_ampliada %}
+                    <th class="col-num-hijos">N° Hijos</th>
+                    <th class="col-telefono">Teléfono</th>
+                    <th class="col-cuil">CUIL</th>
+                    <th class="col-convenio">Convenio</th>
+                    <th class="col-nacionalidad">Nacionalidad</th>
+                    <th class="col-fecha-antiguedad">Fecha Antigüedad</th>
+                    <th class="col-sucursal">Sucursal Laboral</th>
+                    <th class="col-sucursal-direccion">Dirección Sucursal</th>
+                    <th class="col-pers-juridica">Persona Jurídica</th>
+                    <th class="col-domicilio-pers-juridica">Domicilio Persona Jurídica</th>
+                    <th class="col-cond-iva">Cond. IVA</th>
+                    <th class="col-cuit">CUIT</th>
+                    <th class="col-cond-iibb">Cond. IIBB</th>
+                {% endif %}
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in empleados %}
+            <tr data-id="{{ emp.idempleado_id }}" {% if emp.is_historical %}class="historical-record" title="Registro histórico - {{ emp.fecha_el|date:'Y-m-d' }}"{% endif %}>
+                <td>{{ emp.idempleado_id }}</td>
+                <td class="editable" data-campo="nombres">{{ emp.nombres }}</td>
+                <td class="editable" data-campo="apellido">{{ emp.apellido }}</td>
+                <td class="editable" data-campo="dni">{{ emp.dni }}</td>
+                <td class="editable" data-campo="fecha_nac">{{ emp.fecha_nac|date:"Y-m-d" }}</td>
+                <td class="editable" data-campo="email">{{ emp.email }}</td>
+                <td class="editable" data-campo="id_puesto" data-id="{{ emp.id_puesto }}">{{ emp.puesto }}</td>
+                <td class="editable" data-campo="id_civil" data-id="{{ emp.id_civil }}">{{ emp.civil_nombre }}</td>
+                <td class="editable" data-campo="id_sexo" data-id="{{ emp.id_sexo }}">{{ emp.sexo_nombre }}</td>
+                <td class="editable" data-campo="id_localidad" data-id="{{ emp.id_localidad }}">{{ emp.localidad_nombre }}</td>
+                <td class="editable" data-campo="dr_personal">{{ emp.dr_personal }}</td>
+                <td>{{ emp.estado }}</td>
+                <td>{% if emp.fecha_estado %}{{ emp.fecha_estado|date:"Y-m-d" }}{% endif %}</td>
+                {% if vista_ampliada %}
+                    <td class="editable">{{ emp.num_hijos }}</td>
+                    <td class="editable">{{ emp.telefono }}</td>
+                    <td class="editable">{{ emp.cuil }}</td>
+                    <td class="editable">{{ emp.convenio }}</td>
+                    <td class="editable" data-campo="id_nacionalidad" data-id="{{ emp.id_nacionalidad }}">{{ emp.nacionalidad_nombre }}</td>
+                    <td class="editable">{{ emp.fecha_antiguedad|date:"Y-m-d" }}</td>
+                    <td class="editable">{{ emp.sucursal }}</td>
+                    <td class="editable">{{ emp.suc_dire }}</td>
+                    <td class="editable">{{ emp.pers_juridica }}</td>
+                    <td class="editable">{{ emp.domicilio_pers_juridica }}</td>
+                    <td class="editable">{{ emp.cond_iva }}</td>
+                    <td class="editable">{{ emp.cuit }}</td>
+                    <td class="editable">{{ emp.cond_iibb }}</td>
+                {% endif %}
+                <td>
+                    {% if emp.idempleado_id and not emp.is_historical %}
+                        <a href="{% url 'nucleo:modificar_borrar_empleado_id' emp.idempleado_id %}" class="btn-editar" title="Editar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="#333"/></svg>
+                        </a>
+                    {% elif emp.is_historical %}
+                        <span style="color: #999; font-size: 12px;">Histórico</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </div>
+
+{% block extra_js %}
+{{ nacionalidades|json_script:"nacionalidades-json" }}
+{{ estados_civil|json_script:"estados-civil-json" }}
+{{ sexos|json_script:"sexos-json" }}
+{{ localidades|json_script:"localidades-json" }}
+{{ provincias|json_script:"provincias-json" }}
+{{ estados_empleado|json_script:"estados-empleado-json" }}
+{{ years_fecha_estado|json_script:"years-fecha-estado-json" }}
+<script src="{% static 'nucleo/js/export-utils.js' %}?v={% now 'YmdHis' %}"></script>
+<script>
+// --- Filtro en tabla en vivo ---
+document.addEventListener('DOMContentLoaded', function() {
+    const input = document.getElementById('busqueda-empleado');
+    const tbody = document.querySelector('.tabla-empleados tbody');
+    let timeout = null;
+
+    const normalizeResponse = (payload) => {
+        if (Array.isArray(payload)) {
+            return payload;
+        }
+        if (payload && Array.isArray(payload.empleados)) {
+            return payload.empleados;
+        }
+        return [];
+    };
+
+    input.addEventListener('input', function() {
+        clearTimeout(timeout);
+        const q = input.value.trim();
+        timeout = setTimeout(function() {
+            const vistaAmpliada = document.getElementById('vista-ampliada')?.checked ? '1' : '';
+            const soloEstadoActual = document.getElementById('solo-estado-actual')?.checked ? '1' : '';
+            let url = "{% url 'nucleo:buscar_empleados_ajax' %}?q=" + encodeURIComponent(q);
+            if (vistaAmpliada) url += '&vista_ampliada=1';
+            if (soloEstadoActual) url += '&solo_estado_actual=1';
+            
+            fetch(url, { credentials: 'same-origin' })
+                .then(response => {
+                    if (!response.ok) {
+                        console.error('buscar_empleados_ajax failed', response.status);
+                        return [];
+                    }
+                    return response.json().catch(e => { console.error('Invalid JSON from buscar_empleados_ajax', e); return []; });
+                })
+                .then(function(data) {
+                    const results = normalizeResponse(data);
+                    let html = '';
+                    if (results.length === 0) {
+                        html = '<tr><td colspan="100%" style="text-align:center;color:#888;">No hay resultados</td></tr>';
+                    } else {
+                        html = results.map(emp => `
+                            <tr data-id="${emp.idempleado_id || emp.id || ''}">
+                                <td class="col-id">${emp.idempleado_id || emp.id || ''}</td>
+                                <td class="editable col-nombres" data-campo="nombres">${emp.nombres || emp.nombre || ''}</td>
+                                <td class="editable col-apellido" data-campo="apellido">${emp.apellido || ''}</td>
+                                <td class="editable col-dni" data-campo="dni">${emp.dni || ''}</td>
+                                <td class="editable col-fecha-nac" data-campo="fecha_nac">${emp.fecha_nac || ''}</td>
+                                <td class="editable col-email" data-campo="email">${emp.email || ''}</td>
+                                <td class="editable col-puesto" data-campo="id_puesto" data-id="${emp.id_puesto || ''}">${emp.puesto || ''}</td>
+                                <td class="editable col-estado-civil" data-campo="id_civil" data-id="${emp.id_civil || ''}">${emp.civil_nombre || ''}</td>
+                                <td class="editable col-sexo" data-campo="id_sexo" data-id="${emp.id_sexo || ''}">${emp.sexo_nombre || ''}</td>
+                                <td class="editable col-localidad" data-campo="id_localidad" data-id="${emp.id_localidad || ''}">${emp.localidad_nombre || ''}</td>
+                                <td class="editable col-direccion" data-campo="dr_personal">${emp.dr_personal || ''}</td>
+                                <td class="col-estado">${emp.estado || ''}</td>
+                                <td class="col-fecha-estado">${emp.fecha_estado || ''}</td>
+                                <td class="col-acciones">
+                                    ${!emp.is_historical ? `<a href="/nucleo/empleados/modificar/${emp.idempleado_id || emp.id || ''}/" class="btn-editar" title="Editar">
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="#333"/></svg>
+                                    </a>` : '<span style="color: #999; font-size: 12px;">Histórico</span>'}
+                                </td>
+                            </tr>
+                        `).join('');
+                    }
+                    tbody.innerHTML = html;
+                });
+        }, 200);
+    });
+
+    // filtros
+    const filtroTipo = document.getElementById('filtro-tipo');
+    const filtroControles = document.getElementById('filtro-controles');
+    const aplicarFiltroBtn = document.getElementById('aplicar-filtro');
+    const limpiarFiltroBtn = document.getElementById('limpiar-filtro');
+
+    const nacionalidades = JSON.parse(document.getElementById('nacionalidades-json').textContent || '[]');
+    const estadosCivil = JSON.parse(document.getElementById('estados-civil-json').textContent || '[]');
+    const sexos = JSON.parse(document.getElementById('sexos-json').textContent || '[]');
+    const localidades = JSON.parse(document.getElementById('localidades-json').textContent || '[]');
+    const provincias = JSON.parse(document.getElementById('provincias-json').textContent || '[]');
+    const estadosEmpleado = JSON.parse(document.getElementById('estados-empleado-json').textContent || '[]');
+    const yearsFechaEstado = JSON.parse(document.getElementById('years-fecha-estado-json').textContent || '[]');
+
+    function buildSelect(options, valueKey, labelKey, id) {
+        const sel = document.createElement('select');
+        sel.id = id || '';
+        sel.className = 'form-control';
+        const empty = document.createElement('option'); empty.value=''; empty.text='--'; sel.appendChild(empty);
+        options.forEach(opt => {
+            const o = document.createElement('option');
+            o.value = opt[valueKey]; o.text = opt[labelKey]; sel.appendChild(o);
+        });
+        return sel;
+    }
+
+    filtroTipo.addEventListener('change', function() {
+        filtroControles.innerHTML = '';
+        const v = this.value;
+        if (v === 'edad') {
+            const desde = document.createElement('input'); desde.type='number'; desde.id='edad-desde'; desde.placeholder='Desde'; desde.className='form-control';
+            const hasta = document.createElement('input'); hasta.type='number'; hasta.id='edad-hasta'; hasta.placeholder='Hasta'; hasta.className='form-control';
+            filtroControles.appendChild(desde); filtroControles.appendChild(hasta);
+        } else if (v === 'nacionalidad') {
+            const sel = buildSelect(nacionalidades, 'id', 'nacionalidad', 'nacionalidad-id'); filtroControles.appendChild(sel);
+        } else if (v === 'estado_civil') {
+            const sel = buildSelect(estadosCivil, 'id', 'estado_civil', 'estado-civil-id'); filtroControles.appendChild(sel);
+        } else if (v === 'sexo') {
+            const sel = buildSelect(sexos, 'id', 'sexo', 'sexo-id'); filtroControles.appendChild(sel);
+        } else if (v === 'provincia') {
+            const selProv = buildSelect(provincias, 'id', 'provincia', 'provincia-id');
+            let selLoc = null;
+
+            selProv.addEventListener('change', function() {
+                const pid = this.value;
+
+                if (!pid) {
+                    if (selLoc && selLoc.parentElement) {
+                        selLoc.parentElement.removeChild(selLoc);
+                    }
+                    selLoc = null;
+                    return;
+                }
+
+                if (!selLoc) {
+                    selLoc = document.createElement('select');
+                    selLoc.id = 'localidad-id';
+                    selLoc.className = 'form-control';
+                }
+
+                selLoc.innerHTML = '<option value="">--</option>';
+                localidades
+                    .filter(l => String(l.provincia_id) === String(pid))
+                    .forEach(l => {
+                        const o = document.createElement('option');
+                        o.value = l.id;
+                        o.text = l.localidad;
+                        selLoc.appendChild(o);
+                    });
+
+                if (!selLoc.parentElement) {
+                    filtroControles.appendChild(selLoc);
+                }
+            });
+
+            filtroControles.appendChild(selProv);
+        } else if (v === 'estado') {
+            const sel = buildSelect(estadosEmpleado, 'id_estado', 'estado', 'estado-emp-id'); filtroControles.appendChild(sel);
+        } else if (v === 'year_fecha_estado') {
+            // Year + Month selector for Año/Mes Fecha Estado
+            const selYear = document.createElement('select'); selYear.id='year-fecha-estado'; selYear.className='form-control'; selYear.innerHTML='<option value="">--</option>';
+            yearsFechaEstado.forEach(y=>{ const o=document.createElement('option'); o.value=y; o.text=y; selYear.appendChild(o)});
+            const selMonth = document.createElement('select'); selMonth.id='month-fecha-estado'; selMonth.className='form-control'; selMonth.innerHTML = '<option value="">--</option>';
+            const months = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+            months.forEach((m,i)=>{ const o=document.createElement('option'); o.value=(i+1); o.text=m; selMonth.appendChild(o)});
+            filtroControles.appendChild(selYear);
+            filtroControles.appendChild(selMonth);
+        }
+    });
+
+    function applyFilters() {
+        const params = new URLSearchParams();
+        const q = input.value.trim(); if (q) params.set('q', q);
+        const tipo = filtroTipo.value; if (tipo) params.set('filtro', tipo);
+        
+        // Agregar parámetros de vista
+        const vistaAmpliada = document.getElementById('vista-ampliada')?.checked;
+        const soloEstadoActual = document.getElementById('solo-estado-actual')?.checked;
+        if (vistaAmpliada) params.set('vista_ampliada', '1');
+        if (soloEstadoActual) params.set('solo_estado_actual', '1');
+        
+        if (tipo === 'edad') {
+            const d = document.getElementById('edad-desde')?.value; const h = document.getElementById('edad-hasta')?.value;
+            if (d) params.set('edad_desde', d);
+            if (h) params.set('edad_hasta', h);
+        } else if (tipo === 'nacionalidad') {
+            const v = document.getElementById('nacionalidad-id')?.value; if (v) params.set('nacionalidad_id', v);
+        } else if (tipo === 'estado_civil') {
+            const v = document.getElementById('estado-civil-id')?.value; if (v) params.set('estado_civil_id', v);
+        } else if (tipo === 'sexo') {
+            const v = document.getElementById('sexo-id')?.value; if (v) params.set('sexo_id', v);
+        } else if (tipo === 'provincia') {
+            const v = document.getElementById('provincia-id')?.value; const l = document.getElementById('localidad-id')?.value; if (v) params.set('provincia_id', v); if (l) params.set('localidad_id', l);
+        } else if (tipo === 'estado') {
+            const v = document.getElementById('estado-emp-id')?.value; if (v) params.set('estado_emp_id', v);
+        } else if (tipo === 'year_fecha_estado') {
+            const vy = document.getElementById('year-fecha-estado')?.value; if (vy) params.set('year_fecha_estado', vy);
+            const vm = document.getElementById('month-fecha-estado')?.value; if (vm) params.set('mes_fecha_estado', vm);
+        }
+        fetch("{% url 'nucleo:buscar_empleados_ajax' %}?" + params.toString(), { credentials: 'same-origin' })
+            .then(r => {
+                if (!r.ok) { console.error('buscar_empleados_ajax failed', r.status); return []; }
+                return r.json().catch(e=>{ console.error('Invalid JSON from buscar_empleados_ajax', e); return []; });
+            })
+            .then(data => { renderRows(data); }).catch(e=>{ console.error('fetch error', e); });
+    }
+
+    aplicarFiltroBtn.addEventListener('click', applyFilters);
+    limpiarFiltroBtn.addEventListener('click', function(){ filtroTipo.value=''; filtroControles.innerHTML=''; input.value=''; fetch("{% url 'nucleo:buscar_empleados_ajax' %}", { credentials: 'same-origin' }).then(r => { if (!r.ok) { console.error('buscar_empleados_ajax failed', r.status); return []; } return r.json().catch(e=>{ console.error('Invalid JSON from buscar_empleados_ajax', e); return []; }); }).then(data=>{ renderRows(data); }).catch(e=>{ console.error('fetch error', e); }); });
+
+    function buildRow(emp){
+        // Build a row that matches the server-rendered table structure so that
+        // replacing tbody doesn't alter overall layout. Include email and the
+        // basic columns; if the page is in "vista ampliada" mode, add the
+        // expanded columns dynamically based on the checkbox state.
+        const va = (document.getElementById('vista-ampliada') || {}).checked;
+        const isHistorical = emp.is_historical || false;
+        const historicalClass = isHistorical ? ' class="historical-record"' : '';
+        const historicalTitle = isHistorical ? ` title="Registro histórico - ${emp.fecha_el || ''}"` : '';
+        
+        let row = `
+            <tr data-id="${emp.idempleado_id || emp.id || ''}"${historicalClass}${historicalTitle}>
+                <td class="col-id">${emp.idempleado_id || emp.id || ''}</td>
+                <td class="editable col-nombres" data-campo="nombres">${emp.nombres || emp.nombre || ''}</td>
+                <td class="editable col-apellido" data-campo="apellido">${emp.apellido || ''}</td>
+                <td class="editable col-dni" data-campo="dni">${emp.dni || ''}</td>
+                <td class="editable col-fecha-nac" data-campo="fecha_nac">${emp.fecha_nac || ''}</td>
+                <td class="editable col-email" data-campo="email">${emp.email || ''}</td>
+                <td class="editable col-puesto" data-campo="id_puesto" data-id="${emp.id_puesto || ''}">${emp.puesto || ''}</td>
+                <td class="editable col-estado-civil" data-campo="id_civil" data-id="${emp.id_civil || ''}">${emp.civil_nombre || ''}</td>
+                <td class="editable col-sexo" data-campo="id_sexo" data-id="${emp.id_sexo || ''}">${emp.sexo_nombre || ''}</td>
+                <td class="editable col-localidad" data-campo="id_localidad" data-id="${emp.id_localidad || ''}">${emp.localidad_nombre || ''}</td>
+                <td class="editable col-direccion" data-campo="dr_personal">${emp.dr_personal || ''}</td>
+                <td class="col-estado">${emp.estado || ''}</td>
+                <td class="col-fecha-estado">${emp.fecha_estado || ''}</td>
+        `;
+        if (va) {
+            // append placeholders for the expanded columns - serverside may
+            // return additional fields, but ensure the same number/order of
+            // cells to preserve table layout.
+            row += `
+                    <td class="col-num-hijos">${emp.num_hijos || ''}</td>
+                    <td class="col-telefono">${emp.telefono || ''}</td>
+                    <td class="col-cuil">${emp.cuil || ''}</td>
+                    <td class="col-convenio">${emp.convenio || ''}</td>
+                    <td class="col-nacionalidad">${emp.nacionalidad_nombre || ''}</td>
+                    <td class="col-fecha-antiguedad">${emp.fecha_antiguedad || ''}</td>
+                    <td class="col-sucursal">${emp.sucursal || ''}</td>
+                    <td class="col-sucursal-direccion">${emp.suc_dire || ''}</td>
+                    <td class="col-pers-juridica">${emp.pers_juridica || ''}</td>
+                    <td class="col-domicilio-pers-juridica">${emp.domicilio_pers_juridica || ''}</td>
+                    <td class="col-cond-iva">${emp.cond_iva || ''}</td>
+                    <td class="col-cuit">${emp.cuit || ''}</td>
+                    <td class="col-cond-iibb">${emp.cond_iibb || ''}</td>
+            `;
+        }
+        row += `
+                <td class="col-acciones">
+                    ${!isHistorical ? `<a href="/nucleo/empleados/modificar/${emp.idempleado_id || emp.id || ''}/" class="btn-editar" title="Editar">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="#333"/></svg>
+                    </a>` : '<span style="color: #999; font-size: 12px;">Histórico</span>'}
+                </td>
+            </tr>`;
+        return row;
+    }
+
+    function renderRows(data){
+        const rows = normalizeResponse(data);
+        let html = '';
+        if (!rows || rows.length === 0) html = '<tr><td colspan="30" style="text-align:center;color:#888;">No hay resultados</td></tr>';
+        else html = rows.map(emp => buildRow(emp)).join('');
+        tbody.innerHTML = html;
+    }
+
+
+    // --- Vista ampliada ---
+    const vistaAmpliadaCheckbox = document.getElementById('vista-ampliada');
+    if (vistaAmpliadaCheckbox) {
+        vistaAmpliadaCheckbox.addEventListener('change', function() {
+            const url = new URL(window.location.href);
+            if (this.checked) {
+                url.searchParams.set('vista_ampliada', '1');
+            } else {
+                url.searchParams.delete('vista_ampliada');
+            }
+            window.location.href = url.toString();
+        });
+    }
+
+    // --- Solo estado/puesto actual ---
+    const soloEstadoActualCheckbox = document.getElementById('solo-estado-actual');
+    if (soloEstadoActualCheckbox) {
+        soloEstadoActualCheckbox.addEventListener('change', function() {
+            const url = new URL(window.location.href);
+            if (this.checked) {
+                url.searchParams.set('solo_estado_actual', '1');
+            } else {
+                url.searchParams.delete('solo_estado_actual');
+            }
+            window.location.href = url.toString();
+        });
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

@@ -1,0 +1,51 @@
+ {% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/feriados.css' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box feriado-box">
+    <h2 class="feriado-titulo">Alta nuevo Feriado</h2>
+    <form method="post" class="form-alta-feriado">
+        {% csrf_token %}
+        <label>Nombre de Feriado
+            <input type="text" name="descripcion" required value="{{ descripcion }}">
+        </label>
+        <label>Fecha
+            <input type="date" name="fecha" required value="{{ fecha }}">
+        </label>
+        <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+    {% if mensaje_exito %}
+    <div class="mensaje-exito">
+        {{ mensaje_exito }}
+    </div>
+    {% endif %}
+    {% if mensaje_error %}
+    <div class="mensaje-error">
+        {{ mensaje_error }}
+    </div>
+    {% endif %}
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nombre = document.querySelector('input[name="descripcion"]');
+    const fecha = document.querySelector('input[name="fecha"]');
+    const btn = document.querySelector('.btn-guardar');
+
+    function checkCompleto() {
+        if (nombre.value.trim() && fecha.value.trim()) {
+            btn.classList.add('completo');
+        } else {
+            btn.classList.remove('completo');
+        }
+    }
+
+    if (nombre && fecha && btn) {
+        nombre.addEventListener('input', checkCompleto);
+        fecha.addEventListener('input', checkCompleto);
+        checkCompleto();
+    }
+});
+</script>
+{% endblock %}

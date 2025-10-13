@@ -1,0 +1,90 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/mi_perfil.css' %}">
+{% endblock %}
+{% block main %}
+<div class="mi-perfil-container">
+    {% if perfil %}
+    <h2 class="perfil-title">Perfil de {{ perfil.nombres }} {{ perfil.apellido }}</h2>
+    <div class="perfil-card">
+        <!-- Datos Personales (title) -->
+        <div class="perfil-section" style="padding:14px;">
+            <h3 style="margin-top:0;margin-bottom:8px;">Datos Personales</h3>
+            <!-- 1: nombre, apellido -->
+            <div class="perfil-row two">
+                <div class="field"><span class="label">Nombres</span><span class="value">{{ perfil.nombres|default:'-' }}</span></div>
+                <div class="field"><span class="label">Apellidos</span><span class="value">{{ perfil.apellido|default:'-' }}</span></div>
+            </div>
+            <!-- 2: DNI, Fecha Nacimiento -->
+            <div class="perfil-row two">
+                <div class="field"><span class="label">DNI</span><span class="value small">{{ perfil.dni_masked|default:perfil.dni|default:'-' }}</span></div>
+                <div class="field"><span class="label">Fecha Nacimiento</span><span class="value small">{% if perfil.fecha_nac %}{{ perfil.fecha_nac|date:'Y-m-d' }}{% else %}-{% endif %}</span></div>
+            </div>
+            <!-- 3: Nacionalidad, Estado Civil, Hijos, Sexo -->
+            <div class="perfil-row four">
+                <div class="field"><span class="label">Nacionalidad</span><span class="value small">{{ perfil.nacionalidad|default:'-' }}</span></div>
+                <div class="field"><span class="label">Estado Civil</span><span class="value small">{{ perfil.estado_civil|default:'-' }}</span></div>
+                <div class="field"><span class="label">Hijos</span><span class="value small">{{ perfil.num_hijos|default:'-' }}</span></div>
+                <div class="field"><span class="label">Sexo</span><span class="value small">{{ perfil.sexo|default:'-' }}</span></div>
+            </div>
+            <!-- 4: Provincia, Localidad, Direccion -->
+            <div class="perfil-row three">
+                <div class="field"><span class="label">Provincia</span><span class="value small">{{ perfil.provincia|default:'-' }}</span></div>
+                <div class="field"><span class="label">Localidad</span><span class="value small">{{ perfil.localidad|default:'-' }}</span></div>
+                <div class="field"><span class="label">Dirección Personal</span><span class="value">{{ perfil.dr_personal|default:'-' }}</span></div>
+            </div>
+            <!-- 5: Teléfono, CUIL -->
+            <div class="perfil-row two">
+                <div class="field"><span class="label">Teléfono</span><span class="value small">{{ perfil.telefono|default:'-' }}</span></div>
+                <div class="field"><span class="label">CUIL</span><span class="value small">{{ perfil.cuil_masked|default:perfil.cuil|default:'-' }}</span></div>
+            </div>
+        </div>
+
+        <!-- Datos Laborales (title) -->
+        <div class="perfil-section" style="padding:14px;">
+            <h3 style="margin-top:0;margin-bottom:8px;">Datos Laborales</h3>
+            <!-- 7: Estado, Fecha Estado, Convenio -->
+            <div class="perfil-row three">
+                <div class="field"><span class="label">Estado</span><span class="value small">{{ perfil.estado|default:'-' }}</span></div>
+                <div class="field"><span class="label">Fecha Estado</span><span class="value small">{% if perfil.fecha_est %}{{ perfil.fecha_est|date:'Y-m-d' }}{% else %}-{% endif %}</span></div>
+                <div class="field"><span class="label">Convenio</span><span class="value small">{{ perfil.convenio|default:'-' }}</span></div>
+            </div>
+            <!-- 8: Antiguedad, Puesto, Gestor -->
+            <div class="perfil-row three">
+                <div class="field"><span class="label">Antigüedad</span><span class="value small">{% if perfil.alta_ant %}{{ perfil.alta_ant|date:'Y-m-d' }}{% else %}-{% endif %}</span></div>
+                <div class="field"><span class="label">Puesto</span><span class="value">{{ perfil.puesto|default:'-' }}</span></div>
+                <div class="field"><span class="label">Gestor</span><span class="value small">{% if perfil.is_staff %}Sí{% else %}No{% endif %}</span></div>
+            </div>
+            <!-- 9: Dias y horario Laboral (title inside section) -->
+            <h4 style="margin:12px 0 6px 0; font-size:1em;">Días y horario Laboral</h4>
+            <!-- 10: L M M J V S D, horario inicio, horario fin -->
+            <div class="perfil-row days">
+                <div class="field"><span class="label">Días</span><span class="value small">{% if perfil.dias_trabajo %}{{ perfil.dias_trabajo }}{% else %}-{% endif %}</span></div>
+                <div class="field"><span class="label">Horario inicio</span><span class="value small">{% if perfil.horario_inicio %}{{ perfil.horario_inicio }}{% else %}-{% endif %}</span></div>
+                <div class="field"><span class="label">Horario fin</span><span class="value small">{% if perfil.horario_fin %}{{ perfil.horario_fin }}{% else %}-{% endif %}</span></div>
+            </div>
+        </div>
+
+        <!-- Datos Sucursal (title) -->
+        <div class="perfil-section" style="padding:14px;">
+            <h3 style="margin-top:0;margin-bottom:8px;">Datos Sucursal</h3>
+            <!-- 12: Sucursal, Direccion (de sucursal) -->
+            <div class="perfil-row two">
+                <div class="field"><span class="label">Sucursal</span><span class="value">{{ perfil.sucursal|default:'-' }}</span></div>
+                <div class="field"><span class="label">Dirección Sucursal</span><span class="value">{% if perfil.sucursal_direccion %}{{ perfil.sucursal_direccion }}{% else %}-{% endif %}</span></div>
+            </div>
+            <!-- 13: Email -->
+            <div class="perfil-row">
+                <div class="field"><span class="label">Mail</span><span class="value full-width">{{ perfil.email|default:'-' }}</span></div>
+            </div>
+        </div>
+
+    </div>
+    {% else %}
+    <div class="perfil-card">
+        <p>No se encontró información de empleado asociada a este usuario.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

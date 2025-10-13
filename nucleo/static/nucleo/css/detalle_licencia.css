@@ -1,0 +1,209 @@
+/* detalle_licencia.css - consolidated and modernized */
+
+.detalle-licencia-container {
+    /* CSS variables for quick tuning of date box heights (edited to half height) */
+    --fecha-input-height: 20px; /* height of the <input type="date"> control */
+    --fecha-container-min-height: 44px; /* minimum height of the label+input box */
+}
+
+/* Outer card */
+.detalle-licencia-container {
+    position: absolute;
+    top: 60px;
+    left: 260px;
+    width: min(780px, calc(100% - 320px));
+    min-width: 560px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 8px 18px rgba(44,62,80,0.12);
+    border: 3px solid #7ec6f7; /* celeste border */
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.detalle-licencia-title {
+    text-align: center;
+    margin: 0;
+    padding: 18px 16px 10px 16px;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.detalle-licencia-divider {
+    border: 0;
+    border-top: 1px solid rgba(0,0,0,0.12);
+    margin: 8px 0 18px 0;
+}
+
+/* Inner pale box */
+.detalle-licencia-form-box {
+    background: #e9f3fb; /* soft celeste */
+    border-radius: 6px;
+    margin: 0 16px 18px 16px;
+    padding: 16px;
+    border: 1px solid #cfe7f6;
+}
+
+.detalle-licencia-form { padding: 0; }
+
+/* Generic row */
+.detalle-licencia-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.detalle-licencia-row.fechas-group { gap: 18px; }
+.detalle-licencia-row.fechas-group > div { flex: 1 1 0; min-width: 0; display:flex; flex-direction:column; }
+
+/* Make date inputs compact (less than half the row) */
+    .detalle-licencia-form-box .detalle-licencia-row.fechas-group { gap: 18px; }
+    .detalle-licencia-form-box .detalle-licencia-row.fechas-group > div {
+        flex: 1 1 0;
+        min-width: 0;
+        display: inline-flex;
+        align-items: center; /* center label + input vertically */
+        flex-direction: row;
+        min-height: var(--fecha-container-min-height);
+        box-sizing: border-box;
+    }
+    
+    /* Make date inputs compact (less than half the row) */
+    .detalle-licencia-form-box .detalle-licencia-row.fechas-group input[type="date"] {
+        flex: 0 0 140px; /* slightly wider base */
+        max-width: 160px;
+        padding: 6px 10px !important; /* a bit more padding for comfort */
+        height: var(--fecha-input-height) !important; /* use variable */
+        line-height: var(--fecha-input-height) !important;
+        font-size: 14px !important;
+        box-sizing: border-box;
+        -webkit-appearance: none; /* remove native chrome styling */
+        appearance: none;
+        vertical-align: middle;
+        overflow: hidden;
+    }
+
+/* shrink the calendar icon if present */
+.detalle-licencia-form-box .detalle-licencia-row.fechas-group input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 18px;
+    height: 8px;
+    margin-top: 3px;
+}
+
+.detalle-licencia-row label {
+    min-width: 140px;
+    font-weight: 700;
+    color: #0f1720;
+    font-size: 1rem;
+}
+
+.detalle-licencia-row select,
+.detalle-licencia-row input[type="date"],
+.detalle-licencia-row textarea {
+    flex: 1 1 160px;
+    min-width: 0;
+    padding: 6px 8px;
+    border: 1px solid #c3c3c3;
+    border-radius: 6px;
+    background: #ffffff;
+    font-size: 1.04rem;
+    box-sizing: border-box;
+    line-height: 1.2;
+}
+
+/* Disabled select should look like plain readonly text (hide dropdown arrow) */
+.detalle-licencia-row select[disabled],
+.detalle-licencia-row select[disabled] option {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: none;
+    cursor: default;
+}
+/* Remove default dropdown arrow in many browsers by hiding native indicator */
+.detalle-licencia-row select[disabled]::-ms-expand { display: none; }
+.detalle-licencia-row select[disabled] { background-position: right 8px center; background-repeat: no-repeat; }
+
+/* Make read-only look distinct but legible */
+.detalle-licencia-row textarea[readonly],
+.detalle-licencia-row input[readonly],
+.detalle-licencia-row select[disabled] {
+    background: #f1f5f8;
+    color: #55606a;
+}
+
+/* Textareas: allow vertical resize only */
+.detalle-licencia-row textarea { min-height: 64px; max-width: 100%; resize: vertical; font-size:1.02rem; }
+
+/* Button group */
+.detalle-licencia-buttons { display:flex; justify-content:flex-end; gap:12px; margin-top: 12px; }
+
+.btn {
+    display:inline-flex; align-items:center; justify-content:center;
+    border: none; cursor: pointer; font-weight:600; font-size:0.98rem;
+    padding: 8px 16px; border-radius: 999px; box-shadow: 0 6px 18px rgba(44,62,80,0.06);
+    transition: background 0.16s ease, transform 0.06s ease;
+}
+.btn:active { transform: translateY(1px); }
+.btn:disabled, .btn[disabled] { opacity:0.55; cursor:not-allowed; box-shadow:none; }
+
+.btn-ver-certificado { background: linear-gradient(180deg,#4fc3f7,#22a6df); color:#062427; }
+.btn-ver-certificado:hover:enabled { background: linear-gradient(180deg,#1ea0d9,#0b7fb3); color:#fff; }
+.btn-aprobar { background: linear-gradient(180deg,#43a047,#2f8a3a); color:#fff; }
+.btn-aprobar:hover { background: linear-gradient(180deg,#2e7031,#214f24); }
+.btn-rechazar { background: linear-gradient(180deg,#e53935,#b62b27); color:#fff; }
+.btn-rechazar:hover { background: linear-gradient(180deg,#ab000d,#7b0009); }
+
+/* Modal */
+.modal-certificado {
+    display: none; /* controlled by JS */
+    position: fixed; inset: 0; z-index: 1200;
+    background: rgba(0,0,0,0.36);
+    align-items: center; justify-content: center; padding: 20px;
+}
+.modal-certificado.show { display:flex; }
+.modal-contenido-certificado {
+    background: #fff; border-radius: 10px; padding: 18px; width: min(960px, 98%); max-height: 92vh; overflow:auto;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18); position:relative;
+}
+.modal-contenido-certificado iframe { border:none; width:100%; height:65vh; }
+.cerrar-modal-certificado {
+    position: absolute; top: 10px; right: 12px; font-size: 1.4rem; color:#666; cursor:pointer; font-weight:700;
+}
+
+/* Top-right close link inside the card */
+.detalle-close {
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    font-size: 1.6rem;
+    color: #344149;
+    text-decoration: none;
+    background: rgba(255,255,255,0.7);
+    padding: 4px 8px;
+    border-radius: 6px;
+    border: 1px solid rgba(0,0,0,0.06);
+}
+.detalle-close:hover { background: rgba(255,255,255,0.95); }
+
+/* readonly helper class for non-editable gestor comments */
+.detalle-licencia-row textarea.readonly,
+.detalle-licencia-row textarea[readonly] {
+    background: #f3f6f8;
+    color: #4b5563;
+    border-color: #d1dbe1;
+}
+
+@media (max-width: 820px) {
+    .detalle-licencia-container { left: 12px; width: calc(100% - 24px); min-width: auto; }
+    .detalle-licencia-row label { min-width: 110px; }
+}
+
+@media (max-width: 480px) {
+    .detalle-licencia-row { gap:10px; }
+    .detalle-licencia-row label { min-width: 100%; }
+    .detalle-licencia-row > * { width: 100%; }
+    .detalle-licencia-buttons { justify-content: stretch; flex-direction: column-reverse; gap:10px; }
+}

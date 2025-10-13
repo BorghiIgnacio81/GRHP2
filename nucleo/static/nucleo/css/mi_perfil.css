@@ -1,0 +1,88 @@
+.mi-perfil-container {
+  max-width: 920px;
+  margin: 8px 0 0 16px; /* align more left like other pages */
+  background: #e9f5fe; /* pale blue outer background */
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  border: 3px solid #29a8df; /* blue border similar to app */
+}
+.perfil-title {
+  margin: 0 0 14px 0;
+  font-size: 22px;
+  color: #1a365d;
+}
+.perfil-card {
+  display: block; /* stack sections vertically */
+  gap: 16px;
+}
+
+/* Ensure direct children behave as column containers so content aligns vertically */
+.perfil-card > div {
+  display: block;
+}
+
+/* layout helpers for rows */
+.perfil-row.two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.perfil-row.three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+.perfil-row.four { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px; }
+.perfil-row.days { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; align-items: center; }
+.perfil-row .field { display:flex; flex-direction:column; }
+.perfil-row .field .label { margin-bottom:6px; }
+.perfil-section {
+  background: transparent;
+  padding: 12px;
+  border-radius: 8px;
+  border: 2px solid #111; /* black-ish border like mock */
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+/* Remove flex gap and control spacing precisely so the value sits ~3 spaces from the label */
+.perfil-row {
+  display:flex;
+  gap:0; /* controlled spacing via label margin */
+  align-items:center;
+  padding:6px 4px;
+  text-align: left; /* ensure left-aligned text */
+}
+.perfil-row .label {
+  font-weight:700;
+  color:#0b2540;
+  width: auto; /* allow label to size to content */
+  margin-right: 0.75rem; /* approx. '3 spaces' — adjust if needed */
+}
+.perfil-row .value {
+  color:#102030;
+  /* make values look like readonly inputs */
+  display: inline-block;
+  background: #ffffff;
+  border: 1px solid #222;
+  padding: 6px 8px;
+  border-radius: 4px;
+  min-width: 140px;
+  box-sizing: border-box;
+}
+
+/* For shorter fields place tighter min-width */
+.perfil-row .value.small {
+  min-width: 100px;
+}
+
+/* Make long single-line values take full column width when needed */
+.perfil-card > div .perfil-row .value.full-width {
+  width: 100%;
+}
+
+/* Compact contact box when few rows: reduce padding and gap */
+.perfil-card > .perfil-section:nth-child(2) {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  gap: 6px;
+}
+
+@media (max-width:800px) {
+  .perfil-card { grid-template-columns: 1fr; }
+  .perfil-row { flex-direction: column; align-items:flex-start; }
+  .perfil-row .label { width: auto; margin-right: 0; }
+}

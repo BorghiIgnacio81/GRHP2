@@ -1,0 +1,153 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/ver_feriados.css' %}?v={% now 'YmdHis' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box feriados-box">
+    <h2 class="titulo-feriados">
+        Feriados 
+        <div class="year-selector-container">
+            <input type="text" id="year-selector" value="{{ current_year }}" readonly class="year-input">
+            <div class="year-arrows">
+                <button type="button" class="year-arrow year-up" id="year-up">▲</button>
+                <button type="button" class="year-arrow year-down" id="year-down">▼</button>
+            </div>
+        </div>
+    </h2>
+    <div class="barra-superior-feriados">
+        <div class="export-buttons-group">
+            <!-- Excel button -->
+            <button type="button" class="btn-excel export-btn" title="Exportar Excel" data-export-target=".tabla-feriados" data-export-filename="feriados.xls" data-export-format="excel">
+                <img src="{% static 'nucleo/icons/excel-descargar-icon.ico' %}" alt="Excel" class="excel-icon-full">
+            </button>
+            <!-- PDF button -->
+            <button type="button" class="btn-pdf export-btn" title="Exportar PDF" data-export-target=".tabla-feriados" data-export-filename="feriados.pdf" data-export-format="pdf">
+                <img src="{% static 'nucleo/icons/pdf-descarga-icono.png' %}" alt="PDF" class="pdf-icon-full">
+            </button>
+        </div>
+    </div>
+    <div class="tabla-feriados-scroll">
+        <table class="tabla-licencias tabla-feriados">
+            <thead>
+                <tr>
+                    <th>Feriado</th>
+                    <th>Fecha</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feriado in feriados %}
+                <tr data-id="{{ feriado.id_feriado }}">
+                    <td>{{ feriado.descripcion }}</td>
+                    <td>{{ feriado.fecha|date:"d/m/Y" }}</td>
+                    <td>
+                        <a href="{% url 'nucleo:modificar_borrar_feriado' %}?id_feriado={{ feriado.id_feriado }}" class="btn-editar" title="Editar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="#333"/></svg>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% block extra_js %}
+<script src="{% static 'nucleo/js/export-utils.js' %}?v={% now 'YmdHis' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Los botones de exportación ya están configurados con los atributos data-*
+    // El script export-utils.js se encargará de manejar la funcionalidad
+    
+    // Manejo del selector de año personalizado
+    const yearSelector = document.getElementById('year-selector');
+    const yearUpBtn = document.getElementById('year-up');
+    const yearDownBtn = document.getElementById('year-down');
+    const tbody = document.querySelector('.tabla-feriados tbody');
+    
+    let currentYear = parseInt(yearSelector.value);
+    const minYear = 2020;
+    const maxYear = 2030;
+    
+    // Función para actualizar el año
+    function updateYear(newYear) {
+        if (newYear >= minYear && newYear <= maxYear) {
+            currentYear = newYear;
+            yearSelector.value = currentYear;
+            filterByYear(currentYear);
+        }
+    }
+    
+    // Event listeners para las flechitas
+    if (yearUpBtn) {
+        yearUpBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            updateYear(currentYear + 1);
+        });
+    }
+    
+    if (yearDownBtn) {
+        yearDownBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            updateYear(currentYear - 1);
+        });
+    }
+    
+    // Prevenir edición por teclado
+    if (yearSelector) {
+        yearSelector.addEventListener('keydown', function(e) {
+            e.preventDefault();
+        });
+        
+        yearSelector.addEventListener('paste', function(e) {
+            e.preventDefault();
+        });
+    }
+    
+    function filterByYear(year) {
+        if (!year) return;
+        
+        // Hacer petición AJAX para obtener feriados del año seleccionado
+        fetch(`{% url 'nucleo:ver_feriados' %}?year=${year}`, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            // Limpiar tabla actual
+            tbody.innerHTML = '';
+            
+            if (data.feriados && data.feriados.length > 0) {
+                // Agregar nuevas filas
+                data.feriados.forEach(feriado => {
+                    const row = document.createElement('tr');
+                    row.setAttribute('data-id', feriado.id_feriado);
+                    row.innerHTML = `
+                        <td>${feriado.descripcion}</td>
+                        <td>${feriado.fecha}</td>
+                        <td>
+                            <a href="{% url 'nucleo:modificar_borrar_feriado' %}?id_feriado=${feriado.id_feriado}" class="btn-editar" title="Editar">
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="#333"/></svg>
+                            </a>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            } else {
+                // Mostrar mensaje si no hay feriados
+                const row = document.createElement('tr');
+                row.innerHTML = '<td colspan="3" style="text-align: center; color: #888; padding: 20px;">No hay feriados registrados para este año</td>';
+                tbody.appendChild(row);
+            }
+        })
+        .catch(error => {
+            console.error('Error al filtrar feriados:', error);
+            tbody.innerHTML = '<td colspan="3" style="text-align: center; color: #e74c3c; padding: 20px;">Error al cargar los feriados</td>';
+        });
+    }
+});
+</script>
+{% endblock %}
+{% endblock %}

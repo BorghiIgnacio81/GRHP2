@@ -1,0 +1,125 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/tipo_licencias.css' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box tipo-licencia-box">
+    <h2 class="tipo-licencia-titulo">Modificar/borrar licencia</h2>
+    <form method="post" id="form-licencia" class="form-alta-licencia">
+        {% csrf_token %}
+        <label>Buscar Licencia
+            <select name="id_licencia" id="id_licencia" required onchange="this.form.submit()">
+                <option value="">Seleccione...</option>
+                {% for lic in licencias %}
+                    <option value="{{ lic.id_licencia }}" {% if lic.id_licencia|stringformat:"s" == selected_id %}selected{% endif %}>
+                        {{ lic.descripcion }}
+                    </option>
+                {% endfor %}
+            </select>
+        </label>
+        {% if licencia %}
+        <label>Nombre de licencia
+            <input type="text" name="Descripcion" value="{{ licencia.descripcion }}" required>
+        </label>
+        <label>Días a solicitar (En blanco licencia libre)
+            <input type="number" name="Dias" min="0" value="{{ licencia.dias|default_if_none:'' }}">
+        </label>
+        <label class="label-checkbox">
+            <input type="checkbox" name="Pago" {% if licencia.pago %}checked{% endif %}>
+            Marcar si la Licencia Es paga
+        </label>
+        <div class="botones-accion">
+            <button type="submit" name="accion" value="actualizar" class="btn-actualizar" id="btn-actualizar">Actualizar</button>
+            <button type="submit" name="accion" value="borrar" class="btn-borrar">Borrar</button>
+        </div>
+        {% endif %}
+    </form>
+    {% if mensaje_exito %}
+    <div class="mensaje-exito">
+        {{ mensaje_exito }}
+    </div>
+    {% endif %}
+    {% if mensaje_error %}
+    <div class="mensaje-error">
+        {{ mensaje_error }}
+    </div>
+    {% endif %}
+</div>
+
+{% if mostrar_modal_protegido %}
+<div class="modal-protegido-bg">
+  <div class="modal-protegido">
+    <h3>No se puede eliminar la licencia</h3>
+    <p>Esta licencia tiene <b>{{ solicitudes_relacionadas|length }}</b> solicitudes asociadas,
+      de las cuales <b>{{ solicitudes_aprobadas }}</b> están aprobadas.</p>
+    <p>¿Qué desea hacer?</p>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="id_licencia" value="{{ licencia.id_licencia }}">
+      <div class="modal-actions" style="display:flex;gap:8px;justify-content:flex-end;align-items:center;">
+        <button type="submit" name="confirmar_renombrar" value="1" class="btn-actualizar">
+          Renombrar como "{{ licencia.descripcion }} (Discontinuada)"
+        </button>
+        <button type="button" onclick="cerrarModalProtegido()" class="btn-cancelar">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+{% if mostrar_modal_confirmar_renombrar %}
+<div class="modal-protegido-bg">
+  <div class="modal-protegido">
+    <h3>Confirmar renombrado</h3>
+    <p>
+      La licencia será marcada como discontinuada.<br>
+      Cuando todas las solicitudes asociadas estén finalizadas, la licencia se eliminará automáticamente.<br>
+      ¿Desea continuar?
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      <input type="hidden" name="id_licencia" value="{{ licencia.id_licencia }}">
+      <button type="submit" name="confirmar_renombrar_si" value="1" class="btn-actualizar completo">Sí, renombrar</button>
+      <button type="button" onclick="cerrarModalProtegido()" class="btn-cancelar">No</button>
+    </form>
+  </div>
+</div>
+{% endif %}
+
+<script>
+function cerrarModalProtegido() {
+    document.querySelectorAll('.modal-protegido-bg').forEach(function(modal){
+        modal.style.display = 'none';
+    });
+}
+document.addEventListener('DOMContentLoaded', function() {
+    const nombre = document.querySelector('input[name="Descripcion"]');
+    const dias = document.querySelector('input[name="Dias"]');
+    const btn = document.getElementById('btn-actualizar');
+    const nombreOriginal = nombre ? nombre.value : '';
+    const diasOriginal = dias ? dias.value : '';
+
+    function checkCambios() {
+        if (
+            (nombre && nombre.value.trim() !== nombreOriginal.trim()) ||
+            (dias && dias.value !== diasOriginal)
+        ) {
+            btn.disabled = false;
+            btn.classList.add('completo');
+        } else {
+            btn.disabled = true;
+            btn.classList.remove('completo');
+        }
+    }
+
+    if (nombre && dias && btn) {
+        nombre.addEventListener('input', checkCambios);
+        dias.addEventListener('input', checkCambios);
+        checkCambios();
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/ver_tipo_licencia.css' %}?v={% now 'YmdHis' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box tipo-licencia-box">
+    <h2 class="titulo-tipo-licencia">Gestión tipos de licencia</h2>
+    <div class="barra-superior-tipo-licencia">
+        <div class="export-buttons-group">
+            <!-- Excel button -->
+            <button type="button" class="btn-excel export-btn" title="Exportar Excel" data-export-target=".tabla-tipo-licencia" data-export-filename="tipos_licencia.xls" data-export-format="excel">
+                <img src="{% static 'nucleo/icons/excel-descargar-icon.ico' %}" alt="Excel" class="excel-icon-full">
+            </button>
+            <!-- PDF button -->
+            <button type="button" class="btn-pdf export-btn" title="Exportar PDF" data-export-target=".tabla-tipo-licencia" data-export-filename="tipos_licencia.pdf" data-export-format="pdf">
+                <img src="{% static 'nucleo/icons/pdf-descarga-icono.png' %}" alt="PDF" class="pdf-icon-full">
+            </button>
+        </div>
+    </div>
+    <div class="tabla-tipo-licencia-scroll">
+        <table class="tabla-licencias tabla-tipo-licencia">
+            <thead>
+                <tr>
+                    <th>Tipo de Licencia</th>
+                    <th>Días</th>
+                    <th>Paga</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for tipo in tipos_licencia %}
+                <tr data-id="{{ tipo.id_licencia }}">
+                    <td>{{ tipo.descripcion }}</td>
+                    <td>{{ tipo.dias }}</td>
+                    <td>{{ tipo.pago }}</td>
+                    <td>
+                        <a href="{% url 'nucleo:modificar_borrar_licencia' %}?id_licencia={{ tipo.id_licencia }}" class="btn-editar" title="Editar">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zM20.71 7.04a1.003 1.003 0 0 0 0-1.42l-2.34-2.34a1.003 1.003 0 0 0-1.42 0l-1.83 1.83 3.75 3.75 1.84-1.82z" fill="#333"/></svg>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% block extra_js %}
+<script src="{% static 'nucleo/js/export-utils.js' %}?v={% now 'YmdHis' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Los botones de exportación ya están configurados con los atributos data-*
+    // El script export-utils.js se encargará de manejar la funcionalidad
+});
+</script>
+{% endblock %}
+{% endblock %}

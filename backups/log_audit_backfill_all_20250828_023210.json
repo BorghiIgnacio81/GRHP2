@@ -1,0 +1,422 @@
+[
+  {
+    "log_id": 4,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00",
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  },
+  {
+    "log_id": 5,
+    "nombre_tabla": "Empleado_eo",
+    "old": {
+      "fecha_eo": "2025-08-01",
+      "id_sucursal": 4
+    },
+    "new": {
+      "fecha_eo": "2025-08-01",
+      "id_sucursal": 4,
+      "idempleado": 1,
+      "nombres": "Admin",
+      "apellido": "Principal"
+    }
+  },
+  {
+    "log_id": 9,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": false,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": false
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": false,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": false
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00",
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  },
+  {
+    "log_id": 10,
+    "nombre_tabla": "Empleado_eo",
+    "old": {
+      "fecha_eo": "2025-08-01",
+      "id_sucursal": 4
+    },
+    "new": {
+      "fecha_eo": "2025-08-01",
+      "id_sucursal": 4,
+      "idempleado": 1,
+      "nombres": "Admin",
+      "apellido": "Principal"
+    }
+  },
+  {
+    "log_id": 14,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00",
+      "idempleado": 5,
+      "nombres": "Rafael",
+      "apellido": "Galarze"
+    }
+  },
+  {
+    "log_id": 19,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00",
+      "idempleado": 5,
+      "nombres": "Rafael",
+      "apellido": "Galarze"
+    }
+  },
+  {
+    "log_id": 20,
+    "nombre_tabla": "Empleado_eo",
+    "old": {
+      "fecha_eo": "2025-08-19",
+      "id_sucursal": 4
+    },
+    "new": {
+      "fecha_eo": "2025-08-19",
+      "id_sucursal": 4,
+      "idempleado": 5,
+      "nombres": "Rafael",
+      "apellido": "Galarze"
+    }
+  },
+  {
+    "log_id": 135,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00",
+      "idempleado": 15,
+      "nombres": "Ana Maria",
+      "apellido": "Gomez"
+    }
+  },
+  {
+    "log_id": 136,
+    "nombre_tabla": "Empleado_eo",
+    "old": {
+      "fecha_eo": "2025-08-23",
+      "id_sucursal": 4
+    },
+    "new": {
+      "fecha_eo": "2025-08-23",
+      "id_sucursal": 4,
+      "idempleado": 15,
+      "nombres": "Ana Maria",
+      "apellido": "Gomez"
+    }
+  },
+  {
+    "log_id": 140,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": false,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": false,
+        "miercoles": false
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": false,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": false,
+        "miercoles": false
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00",
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  },
+  {
+    "log_id": 150,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00",
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  },
+  {
+    "log_id": 157,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": false,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "21:00:00",
+      "start_time": "09:00:00",
+      "idempleado": 5,
+      "nombres": "Rafael",
+      "apellido": "Galarze"
+    }
+  },
+  {
+    "log_id": 244,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": true
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00",
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  },
+  {
+    "log_id": 245,
+    "nombre_tabla": "Empleado_eo",
+    "old": {
+      "fecha_eo": "2025-08-28",
+      "id_sucursal": 4
+    },
+    "new": {
+      "fecha_eo": "2025-08-28",
+      "id_sucursal": 4,
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  },
+  {
+    "log_id": 254,
+    "nombre_tabla": "Plan_trabajo",
+    "old": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": false
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00"
+    },
+    "new": {
+      "dias": {
+        "lunes": true,
+        "jueves": true,
+        "martes": true,
+        "sabado": true,
+        "domingo": false,
+        "viernes": true,
+        "miercoles": false
+      },
+      "end_time": "08:00:00",
+      "start_time": "00:00:00",
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  },
+  {
+    "log_id": 255,
+    "nombre_tabla": "Empleado_eo",
+    "old": {
+      "fecha_eo": "2025-08-28",
+      "id_sucursal": 4
+    },
+    "new": {
+      "fecha_eo": "2025-08-28",
+      "id_sucursal": 4,
+      "idempleado": 49,
+      "nombres": "Ignacio",
+      "apellido": "Borghi"
+    }
+  }
+]

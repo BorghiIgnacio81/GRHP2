@@ -1,0 +1,198 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/detalle_licencia.css' %}">
+<style>
+/* Inline overrides (high specificity) to tightly control date input appearance */
+#detalleLicenciaForm input[type="date"], .detalle-licencia-form-box input[type="date"] {
+    height: 18px !important;
+    line-height: 18px !important;
+    padding: 0 6px !important;
+    font-size: 13px !important;
+    box-sizing: border-box !important;
+    border-width: 1px !important;
+}
+#detalleLicenciaForm .fecha-desde input[type="date"],
+#detalleLicenciaForm .fecha-hasta input[type="date"] {
+    width: 110px !important;
+    max-width: 130px !important;
+}
+#detalleLicenciaForm select[disabled] {
+    -webkit-appearance: none !important;
+    -moz-appearance: none !important;
+    appearance: none !important;
+    background-image: none !important;
+}
+</style>
+{% endblock %}
+{% block main %}
+<div class="detalle-licencia-container">
+    {% comment %} Preserve current filters when returning to the list {% endcomment %}
+    <a href="{% url 'nucleo:gestion_reporte_licencias' %}{% if request.GET %}?{{ request.GET.urlencode }}{% endif %}" class="detalle-close" title="Cerrar">&times;</a>
+    <h2 class="detalle-licencia-title">Detalle Licencia</h2>
+    <hr class="detalle-licencia-divider">
+    <div class="detalle-licencia-form-box">
+    <div class="detalle-licencia-form-box">
+        <form method="post" enctype="multipart/form-data" class="detalle-licencia-form" id="detalleLicenciaForm">
+            {% csrf_token %}
+            <div class="detalle-licencia-row">
+                <label for="tipo_licencia">Licencia Solicitada</label>
+                <select id="tipo_licencia" name="tipo_licencia" disabled>
+                    {% for tipo in tipos_licencia %}
+                        <option value="{{ tipo.id_licencia }}" {% if tipo.id_licencia == solicitud.id_licencia.id_licencia %}selected{% endif %}>{{ tipo.descripcion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="detalle-licencia-row fechas-group">
+                <div class="fecha-desde">
+                    <label for="fecha_desde">Fecha Desde</label>
+                    <input type="date" id="fecha_desde" name="fecha_desde" value="{{ solicitud.fecha_desde|date:'Y-m-d' }}" readonly>
+                </div>
+                <div class="fecha-hasta">
+                    <label for="fecha_hasta">Fecha Hasta</label>
+                    <input type="date" id="fecha_hasta" name="fecha_hasta" value="{{ solicitud.fecha_hasta|date:'Y-m-d' }}" readonly>
+                </div>
+            </div>
+            <div class="detalle-licencia-row">
+                <label for="comentario">Comentarios</label>
+                <textarea id="comentario" name="comentario" rows="3" readonly>{{ solicitud.comentario }}</textarea>
+            </div>
+            <div class="detalle-licencia-row">
+                <label for="texto_gestor">Comentarios Gestor</label>
+                {% with estado=solicitud.id_estado.estado|default:"" %}
+                    {% if estado|lower != 'en espera' %}
+                        <textarea id="texto_gestor" name="texto_gestor" rows="3" readonly class="readonly">{{ solicitud.texto_gestor }}</textarea>
+                    {% else %}
+                        <textarea id="texto_gestor" name="texto_gestor" rows="3">{{ solicitud.texto_gestor }}</textarea>
+                    {% endif %}
+                {% endwith %}
+            </div>
+            <div class="detalle-licencia-buttons">
+                <button type="button" class="btn btn-ver-certificado" onclick="mostrarCertificado()" {% if not solicitud.archivo %}disabled{% endif %}>Ver Certificado</button>
+                {% if is_pending %}
+                    <button type="submit" name="accion" value="aprobar" class="btn btn-aprobar" {% if is_owner %}disabled title="No puedes aprobar tu propia solicitud"{% endif %}>Aprobar</button>
+                    <button type="submit" name="accion" value="rechazar" class="btn btn-rechazar" id="btn-rechazar">Rechazar</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+    {% if mensaje_error %}
+    <div style="margin-top:12px;color:red;font-weight:bold;text-align:center;">{{ mensaje_error }}</div>
+    {% endif %}
+    {% if mensaje_exito %}
+    <div style="margin-top:12px;color:green;font-weight:bold;text-align:center;">{{ mensaje_exito }}</div>
+    {% endif %}
+    <div id="modal-certificado" class="modal-certificado" style="display:none;">
+        <div class="modal-contenido-certificado">
+            <span id="cerrar-modal-certificado" class="cerrar-modal-certificado">&times;</span>
+            <div id="certificado-contenido"></div>
+        </div>
+    </div>
+</div>
+<script>
+function mostrarCertificado() {
+    const modal = document.getElementById('modal-certificado');
+    const contenido = document.getElementById('certificado-contenido');
+    const archivo = "{{ solicitud.archivo|default:''|escapejs }}";
+    
+    // Debug: mostrar información en consola
+    console.log('Archivo desde BD:', archivo);
+    
+    if (!archivo) {
+        alert('No hay archivo adjunto en esta solicitud');
+        return;
+    }
+    
+    const ext = archivo.split('.').pop().toLowerCase();
+    const url = archivo ? ('/media/' + archivo.split('/').map(encodeURIComponent).join('/')) : '';
+    
+    // Debug: mostrar URL construida
+    console.log('URL construida:', url);
+    console.log('Extensión detectada:', ext);
+    
+    if (!url) {
+        contenido.innerHTML = `
+            <div style="text-align: center; padding: 20px;">
+                <p style="color: red; font-weight: bold;">No se pudo determinar la URL del archivo adjunto.</p>
+                <p>Archivo: ${archivo || 'Sin nombre disponible'}</p>
+            </div>
+        `;
+        modal.style.display = 'flex';
+        return;
+    }
+
+    if (["jpg","jpeg","png","gif","bmp","webp"].includes(ext)) {
+        // Crear imagen con manejo de errores
+        const img = new Image();
+        img.onload = function() {
+            console.log('Imagen cargada exitosamente');
+            contenido.innerHTML = `
+                <div style="text-align: center;">
+                    <p style="margin-bottom: 10px; font-weight: bold;">Archivo: ${archivo}</p>
+                    <img src="${url}" alt="Certificado - ${archivo}" style="max-width:100%;max-height:350px;border-radius:6px;">
+                </div>
+            `;
+            modal.style.display = 'flex';
+        };
+        img.onerror = function() {
+            console.error('Error al cargar imagen:', url);
+            contenido.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <p style="color: red; font-weight: bold;">Error al cargar la imagen</p>
+                    <p>Archivo: ${archivo}</p>
+                    <p>URL: ${url}</p>
+                    <p>Verifique que el archivo existe en el servidor</p>
+                    <a href="${url}" target="_blank" style="color: blue; text-decoration: underline;">Intentar abrir en nueva pestaña</a>
+                </div>
+            `;
+            modal.style.display = 'flex';
+        };
+        img.src = url;
+    } else if (ext === 'pdf') {
+        contenido.innerHTML = `
+            <div style="text-align: center;">
+                <p style="margin-bottom: 10px; font-weight: bold;">Archivo: ${archivo}</p>
+                <iframe src="${url}" width="100%" height="350px" style="border-radius:6px;" frameborder="0"></iframe>
+            </div>
+        `;
+        modal.style.display = 'flex';
+    } else if (ext === 'doc' || ext === 'docx') {
+        contenido.innerHTML = `
+            <div style='margin:20px 0; text-align: center;'>
+                <p style="font-weight: bold;">Archivo: ${archivo}</p>
+                <p>Vista previa de Word solo disponible en servidor público.</p>
+                <a href='${url}' download style="color: blue; text-decoration: underline;">Descargar ${archivo}</a>
+            </div>
+        `;
+        modal.style.display = 'flex';
+    } else {
+        contenido.innerHTML = `
+            <div style='margin:20px 0; text-align: center;'>
+                <p style="font-weight: bold;">Archivo: ${archivo}</p>
+                <a href='${url}' download style="color: blue; text-decoration: underline;">Descargar archivo adjunto</a>
+            </div>
+        `;
+        modal.style.display = 'flex';
+    }
+}
+document.getElementById('cerrar-modal-certificado').onclick = function() {
+    document.getElementById('modal-certificado').style.display = 'none';
+};
+document.getElementById('modal-certificado').onclick = function(e) {
+    if (e.target === this) this.style.display = 'none';
+};
+
+// Validación para botón rechazar
+var btnRechazar = document.getElementById('btn-rechazar');
+if (btnRechazar) {
+    btnRechazar.addEventListener('click', function(e) {
+        var textoGestor = document.getElementById('texto_gestor').value.trim();
+        if (!textoGestor) {
+            e.preventDefault();
+            alert('No se puede rechazar una licencia, sin exponer una razón en Comentarios Gestor');
+            document.getElementById('texto_gestor').focus();
+        }
+    });
+}
+</script>
+{% endblock %}

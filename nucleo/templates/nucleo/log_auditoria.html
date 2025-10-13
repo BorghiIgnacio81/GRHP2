@@ -1,0 +1,161 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+{% load dict_filters %}
+
+{% block extra_js %}
+<script src="{% static 'nucleo/js/exportar_excel.js' %}"></script>
+<script src="{% static 'nucleo/js/html2canvas.min.js' %}"></script>
+<script src="{% static 'nucleo/js/exportar_pdf.js' %}"></script>
+<script src="{% static 'nucleo/js/export-utils.js' %}"></script>
+<script src="{% static 'nucleo/js/modules/log-auditoria.js' %}?v=20251012"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.LogAuditoriaModule) {
+    new window.LogAuditoriaModule({
+      rangoFechaCheckbox: '#audit_rango_fecha',
+      fechaHastaInput: '#audit_fecha_hasta',
+      cleanUrlOnReload: true
+    });
+  } else {
+    console.error('LogAuditoriaModule no está disponible');
+  }
+  if (window.exportUtils && typeof window.exportUtils.bindExportButtons === 'function') {
+    window.exportUtils.bindExportButtons(document);
+  }
+});
+</script>
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid">
+  <link rel="stylesheet" href="{% static 'nucleo/css/log_auditoria.css' %}?v={% now 'YmdHis' %}">
+  {# Reuse the consultar_licencia filters button styles so Filtrar/Limpiar match exactly #}
+  <link rel="stylesheet" href="{% static 'nucleo/css/consultar_licencia.css' %}">
+  <div class="card">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <strong>Log Auditoría</strong>
+      <div class="export-buttons-group">
+        <!-- PDF button -->
+        <button type="button" class="btn-pdf export-btn" title="Exportar PDF" data-export-target="#audit-table" data-export-filename="log_auditoria.pdf" data-export-format="pdf">
+          <img src="{% static 'nucleo/icons/pdf-descarga-icono.png' %}" alt="PDF" class="pdf-icon-full">
+        </button>
+        <!-- Excel button -->
+        <button type="button" class="btn-excel export-btn" title="Exportar Excel" data-export-target="#audit-table" data-export-filename="log_auditoria.xls" data-export-format="excel">
+          <img src="{% static 'nucleo/icons/excel-descargar-icon.ico' %}" alt="Excel" class="excel-icon-full">
+        </button>
+      </div>
+    </div>
+    <div class="card-body py-2">
+      <form method="get" class="form-inline" id="audit-filters" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
+        <!-- Usuario / Id -->
+        <input type="text" name="usuario" placeholder="Usuario o Id" class="form-control form-control-sm" value="{{ filtros.usuario }}" style="min-width:180px;">
+
+        <!-- Fecha desde -->
+        <input type="date" name="fecha_desde" id="audit_fecha_desde" class="form-control form-control-sm" value="{{ filtros.fecha_desde }}">
+
+        <!-- Rango checkbox immediately before fecha_hasta for CSS fallback -->
+  <input type="checkbox" name="rango_fecha" id="audit_rango_fecha" {% if filtros.rango_fecha %}checked{% endif %}>
+        <label for="audit_rango_fecha" style="margin-right:8px;">Rango</label>
+
+        <!-- Fecha hasta (hidden/disabled when rango not checked) -->
+        <input type="date" id="audit_fecha_hasta" {% if not filtros.rango_fecha %}style="display:none;" disabled{% else %}name="fecha_hasta"{% endif %} class="form-control form-control-sm" value="{{ filtros.fecha_hasta }}">
+
+        <!-- Action buttons styled like consultar_licencia -->
+        <div class="filtros-actions" style="margin-left:auto;">
+          <button type="submit" class="btn-editar">Filtrar</button>
+          <a href="{% url 'nucleo:log_auditoria' %}" class="btn-cancelar">Limpiar</a>
+        </div>
+
+        {# Preserve ordering params and tabla when filtering #}
+        {% if log_order %}<input type="hidden" name="log_order" value="{{ log_order }}">{% endif %}
+        {% if log_dir %}<input type="hidden" name="log_dir" value="{{ log_dir }}">{% endif %}
+        {% if filtros.tabla %}<input type="hidden" name="tabla" value="{{ filtros.tabla }}">{% endif %}
+      </form>
+
+    </div>
+    <div class="card-body p-0">
+      <table class="table table-sm table-striped mb-0" id="audit-table">
+        <thead>
+          <tr>
+            <th class="col-idusuario"><a class="{% if log_order == 'idusuario' %}sorted{% endif %}" href="?log_order=idusuario&log_dir={% if log_order == 'idusuario' and log_dir == 'asc' %}desc{% else %}asc{% endif %}">Usuario(Id)</a></th>
+            <th><a class="{% if log_order == 'fecha_cambio' %}sorted{% endif %}" href="?log_order=fecha_cambio&log_dir={% if log_order == 'fecha_cambio' and log_dir == 'asc' %}desc{% else %}asc{% endif %}">Fecha</a></th>
+            <th><a class="{% if log_order == 'tabla' %}sorted{% endif %}" href="?log_order=tabla&log_dir={% if log_order == 'tabla' and log_dir == 'asc' %}desc{% else %}asc{% endif %}">Tabla</a></th>
+            <th><a class="{% if log_order == 'idregistro' %}sorted{% endif %}" href="?log_order=idregistro&log_dir={% if log_order == 'idregistro' and log_dir == 'asc' %}desc{% else %}asc{% endif %}">IdRegistro</a></th>
+            <th><a class="{% if log_order == 'accion' %}sorted{% endif %}" href="?log_order=accion&log_dir={% if log_order == 'accion' and log_dir == 'asc' %}desc{% else %}asc{% endif %}">Acción</a></th>
+            <th>Cambio</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for l in logs %}
+          {% render_cambio l as cambio_html %}
+          {% if cambio_html %}
+          <tr>
+            <td>{% if l.idusuario %}{{ l.idusuario.username }} ({{ l.idusuario.id }}){% else %}Anon{% endif %}</td>
+            <td>{% if l.fecha_cambio %}{{ l.fecha_cambio|date:"d/m/Y" }}{% endif %}</td>
+            <td>{{ l.nombre_tabla }}</td>
+            <td>{{ l.idregistro }}</td>
+                    <td>{{ l.accion|accion_label }}</td>
+                    <td class="cambio-cell">{{ cambio_html|safe }}</td>
+          </tr>
+          {% endif %}
+          {% empty %}
+          <tr><td colspan="6">No hay logs</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Información de paginación -->
+    {% if logs.has_other_pages %}
+    <div class="card-footer">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <small class="text-muted">
+            Mostrando registros {{ logs.start_index }} - {{ logs.end_index }} de {{ total_logs }} total
+          </small>
+        </div>
+        <div class="col-md-6">
+          <nav aria-label="Paginación del log de auditoría">
+            <ul class="pagination pagination-sm justify-content-end mb-0">
+              {% if logs.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page=1{% if log_order %}&log_order={{ log_order }}&log_dir={{ log_dir }}{% endif %}">
+                    &laquo; Primera
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ logs.previous_page_number }}{% if log_order %}&log_order={{ log_order }}&log_dir={{ log_dir }}{% endif %}">
+                    &lsaquo; Anterior
+                  </a>
+                </li>
+              {% endif %}
+              
+              <li class="page-item active">
+                <span class="page-link">Página {{ logs.number }} de {{ logs.paginator.num_pages }}</span>
+              </li>
+              
+              {% if logs.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ logs.next_page_number }}{% if log_order %}&log_order={{ log_order }}&log_dir={{ log_dir }}{% endif %}">
+                    Siguiente &rsaquo;
+                  </a>
+                </li>
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ logs.paginator.num_pages }}{% if log_order %}&log_order={{ log_order }}&log_dir={{ log_dir }}{% endif %}">
+                    Última &raquo;
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="card-footer">
+      <small class="text-muted">Total: {{ total_logs }} registros</small>
+    </div>
+    {% endif %}
+  </div>
+
+{% endblock %}

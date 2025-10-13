@@ -1,0 +1,279 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/consultar_licencia.css' %}">
+{% endblock %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.btn-eliminar').forEach(function(b) {
+        var form = b.closest('form');
+        if (!form) return;
+        form.addEventListener('submit', function(e) {
+            var ok = confirm('¿Confirma que desea eliminar/cancelar esta solicitud?');
+            if (!ok) e.preventDefault();
+        });
+    });
+});
+</script>
+{% block main %}
+<div class="consultar-licencia-container">
+    <div class="consultar-licencia-box">
+        <h2>Mis solicitudes de licencia</h2>
+        {% if messages %}
+            <div style="margin-top:10px;" id="mensajes-django">
+                {% for message in messages %}
+                    {% if message.tags == 'success' or message.tags == 'exito' %}
+                        <div class="mensaje-exito mensaje-cerrable"><span style="float:right;cursor:pointer;font-weight:bold;font-size:1.2em;" class="cerrar-mensaje">&times;</span>{{ message }}</div>
+                    {% elif message.tags == 'error' %}
+                        <div class="mensaje-error mensaje-cerrable"><span style="float:right;cursor:pointer;font-weight:bold;font-size:1.2em;" class="cerrar-mensaje">&times;</span>{{ message }}</div>
+                    {% else %}
+                        <div class="mensaje-aviso mensaje-cerrable"><span style="float:right;cursor:pointer;font-weight:bold;font-size:1.2em;" class="cerrar-mensaje">&times;</span>{{ message }}</div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <script>
+            document.querySelectorAll('.cerrar-mensaje').forEach(function(btn) { btn.onclick = function(){ this.parentElement.style.display='none'; }; });
+            </script>
+        {% endif %}
+        
+        <!-- Formulario de Filtros -->
+        <div class="filtros-box" style="background:#f8f9fa;padding:15px;border-radius:8px;margin-bottom:20px;">
+            <style>
+            /* CSS fallback: show fecha_hasta immediately when rango checkbox is checked */
+            #fecha_hasta { display: none; }
+            #rango_fecha:checked + #fecha_hasta { display: inline-block; }
+            </style>
+            <form method="get" id="filtros-form" class="filtros-form" style="display:flex;flex-wrap:wrap;align-items:center;gap:15px;">
+                
+                <!-- Filtro por Tipo de Licencia -->
+                <div class="filtro-grupo" style="display:flex;align-items:center;gap:8px;">
+                    <label>Tipo</label>
+                    <select name="tipo_licencia" id="tipo_licencia">
+                        <option value="">Todos los tipos...</option>
+                        <option value="vacaciones" {% if filtros_get.tipo_licencia == 'vacaciones' %}selected{% endif %}>Vacaciones</option>
+                        {% for tipo in tipos_licencia %}
+                            <option value="{{ tipo.id_licencia }}" {% if filtros_get.tipo_licencia == tipo.id_licencia|stringformat:"s" %}selected{% endif %}>{{ tipo.descripcion }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!-- Filtro por Fecha -->
+                <div class="filtro-grupo" style="display:flex;align-items:center;gap:8px;">
+                    <label>Fecha</label>
+                    <select name="tipo_fecha" id="tipo_fecha" onchange="toggleRangoFecha()">
+                        <option value="">Tipo de fecha...</option>
+                        <option value="solicitud" {% if filtros_get.tipo_fecha == 'solicitud' %}selected{% endif %}>Solicitud</option>
+                        <option value="desde_hasta" {% if filtros_get.tipo_fecha == 'desde_hasta' %}selected{% endif %}>Desde/Hasta</option>
+                    </select>
+                    <input type="date" name="fecha_desde" id="fecha_desde" value="{{ filtros_get.fecha_desde }}" placeholder="Fecha desde">
+                    {# Place the checkbox immediately before the fecha_hasta input so the CSS sibling selector can show it instantly #}
+                    <input type="checkbox" name="rango_fecha" id="rango_fecha" {% if filtros_get.rango_fecha %}checked{% endif %} onchange="toggleRangoFecha()">
+                    <input type="date" name="fecha_hasta" id="fecha_hasta" value="{{ filtros_get.fecha_hasta }}" placeholder="Fecha hasta" {% if not filtros_get.rango_fecha %}style="display: none;"{% endif %}>
+                    <label id="rango_fecha_label" for="rango_fecha"> Rango</label>
+                    <script>
+                        // Bind after the elements so handlers attach early during parsing
+                        (function(){
+                            try {
+                                var el = document.getElementById('rango_fecha');
+                                if (el) el.addEventListener('change', function(){ try{ toggleRangoFecha(); }catch(e){} }, false);
+                            } catch(e){}
+                        })();
+                    </script>
+                </div>
+                
+                
+                <!-- Botones de acción -->
+                <div class="filtros-actions" style="display:flex;gap:10px;">
+                    <button type="submit" class="btn-editar">Filtrar</button>
+                    <a href="{% url 'nucleo:consultar_licencia' %}" class="btn-cancelar">Limpiar</a>
+                </div>
+                
+                {% if filtros_activos %}
+                    <div style="width:100%;margin-top: 10px; font-size: 13px; color: #666;">
+                        <strong>Filtros activos:</strong>
+                        {% if filtros_activos.tipo %} Tipo: {{ filtros_activos.tipo }}{% endif %}
+                        {% if filtros_activos.fecha %} Fecha {{ filtros_activos.fecha.tipo }}: {{ filtros_activos.fecha.desde }}{% if filtros_activos.fecha.hasta %} - {{ filtros_activos.fecha.hasta }}{% endif %}{% endif %}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+
+        <script>
+        function toggleFiltro(tipo) {
+            const checkbox = document.getElementById('filtro_' + tipo);
+            
+            if (tipo === 'estado') {
+                const select = document.getElementById('select_estado');
+                if (checkbox.checked) {
+                    select.style.display = 'inline-block';
+                } else {
+                    select.style.display = 'none';
+                    select.value = '';
+                }
+            } else if (tipo === 'fecha') {
+                const tipoFecha = document.getElementById('tipo_fecha');
+                const fechaDesde = document.getElementById('fecha_desde');
+                const rangoLabel = document.getElementById('rango_fecha_label');
+                const rangoCheck = document.getElementById('rango_fecha');
+                const fechaHasta = document.getElementById('fecha_hasta');
+                
+                if (checkbox.checked) {
+                    tipoFecha.style.display = 'inline-block';
+                    fechaDesde.style.display = 'inline-block';
+                    rangoLabel.style.display = 'inline-block';
+                    if (rangoCheck.checked) {
+                        fechaHasta.style.display = 'inline-block';
+                    }
+                } else {
+                    tipoFecha.style.display = 'none';
+                    fechaDesde.style.display = 'none';
+                    rangoLabel.style.display = 'none';
+                    fechaHasta.style.display = 'none';
+                    tipoFecha.value = '';
+                    fechaDesde.value = '';
+                    fechaHasta.value = '';
+                    rangoCheck.checked = false;
+                }
+            } else if (tipo === 'dias') {
+                const diasMin = document.getElementById('dias_min');
+                const rangoLabel = document.getElementById('rango_dias_label');
+                const rangoCheck = document.getElementById('rango_dias');
+                const diasMax = document.getElementById('dias_max');
+                
+                if (checkbox.checked) {
+                    diasMin.style.display = 'inline-block';
+                    rangoLabel.style.display = 'inline-block';
+                    if (rangoCheck.checked) {
+                        diasMax.style.display = 'inline-block';
+                    }
+                } else {
+                    diasMin.style.display = 'none';
+                    rangoLabel.style.display = 'none';
+                    diasMax.style.display = 'none';
+                    diasMin.value = '';
+                    diasMax.value = '';
+                    rangoCheck.checked = false;
+                }
+            }
+        }
+        
+        function toggleRangoFecha() {
+            const rangoCheck = document.getElementById('rango_fecha');
+            const fechaHasta = document.getElementById('fecha_hasta');
+            if (!fechaHasta) return;
+            if (rangoCheck && rangoCheck.checked) {
+                // show (allow CSS to handle layout)
+                fechaHasta.style.display = '';
+                fechaHasta.style.visibility = 'visible';
+                // enable for form submission
+                fechaHasta.disabled = false;
+                fechaHasta.setAttribute('name', 'fecha_hasta');
+                // focus to make it obvious for the user
+                try { fechaHasta.focus(); } catch (e) {}
+            } else {
+                // hide and clear value
+                fechaHasta.style.display = 'none';
+                fechaHasta.style.visibility = 'hidden';
+                try { fechaHasta.value = ''; } catch (e) {}
+                fechaHasta.disabled = true;
+                try { fechaHasta.removeAttribute('name'); } catch (e) {}
+            }
+        }
+        
+        function toggleRangoDias() {
+            const rangoCheck = document.getElementById('rango_dias');
+            const diasMax = document.getElementById('dias_max');
+            const filtroDias = document.getElementById('filtro_dias');
+            
+            if (filtroDias.checked && rangoCheck.checked) {
+                diasMax.style.display = 'inline-block';
+            } else {
+                diasMax.style.display = 'none';
+                diasMax.value = '';
+            }
+        }
+        // Initialize fecha_hasta visibility on load in case checkbox state was restored
+        document.addEventListener('DOMContentLoaded', function() {
+            try { toggleRangoFecha(); } catch (e) { /* ignore */ }
+        });
+        // Ensure the checkbox reliably calls toggleRangoFecha on various events
+        (function(){
+            try {
+                var rc = document.getElementById('rango_fecha');
+                if (rc) {
+                    rc.addEventListener('change', toggleRangoFecha);
+                    rc.addEventListener('click', toggleRangoFecha);
+                    rc.addEventListener('input', toggleRangoFecha);
+                }
+            } catch(e){}
+        })();
+        </script>
+
+        <table class="licencias-table">
+            <thead>
+                <tr>
+                    <th>Tipo</th>
+                    <th>Fecha Solicitud</th>
+                    <th>Desde</th>
+                    <th>Hasta</th>
+                    <th>Días Solicitados</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in solicitudes %}
+                <tr>
+                    <td>{% if s.tipo %}{{ s.tipo }}{% else %}{{ s.id_licencia.descripcion }}{% endif %}</td>
+                    <td>{{ s.fecha_solicitud|date:"d/m/Y" }}</td>
+                    <td>{{ s.fecha_desde|date:"d/m/Y" }}</td>
+                    <td>{{ s.fecha_hasta|date:"d/m/Y" }}</td>
+                    <td>{{ s.dias_solicitados }}</td>
+                    <td>
+                        {% if s.id_estado.estado|lower == "aceptada" %}
+                            <span class="licencia-badge aprobada">Aprobada</span>
+                        {% elif s.id_estado.estado|lower == "rechazada" %}
+                            {% if s.texto_gestor %}
+                                <span class="licencia-badge rechazada" title="{{ s.texto_gestor|escape }}">Rechazada</span>
+                            {% else %}
+                                <span class="licencia-badge rechazada">Rechazada</span>
+                            {% endif %}
+                        {% else %}
+                            <span class="licencia-badge espera">En espera</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {# Botón eliminar para el dueño si la solicitud está en espera o aceptada/aprobada #}
+                        <form method="post" action="{% url 'nucleo:eliminar_solicitud' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <input type="hidden" name="solicitud_id" value="{{ s.pk }}">
+                            {% with estado_lower=s.id_estado.estado|lower %}
+                                {% if request.user.is_staff %}
+                                    {# Staff puede eliminar solicitudes en cualquier estado #}
+                                    {% if estado_lower == 'en espera' or estado_lower == 'aceptada' or estado_lower == 'aprobada' %}
+                                        <button type="submit" title="Eliminar solicitud" class="btn-eliminar" style="background:transparent;border:none;cursor:pointer;padding:6px;">
+                                            <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:#ddd;color:#333;text-align:center;line-height:22px;font-weight:bold;">×</span>
+                                        </button>
+                                    {% endif %}
+                                {% elif request.user == s.idempleado.idempleado %}
+                                    {# Empleados normales solo pueden eliminar solicitudes "En espera" #}
+                                    {% if estado_lower == 'en espera' %}
+                                        <button type="submit" title="Eliminar solicitud" class="btn-eliminar" style="background:transparent;border:none;cursor:pointer;padding:6px;">
+                                            <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:#ddd;color:#333;text-align:center;line-height:22px;font-weight:bold;">×</span>
+                                        </button>
+                                    {% endif %}
+                                {% endif %}
+                            {% endwith %}
+                        </form>
+                    </td>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="6" class="sin-solicitudes">No hay solicitudes registradas.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

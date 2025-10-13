@@ -1,0 +1,12 @@
+{% extends "base_dashboard.html" %}
+{% load static dict_filters %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/gestion_reporte_licencias.css' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box">
+    <h2>Gestión Licencias / Vacaciones</h2>
+    {# mensajes renderizados sólo en la sección inferior (mensaje_unico / mensajes_error) #}
+    {# Eliminado bloque de mensajes duplicado, los mensajes se mostrarán solo después de la paginación #}
+    ...existing code...
+{% endblock %}

@@ -1,0 +1,5565 @@
+--
+-- PostgreSQL database dump
+--
+
+\restrict MScay9UfAIfzQ0LbtcLbTGgQJGs1G35huOZvKVbLp0yiMiwOMs6OT1CM89S1Y8s
+
+-- Dumped from database version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
+-- Dumped by pg_dump version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+ALTER TABLE IF EXISTS ONLY public.nucleo_vacaciones_otorgadas DROP CONSTRAINT IF EXISTS "nucleo_vacaciones_ot_Idempleado_3ab9a9f3_fk_nucleo_em";
+ALTER TABLE IF EXISTS ONLY public.nucleo_sucursal DROP CONSTRAINT IF EXISTS nucleo_sucursal_id_pers_juridica_2c360be7_fk_nucleo_pe;
+ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_vacaciones DROP CONSTRAINT IF EXISTS "nucleo_solicitud_vac_Idempleado_c56a15c6_fk_nucleo_em";
+ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_vacaciones DROP CONSTRAINT IF EXISTS "nucleo_solicitud_vac_ID_estado_339495b8_fk_nucleo_es";
+ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS "nucleo_solicitud_lic_Idempleado_10b8e362_fk_nucleo_em";
+ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS "nucleo_solicitud_lic_Id_Licencia_2016feb6_fk_nucleo_ti";
+ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS "nucleo_solicitud_lic_ID_estado_69972f47_fk_nucleo_es";
+ALTER TABLE IF EXISTS ONLY public.nucleo_plan_trabajo DROP CONSTRAINT IF EXISTS "nucleo_plan_trabajo_Idempleado_cf5ae9c9_fk_nucleo_em";
+ALTER TABLE IF EXISTS ONLY public.nucleo_log_auditoria DROP CONSTRAINT IF EXISTS "nucleo_log_auditoria_idUsuario_78a2cf1f_fk_auth_user_id";
+ALTER TABLE IF EXISTS ONLY public.nucleo_localidad DROP CONSTRAINT IF EXISTS nucleo_localidad_provincia_id_2e9deb89_fk_nucleo_provincia_id;
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_id_Localidad_b86bdb1d_fk_nucleo_localidad_id";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS "nucleo_empleado_eo_id_Sucursal_505c9652_fk_nucleo_su";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS "nucleo_empleado_eo_Idempleado_4332c487_fk_nucleo_em";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS nucleo_empleado_el_id_puesto_2c73d494_fk_nucleo_pu;
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS nucleo_empleado_el_id_convenio_a67c8975_fk_nucleo_co;
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS "nucleo_empleado_el_Idempleado_749748e6_fk_nucleo_em";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS "nucleo_empleado_el_Id_estado_7a3ae9a3_fk_nucleo_es";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Idempleado_89383695_fk_auth_user_id";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Id_sexo_9099efca_fk_nucleo_sexo_id";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Id_nacionalidad_5c76fe0e_fk_nucleo_na";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Id_civil_be0f3906_fk_nucleo_estadocivil_id";
+ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_user_id_c564eba6_fk_auth_user_id;
+ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_content_type_id_c4bce8eb_fk_django_co;
+ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id;
+ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm;
+ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_user_id_6a12ed8b_fk_auth_user_id;
+ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_group_id_97559544_fk_auth_group_id;
+ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_content_type_id_2f476e4b_fk_django_co;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_group_id_b120cbf9_fk_auth_group_id;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissio_permission_id_84c5c92e_fk_auth_perm;
+DROP INDEX IF EXISTS public."nucleo_vacaciones_otorgadas_Idempleado_3ab9a9f3";
+DROP INDEX IF EXISTS public.nucleo_sucursal_id_pers_juridica_2c360be7;
+DROP INDEX IF EXISTS public."nucleo_solicitud_vacaciones_Idempleado_c56a15c6";
+DROP INDEX IF EXISTS public."nucleo_solicitud_vacaciones_ID_estado_339495b8";
+DROP INDEX IF EXISTS public."nucleo_solicitud_licencia_Idempleado_10b8e362";
+DROP INDEX IF EXISTS public."nucleo_solicitud_licencia_Id_Licencia_2016feb6";
+DROP INDEX IF EXISTS public."nucleo_solicitud_licencia_ID_estado_69972f47";
+DROP INDEX IF EXISTS public.nucleo_sexo_sexo_8a586732_like;
+DROP INDEX IF EXISTS public."nucleo_plan_trabajo_Idempleado_cf5ae9c9";
+DROP INDEX IF EXISTS public.nucleo_pers_juridica_pers_juridica_d625af9e_like;
+DROP INDEX IF EXISTS public.nucleo_nacionalidad_nacionalidad_7a729e49_like;
+DROP INDEX IF EXISTS public."nucleo_log_auditoria_idUsuario_78a2cf1f";
+DROP INDEX IF EXISTS public.nucleo_localidad_provincia_id_2e9deb89;
+DROP INDEX IF EXISTS public.nucleo_estadocivil_estado_civil_e187f56f_like;
+DROP INDEX IF EXISTS public.nucleo_estado_lic_vac_estado_8fad8906_like;
+DROP INDEX IF EXISTS public.nucleo_estado_empleado_estado_52695d69_like;
+DROP INDEX IF EXISTS public."nucleo_empleado_eo_id_Sucursal_505c9652";
+DROP INDEX IF EXISTS public."nucleo_empleado_eo_Idempleado_4332c487";
+DROP INDEX IF EXISTS public.nucleo_empleado_el_id_puesto_2c73d494;
+DROP INDEX IF EXISTS public.nucleo_empleado_el_id_convenio_a67c8975;
+DROP INDEX IF EXISTS public."nucleo_empleado_el_Idempleado_749748e6";
+DROP INDEX IF EXISTS public."nucleo_empleado_el_Id_estado_7a3ae9a3";
+DROP INDEX IF EXISTS public."nucleo_empleado_Id_sexo_9099efca";
+DROP INDEX IF EXISTS public."nucleo_empleado_Id_nacionalidad_5c76fe0e";
+DROP INDEX IF EXISTS public."nucleo_empleado_Id_civil_be0f3906";
+DROP INDEX IF EXISTS public."nucleo_empleado_Id_Localidad_d192a204";
+DROP INDEX IF EXISTS public."nucleo_empleado_Dni_9de4e6ca_like";
+DROP INDEX IF EXISTS public."nucleo_empleado_CUIL_253991d8_like";
+DROP INDEX IF EXISTS public.django_session_session_key_c0390e0f_like;
+DROP INDEX IF EXISTS public.django_session_expire_date_a5c62663;
+DROP INDEX IF EXISTS public.django_admin_log_user_id_c564eba6;
+DROP INDEX IF EXISTS public.django_admin_log_content_type_id_c4bce8eb;
+DROP INDEX IF EXISTS public.auth_user_username_6821ab7c_like;
+DROP INDEX IF EXISTS public.auth_user_user_permissions_user_id_a95ead1b;
+DROP INDEX IF EXISTS public.auth_user_user_permissions_permission_id_1fbb5f2c;
+DROP INDEX IF EXISTS public.auth_user_groups_user_id_6a12ed8b;
+DROP INDEX IF EXISTS public.auth_user_groups_group_id_97559544;
+DROP INDEX IF EXISTS public.auth_permission_content_type_id_2f476e4b;
+DROP INDEX IF EXISTS public.auth_group_permissions_permission_id_84c5c92e;
+DROP INDEX IF EXISTS public.auth_group_permissions_group_id_b120cbf9;
+DROP INDEX IF EXISTS public.auth_group_name_a6ea08ec_like;
+ALTER TABLE IF EXISTS ONLY public.nucleo_vacaciones_otorgadas DROP CONSTRAINT IF EXISTS nucleo_vacaciones_otorgadas_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_tipo_licencia DROP CONSTRAINT IF EXISTS nucleo_tipo_licencia_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_sucursal DROP CONSTRAINT IF EXISTS nucleo_sucursal_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_vacaciones DROP CONSTRAINT IF EXISTS nucleo_solicitud_vacaciones_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS nucleo_solicitud_licencia_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_sexo DROP CONSTRAINT IF EXISTS nucleo_sexo_sexo_key;
+ALTER TABLE IF EXISTS ONLY public.nucleo_sexo DROP CONSTRAINT IF EXISTS nucleo_sexo_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_puesto DROP CONSTRAINT IF EXISTS nucleo_puesto_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_provincia DROP CONSTRAINT IF EXISTS nucleo_provincia_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_plan_trabajo DROP CONSTRAINT IF EXISTS nucleo_plan_trabajo_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_pers_juridica DROP CONSTRAINT IF EXISTS nucleo_pers_juridica_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_pers_juridica DROP CONSTRAINT IF EXISTS nucleo_pers_juridica_pers_juridica_key;
+ALTER TABLE IF EXISTS ONLY public.nucleo_nacionalidad DROP CONSTRAINT IF EXISTS nucleo_nacionalidad_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_nacionalidad DROP CONSTRAINT IF EXISTS nucleo_nacionalidad_nacionalidad_key;
+ALTER TABLE IF EXISTS ONLY public.nucleo_log_auditoria DROP CONSTRAINT IF EXISTS nucleo_log_auditoria_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_localidad DROP CONSTRAINT IF EXISTS nucleo_localidad_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_feriado DROP CONSTRAINT IF EXISTS nucleo_feriado_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_estadocivil DROP CONSTRAINT IF EXISTS nucleo_estadocivil_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_estadocivil DROP CONSTRAINT IF EXISTS nucleo_estadocivil_estado_civil_key;
+ALTER TABLE IF EXISTS ONLY public.nucleo_estado_lic_vac DROP CONSTRAINT IF EXISTS nucleo_estado_lic_vac_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_estado_lic_vac DROP CONSTRAINT IF EXISTS nucleo_estado_lic_vac_estado_key;
+ALTER TABLE IF EXISTS ONLY public.nucleo_estado_empleado DROP CONSTRAINT IF EXISTS nucleo_estado_empleado_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_estado_empleado DROP CONSTRAINT IF EXISTS nucleo_estado_empleado_estado_key;
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS nucleo_empleado_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS nucleo_empleado_eo_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS "nucleo_empleado_eo_Fecha_EO_Idempleado_854dd74d_uniq";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS nucleo_empleado_el_pkey;
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Dni_key";
+ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_CUIL_key";
+ALTER TABLE IF EXISTS ONLY public.nucleo_convenio DROP CONSTRAINT IF EXISTS nucleo_convenio_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_session DROP CONSTRAINT IF EXISTS django_session_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_migrations DROP CONSTRAINT IF EXISTS django_migrations_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_content_type DROP CONSTRAINT IF EXISTS django_content_type_pkey;
+ALTER TABLE IF EXISTS ONLY public.django_content_type DROP CONSTRAINT IF EXISTS django_content_type_app_label_model_76bd3d3b_uniq;
+ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_user DROP CONSTRAINT IF EXISTS auth_user_username_key;
+ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permissions_user_id_permission_id_14a6b632_uniq;
+ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permissions_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_user DROP CONSTRAINT IF EXISTS auth_user_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_user_id_group_id_94350c0c_uniq;
+ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_content_type_id_codename_01ab375a_uniq;
+ALTER TABLE IF EXISTS ONLY public.auth_group DROP CONSTRAINT IF EXISTS auth_group_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_pkey;
+ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_group_id_permission_id_0cd325b0_uniq;
+ALTER TABLE IF EXISTS ONLY public.auth_group DROP CONSTRAINT IF EXISTS auth_group_name_key;
+DROP TABLE IF EXISTS public.nucleo_vacaciones_otorgadas;
+DROP TABLE IF EXISTS public.nucleo_tipo_licencia;
+DROP TABLE IF EXISTS public.nucleo_sucursal;
+DROP TABLE IF EXISTS public.nucleo_solicitud_vacaciones;
+DROP TABLE IF EXISTS public.nucleo_solicitud_licencia;
+DROP TABLE IF EXISTS public.nucleo_sexo;
+DROP TABLE IF EXISTS public.nucleo_puesto;
+DROP TABLE IF EXISTS public.nucleo_provincia;
+DROP TABLE IF EXISTS public.nucleo_plan_trabajo;
+DROP TABLE IF EXISTS public.nucleo_pers_juridica;
+DROP TABLE IF EXISTS public.nucleo_nacionalidad;
+DROP TABLE IF EXISTS public.nucleo_log_auditoria;
+DROP TABLE IF EXISTS public.nucleo_localidad;
+DROP TABLE IF EXISTS public.nucleo_feriado;
+DROP TABLE IF EXISTS public.nucleo_estadocivil;
+DROP TABLE IF EXISTS public.nucleo_estado_lic_vac;
+DROP TABLE IF EXISTS public.nucleo_estado_empleado;
+DROP TABLE IF EXISTS public.nucleo_empleado_eo;
+DROP TABLE IF EXISTS public.nucleo_empleado_el;
+DROP TABLE IF EXISTS public.nucleo_empleado;
+DROP TABLE IF EXISTS public.nucleo_convenio;
+DROP TABLE IF EXISTS public.django_session;
+DROP TABLE IF EXISTS public.django_migrations;
+DROP TABLE IF EXISTS public.django_content_type;
+DROP TABLE IF EXISTS public.django_admin_log;
+DROP TABLE IF EXISTS public.auth_user_user_permissions;
+DROP TABLE IF EXISTS public.auth_user_groups;
+DROP TABLE IF EXISTS public.auth_user;
+DROP TABLE IF EXISTS public.auth_permission;
+DROP TABLE IF EXISTS public.auth_group_permissions;
+DROP TABLE IF EXISTS public.auth_group;
+-- *not* dropping schema, since initdb creates it
+--
+-- Name: public; Type: SCHEMA; Schema: -; Owner: -
+--
+
+-- *not* creating schema, since initdb creates it
+
+
+SET default_table_access_method = heap;
+
+--
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_group (
+    id integer NOT NULL,
+    name character varying(150) NOT NULL
+);
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.auth_group ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.auth_group_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_group_permissions (
+    id bigint NOT NULL,
+    group_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.auth_group_permissions ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.auth_group_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_permission (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    content_type_id integer NOT NULL,
+    codename character varying(100) NOT NULL
+);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.auth_permission ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.auth_permission_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user (
+    id integer NOT NULL,
+    password character varying(128) NOT NULL,
+    last_login timestamp with time zone,
+    is_superuser boolean NOT NULL,
+    username character varying(150) NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL,
+    email character varying(254) NOT NULL,
+    is_staff boolean NOT NULL,
+    is_active boolean NOT NULL,
+    date_joined timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user_groups (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    group_id integer NOT NULL
+);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.auth_user_groups ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.auth_user_groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.auth_user ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.auth_user_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.auth_user_user_permissions (
+    id bigint NOT NULL,
+    user_id integer NOT NULL,
+    permission_id integer NOT NULL
+);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.auth_user_user_permissions ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.auth_user_user_permissions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_admin_log (
+    id integer NOT NULL,
+    action_time timestamp with time zone NOT NULL,
+    object_id text,
+    object_repr character varying(200) NOT NULL,
+    action_flag smallint NOT NULL,
+    change_message text NOT NULL,
+    content_type_id integer,
+    user_id integer NOT NULL,
+    CONSTRAINT django_admin_log_action_flag_check CHECK ((action_flag >= 0))
+);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.django_admin_log ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.django_admin_log_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_content_type (
+    id integer NOT NULL,
+    app_label character varying(100) NOT NULL,
+    model character varying(100) NOT NULL
+);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.django_content_type ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.django_content_type_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_migrations (
+    id bigint NOT NULL,
+    app character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
+    applied timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.django_migrations ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.django_migrations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: django_session; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.django_session (
+    session_key character varying(40) NOT NULL,
+    session_data text NOT NULL,
+    expire_date timestamp with time zone NOT NULL
+);
+
+
+--
+-- Name: nucleo_convenio; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_convenio (
+    id_convenio integer NOT NULL,
+    tipo_convenio character varying(100) NOT NULL
+);
+
+
+--
+-- Name: nucleo_convenio_id_convenio_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_convenio ALTER COLUMN id_convenio ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_convenio_id_convenio_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_empleado; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_empleado (
+    fecha_e date NOT NULL,
+    "Idempleado" integer NOT NULL,
+    nombres character varying(40) NOT NULL,
+    apellido character varying(40) NOT NULL,
+    dni character varying(15) NOT NULL,
+    fecha_nac date NOT NULL,
+    num_hijos integer NOT NULL,
+    dr_personal character varying(40) NOT NULL,
+    telefono character varying(20) NOT NULL,
+    cuil character varying(15) NOT NULL,
+    id_civil bigint NOT NULL,
+    id_localidad bigint NOT NULL,
+    id_nacionalidad bigint NOT NULL,
+    id_sexo bigint NOT NULL
+);
+
+
+--
+-- Name: nucleo_empleado_el; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_empleado_el (
+    id bigint NOT NULL,
+    fecha_el date NOT NULL,
+    alta_ant date NOT NULL,
+    id_estado integer NOT NULL,
+    idempleado integer NOT NULL,
+    id_convenio integer NOT NULL,
+    id_puesto integer NOT NULL,
+    fecha_est date
+);
+
+
+--
+-- Name: nucleo_empleado_el_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_empleado_el ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_empleado_el_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_empleado_eo; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_empleado_eo (
+    id bigint NOT NULL,
+    fecha_eo date NOT NULL,
+    idempleado integer NOT NULL,
+    id_sucursal integer NOT NULL
+);
+
+
+--
+-- Name: nucleo_empleado_eo_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_empleado_eo ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_empleado_eo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_estado_empleado; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_estado_empleado (
+    id_estado integer NOT NULL,
+    estado character varying(40) NOT NULL
+);
+
+
+--
+-- Name: nucleo_estado_empleado_ID_estado_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_estado_empleado ALTER COLUMN id_estado ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public."nucleo_estado_empleado_ID_estado_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_estado_lic_vac; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_estado_lic_vac (
+    id_estado integer NOT NULL,
+    estado character varying(40) NOT NULL
+);
+
+
+--
+-- Name: nucleo_estado_lic_vac_ID_estado_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_estado_lic_vac ALTER COLUMN id_estado ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public."nucleo_estado_lic_vac_ID_estado_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_estadocivil; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_estadocivil (
+    id bigint NOT NULL,
+    estado_civil character varying(40) NOT NULL
+);
+
+
+--
+-- Name: nucleo_estadocivil_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_estadocivil ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_estadocivil_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_feriado; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_feriado (
+    id_feriado integer NOT NULL,
+    descripcion character varying(120) NOT NULL,
+    fecha date NOT NULL
+);
+
+
+--
+-- Name: nucleo_feriado_id_Feriado_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_feriado ALTER COLUMN id_feriado ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public."nucleo_feriado_id_Feriado_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_localidad; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_localidad (
+    id bigint NOT NULL,
+    localidad character varying(100) NOT NULL,
+    provincia_id bigint NOT NULL
+);
+
+
+--
+-- Name: nucleo_localidad_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_localidad ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_localidad_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_log_auditoria; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_log_auditoria (
+    id bigint NOT NULL,
+    idusuario integer NOT NULL,
+    fecha_cambio timestamp with time zone NOT NULL,
+    nombre_tabla character varying(100) NOT NULL,
+    idregistro integer NOT NULL,
+    accion character varying(40) NOT NULL,
+    cambio jsonb NOT NULL
+);
+
+
+--
+-- Name: nucleo_log_auditoria_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_log_auditoria ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_log_auditoria_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_nacionalidad; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_nacionalidad (
+    id bigint NOT NULL,
+    nacionalidad character varying(40) NOT NULL
+);
+
+
+--
+-- Name: nucleo_nacionalidad_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_nacionalidad ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_nacionalidad_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_pers_juridica; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_pers_juridica (
+    id_pers_juridica integer NOT NULL,
+    pers_juridica character varying(50) NOT NULL,
+    domicilio character varying(120) NOT NULL,
+    cond_iva character varying(45) NOT NULL,
+    cuit character varying(15) NOT NULL,
+    cond_iibb character varying(45) NOT NULL
+);
+
+
+--
+-- Name: nucleo_pers_juridica_id_pers_juridica_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_pers_juridica ALTER COLUMN id_pers_juridica ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_pers_juridica_id_pers_juridica_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_plan_trabajo; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_plan_trabajo (
+    id bigint NOT NULL,
+    lunes boolean NOT NULL,
+    martes boolean NOT NULL,
+    miercoles boolean NOT NULL,
+    jueves boolean NOT NULL,
+    viernes boolean NOT NULL,
+    sabado boolean NOT NULL,
+    domingo boolean NOT NULL,
+    start_time time without time zone NOT NULL,
+    end_time time without time zone NOT NULL,
+    idempleado integer NOT NULL
+);
+
+
+--
+-- Name: nucleo_plan_trabajo_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_plan_trabajo ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_plan_trabajo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_provincia; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_provincia (
+    id bigint NOT NULL,
+    provincia character varying(100) NOT NULL
+);
+
+
+--
+-- Name: nucleo_provincia_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_provincia ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_provincia_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_puesto; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_puesto (
+    id_puesto integer NOT NULL,
+    tipo_puesto character varying(60) NOT NULL
+);
+
+
+--
+-- Name: nucleo_puesto_id_puesto_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_puesto ALTER COLUMN id_puesto ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_puesto_id_puesto_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_sexo; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_sexo (
+    id bigint NOT NULL,
+    sexo character varying(20) NOT NULL
+);
+
+
+--
+-- Name: nucleo_sexo_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_sexo ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_sexo_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_solicitud_licencia; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_solicitud_licencia (
+    idsolicitudlic integer NOT NULL,
+    fecha_sqllc date NOT NULL,
+    fecha_desde date NOT NULL,
+    fecha_hasta date NOT NULL,
+    comentario character varying(200) NOT NULL,
+    texto_gestor character varying NOT NULL,
+    archivo character varying(200),
+    id_estado integer NOT NULL,
+    idempleado integer NOT NULL,
+    id_licencia integer NOT NULL
+);
+
+
+--
+-- Name: nucleo_solicitud_licencia_idSolicitudLic_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_solicitud_licencia ALTER COLUMN idsolicitudlic ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public."nucleo_solicitud_licencia_idSolicitudLic_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_solicitud_vacaciones; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_solicitud_vacaciones (
+    idsolicitudvac integer NOT NULL,
+    fecha_sol_vac date NOT NULL,
+    fecha_desde date NOT NULL,
+    fecha_hasta date NOT NULL,
+    comentario character varying(200) NOT NULL,
+    id_estado integer NOT NULL,
+    idempleado integer NOT NULL
+);
+
+
+--
+-- Name: nucleo_solicitud_vacaciones_idSolicitudVac_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_solicitud_vacaciones ALTER COLUMN idsolicitudvac ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public."nucleo_solicitud_vacaciones_idSolicitudVac_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_sucursal; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_sucursal (
+    id_sucursal integer NOT NULL,
+    sucursal character varying(30) NOT NULL,
+    suc_dire character varying(120) NOT NULL,
+    suc_mail character varying(50) NOT NULL,
+    id_pers_juridica integer NOT NULL
+);
+
+
+--
+-- Name: nucleo_sucursal_id_sucursal_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_sucursal ALTER COLUMN id_sucursal ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_sucursal_id_sucursal_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_tipo_licencia; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_tipo_licencia (
+    id_licencia integer NOT NULL,
+    descripcion character varying(100) NOT NULL,
+    dias integer,
+    pago boolean NOT NULL
+);
+
+
+--
+-- Name: nucleo_tipo_licencia_id_Licencia_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_tipo_licencia ALTER COLUMN id_licencia ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public."nucleo_tipo_licencia_id_Licencia_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Name: nucleo_vacaciones_otorgadas; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.nucleo_vacaciones_otorgadas (
+    id_vacaciones integer NOT NULL,
+    inicio_consumo date NOT NULL,
+    fin_consumo date NOT NULL,
+    dias_disponibles integer NOT NULL,
+    dias_consumidos integer NOT NULL,
+    idempleado integer NOT NULL
+);
+
+
+--
+-- Name: nucleo_vacaciones_otorgadas_id_vacaciones_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+ALTER TABLE public.nucleo_vacaciones_otorgadas ALTER COLUMN id_vacaciones ADD GENERATED BY DEFAULT AS IDENTITY (
+    SEQUENCE NAME public.nucleo_vacaciones_otorgadas_id_vacaciones_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1
+);
+
+
+--
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_group (id, name) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
+1	Can add log entry	1	add_logentry
+2	Can change log entry	1	change_logentry
+3	Can delete log entry	1	delete_logentry
+4	Can view log entry	1	view_logentry
+5	Can add permission	2	add_permission
+6	Can change permission	2	change_permission
+7	Can delete permission	2	delete_permission
+8	Can view permission	2	view_permission
+9	Can add group	3	add_group
+10	Can change group	3	change_group
+11	Can delete group	3	delete_group
+12	Can view group	3	view_group
+13	Can add user	4	add_user
+14	Can change user	4	change_user
+15	Can delete user	4	delete_user
+16	Can view user	4	view_user
+17	Can add content type	5	add_contenttype
+18	Can change content type	5	change_contenttype
+19	Can delete content type	5	delete_contenttype
+20	Can view content type	5	view_contenttype
+21	Can add session	6	add_session
+22	Can change session	6	change_session
+23	Can delete session	6	delete_session
+24	Can view session	6	view_session
+25	Can add convenio	7	add_convenio
+26	Can change convenio	7	change_convenio
+27	Can delete convenio	7	delete_convenio
+28	Can view convenio	7	view_convenio
+29	Can add estado_ empleado	8	add_estado_empleado
+30	Can change estado_ empleado	8	change_estado_empleado
+31	Can delete estado_ empleado	8	delete_estado_empleado
+32	Can view estado_ empleado	8	view_estado_empleado
+33	Can add estado_li c_vac	9	add_estado_lic_vac
+34	Can change estado_li c_vac	9	change_estado_lic_vac
+35	Can delete estado_li c_vac	9	delete_estado_lic_vac
+36	Can view estado_li c_vac	9	view_estado_lic_vac
+37	Can add estado civil	10	add_estadocivil
+38	Can change estado civil	10	change_estadocivil
+39	Can delete estado civil	10	delete_estadocivil
+40	Can view estado civil	10	view_estadocivil
+41	Can add feriado	11	add_feriado
+42	Can change feriado	11	change_feriado
+43	Can delete feriado	11	delete_feriado
+44	Can view feriado	11	view_feriado
+45	Can add localidad	12	add_localidad
+46	Can change localidad	12	change_localidad
+47	Can delete localidad	12	delete_localidad
+48	Can view localidad	12	view_localidad
+49	Can add log_auditoria	13	add_log_auditoria
+50	Can change log_auditoria	13	change_log_auditoria
+51	Can delete log_auditoria	13	delete_log_auditoria
+52	Can view log_auditoria	13	view_log_auditoria
+53	Can add nacionalidad	14	add_nacionalidad
+54	Can change nacionalidad	14	change_nacionalidad
+55	Can delete nacionalidad	14	delete_nacionalidad
+56	Can view nacionalidad	14	view_nacionalidad
+57	Can add pers_juridica	15	add_pers_juridica
+58	Can change pers_juridica	15	change_pers_juridica
+59	Can delete pers_juridica	15	delete_pers_juridica
+60	Can view pers_juridica	15	view_pers_juridica
+61	Can add provincia	16	add_provincia
+62	Can change provincia	16	change_provincia
+63	Can delete provincia	16	delete_provincia
+64	Can view provincia	16	view_provincia
+65	Can add puesto	17	add_puesto
+66	Can change puesto	17	change_puesto
+67	Can delete puesto	17	delete_puesto
+68	Can view puesto	17	view_puesto
+69	Can add sexo	18	add_sexo
+70	Can change sexo	18	change_sexo
+71	Can delete sexo	18	delete_sexo
+72	Can view sexo	18	view_sexo
+73	Can add tipo_ licencia	19	add_tipo_licencia
+74	Can change tipo_ licencia	19	change_tipo_licencia
+75	Can delete tipo_ licencia	19	delete_tipo_licencia
+76	Can view tipo_ licencia	19	view_tipo_licencia
+77	Can add empleado	20	add_empleado
+78	Can change empleado	20	change_empleado
+79	Can delete empleado	20	delete_empleado
+80	Can view empleado	20	view_empleado
+81	Can add login	21	add_login
+82	Can change login	21	change_login
+83	Can delete login	21	delete_login
+84	Can view login	21	view_login
+85	Can add plan_ trabajo	22	add_plan_trabajo
+86	Can change plan_ trabajo	22	change_plan_trabajo
+87	Can delete plan_ trabajo	22	delete_plan_trabajo
+88	Can view plan_ trabajo	22	view_plan_trabajo
+89	Can add solicitud_ vacaciones	23	add_solicitud_vacaciones
+90	Can change solicitud_ vacaciones	23	change_solicitud_vacaciones
+91	Can delete solicitud_ vacaciones	23	delete_solicitud_vacaciones
+92	Can view solicitud_ vacaciones	23	view_solicitud_vacaciones
+93	Can add sucursal	24	add_sucursal
+94	Can change sucursal	24	change_sucursal
+95	Can delete sucursal	24	delete_sucursal
+96	Can view sucursal	24	view_sucursal
+97	Can add solicitud_ licencia	25	add_solicitud_licencia
+98	Can change solicitud_ licencia	25	change_solicitud_licencia
+99	Can delete solicitud_ licencia	25	delete_solicitud_licencia
+100	Can view solicitud_ licencia	25	view_solicitud_licencia
+101	Can add vacaciones_ otorgadas	26	add_vacaciones_otorgadas
+102	Can change vacaciones_ otorgadas	26	change_vacaciones_otorgadas
+103	Can delete vacaciones_ otorgadas	26	delete_vacaciones_otorgadas
+104	Can view vacaciones_ otorgadas	26	view_vacaciones_otorgadas
+105	Can add empleado_eo	27	add_empleado_eo
+106	Can change empleado_eo	27	change_empleado_eo
+107	Can delete empleado_eo	27	delete_empleado_eo
+108	Can view empleado_eo	27	view_empleado_eo
+109	Can add empleado_el	28	add_empleado_el
+110	Can change empleado_el	28	change_empleado_el
+111	Can delete empleado_el	28	delete_empleado_el
+112	Can view empleado_el	28	view_empleado_el
+113	Can add estado_laboral	29	add_estado_laboral
+114	Can change estado_laboral	29	change_estado_laboral
+115	Can delete estado_laboral	29	delete_estado_laboral
+116	Can view estado_laboral	29	view_estado_laboral
+\.
+
+
+--
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+55	pbkdf2_sha256$1000000$vn1Q9Vc0rUwYzmb2MsKeTb$a/CAvkR7vGRUnVH/7TeIb/HcIRPqHQGY6x7LJVAmiys=	\N	f	ignacioborghi	Ignacio	Borghi	ygumy44@gmail.com	t	t	2025-08-28 09:39:48.885406+00
+40		\N	f	u_test1				f	t	2025-08-27 03:41:07.587284+00
+56	pbkdf2_sha256$1000000$Jxmx0YJ5Xy1BwwUlhTHgkP$96jXEeKU824VwBCO04ZF43FluSA8iYjqwRZvld7YLvE=	\N	f	ignaciossssborghiss	Ignaciossss	Borghiss	ygumy44@gmail.com	t	t	2025-08-30 02:31:19.713794+00
+41		\N	f	u_test2				f	t	2025-08-27 03:41:07.589829+00
+57	pbkdf2_sha256$1000000$kE7nIbb8i8mT7P5LcAOM1Z$KXvs5uSTJQu4dO0KwL5JPARdlb/1CNFmvKxU0Zsa2RQ=	\N	f	ignacionnnnnnnnnborghi	Ignacionnnnnnnnn	Borghi	ygumy44@gmail.com	t	t	2025-08-30 03:18:31.810577+00
+58	pbkdf2_sha256$1000000$Ug6aIDC5cG70xmpHqYixfJ$Op8M5djru7/AtBKCKlYJPNUzU88hgHVzsIDZ8a2c7VA=	\N	f	ignacioborghi1	Ignacio	Borghi	ygumy44@gmail.com	t	t	2025-08-30 04:15:22.88773+00
+23	pbkdf2_sha256$1000000$9bAiR3CMvdD2AqprkaVJil$M9UWD1zoFRrdFCNS70PXegeTv6U3tTPsKwS07EZQ2F8=	\N	f	test_emp_http				f	t	2025-08-27 00:40:20.740447+00
+24	pbkdf2_sha256$1000000$eB61hlRCUasi15JQMDqLW8$QuNUdvpRp4kqcDXMMNtc+seHWedPkhlAL4y1LbjlQOY=	\N	f	test_gestor_255305				t	t	2025-08-27 00:41:45.862161+00
+26	pbkdf2_sha256$1000000$x69Oe3Y7ZYfch5G7qfEiTV$atlm4q6WSdW+IG3+g6LTdQw4GoIZSkFfN+hAndKM2uM=	\N	f	test_gestor_255334				t	t	2025-08-27 00:42:14.604729+00
+42	pbkdf2_sha256$1000000$7Gw9Ur1Zp44ANuCtn9wMcf$GcY2K07gdkK/KAhu6Dgd4KPlRycbeLsufK98M6jNW8I=	2025-08-27 04:15:26.255967+00	t	admin_temp			admin_temp@example.com	t	t	2025-08-27 04:15:25.522062+00
+35	pbkdf2_sha256$1000000$OXOmo8NBdws8w9xkkIOqAP$yMFmoDr4JWwsBDj+iNwx9h1yp2N7oewI5D92+SSybTk=	2025-08-27 01:28:34.896838+00	f	test_gestor_delete				t	t	2025-08-27 01:28:05.525442+00
+28	pbkdf2_sha256$1000000$jud0o6h423HBZb6fIVvkA3$l/uh01wjtP6k86N93ykfEm5C5IDnAWEv6DWkmZexNVY=	\N	f	test_gestor_256323				t	t	2025-08-27 00:58:43.923029+00
+15	pbkdf2_sha256$1000000$xWHAqWrjUNcxBlM1u38Qts$ZnDfU1/78yo2PujTI4KxvDCH/v3TPm8ie6ge0rVejWE=	2025-08-30 15:10:38.503307+00	f	anamariagomez	Ana Maria	Gomez	jeregalarze@gmail.com	t	t	2025-08-23 21:16:00.579116+00
+52	pbkdf2_sha256$1000000$wNAapgvaCWMypJ988wv26W$RsZLtS6zaWq8PdkAojMj5JBObuSbT6MBRT02mQJG6vM=	2025-08-28 09:26:44.412776+00	t	dbg_admin			dbg@example.com	t	t	2025-08-28 08:59:42.582079+00
+30	pbkdf2_sha256$1000000$lmzjn15EyZFf9iK8QHFtX0$m0MzfTaa7W2wDgQgqGF9ElZ80VVBEo0ZZiM2pQTOkeA=	\N	f	test_gestor_256393				t	t	2025-08-27 00:59:53.799079+00
+22	pbkdf2_sha256$1000000$SXPzO9OvOwUT2N0qAjow50$qMs+hNy6GQpfhRz8y4OAvIEyP34PY027n5roqnJjepw=	2025-08-27 00:59:54.83782+00	f	test_gestor				t	t	2025-08-27 00:40:20.294616+00
+44	pbkdf2_sha256$1000000$A3ypAcRuAGeEY5sKAAVuqH$dioQlDY+MBRa0Lpykeek82qb6YYeXJG/aoEewMpVha4=	2025-08-27 05:09:28.853439+00	f	gestor_test			gestor@example.com	t	t	2025-08-27 04:31:29.830271+00
+5	pbkdf2_sha256$1000000$aZHmlAmL7at6B2Rh8Tw1qI$uea8AXD+mgroNJZzDtP5e++sLl3P0S8zFH+VDXHRMlc=	2025-09-23 18:16:40.947843+00	f	rafaelgalarze	Rafael	Galarze	jeregalarze@gmail.com	f	t	2025-08-19 23:36:37.695718+00
+1	pbkdf2_sha256$1000000$QnNecP7TX7sGwBiYcLbzDl$JCN2RQu7Y1VaTv237d1om3nfDc++bARhdKT2e2Ux2bw=	2025-09-23 18:25:19.497878+00	t	admin	TestCambio	Principal	admin@admin.com	t	t	2025-08-01 08:56:01.841564+00
+3	pbkdf2_sha256$1000000$8Vdxjrbsq8iyigYd5vA0gB$8tC1Ec2N7WvywBjoOPfnczcpnS9F9W35nlWn8gDaXnQ=	2025-09-22 23:52:05.488164+00	f	jeremiasgalarze	Jeremias	Galarze	jeregalarze@gmail.com	t	t	2025-08-01 12:00:04.68777+00
+\.
+
+
+--
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_content_type (id, app_label, model) FROM stdin;
+1	admin	logentry
+2	auth	permission
+3	auth	group
+4	auth	user
+5	contenttypes	contenttype
+6	sessions	session
+7	nucleo	convenio
+8	nucleo	estado_empleado
+9	nucleo	estado_lic_vac
+10	nucleo	estadocivil
+11	nucleo	feriado
+12	nucleo	localidad
+13	nucleo	log_auditoria
+14	nucleo	nacionalidad
+15	nucleo	pers_juridica
+16	nucleo	provincia
+17	nucleo	puesto
+18	nucleo	sexo
+19	nucleo	tipo_licencia
+20	nucleo	empleado
+21	nucleo	login
+22	nucleo	plan_trabajo
+23	nucleo	solicitud_vacaciones
+24	nucleo	sucursal
+25	nucleo	solicitud_licencia
+26	nucleo	vacaciones_otorgadas
+27	nucleo	empleado_eo
+28	nucleo	empleado_el
+29	nucleo	estado_laboral
+\.
+
+
+--
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
+1	contenttypes	0001_initial	2025-06-11 17:32:06.369144+00
+2	auth	0001_initial	2025-06-11 17:32:06.620457+00
+3	admin	0001_initial	2025-06-11 17:32:06.682293+00
+4	admin	0002_logentry_remove_auto_add	2025-06-11 17:32:06.709221+00
+5	admin	0003_logentry_add_action_flag_choices	2025-06-11 17:32:06.727172+00
+6	contenttypes	0002_remove_content_type_name	2025-06-11 17:32:06.760085+00
+7	auth	0002_alter_permission_name_max_length	2025-06-11 17:32:06.780032+00
+8	auth	0003_alter_user_email_max_length	2025-06-11 17:32:06.803967+00
+9	auth	0004_alter_user_username_opts	2025-06-11 17:32:06.830898+00
+10	auth	0005_alter_user_last_login_null	2025-06-11 17:32:06.855829+00
+11	auth	0006_require_contenttypes_0002	2025-06-11 17:32:06.860815+00
+12	auth	0007_alter_validators_add_error_messages	2025-06-11 17:32:06.897716+00
+13	auth	0008_alter_user_username_max_length	2025-06-11 17:32:06.958585+00
+14	auth	0009_alter_user_last_name_max_length	2025-06-11 17:32:06.972553+00
+15	auth	0010_alter_group_name_max_length	2025-06-11 17:32:06.996489+00
+16	auth	0011_update_proxy_permissions	2025-06-11 17:32:07.020426+00
+17	auth	0012_alter_user_first_name_max_length	2025-06-11 17:32:07.046356+00
+18	nucleo	0001_initial	2025-06-11 17:32:07.60483+00
+19	sessions	0001_initial	2025-06-11 17:32:07.63831+00
+20	nucleo	0002_alter_empleado_id_localidad_and_more	2025-06-16 03:25:05.352627+00
+21	nucleo	0003_remove_empleado_id_sucursal_alter_empleado_fecha_e_and_more	2025-06-16 03:51:02.008139+00
+22	nucleo	0004_empleado_email	2025-06-18 03:25:27.669199+00
+23	nucleo	0005_remove_empleado_email_empleado_user	2025-06-18 19:44:04.603602+00
+24	nucleo	0006_remove_solicitud_licencia_toma_gestor_and_more	2025-07-05 04:48:37.40841+00
+25	nucleo	0002_rename_dias_permisados_vacaciones_otorgadas_dias_disponibles_and_more	2025-07-05 04:53:28.771058+00
+26	nucleo	0003_empleado_email	2025-07-07 05:11:53.914396+00
+27	nucleo	0004_remove_empleado_email_alter_log_auditoria_idusuario_and_more	2025-07-07 06:16:32.405463+00
+28	nucleo	0005_alter_empleado_idempleado	2025-07-08 21:26:13.532314+00
+29	nucleo	0002_empleado_el_fecha_est	2025-08-01 09:07:34.488285+00
+30	nucleo	0003_estado_laboral	2025-08-01 09:11:18.215639+00
+31	nucleo	0004_rename_estado_laboral_estado_laboral_estado_and_more	2025-08-01 09:25:02.79463+00
+32	nucleo	0005_alter_tipo_licencia_dias	2025-08-26 19:08:29.550632+00
+\.
+
+
+--
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
+2fayqyovfpubacyzxmouv7w6937vcpxe	.eJxVjEEOwiAQRe_C2pDCSDu4dN8zkIGZStVAUtqV8e7apAvd_vfef6lA25rD1mQJM6uLsur0u0VKDyk74DuVW9WplnWZo94VfdCmx8ryvB7u30Gmlr-1ODJAzntnQYSS7aGTFA1OU0TkwQGQB0Ig2yNIZD8YQLFn2zEJonp_AOieN9o:1uPmEx:1YkhbFTSFx0VI1BOK4L3BDxtwI_YsybV4NuFU2pyPlM	2025-06-26 18:01:27.867615+00
+u7aj4abx7nlqk3vuog4e39ganphn5qad	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQgII:MPkcehIOd_68FQFiFGrED6h4XtCJ9aovwc_Vk7mTOgU	2025-06-29 05:52:38.480294+00
+0gczdkztepue8t7r51o0180ncd7uvswg	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQTST:NPEzLYUUN7A7QCnfCqqbfp1CzXbwUjHI5hO0lNzKIU4	2025-06-28 16:10:17.37376+00
+en2hoge6bd9m7ni1sqm8fmnva6bxy0v4	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1urOTp:13oUXhL-tPXHM1TEJdifquK9sYOohMNSCIJjdoz7o2M	2025-09-10 22:18:57.694923+00
+d644nl5i5yh0ywubypiwafxjovpeyv3r	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uPq95:9XLzf6WGre-vm4rtgG9J6XBi2IxT98Coj-N7iZgaDLw	2025-06-26 22:11:39.629819+00
+blpie01h97rh8mm0bboobxze6loe4hov	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uPtcl:lOtGAVXMTmdXnsVnms5n2UplBKmxXBSv0NJUvXiy4D8	2025-06-27 01:54:31.12679+00
+cbts4zomx6ctiwkr350ort0iy91dmpq5	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXDj:C39twvMI0K9jYNavzlSBUTOLJCCT8uuyYWKYa4QgrOA	2025-09-11 07:38:55.015399+00
+5xz4ek779jouor89iijjfkug3bj0i8me	.eJxVjEEOwiAQRe_C2pDSDrS4dO8ZCDPMSNVAUtqV8e7apAvd_vfef6kQtzWHrfES5qTOCkCdfkeM9OCyk3SP5VY11bIuM-pd0Qdt-loTPy-H-3eQY8vfWgwDgwMRiySDB-DEYxd7JIyIEznxkGgwhicybK1Yy86O0pneC5N6fwBBwTli:1ur7oo:xuznQuu9ceQHRY-HQnYSDj46d-e0MaFq4Dcp4BE0AII	2025-09-10 04:31:30.913529+00
+6w5ejdy2so9umjo7fkjumysnf5hq2r71	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ80:dnDEyJ7OBGJKTugBRoDMoXActgZLC7GNT_4CxkGYHxA	2025-09-11 09:41:08.101977+00
+yudd0rba606xw4qqix9m87jalogj7tj5	.eJxVjMEOwiAQRP-FsyEgWxY8evcbyMJupWrapLQn47_bJj3oaZJ5b-atEq1LTWuTOQ2sLgpAnX7LTOUp4074QeN90mUal3nIelf0QZu-TSyv6-H-HVRqdVv7gMZ1hbk3Z7KAyEgEYozDzjvn0GNvJfZRwpYZ2BobIIqXbNF1oD5f8M83VA:1ur8Jm:lSBu2fAWBGfPSkZb6YnboCFPL-8xtC4fMj_DkC-7LT4	2025-09-10 05:03:30.722642+00
+n29hxqb4v78zjijsam4hewlyhqqej5rk	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQxGv:TNGIVHsGu7N11zoxrZ4ZJkxCIyPoLiiImPfFTWGGctc	2025-06-30 00:00:21.130231+00
+ep9m1q1pfah1en5ftj9oujahxvly75vm	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uZi8J:crj1Ewzh_gghST0ngyX1hs4pHCtuBB5qbcOR3yL81qw	2025-07-24 03:39:39.351642+00
+4fu24152yufsed0fcnrk4p92l36d5et5	.eJxVjEEOwiAQRe_C2pDCSDu4dN8zkIGZStVAUtqV8e7apAvd_vfef6lA25rD1mQJM6uLsur0u0VKDyk74DuVW9WplnWZo94VfdCmx8ryvB7u30Gmlr-1ODJAzntnQYSS7aGTFA1OU0TkwQGQB0Ig2yNIZD8YQLFn2zEJonp_AOieN9o:1uPluw:VaZGRAvQShgBbyKRQkOwV2akEKjb1E8zMa9Cs7iaNgM	2025-06-26 17:40:46.985126+00
+v7lqzy10afrppgmyxw6ixpd1314uoc4d	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWRK:vvX23CuamSB2V5r4J3mkh7YnjdkuAUSQYtESqXJIGDo	2025-09-11 06:48:54.980746+00
+cg3svudkpitzvvzxsiicz2felzmfw9k2	.eJxVjE0OwiAYBe_C2hCo_Lp03zOQBx9I1dCktCvj3bVJF7p9M_NeLGBba9h6XsJE7MKUZqffMSI9ctsJ3dFuM09zW5cp8l3hB-18nCk_r4f7d1DR67fORmkZhc8RZGyE1kJjUGUonqSDNcVpyt5JiLMHJYLzioorCSiWEnt_ACAJOWc:1ur9tK:co65nwOLOqnyIKUuCc2aTu9S0kXWMMFPLs-u29_aMSY	2025-09-10 06:44:18.487926+00
+xxgwq0xohlo3vjznazjhdgptuiyaxu9z	.eJxVjMsOwiAQRf-FtSGAPF267zeQgRmkaiAp7cr479qkC93ec859sQjbWuM2aIkzsgvTjp1-xwT5QW0neId26zz3ti5z4rvCDzr41JGe18P9O6gw6rd2WufgEpqkjKcCkjxICMIEZ1AiWQBrnIXizp5USdkaVYRHykIDqsDeHxpkOKk:1urA0I:RlriwozBCJX9uNLGjKTwKeMy-FdT6XxfK4fx8a-tcJE	2025-09-10 06:51:30.975097+00
+nzax8sx7mtx0v9ax3rkh62lzltsew3kt	e30:1upBdg:i93Z5K_Xw3X69IUoCyi_Z5zE5E-Dmv1wNsI56txN7_s	2025-09-04 20:12:00.234801+00
+g7xhk0390q77p97tgfdzgt6m743xf5i4	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWTL:8v9yQZHnvd99YZCQc_UiSp-aG67EVnul446jEntlIQk	2025-09-11 06:50:59.555972+00
+pp5j6gp5tfbh05kkg048a8re28fkb7ty	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWXV:4m56VChOYUcLbBEvpIxqFupa5XgXrApyEQDEIqQbTdg	2025-09-11 06:55:17.752069+00
+rnkra57ryppsxtaflzmicoicpgg3698q	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXrg:hUQ0Rz0UUcrFRjtDmp3Vy6jRvRRH9WPtxt_Wza89r6o	2025-09-11 08:20:12.018326+00
+d12vcwbg54qunqpxh1ninsw5ke7orvd1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWiS:g0yIS6BQezF5ntubJKwSMktHRAlCFjdhmP-9vHUGRCA	2025-09-11 07:06:36.470274+00
+bwski8v6twysrgbbnu1myvxs9e7nio37	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWlc:gLvfr12uoCvOH_210fj00oKHF1b84rK-KzNotJGQv7A	2025-09-11 07:09:52.993633+00
+ipq7y2lfktfgjjt9438x182s9fme5w7w	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXu5:BSF0gcnplh9dI8H8lXQE-kQGHUYCBkjroEX5oIiOLlQ	2025-09-11 08:22:41.918531+00
+15kdgcfiu6b0grdynyddb4v6oiron69n	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWp3:05n6TbxQUvFKWzRLmegvkzEbikkdj5KKE0j3NKGYBOM	2025-09-11 07:13:25.244846+00
+ed6vim95n5w5qm829clqab4yg9t057wu	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWwZ:VVYNNZxs8Ffi0Qq5gwaDzVbOaRlx1YCKtGBVbh6hfbs	2025-09-11 07:21:11.974266+00
+spn7u9xjn0b4j6s0e6dvh11mv8e4rz0b	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX5V:ojmuf8URWTVX8qxUAy7qDcvt-ld0fqjTjhNK1R2UvgM	2025-09-11 07:30:25.060693+00
+ict5p1pcxgbn7p8anw5djysxo74kzc1x	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYd0:ljZTPd42Zciez3lwfvrYMgmpahAeYi5StaXUo-j5szM	2025-09-11 09:09:06.241764+00
+wc83ltt9qcls1vc7ws794lk82dzkddaj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZE6:ETqQeGxxAg6pWufN8JMucasTvVvKVZTBwbCqyPU7MW8	2025-09-11 09:47:26.322425+00
+7fu4zh589qz3btzbfbbnihbnkr6bidci	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlFr:yQodROO3titxnUlui4es6m2crl7vTd_S2n_WRH_wgXM	2025-09-11 22:38:03.266379+00
+hwx5ugvo90gmus5herm8tegbj6g0q1p8	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urk94:1RFiRSKY1JLE155-lOqEyASHXY0jyjyIrUoJEgg_6PM	2025-09-11 21:26:58.061933+00
+l95fdmfft5s6k5i6qzlolunrmy8qcl42	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXYb:8dtGU2ilLZgvEp3ajToBMOT8F7osSq8UT5UGqeXan5Q	2025-09-11 08:00:29.898658+00
+2r162y4r28xfci8fxihfd5ftckukozok	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkDp:j8gHNJyyoG5R6eBpArh9-sWcrT-JO-MvRDgnI41QsbA	2025-09-11 21:31:53.120974+00
+b5kuy4p41mgijdluh778wuqplybgquxo	.eJxVjMEOgjAQRP-lZ9Ms3W3revTuN5BtWSxqIKFwMv67kHDQ48x7M2_TyrqUdq06t0NnLobInH7LJPmp4066h4z3yeZpXOYh2V2xB632NnX6uh7u30GRWrZ1kAbFEZNj8NCzT86jniNoUGJuckCO1EtE4OQh-y0DkXhoFAHZfL7MiTYs:1ur88t:8qRp35s4Z9aCvZGAIh5OTH2ZJcork13oc0SiTy790kk	2025-09-10 04:52:15.328883+00
+qbh4qc44chlb0fzx3t327oa4z6q8nfc3	.eJxVjEEOwiAQRe_C2hCgA60u3fcMZJiZStVAUtqV8e7apAvd_vfef6mI25rj1mSJM6uLCladfseE9JCyE75juVVNtazLnPSu6IM2PVaW5_Vw_w4ytvytgVkSAjkMFBi8EBgi56feGwhi6GwGnJI1ltGR7V1KQWw3dEKWmEG9PzHBOQA:1uhYOx:QA1k6hVsDFsn68TGfws0B3Hyhc5Il8c1f0wbeFU390s	2025-08-14 18:53:15.995188+00
+wsn2xj7mckckvcvhi2b9dn2ivwlclvtd	.eJxVjLsOAiEUBf-F2hAReVna7zcQuA9ZNZAsu5Xx35VkC-1OzkzmJWLa1hK3TkucUVyE8eLwe-YED6qD4D3VW5PQ6rrMWQ5F7rTLqSE9r7v7Fyipl9HV7I7OaWUheMvE3p-NIWCHnE9aE1L-Th8UKwwZiGwCZ1IIFghBifcHHtA5XQ:1ugR4e:C2rh5b95uuxUx2Cyd9WOoQZDxhaeKJA13Ce4IV8Rpk0	2025-08-11 16:51:40.840977+00
+6t9vbf5w29gu4f3w1e35cfryunl19dh8	.eJxVjE0OwiAYBe_C2pDSQgCX7j0D4fuTqoGktCvj3bVJF7p9M_NeKuVtLWnrvKSZ1FlZq06_I2R8cN0J3XO9NY2trssMelf0Qbu-NuLn5XD_Dkru5VsHQ1OmLBFi9OAocmAZA3kvSITgOAwg1jiDyDJFnuxoYxiCAIJhVu8PRB45pw:1ur8PY:Tn9OJA5g6FehrWD3wTcZkwk9xE9u6W5sWMLw_F9wDMM	2025-09-10 05:09:28.854353+00
+84oa45x2lp8pt7oj9r1apohyz87p9xru	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWSG:X_t0LSx6fvkPNSVd3yTo13xsQOS5uRzsaA1cLMZKU6Q	2025-09-11 06:49:52.124921+00
+0i0dkmzg244b4ttp77kpxyyrv355t2mw	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1ueQ6c:VJgVxw7BG_xrN2e5U7oh3BZhoSv4H_lz2deaYfQ0i3k	2025-08-06 03:25:22.028238+00
+ap9ol6uzutmojrojwpawm2k6nw550p84	.eJxVjEEOwiAQRe_C2hAGKB1duu8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnER1onT7xgoPlLdCd-p3pqMra7LHOSuyIN2OTVOz-vh_h0U6uVbBySrUjDMEUE50jzCiBpdzgZIAZHSTEBJk0OV3ZAxB9DRuvOAyhjx_gAWPTft:1ur9tr:bufWl8nhG9H1KdytTZWeeD-MKf2BT5wotlYyh5uL4dw	2025-09-10 06:44:51.403184+00
+twg9ey7kgdmhkb0akjkc1t5u4gjn4ajj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWU8:lbBFVA7qOAc6SPY8kTN1TM0oXltiAiqYCOeY2dFGdWM	2025-09-11 06:51:48.586488+00
+mwr9rpu1jom1i9v6hymbwyajnpr7aozz	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uqemq:KkuI9jTrDfdecPFyBUr8lJoSYUW4-6iS48_tPIyakNk	2025-09-08 21:31:32.570981+00
+blmdpgjmilotxmq0hckidc5tqnq3zn5n	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urLbw:Qb6gd2Yba6dCVP17WaH3_cAhCfyNoxeywcx4Av7Onoo	2025-09-10 19:15:08.526679+00
+5hcozha5oebtw9b5hqtwrksr7f6xhzga	.eJxVjDkOwjAUBe_iGlnYeMmnpOcMkfMXHEC2FCcV4u5gKQW0b2beS41pW_O4NV7GmdRZGVCH33FK-ODSCd1TuVWNtazLPOmu6J02fa3Ez8vu_h3k1PK3RhyQaTAeU0DPkYidY2sFPEFMhCIQxFvvjFhDEAg6OwEco0Tx6v0BQH44zw:1urLer:9I9QDIAPzwn6SH7b-HD5QZ3v4yq04y22Rh6-2tHBn78	2025-09-10 19:18:09.220455+00
+5rqzlm033wtnka8hwa89ssiuswm484dp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWYO:DT9xBUyxTFgqGYXOKXkMqiSA4IrIrC1Hr_kI55rRDEE	2025-09-11 06:56:12.337933+00
+eq27x1lt4knu5y57ct1ozzpzuxi67fyb	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uqfUl:UawexSb7GidOOogW5Hcgj8MY4ntLL1AFRk0fI5An1LA	2025-09-08 22:16:55.805563+00
+3pk7r8lvg94hjbb98qbtwz632qswyfa4	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1ur7Yx:3PFXmVRBGXs-O6TUzaLYuqy416qHOa6LppcGgv0FGgo	2025-09-10 04:15:07.816692+00
+09msezibww4sqosfwyy2ocm3g8q49sai	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWje:Jqhgl2SrazjkulkvUqvtJR1OX5wgov_ev0kkyaXUyBg	2025-09-11 07:07:50.039388+00
+fn9dvbg7oto1r2xvhtvt277d4p8x3py1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ8o:RKFq5i5pyuSKF-lqxCtFdx4wJEIJjuwYQPYr6BOrElY	2025-09-11 09:41:58.782842+00
+xpb52oyjfftbsqpzfm4b3ooqtm2xd7fb	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWnD:7qk7YvjrZnAlgP8IEEmm95ZN1cNWYka9YHQEMWmxDsk	2025-09-11 07:11:31.704244+00
+das1pusjqaeswp7nuxiiw9z3xsl3qwhy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXsc:MLOdB98q1TlyAVI0YXiATb3fbuGlmqYN1_U3ofYn8GA	2025-09-11 08:21:10.606061+00
+7mui0wjjfd1apbcwjgih407ip72o7ygr	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWsQ:MITlShmTWRzXR9uj3k7-MHcBiml5WifbrVq2Ky15a0w	2025-09-11 07:16:54.521645+00
+86twsih041wxn737mgbwr0ik59k9w0ks	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX2S:aDYKN-nBNyipwHhfKmOSTzgmVaHX3byLl_Gx0sNZVVM	2025-09-11 07:27:16.841685+00
+t5l8zdhdpl15bt5k19onq6mus37d1kzy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXCz:QrpUVU761w_pZR0_G_bZV6c6SzPA429qYZxaeCNBclo	2025-09-11 07:38:09.559134+00
+dedi44gsm46uyhfvxs7ffe8zhuxdbhn2	.eJxVjEsOwjAMBe-SNYqI6zopS_Y9Q2QnLi2gROpnhbg7VOoCtm9m3stE3tYxbovOccrmYho0p99ROD207CTfudyqTbWs8yR2V-xBF9vXrM_r4f4djLyM3xoDthQ8YDNkZk9-IDw7HxiIAqljJWwQHac2iQCqBAUv0nUdSAto3h_iMTdW:1ur4oK:trWY-5s6vE9dC3f90Y8KECHI_P273NPZuSi5CpAF0Yo	2025-09-10 01:18:48.86953+00
+oeqjhhg70r09kciphcirr6gfbhhpw9gy	.eJxVjEEOwiAQRe_C2pCBMpS6dO8ZmgFmbNVAUtqV8e7apAvd_vfef6mRtnUat8bLOGd1Vh2q0-8YKT247CTfqdyqTrWsyxz1ruiDNn2tmZ-Xw_07mKhN39pKsLGHbAZneknGY7CCneEuDR6wR6BgmYhkICeQwEWPwA4FJKCP6v0B76A3og:1ur4xm:8hsKT-35EH0o6U8GbgmvdbGpXfoNit8_jEGz028bL0c	2025-09-10 01:28:34.898593+00
+ao6gvymq6aeondpckehsmeyf1ku5fugy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1ut7pl:SUKwDOvbNo9hPENxfCfFv0g6Taga1aQFXJuYjEmRRyY	2025-09-15 16:56:45.522297+00
+020fpjg3bdrabq6vrlpwum02eoqdmgbf	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWQo:E9CL0hBU5gN8jd0cRIzYG4jchT1OKOMQS0lf4gIckYk	2025-09-11 06:48:22.54068+00
+p7c4zbenlycol6tqrl400hs1ph2uko4v	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYkw:kFMSkgusTKuj9pOqYHfNbF3zdsHXBUwQXg_1tuZhpAU	2025-09-11 09:17:18.782353+00
+pcsbyccyhfrez82idoj378i3aku28ac0	.eJxVjMsOgjAUBf-la9PUlkvRpXu_gdynoKYkFFbGf1cSFro9M3Nersd1Gfq16tyP4s4uZXf4HQn5oWUjcsdymzxPZZlH8pvid1r9dRJ9Xnb372DAOnxrDmJdiAoErYZ4xJgxU2NqIADImTmRIjdJQ7CmlQ4JT0aQo0C0zr0_MmY5Sw:1ur5s9:AR5LOuUYenxayZ3dWxUgsRltIKflBpCWNdOGeHABk_M	2025-09-10 02:26:49.741764+00
+09udzqqqemalys5plgv2i01nr4obolqy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZEi:AXootHNVM5iF5JD15TOxTR-SFd6cBghP8_6FUXu9QIE	2025-09-11 09:48:04.883228+00
+s67w5m1r86v4686qz3hi595wk8sgx9dc	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWSf:vGkj39Pgg63pf6xC7G_5LBL32do0P0z4yyObkC4ba4U	2025-09-11 06:50:17.297793+00
+u7d18wly43g3lemuxzqdpqwxsujhe55x	.eJxVjMsOwiAQRf-FtSFlGAZw6d5vIDylaiAp7cr479qkC93ec859Mee3tbpt5MXNiZ0ZIjv9jsHHR247SXffbp3H3tZlDnxX-EEHv_aUn5fD_TuoftRvDSKDxSKmRFpFAdKWAkYYQENS-2BAkwo4FWFFIsopSsiSbFCko8bA3h_YoTb5:1ur8Ep:iH9NeUJfXXisf7mpR8OOdAn_iWxbfGYjckJq9sQdLv8	2025-09-10 04:58:23.887971+00
+rw9rjjx516kgbnk68ix6p84oxr5cu0tx	.eJxVjDsOwjAQRO_iGln-JNimpOcM1q53jQPIkeKkQtwdR0oBzRTz3sxbRNjWErfGS5xIXMRgxOm3REhPrjuhB9T7LNNc12VCuSvyoE3eZuLX9XD_Dgq00tfo0GaDgFoNnlmNPS1SZrJJq5CNDjoYUMkzmETeqTPxyN12hpwl8fkCJK84gw:1ur7ZG:rxgt2G1n-Lk5Cde8L-LkZvWR71GcL4-J7FblSK6NhlQ	2025-09-10 04:15:26.257213+00
+tcnhut5zrp35sg1lbnivjsw3fy5p84po	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ9X:5yQQZMOYkgvrndtQkJ_Vbn-aIhKCIjDMZfbW01QsGgM	2025-09-11 09:42:43.129171+00
+9qanes5qhaowm80xmwyiuqkta0do4mzp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWVJ:oo5Op8_RBaz9YZAFqeA925WkVw768NZl0wuMmzblyyI	2025-09-11 06:53:01.312386+00
+oqr14itsmdz72cjmmvuzupiybdt6yk8c	.eJxVjDkOwjAUBe_iGlnYeMmnpOcMkfMXHEC2FCcV4u5gKQW0b2beS41pW_O4NV7GmdRZGVCH33FK-ODSCd1TuVWNtazLPOmu6J02fa3Ez8vu_h3k1PK3RhyQaTAeU0DPkYidY2sFPEFMhCIQxFvvjFhDEAg6OwEco0Tx6v0BQH44zw:1ur9w0:99itUHFCljHbqOF5VQHOLU49M1TIoGG32U6OXnHGE8E	2025-09-10 06:47:04.283532+00
+4u45t20r6rd8aahmhmc0ogjuko6cm7o6	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXLM:sn6mEncs2QxM5gRaFfJqubZlc502vEh_AWeuVGm7ldU	2025-09-11 07:46:48.294033+00
+zr5hmmds67mxp933ftxakxllkuxh1iwn	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWlF:zuSz6yI5buoU9bwbxLyIazyz2zP3cmcaodFNm8aIj-o	2025-09-11 07:09:29.241039+00
+u8gzsumy51jo4gttx3752bpwbaijt69x	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXa3:581RbD3A2xKzlhGrkUaJLUmUY2pVEDerWQwHMLMhIWs	2025-09-11 08:01:59.811076+00
+hnp09psgr9fmtjgazf5jjqw01no21pwy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWo1:YjMk_cPfEx2TPWpOGnw7V6yiXXaI8utOb6RBQgE7APs	2025-09-11 07:12:21.911168+00
+2mg8bqjnla5mgc1jvea36gzdwe4xjtzz	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWsj:Vx-vdY4dkFBGQzk9kv-xw7sEnmMmFbG3COqlaZLse1E	2025-09-11 07:17:13.150612+00
+yyadjpneyytdjdq1uu0v7qs2dh67mz6g	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXqk:EdPvSG0Ytjsiea7jUZy3eRTSxm1Gb7UpPxiLjIxeNYQ	2025-09-11 08:19:14.868843+00
+7cbctpthaveetz3aejopjtztcraf8rny	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX2l:HefnUsdl-m1Sfw-3VkXBjiH9QQOgzF0-sFN1Bv97r20	2025-09-11 07:27:35.699535+00
+2zs3j38rccvkrs63ne3iitj54ajt9qet	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXtX:RApcRW5At7rOqCBaiJf76PPuLA9i1zirx16jYmKlZIU	2025-09-11 08:22:07.253356+00
+4xrzx3m2s6kz8pu8hxflzv764ap41mv7	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4Ex:J7hMNIuXbaUuCsUfEjG6CIcpfz6xSRg9KMz578XS9Ys	2025-09-10 00:42:15.844966+00
+ck7rtoedzei3jshifmyk092lys1jyiek	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4Uv:rVmxUnaL8Tipzv3A9j-9clk0S5wywL_BgaFGaBpHNs4	2025-09-10 00:58:45.087712+00
+pvo04zhmg0bmdmywnrisdzip51oo91id	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4W2:_2LZkjUiJiSbRwecPy-_MFDHHu3iBM7ev9PkDUwR6u0	2025-09-10 00:59:54.839371+00
+bjeu280ez36lo8q6dv54kht79cisq89g	.eJxVjEEOwiAQRe_C2hBgWjp16d4zkGGGStVAUtqV8e7apAvd_vfef6lA25rD1tISZlFnBU6dfsdI_EhlJ3Kncquaa1mXOepd0Qdt-lolPS-H-3eQqeVvTWx79kLYxc46AQ_TGEkQgQB6Fz0yJB5Gdh4JDA0AE4FFYzB5YqPeHw7YN_I:1ur4XU:HOKEYTx7hbagzJH3UWlLW3dakFvWq8Hd7DQ1BGo54KQ	2025-09-10 01:01:24.131949+00
+k3oj14eq8alcfonq78azn4vxgftpde3p	.eJxVjDsOwyAQBe9CHSHzWQwp0_sMaPlscBKBZOwqyt0jJBdJ-2bmvZnHYy_-6Hnza2JXphS7_I4B4zPXQdID673x2Oq-rYEPhZ-086Wl_Lqd7t9BwV5GLRI6kjkaQKUzkNPRkkmAAYHkrAiCylbMgigICzpqN-GkBUltwEj2-QItZTg7:1ur4dO:cznFdlTHeSGKCAYs_9VBmfVVAoKGPLKV7Zt8WU4o6I4	2025-09-10 01:07:30.33881+00
+ndqxomfctufk7u09s07i9lzyuah1ioz0	.eJylVU1zmzAQ_SseLrnEHhDYxj417tekbXJo-jFt3WEELLZcQK4EbuNM_ntXrMCQ1qcePKN9b7Vard7DD07E62ob1RpUJFJn6UyZc9kHY578gNIw6Y6XGzlJZFkpEU9MysSyenIjU8hXNndQYMv1FncH0zgJMgYQch4yL0v5bA4QgO9CEPqZC-BPvZAHs5kfMh9gHruLZMFTmHrBDHwfiya8iIXUEU-qmufiyJWz_ObcwW-5HF28ggJKUcqL0bpm3oKNLm64TurcQLj3XV2CXo7u1rXrQtrm3EqkbriqznICVCLzc_SbGg7nuE-49cyZ3y-dvdRVlPKKO8sHJ9EqK0Sa5vCLK6gkDhEntov3L79ev87eXtfbn6vX_Mcejs83tyIIss-fQbzfvQu-HPnmvth8fH98FbMPYXD3pfAOx9s3bjjXC-yhlEWsQGOx603JE2H64nvIc5FKBFdSbbYCsbQUGPpswjzf_BDKINnyCDchwVx3MXbDsWu0IdKoKVXiE6TcCMMjNBEHkZuXNgfXRbQVO6lPtMZ3stFeyYMoE8FtnMukK_b8anVFG_ooW8xc06eK9qC0ORvBq7yC0UrJX-WIzWdIV5BDJktzjOsH01kw89jUEEnddMbm49Mdx3MkoOANc7-pi_sgeLYxMUq8oBZAV7yZFOsmglAzETYde2zst3eX5QHlJ-31eV7xiJf_ytzXWKHNEzrCE7IMw0rV0OoUw06Xdt3qkELSHa2tzii44zE1jOsXshBoWArwGFVFlSjADMdbumac6NUOCgkyD1UntdK8fUqemMfGoGe7nn6jnW7Yh_W_ZLx2lqP1fyt57VxiFStmKmn1TEwraaJI1cSgsAk8vTsRnbyJPimc6CcipySv4xqpExjY5lrBP001sh9gnfgHaCd2Qo0LuhJPOOMFe7uTHYgaOoKSWlNQRs8XRBtr2LpDdxDdGIT4vzzSNUg2sVX680WinW_rgtMMrWUGY2yNc3YX2WewpzURgcZHhDdWIpAAMtQAaW3VB8lcfcRarA-R0fqItVsfOpnODt_4zs7VWs8SYUf0DDicTGNDgk5OXDuP5vMmy0yogqvBX2Pzae0ojLVwHh__ADW9Z_w:1urYTv:Z83RhRGwpjTb5Wg4wHR-PrmSdxOJb60KSCwFbncCrrw	2025-09-11 08:59:43.259129+00
+q5tbxen40j4ab14szbubqs6hik58hwqa	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlGH:upecGzv49VjU-liBIWyyUfJ7xkCdZ8NduvZn6lebjyI	2025-09-11 22:38:29.360273+00
+7q158jgw3m4ofdioulfj67fsmsd6acji	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZFY:dqiQ5V-BbL_xo7UBGmq4P8y6ID2VB68Lzl6tEK-XrFM	2025-09-11 09:48:56.68859+00
+b4ii5dudqrz6fhf49r5azg1tgk2zth67	.eJxVjEsOwjAMBe-SNYpiXDUJS_acobIdmxRQK_Wzqrg7VOoCtm9m3uY6WpfarbNOXV_cxaE7_W5M8tRhB-VBw330Mg7L1LPfFX_Q2d_Goq_r4f4dVJrrtxZQK0WkERBJkAXZEGLUaNYCZWNsOGlWIwbJAThaaM8qARMhBvf-ACkuORk:1uvoHA:16s2XxVNMhQa1c4q8bR9JFAoWpo5Oo3H9NEq5tEkStI	2025-09-23 02:40:08.36417+00
+yo14wbeqaavjhlyzvu86qk3dfslnf74e	.eJylVU1v2zgQ_SuGLrnEhj4d2afGTZt2sV4UcLOXdSHQ1MhmKpFeUnLzgfz3DjWULHXr0x4CaN6bGQ6H7zmvXsaa-pA1BnQmcm_pJaF3PQR3jH8HaZn8kcm9mnElay12M5syc6yZrVUO5crljhocmDlgdZzseFyEACljaRgUOZvfAMQQ-RCnUeEDREmQsng-j9IwArjZ-Qu-YDkkQTyHKMKmnFU7oUzGeN2wUrww7S3_8TbwpJaTqzUzvCmFVFeTbRMGi3By9REqkBbB2j8bCWY52Wwb34e8S_lLIbVmur7ICdBclZfoPxo4XeL-xtILZ3679o7K1FnOauYtXz1udFGJPC_hB9NQK1wibux2nSbK3BcbdQeF_JjKry8-n683p_RhfRA7_9_PXx6a1cPmfvEh-aSK57vF_dfH6oNZAX96unn5hDNIVe00GGz2eS8ZF3YudoSyFLlCcKX0_iAQy6XAMApnYRDZP4QK4AeWYRESoe8vpn469a02RJ61rSQ-Qc6sMAJCuTiJ0mbbg5sqO4hHZVyMtMF3ctFRq5OQXDBXXCreN3t_u7qlgiEaLua-nVNnR9DGnm0XVNYwWWn1Q07CmznSNZRQKGmP8aM4mcfzIEwswRuazJ-e7zi1k0DFWuZ531TPcfxub2OUeEUjgKlZ3k1NG0Go7RQm0yCcRt3dlTyh1mxqbHdc1ixj8neZxwY7dHnCZHhCUWBY6wY6nWLY69J9dzqkkHRH305nFGzYjgbG7ztVCTQsBXiMrrNaVGCXEyx9u070ag-lBNmHanijTbvh9i7cPjYGA9sN9Js9mpZ93f5OxltvOdn-byVvvWvs4sRMLZ2eiekkTRSpmhgUNoHndyeilzfRZ4UT_YvIKSnouVbqrtIN1wl-hDrZj7Be_KOmvdgJtS7oW_zCWS-4253t4BY9cgQldaagjIEviLbW6HYwcgfRrUGI_49H-gHJJqNb9mbpencuOO_QWYYSYveSzjgXq8g-o5rORARaHxHeWolAAshQI6Sz1RAkcw0RZ7EhREYbIs5uQ-hsOrd86zu3V2c9R6Q9MTDgeDOtDQk6O3HrvdmfNyULoSumR_8a25_WnsLYCO_t7SctDmb2:1urYoO:hdwrnUnHSH__fICH4EYXyMJqRmF6v21-sJvgn3LoURw	2025-09-11 09:20:52.74004+00
+iuw7zby84gwnyyxlf7r83h2xuet5raqz	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uwTwI:Sxo4OVa-zc681C15u2wEfeNxYhahcs66xunCCxCghO8	2025-09-24 23:09:22.752971+00
+1se35ih6eotspi5xbaf27ywzd0j6akyk	.eJy1VE1T2zAQ_SseX7iQjC1_EZ-aQBkyQ0LaUtoOYTxrSU5EZSmV7VDC8N-7cj4ptD31lNm3b3efdv3y5GbQ1POsqbjJBHNT13ePD7Ec6HeubILdg5rpLtWqNiLvWkp3k626I824HGy4LxrMoZpjdeFT8H1G86iAII5pEgfgs8A_gTz2co-GeZhElBY0iFns9yiNkiiBiHG_gB7NCTalUOZCVxnV-Ks4arp1z8bD1DkKAhKEAQmPnGlD_B6xSBehrsWw8vTz8BJpxNsSkz2TeJ09uZNY-mWjeJU6Y70lfZo2nocD7_YigNYNSLEC859kHMySkGsD0g76m7SFruqMQQ1u-uTSyhSlYEzyBzC81ngYvMLN6jq46k3OosnV-fJrKcPVBW3iVXIx6X_5FhQXajWC3nkyoh9mH9-Ph3L26E-uf_QJvY76N6fLE3yEwu0bXmGz4UwBFRoxWHApBdMIDrSZzQViTAkM929CqOB0DhkWYYJ4Xq_jnXQ8e1nBsraVwo0y2H6FiFKxFHITqqbM5uJe29HeOl3xn3qTXRi9FIoK2MRS012zAUgKhvJ10WHGDyIr1WQLbio7HrFTkJI7fVkKA6rmzsDoB-WM7Z5zzyFJfOycc8ZNKxiray55oZUV4gVhFIexT6LYfq9Nq_23y2KCl9BmHmdN-RiG72Y2RmOVa4G8qqHdJdntDKG2E4k6PukE2-1oteRKbFcAsoYMJb_BXDTYwfLsGUSV4YSiwLA2Dd9-8Bi27xmBqfcRMk2d1aLk9n1-6tmOaPIdRNLtCauGNqZqd2jHAG0XlLoHVtl_0_dVm7udvvbOG-aZusfO9G3__MlA65IDv-wMs3bM1L1zX1nsQNY_K7UqhCnBvPgrwEM8P_8CKROQGw:1us5Z5:oqxMdPqvJbL3DAPIPBCawfxdY41F_ScOVW41O6hAR6Q	2025-09-12 20:19:15.078221+00
+mcr3719lrg87j3v2b7vafxhtublsf2ta	e30:1ut9AL:qv2rp-YcHbCx8G-BESoRaxu8Hvq2HpuYYRHnWzpvve0	2025-09-15 18:22:05.059426+00
+m79xrwfha4j8eet59qnzrrt6qo2h9mj2	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utBD0:0_DRzIBg1N8vTfNQDj2X2dgxkGz2z9M4QKUWsh28uSE	2025-09-15 20:32:58.858194+00
+qnwn7jh585axqmwrw18ogmapmnc254oj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urm7f:wqDl3jQUU6aZftbKY9SlI9--YPWERJhZO4KqjFTADxs	2025-09-11 23:33:39.1625+00
+y312xiejzukhdoezo7duod66s58tavim	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uw9o9:kH4CjzlepnpuopyAsZYseYylvAkX-On8j3-0Hpx_vBI	2025-09-24 01:39:37.526134+00
+r950hrdhbin8nn629dvc7f4z2q0trdcf	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkFP:GsFOVC_dYgAQJADSt8IfHU_zpB9TIM5GjRByyCeObDE	2025-09-11 21:33:31.986431+00
+bpa8344b3wimtsspejfqz942c814vnpb	.eJxtk9tu2zAMht9F17Xhs5pcDekGdECzYiswFAgKgaZkW50spbKd9IC8-yQnRRKnuiP_j-QvgfogDIa-YUMnLJOczElMrk5zJeA_ob3An0HXJkSjeyvL0CPhQe3CpeFCLQ7sWYMGusZVVzFCHHMs8wrSokBapBDzNL6GsojKCLMyozlihWnBi3iGmNOcQs5FXMEMy8Q13cp3sJyB6oGJdq0EcMP2STL_IF0v1m6QgtJYUKJzFT7FOPTg9bWwndGj4iLsbNVKzpXYghW9ccbJfEWsTrdo4Tc3y8fml7q7E0W1eHl4-ZGlkDz87XFYvt9maYebqFwuNvWS3mi8Te7r7eP9zXfbkqcr8pXBAAdrhe7Z3uXq1I0rOUaBNm1pvccV-VlrQGkmAKyFUpIbTyyMrRs5AbiWXqM0LGgR0tn1RK8ENsBca08lUUSDOAmS2YSSnHXidZwSX0qjMRdJDnxEoksG5Uaqr-r10LJGPpvuKFqzkRoljJnRijJ4bP8Htq74csQZlFyY4JZ9Rh4YTs6E7IUSldHjdYv89ExAHPZ3SqKAUve-7nmD6f1EC3vorR7atyz7VvuE-zluPXa7w1pW8rCJZ3vpZfHaW_hc291u9x9qlT7I:1utsyX:-fovPJr_oGgoV0tlryxTTqldt2XesZILGlk3Zs7MMKo	2025-09-17 19:16:57.162187+00
+914kjtuglupqpases46irz7ozqe8rtc9	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1usJje:TGhU5Qx4olJy1nV6hh4ylV_rlILTauSl4Cpi1RNUSeg	2025-09-13 11:27:06.872887+00
+y7tt51nmtidu7hljmxpyrv3l02hgr0ui	.eJy1U01P3DAQ_StRLlzYlfPN5lQCRaVaFiEEKpQqmtjOxtSxFzsBFsR_7zhs2G1V9daTNW_ezDy_sV_9EvquKXvLTSmYn_uBv7-LVUB_cuUS7B7UUk-pVp0R1dRRppusnZ5pxmWx4f7WoAHbYHUdUAgCRqukhihNaZZGELAoOIAqJRWhcRVnCaU1jVKWBjNKkyzJIGE8qGFGqxCbUmgroW1JNZ6Ko6bv_vHiNPf2oiiM4iiM97y7PgxmoUOmCE0dhpVHV6dzpIVkJGZbZkgmW_Ikc_R5r7jNvYUeSZd3PSE48MdWBNCuBylewPwnGTuzJFTagHSD_iVtpW1XMujAz199ak3dCsYkfwLDO42LwS201xftib5fn93eRtfH4vxLgkuZzw-Lh_P2pulfYkvmq9viRhx-XTyrq8_XL7PZt8qoy4KsH8xJhJdQ6L7hFpudLhVQoRGDFZdSMI1goc2yEYgxJTDc3gmhmtMGSizCREjIbEIOJsRtVrByaKXQUQbjK0SUikchN6Hq27IR99qNJu9py5_1Jrsy-lEoKmATS00_mhUgKRjK34t2M0GUOKmmXHFj3XjEjkBK7h3KVhhQHfcKo5-Ut3A-V8QLs3TfO-GMm0EwVndc8lorJ4REcZLGaRAmqXuv_aD9j81igrcwZNbLvl3H8aeli_Fjte8Cue1g8DL88AyhoVOYTIJwEo3uaPXIlRgtANlBiZL_wlz12MHx3BqELXFCXWPYmZ6PDx7D4T5nYLpthEzTlZ1oubtfkBPXET_5BxTm4wptT3tjBw_dGKCDQbm_81Xe3n4BXX5RhQ:1urqYS:tRAGqoJMHef46sS8j0AYAh1q4IrwfAEZDv9OpHJUx68	2025-09-12 04:17:36.118658+00
+41gzj3521j5cqoqsezooki4x5exzmsls	.eJylVdtymzAQ_RUPL3mJPSDw9alxem_TTpv07g4ji8VWAsiVIJdm8u9dsQJDWj_1wTPac1ar1eocfO_FvCq3cWVAxzLxFt6YecddcM3FFRSWSS55sVEjoYpSy_XIpowca0ZnKoFs6XJ7BbbcbHF3NF6LKGUAM85nLEgTPpkCRBD6EM3C1AcIx8GMR5NJOGMhwHTtz8WcJzAOogmEIRYVPF9LZWIuyopn8jfX3uKHdw63ajE4eg45FLJQR4NVxYI5GxydcSOqzEK4921VgFkMzleV70PS5LxTSJ1xXR7kJGihskP06wquD3GfceuBM38eeztlyjjhJfcW954wOs1lkmRwwzWUCoeIE6u-XXz8Ch9_RU9_fYewAnX6-9nZxeb7RQSf1tE4PL26Ei8-PL-Uz968S1n26Tz_8vL2xd1r-eH2pkjfL7GHQuVrDQaLvdoUXEjbF99BlslEIbhUerOViCWFxDBkIxaE9odQCmLLY9yEBPP9-dCfDX2rDZnEdakCnyDhVhgBoUJey8y-tD24yuOtvFRmTxt8JxfttLqWhZDcxZkSbbHTk-UJbeiibD7xbZ863oE29mwET7ISBkutbooBm06QLiGDVBX2GD-MxpNoErCxJURVd8amw_0dh1MkIOc1c7ep8rsoerKxMUo8pxbAlLyeFGsnglA9ETYeBmwYNndXxTXKT7nr86zkMS_-lbmrsEKTJ02MJ6QphqWuoNEphq0u3brRIYWkO1o7nVFwztfUMK6fqlyiYSnAY3QZlzIHO5xg4dtxoldbaEaQfahKVNrw5im5sI-NQcd2Hf3Gl6Zm71f_kvHKWwxW_63klXeMVZyYqaTTMzGNpIkiVRODwiZw_-5EtPImeq9woh-JnJKClqulTmDkmmsE_zjVyr6HteLvoa3YCbUuaEs84qwX3O32diCq7whKakxBGR1fEG2t4er23UF0bRDi__JI2yDZxFXpzheJZr6NC_YzdJbpjbExzsFdZJ_ensZEBFofEV5biUACyFA9pLFVFyRzdRFnsS5ERusizm5daG86N3zrOzdXZz1HzFqiY8D-ZGobErR34sp7sJ83VaRS51z3_hrrT2tLYWyk9_DwB6XjaB4:1urYdo:VLmdA8tQwUOWK21eyBXGIbCv7KqWn6w2rb4_I_9aHcM	2025-09-11 09:09:56.844568+00
+cmi35inqtip6nzjv5o21aiy8ci52sfgs	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYu4:jNrSW9JDkwuPgm58ltZ0g7P0W6AOm5S9lCcJI_oWStM	2025-09-11 09:26:44.413979+00
+3pmmc2l4xb15aueup98as78mn403mpor	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlHz:3VH6m-MuLCK3KSa_nf595H_3cMnghN6kBHHKEeQVjNQ	2025-09-11 22:40:15.222122+00
+o6dlaipjcaumra6wr0pa7o944ldgtmol	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZGd:vU8d6Wk_NP6eO7J_QuXTpAfKbh83VLw7jFH6yKnwslE	2025-09-11 09:50:03.195145+00
+4yj8k3o9p8tyzeivu287ukuz3ba9tw7o	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ7U:-Cz3fFjzD1_FyNSgRpGSSxax7gFj_RZFDFmB8y9slFk	2025-09-11 09:40:36.184486+00
+ft6c3wefauj9wzf96j69ibn2vclu48l2	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utA51:sn6UfENNdpaJfZNGqC4q4h9UQh84pEKkIe-YvYeLvFA	2025-09-15 19:20:39.285162+00
+x67452kee00i2dgxthrgxod2925ka9wq	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uu0um:rcENifBVXXcthk0jNrcNorRk8xtSaVWkmfLQimu4dUI	2025-09-18 03:45:36.082293+00
+2wkfksybgnmq6n5z6gkvh1zwnh9ra5mt	.eJylVU1z2zgM_SsenWMP9enYp113nTQ7TreetGkzdUcDkZTNRBJVSrLrZvLfFxQpWc6mp70J7xEgAOJBz04MTb2Lm4qrWDBn7rjOxRBLgD7xQhPsEYqtnFBZ1EokE31kYtlqcisZzxb27FmAHVQ79E5dCq7LaBKm4EcRnUY-uMx3LyGJSEJokATTkNKU-hGL3Bml4TScQsi4m8KMJh4GpZAnQlYx0LqBTPwC5cy_Oaum4NV89EGONo3nzrzR3aYhhDPn-4VTyqqOGdTgzJ8dWqk0F4xl_ACK1xJT1f7-crnyv86uPkuePB1-PNyFs3tCqtVy9f5K7Kn7syivHm58-Wm9hNtaBplPBNmuYHmcXQO9CTCx9cd_3gnmlmodlXxx_SXkD1xt35P19GuSu-mnp-OvA3u4v_whDvL6uPSO9ONCHUi5_lxSfrP6cpZq_FhJTMx53ryV8caZjzb_-8KNc4FRCpknilcm5M22ACqkYaDkWSaYNNRCqu1OGIYVwoC-P_H8YOJ7gSFSTncQYwxDe4TMxuRyTDxDCxa38Qt8OAbMHHJ7joq9yM7AosnjnXiUNj3SH634T3l2slRyLwoq4AzNJB1etYCMgqK8D_OKd_3QFqjikqtKJ2qYd5BlfPRnlgsFRc1HCyUPxejDRk9ZQkbeNLoYXXHGVVueCVLzjKeysHkSPwijIHK9MDI0bbpiPTI-NXI8NTTPoeOP2yY_BsEfWw2h9PI-f17V0D2QN3wCJLrYXjh2vbE_aLMs9rwQ5_2DDIcOS_utV9lgTOtjX1tUMd6fpgasVWMb24rRgF0vbkHVrzH0VXVci5zbDrlzYu_D_TEkvPlggqqGNqrqHsamAtT0fd5-d5vB3i24ojLrrjfg3w3fnyP3eKw4h-4g6dtrkL9kLnD_ddDLYCFZxX7bDJdRv43MOto43wceGSRSQdZ7as7KEU2rRcQ6ISJoVIgYShDN09gg1IsPiZPykHglO7veO8FZs5ca2sTQWmSW7eVl7V44OierKuM0ZFBPOtWTmBD7nZLeFBJ6dyrSaZ0kpLvYtLm_Eg8SrXKQ-Y9sTIJGM9qz7xlCbaRu6G13rE5syZ1C3jhptIGEfoZOFWhqSSDSzgOabT1GCZ110oCuTwtAF2CnX0N69O1r2Lm315iJR2PwI7w4zToSaJopN992vo1hJtt825k2BhadCpWDOvvBtg3oKbQr4by8_AszYYb-:1uriSY:8aG1gJeT1LS0zUiQWAk4Na9VTOYpgiMVvOjt_BJ4uig	2025-09-11 19:38:58.08457+00
+skx99p2o8elvtf7arz2jffvfbz4ltmkm	.eJy1Vtty4jgQ_RWXX-YFKN9JeNoh5MIkZCbJbLKzccolyzKIGAtkG0hS-fdtWfIFQna3amt5wX1Od6vVLR37TQ9Qkc-CIiM8oJE-0E2908ZChJ9JKohojtIp62GW5pyGPeHSU2zWm7CIJEPlu5NghrIZRMcmRqYZ4dCNke15uO_ZyIxs8wiFnhEa2AmdvotxjG0v8sxjjN2-20duRMwYHePQgqQYLULKsgDhvEAJfUVcHzzqo-vxQPti25bt2JbzRfMLyzy2BNIDqCcwiD35fXwFbpbRrTy7_ca3hCt3IPSnZrUEhYyjRCx1VaQkG2jXrAq88wvDIFHbHTP4TwH7v0rr_G0ZS5blQYRypA_edJzxeEGjKCEbxEnOYDgwCevWWp_8oDcP1sTgp1d8e3Mz2Xh09eti8-31ZRRGN46z_joJV_nFw_zc-Xk3-r7a3F-u-_NrPA5zQ2-tEswzJnK--YcW8_WB9ujrLqNXDz9PbvnRapyMyO1yNP5jm28u0NHyz9ia0mn6_Pzj1MP3r8lpdLadX67Oh1v6azK_PM_Ymdf39Y7m_-eyfWgPpElhPpxkojRfH09ThCmTC6AlSRIaMUkNGZ_OqGSilEqwmYQkYoJnKIAckrYM47hrHHUNS9I0Csr8KZzWCEXSyaw5TNc02QHTYhHM6Jyp8ozaNSNbtuO55GxNU0zRDpow3F5qiBKMOCZ1mj3etF21QR4sCc9EoZI5QUlCtK_JgnKU5kQbcrZJtWtfHLTQ0Ky-19HOSER4uT2ZJCcJiVmq6jRsx_Ucz7RcT9K4qDa7d6QlTRao4l-mxeLFcX6bCgj0ZlHXT7IcVQOy2iMAosptuV3T6tqtNrN0TVK62z-UwOGFrX0atSwgp4pR06ZZAOvHsQRzXqjGlvdRglUvJojn-xjE8jzI6YKoDpkDQ60HotkmrEHrBGUFLnhWDUaVgrDs-6B8ruRQNVopkbia0uPR9_2PYgS_j3okPDuC-0yWmqh9ZWpCWwJVu9-Vj0KmhMfTbqlKY_dL_vd5WBpTvkA8aDejNe7aQaKZutgTSjhmSTUpCX4ryHoXuQe3dBe6Q2F9EiUyYgsK78cKem-9sJRIPh4awoERlOk-a_9nzW9OompY3S7ZLP1J__BOaxX2T5FKNsFZaSZglWACKNUSMJBKMJvSAKpFUrx7aoUEYk8e1bdHJYzKrCURbEPSQgwVW8ugsmuBEzUp9ZNBbQZ0T5TaiB5gnyneQcGD6ErtRFmN1IkeF2XtewMColQ4YD7ImyxQapuIrHsGUJmpEifVHaVnasuVkh3wlBoGhBhDpV5gCumqviPALPcjFauyGq0S-xNCJTagVEpAQqLUNJQ-qWWkMoHR-krrHLygqv6aAjsTR6i-lACAKa-jfFYXURryCspndfmE8f7-F95INTU:1urlkG:hqY1oXgJnJXqGuFuwdGjOeaRW8LpmkkOllgtCUOuc6k	2025-09-11 23:09:28.160464+00
+i1w885fekffw8o9ft0700o1vl84f26ps	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urk8i:KZk3YFUn5o149qcjAW81vjyM_2f2ZYCm3B7M0awiZws	2025-09-11 21:26:36.618931+00
+fo0im3aedgndzd5pqagc752qea6nf5r8	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkFb:uABDThH-neQfogkBzZ7u1uQQtvFwIwtAGP7xVRUmNX4	2025-09-11 21:33:43.658636+00
+wuwz8811z67tn5hx6sl0knseinq2mzp6	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urm7z:XSSGMn076aEKkY0tPywhSL0xMKELjubewmKX7phzRCg	2025-09-11 23:33:59.935788+00
+avwyfwszyljv8hp0vd0w09kuk93hkajp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlQU:LrVk-zgE21Ma1PUsA5Gyw6Jxryv2zEgjI-xI3zIQn4g	2025-09-11 22:49:02.467532+00
+sp69ycf5npsyy9afxs28kk0mmtwrnvhr	.eJy1Vk1z0zAQ_SseX7gkGX-b-gRNoS0DmUIpH0MYz1qWE7W2lZHtQOn0v7OyJMdJWzgw3LLvrVa7q33r3NkpdO067RoqUpbbie3akzGWAbmhtSTya6hXfEZ43QqWzaTLTLPN7B3PaXmsffcCrKFZ4-nCJeC6OcnCAvwoInHkg5v77nPIIidzSJAFcUhIQfwoj9wjQsI4jCHMqVvAEck8DEqgyhhvUiBtByX7BcJOvtkni_PEeub7nh_4XvDMWnaee-RJZIbQTGJ4dn51_hbdPGdqPKfxzreHjTsS9veJveFNm-bQgp3c2aQRRcXyvKQ_QNCWY5lYU3DRXH347J7FP7-e_np5eRqKL7dVe-p_3r5fXH8s4_aqfRU5YeOdLeY3J_F8c3YTfLg9ieZfeTu_uVjbo1vS64bLmHfLxy5b2om1_Of7lvYEo9S8ygRtVMjzVQ2EccXAhpYly7mijrlYrZli8popcNcmRRSUrCHFGIr2HOdo6jyfOp6iWZ728Wt8rxxy5eQOHGFbVu6BdVela3bNdXrO4NrQn3zPcyP4ltWEwR5acjK-6hhKAoLQIcwB7_qhLlCkGyoamahi5lCW1HpZVkxA3VLrWPAftbVYLjsHx9Xy4mhivaY5FX15KkhLS1rwWufp-EEYBZHrhZGiSWeKPZg3RdMKDH-76qrbIHixkhAqrhryp00L5oG88RMgYWJ74dT1pv6ozbze0prt9w9KHDos7clTmw5j6jP6tVmT4v1FocBWdLqxb7vaDJTpxTsQ7SGGZ0WbtqyiukNu4uj7cG2MCS8ZTVDTkU405mF0KkBU35P-t1kI-m5GBeGluV6Bbzq63Uc-oVu9D11CNrRXISe8Yrj2DHQ_2kNasd-WD3fQI0tIhXtiDz21iEbtTawFHxwv-zmkOMXfRwmVkHEB5Sixv53UuwCd9SJAzGwBBNUKQAz1j-YuNYQG5SOxkz0SB5rXnxSjdm0OOkfbUbRUuGYHbWt7UK3MSUtaHRozKGaZ6k7JiD0l40dVjKeNhGVaO_3KHnd97gcPhEQvW2QeaFYlqAQrTw49Q6iPZBSnu6NFqks28nzEUwlTfn-krSWJptQjIv2bo9nXo2RorJ0AZX1SfbIALT0JSd3p19Ci09couaEx-vhOdkJDAk0lMfVbi0sZSlbqtxaUMrDogokKxN5HvW_AQKHdMPv-wZjLj_9ovs1499MtP-DGHZ8iYzVi_-vPwuQPadz_BpIkxSg:1urn9R:YXoTDxKwypE0qSTbwpxnM6M7DORN_oO912raMnq6riQ	2025-09-12 00:39:33.472002+00
+x4dxtnyni4n96n2z14bf0f764gakjo95	.eJy1VE1T2zAQ_SseX3ohGVv-SnJqA5OSEtLpAJ0OhPGsJTkRlaVUlkOB4b935XxSaHvqKbNv3-4-7frlyc-hsYu8qbnJBfMHfugfHWIF0O9cuQS7AzXXXaqVNaLoOkp3k62755pxOdxwXzRYQL3A6jKkEIaMFkkJUZrSLI0gZFHYgyINioDGRZwllJY0Slka9ilNsiSDhPGwhD4tCDalUBVC1znV-Ks4arrxT6bjgfcuikgURyR-580aEvaJQ7oIdR2GlcdX4wnSSLAlZnsmCTp7cidz9EmjeD3wpnpLupg1QYADb_cigNoGpHgE859kHMySUGgD0g36m7Slrm3OwII_ePJpbcpKMCb5PRhuNR4GrzCdXCZfe7FZ8NUk-3Z91RATn8VjGp9Fp_fVl-WP0dX4UX2yI3NycR0PH9KP48tT2_vcm1KVjqoMH6Fw-4bX2Gw8V0CFRgyWXErBNIJDbeYLgRhTAsP9mxAqOV1AjkWYIEHQ7wS9TuAuK1jetlK4UQbbrxBRKlZCbkLVVPlC3Gk3Olina_5Tb7JLo1dCUQGbWGq6azYEScFQvi46zIRR4qSafMlN7cYjdgxScu-DrIQBZbk3NPpeeVO35yLwSJYeeSPOuGkFY7XlkpdaOSFBFCdpnIYkSd332rTaf7ssJngFbeZh3lQPcfx-7mI0VrUWyGsL7S7JbmcItZ1I0glJJ9puR6sVV2K7ApAWcpT8BnPZYAfHc2cQdY4TyhJDaxq-_eAxbN9zDsbuI2Qam1tRcfe-cBC4jmjyHUQG2xPWDW1M3e7QjQHaLmjgH1hl_03f1W3uZvbaO2-YZ-YfebO3_fMnA61LDvyyM8zaMTP_1n9lsQNZ_6zUqhSmAvPirwAP8fz8C_5zkA8:1ursE1:7SyPrk8SeEe8pBee2EMzUGYVgof8eregIbcFswKN1gI	2025-09-12 06:04:37.317019+00
+xt50kco96ndtnuwpdi00u23mtd1bzg2e	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1us8Uc:3M2PZJO9cErrrOF_fe8Fs6e5fI6vR2YIAVIOOo01LHM	2025-09-12 23:26:50.206371+00
+b8erc9io2f41ajlhhn4psq47dgy5it4o	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkDY:9O0-NRWObmhCnCFOmWTO77P-fPqs61OWxKnVwkv-cSs	2025-09-11 21:31:36.582056+00
+hsvjf7d4i98bb7osj7fqys295nqnnmr1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uu0yT:-DhxkSz2WFX1MHQ2GUI2A3spmokLCbRvkvvyxLs76o0	2025-09-18 03:49:25.340138+00
+s07dpp205mtecohjv70zz2jfl33e879h	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utBt4:rXPOYXskrz7mP8dvbIQ1d0WPqnSrhteqcxZTi-x8Mkw	2025-09-15 21:16:26.463216+00
+ipd9xh2j9gpawht33lre4y573mu7gu6f	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1ut7pl:SUKwDOvbNo9hPENxfCfFv0g6Taga1aQFXJuYjEmRRyY	2025-09-15 16:56:45.060914+00
+a9bd0h689ccv22qbuz3rkh177cmoutow	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlRO:M5Fx2hUEQjjE4-39KRTlxB0-HYnRtIv0MF6msx5sSRw	2025-09-11 22:49:58.44151+00
+e0s88wkc8s1sys61uq46wzu4afsfjcqq	.eJxVjMEOwiAQRP-FsyGwwrbx6N1vIAu7StVAUtpT479Lkx70Mod5b2ZTgdYlh7XJHCZWF4VOnX7LSOklZSf8pPKoOtWyzFPUu6IP2vStsryvh_t3kKnlvpYhAcUeACx-9Nb4OCAYcdY7Er4DiiGMlsczgUWbxBtnumlELKP6fAEHKje4:1uwEX7:dGbcnnuY21B-PJOe8VWzYP9s1qwfTlHD1UVC-sB5U4Q	2025-09-24 06:42:21.751717+00
+zq72fmsj38n36zfrzi1e479hpcsrj2v0	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1us6eP:Lw9Ax_-XgNLcNt0WqZzDZ0yrve0eKpTB7I50vAdR8oI	2025-09-12 21:28:49.121725+00
+bekt6yjrzq0lv2abqq0e8ng264kvl3ty	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uu12G:cvKrPM-jo0o7u5Miw4On3UVVQ7S_kJZLxSCC1e73bWc	2025-09-18 03:53:20.879489+00
+tvcmi3liunlhkrcjjiezytl6g174okpa	.eJylVl1v4joQ_StRXvoCKN8sPN3SqisosLuiX9qmihzHAdMkZp2E0lb973ccOyGwVLvSPpE5Z2Y8nrGPedcDVBaroMwJD2ikD3VT77SxEOFnkgkiWqNsyXqYZQWnYU-49BSb92YsIslI-R4kWKF8BdGxiZFpRjh0Y2R7Hu57NjIj2_yCQs8IDeyETt_FOMa2F3nmAGO37_aRGxEzRgMcWpAUozSkLA8wg9-MQE2P-rTMSD7U5kzzS8scWNrCLw0DuKe9P8JFiRL6hjhEtPAEhYyj5E9pNiwvgggVSB--6zjncUqjKCEviJOCwX5Fa1Zv6eX82_PXcDKJvpKouLp2N2_u9flNn0y-3_-a5mg9vl2O3MVV9MKL-_nMni7xzpz3ry8IGzO9tUqwzpnI-e6fWszXh9qjr_ObX84E_-i_Zvd3ePzwfH_74yGa7UZj_nCzvJi-_XRM89uasgdnsdkW2F6ag0tn83Nxd3W-moa7na93NP-fy_ahPZAmg3lwkovSfH28zBCmTC6ANiRJaMQkNWJ8uaJq6YxK0LZ7lu30bMuRREzwCgWQQ9KWYQy6xpeuYUmaRkGVP4OBRiiSTmbDYbqlyQGYlWmwomumyjMa15zs2IHnhrMtzTBFB2jCcHupEUow4pg0aY5403bVBnmwITwXhUrmAiUJ0c6TlHKUFUQbcfaSaXNfHLTQ0Ky-19GuSER4tT2ZpCAJiVmm6jRsx_Ucz7RcT9K4rDdrGd19I7t9SZMU1fzrskxfHee_pYDgCqdN_SQvUD0gqz0CIOrclts1ra7dajPLtiSjh_1DCRxe2NqnUZsScqoYNW2aB7B-HEuw4KVqbHUfJVj3YoZ4cYxBLC-CgqZEdcgcGmo90KE2YQ1bJygvccnzejCqFIRl34fVd60YqtFKMcTVlB6Pvu_rl_PxUDuzbeg7tP1MA0zJx9l-GmfCsyM4_eJ2PIWAalgypts_iDoaYyu0JVCN-6L6FDIlPJ4OS1Xidlzy3-dhWUx5injQbkZr3I2DRHN1sWeUcMySelISnJRke4jcgVt2CC1Q2JxEiVyylMKTU0MfrTdAieTjqSGcGEGV7rP2f9b8_UlUDWvaJZulP-m_PSatwv4UqWQTnJVmAlYLJoBSLQEDqQRzXxpAjUgCsVdIII7kUT3ntTAqs5FEsA1JCzFUbCODym4ETtSk1E8GtRnQPVHqXvQA-0zxTgoeRNdqJ8raS53ocVnVfjQgICqFA-Y3eZMFSm0TkU3PAKoy1eKkuqP0TG25VrITnlLDgBBjqNULTCFdgFQzB7Paj1Ss2tprldifECqxAaVSAhISpaah9EktI5UJjNYfmc7JC6rqbyiwc3GEmksJAJjyOspvdRGlIa-g_FaXTxgfH_8DyIsR8A:1urple:KZClBHJjZb5XVZHM0TNRD9sbj1MjdBzr9HMH6ULYqoE	2025-09-12 03:27:10.960157+00
+tconx595bmiabbzttldh3gejdp9v8wkg	.eJxVjc1uwjAQhN_F5yrCBDuFY-99Bmu8uyZp0ziyjYpAefc6bYTKceabn7tyuJTeXbIkN7A6Ka1e_nse9CnTCvgD0zk2FKeSBt-skWajuXmPLOPbln0a6JH72g6aoDWTNwGttdTZFppb_Qpvd35HB3_oDFGg1rLVRyLTmQ6GRQccye_r6PdwQ2KHscDJ1zwKOLo_U53uKheZ69EsKccJo-RaWT3HKKiBZZNhWNmvlmtJePBl-QEaVV1C:1usERh:bNYkqTfrAUb58Zk8T9_-QZTpFBZoGHo7-O0GrrRe0Vo	2025-09-13 05:48:13.422162+00
+2pmjo1s2wompauv2bu8ysxtmnjx1jvpi	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utYrs:_gtyW8LbGhqf36lvIehMLICiYToqjLio0l9iBVg5lIk	2025-09-16 21:48:44.912724+00
+m3q5liid9s6fve4jaix2hecju19c1qks	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0std:nT00ro_ouWF15glzvBkFBq2GmRUa-t7G9d1iIo46olg	2025-09-24 02:36:49.608138+00
+h7lyqm3sr4gpohfonif4uklafeq63slk	.eJxVjMGOwjAQQ_8lZ1QRSlLokTvfEDkzE1oILWpSsVrUf9-yVAhutp_th3IYc-PGJINrWdVKq9Vn5kEX6Z6Az-hOfUF9l4fWF89KsdBUHHuWeFi6XwcNUjOvgyZozeRNQGktVbaE5lLv4O3ar2nrt5UhClRatnpPZCpTwbDogD35zXx6b38xsEPMcHK9RQH37hWq-qFSlpuquzHG1b92jIwZTIsNbZT08vKTB7z5NP0BQmFafQ:1uzhri:7mW6ii_kXfQUMJsUB0HJ1pDQ36egIH6yEpBkuFUzHhg	2025-10-03 20:37:58.091483+00
+rgsht3sap4bu2e0w806vmx4oxv7s208i	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0nuq:Jm0BC-hps4X9SkGZjKAXBpPSG_QIJCnBo21BaBV_uPg	2025-10-06 21:17:44.091932+00
+vjhsd9x02xziohg73ku745srpur4cyv4	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0pnM:dUriW864jNDQB9mOshtoIm7zRu1T2CkVMGGr2ALIYuE	2025-10-06 23:18:08.980322+00
+koc91vl1c5d6pnoh1jlkmz6iswa7opk4	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0ppm:MX_qep-AYMtPmPSRbno4aVJtz543k-kBn2PLu1bgCoc	2025-10-06 23:20:38.267569+00
+6ixtjazo44sc37ot5wekvrkl4196v4xr	.eJxVjMGOwjAQQ_8lZ1QRSlLokTvfEDkzE1oILWpSsVrUf9-yVAhutp_th3IYc-PGJINrWdVKq9Vn5kEX6Z6Az-hOfUF9l4fWF89KsdBUHHuWeFi6XwcNUjOvgyZozeRNQGktVbaE5lLv4O3ar2nrt5UhClRatnpPZCpTwbDogD35zXx6b38xsEPMcHK9RQH37hWq-qFSlpuquzHG1b92jIwZTIsNbZT08vKTB7z5NP0BQmFafQ:1v18bj:P8YacP2mLwZlZzvfY75CrmX0W49LgzlFZCKicVD0Zn4	2025-09-24 19:23:23.778686+00
+\.
+
+
+--
+-- Data for Name: nucleo_convenio; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_convenio (id_convenio, tipo_convenio) FROM stdin;
+1	CCT 430/05
+4	Fuera de convenio
+\.
+
+
+--
+-- Data for Name: nucleo_empleado; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_empleado (fecha_e, "Idempleado", nombres, apellido, dni, fecha_nac, num_hijos, dr_personal, telefono, cuil, id_civil, id_localidad, id_nacionalidad, id_sexo) FROM stdin;
+2025-08-23	15	Ana Maria	Gomez	11868411	1955-12-27	2	Rivadavia 276	3512456789	27-11868411-2	2	33	1	2
+2025-08-19	5	Rafael	Galarze	20222223	1986-03-30	1	Calle angosta 2	351-8796303	20202222235	1	2957	1	1
+2025-08-01	1	TestCambio	Principal	12345678	1990-01-01	0	Calle Falsa 123	000000000	20-12345678-9	1	2960	1	1
+2025-08-01	3	Jeremias	Galarze	29144742	1982-07-01	2	alta 234	54343432XYX	20291447423	1	2957	1	1
+\.
+
+
+--
+-- Data for Name: nucleo_empleado_el; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_empleado_el (id, fecha_el, alta_ant, id_estado, idempleado, id_convenio, id_puesto, fecha_est) FROM stdin;
+4	2025-08-19	2023-08-15	1	5	4	6	2023-08-01
+15	2025-08-23	1980-05-19	1	15	1	4	1980-05-19
+29	2025-08-28	2020-01-01	2	1	1	4	\N
+14	2025-08-23	2025-05-01	1	3	1	4	2025-06-02
+\.
+
+
+--
+-- Data for Name: nucleo_empleado_eo; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_empleado_eo (id, fecha_eo, idempleado, id_sucursal) FROM stdin;
+5	2025-08-19	5	5
+1	2025-08-01	1	4
+14	2025-08-23	15	4
+34	2025-08-01	3	4
+\.
+
+
+--
+-- Data for Name: nucleo_estado_empleado; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_estado_empleado (id_estado, estado) FROM stdin;
+1	Activo
+2	Baja
+9	Jubilado Activo
+\.
+
+
+--
+-- Data for Name: nucleo_estado_lic_vac; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_estado_lic_vac (id_estado, estado) FROM stdin;
+1	En espera
+3	Aceptada
+4	Rechazada
+\.
+
+
+--
+-- Data for Name: nucleo_estadocivil; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_estadocivil (id, estado_civil) FROM stdin;
+1	Soltero/a
+2	Casado/a
+3	Viudo/a
+4	Divorciado/a
+\.
+
+
+--
+-- Data for Name: nucleo_feriado; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_feriado (id_feriado, descripcion, fecha) FROM stdin;
+18	Año Nuevo	2025-01-01
+19	Día del Trabajador	2025-05-01
+20	Día de la Revolución de Mayo	2025-05-25
+21	Día de la Independencia	2025-07-09
+22	Inmaculada Concepción de María	2025-12-08
+23	Navidad	2025-12-25
+24	Carnaval Lunes	2025-03-03
+25	Carnaval Martes	2025-03-04
+26	Día de la Memoria por la Verdad y la Justicia (Trasladado)	2025-03-24
+27	Día del Veterano y de los Caídos en la Guerra de Malvinas (Trasladado)	2025-04-02
+28	Día de la Soberanía Nacional (Trasladado)	2025-11-24
+29	Feriado turístico (puente antes del Día del Trabajador)	2025-02-28
+30	Feriado turístico (puente después de Revolución de Mayo)	2025-05-02
+31	Feriado turístico (puente por Paso a la Inmortalidad de Belgrano)	2025-06-20
+32	Feriado turístico (puente antes del Día de la Independencia)	2025-07-07
+33	Feriado turístico (puente por Día del Respeto a la Diversidad Cultural)	2025-10-10
+34	Feriado turístico (puente después de Navidad)	2025-12-26
+35	Viernes Santo	2025-04-18
+36	Pascua Judía (Festividad)	2025-04-13
+37	Día de la Pascua de los Judíos (Festividad)	2025-04-14
+38	Año Nuevo Judío (Festividad)	2025-09-23
+39	Día del Perdón (Festividad)	2025-10-02
+40	Año Nuevo	2026-01-01
+41	Día del Trabajador	2026-05-01
+42	Día de la Revolución de Mayo	2026-05-25
+43	Día de la Independencia	2026-07-09
+44	Inmaculada Concepción de María	2026-12-08
+45	Navidad	2026-12-25
+46	Carnaval Lunes	2026-02-16
+47	Carnaval Martes	2026-02-17
+48	Día de la Memoria por la Verdad y la Justicia (Trasladado)	2026-03-24
+49	Día del Veterano y de los Caídos en la Guerra de Malvinas (Trasladado)	2026-04-02
+50	Día de la Soberanía Nacional (Trasladado)	2026-11-23
+51	Feriado turístico (puente antes del Día del Trabajador)	2026-02-27
+52	Feriado turístico (puente después de Revolución de Mayo)	2026-05-04
+53	Feriado turístico (puente por Paso a la Inmortalidad de Belgrano)	2026-06-19
+54	Feriado turístico (puente antes del Día de la Independencia)	2026-07-08
+55	Feriado turístico (puente por Día del Respeto a la Diversidad Cultural)	2026-10-09
+56	Feriado turístico (puente después de Navidad)	2026-12-26
+57	Viernes Santo	2026-04-03
+58	Pascua Judía (Festividad)	2026-04-01
+59	Día de la Pascua de los Judíos (Festividad)	2026-04-02
+60	Año Nuevo Judío (Festividad)	2026-09-11
+61	Día del Perdón (Festividad)	2026-09-20
+\.
+
+
+--
+-- Data for Name: nucleo_localidad; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_localidad (id, localidad, provincia_id) FROM stdin;
+1	Córdoba	5
+2	Villa Carlos Paz	5
+3	Villa María	5
+4	Río Cuarto	5
+5	Bell Ville	5
+6	Alta Gracia	5
+7	Río Tercero	5
+8	San Francisco	5
+9	Jesús María	5
+10	Cosquín	5
+11	La Falda	5
+12	Villa Dolores	5
+13	Villa Allende	5
+14	Villa General Belgrano	5
+15	Río Ceballos	5
+16	Deán Funes	5
+17	Cruz del Eje	5
+18	La Calera	5
+19	Arroyito	5
+20	Las Varillas	5
+21	Morteros	5
+22	Marcos Juárez	5
+23	Laboulaye	5
+24	Las Higueras	5
+25	Capilla del Monte	5
+26	Oncativo	5
+27	Santa Rosa de Calamuchita	5
+28	Corral de Bustos	5
+29	Monte Cristo	5
+30	Leones	5
+31	Sampacho	5
+32	General Deheza	5
+33	San Basilio	5
+34	Vicuña Mackenna	5
+35	San Juan	17
+36	Rawson	17
+37	Rivadavia	17
+38	Santa Lucía	17
+39	Pocito	17
+40	Caucete	17
+41	Chimbas	17
+42	Albardón	17
+43	San Martín	17
+44	Angaco	17
+45	Jáchal	17
+46	Iglesia	17
+47	Valle Fértil	17
+48	Calingasta	17
+49	25 de Mayo	17
+50	9 de Julio	17
+51	Zonda	17
+52	Ullum	17
+53	Pocito	17
+54	Sarmiento	17
+55	Villa Krause	17
+56	Villa Aberastain	17
+57	Villa Paula Albarracín	17
+58	Villa Borjas	17
+59	Villa Basilio Nievas	17
+60	Villa Ibáñez	17
+61	Villa San Agustín	17
+62	Villa General San Martín	17
+63	Villa Nacusi	17
+64	Villa Media Agua	17
+65	Villa El Salvador	17
+66	Villa Pituil	17
+67	Villa Malvinas Argentinas	17
+68	Villa Santa Rosa	17
+69	Villa Marini	17
+70	Villa Barboza	17
+71	Villa Ampacama	17
+72	Villa San Isidro	17
+73	Villa Don Bosco	17
+74	Villa Boulogne Sur Mer	17
+75	La Plata	1
+76	Mar del Plata	1
+77	Bahía Blanca	1
+78	Quilmes	1
+79	Lanús	1
+80	Morón	1
+81	Lomas de Zamora	1
+82	Avellaneda	1
+83	San Isidro	1
+84	Tres de Febrero	1
+85	Merlo	1
+86	Berazategui	1
+87	Florencio Varela	1
+88	San Miguel	1
+89	Moreno	1
+90	Pilar	1
+91	Ezeiza	1
+92	Tigre	1
+93	Malvinas Argentinas	1
+94	Vicente López	1
+95	San Fernando	1
+96	José C. Paz	1
+97	Hurlingham	1
+98	Ituzaingó	1
+99	San Martín	1
+100	Escobar	1
+101	Esteban Echeverría	1
+102	Almirante Brown	1
+103	General San Martín	1
+104	General Rodríguez	1
+105	Necochea	1
+106	Olavarría	1
+107	Junín	1
+108	Pergamino	1
+109	Tandil	1
+110	Campana	1
+111	Zárate	1
+112	Chivilcoy	1
+113	Azul	1
+114	Pehuajó	1
+115	Bragado	1
+116	General Pueyrredón	1
+117	Trenque Lauquen	1
+118	9 de Julio	1
+119	Lincoln	1
+120	Veinticinco de Mayo	1
+121	Mercedes	1
+122	Lobos	1
+123	Chacabuco	1
+124	Saladillo	1
+125	Capitán Sarmiento	1
+126	San Antonio de Areco	1
+127	Exaltación de la Cruz	1
+128	Brandsen	1
+129	General Belgrano	1
+130	Las Flores	1
+131	Lezama	1
+132	Dolores	1
+133	Rauch	1
+134	Ayacucho	1
+135	Balcarce	1
+136	Tres Arroyos	1
+137	Coronel Suárez	1
+138	Coronel Pringles	1
+139	Benito Juárez	1
+140	Tapalqué	1
+141	Bolívar	1
+142	General Alvear	1
+143	General Guido	1
+144	General Madariaga	1
+145	General Pinto	1
+146	General Villegas	1
+147	Carlos Casares	1
+148	Carlos Tejedor	1
+149	Rojas	1
+150	Colón	1
+151	Rivadavia	1
+152	Alberti	1
+153	Baradero	1
+154	San Pedro	1
+155	Ramallo	1
+156	San Nicolás	1
+157	Arrecifes	1
+158	Capitán Sarmiento	1
+159	Villa Gesell	1
+160	Pinamar	1
+161	Miramar	1
+162	Mar de Ajó	1
+163	Santa Teresita	1
+164	San Clemente del Tuyú	1
+165	Villa Carlos Paz	1
+166	Vicente López	1
+167	Villa Ballester	1
+168	Villa Lynch	1
+169	Villa Martelli	1
+170	Villa Bosch	1
+171	Villa Raffo	1
+172	Villa Sarmiento	1
+173	Villa Centenario	1
+174	Villa Fiorito	1
+175	Villa Dominico	1
+176	Villa Celina	1
+177	Villa Luzuriaga	1
+178	Villa Insuperable	1
+179	Villa Maipú	1
+180	Villa Tesei	1
+181	Villa Udaondo	1
+182	Villa de Mayo	1
+183	Villa Astolfi	1
+184	Villa Adelina	1
+185	Villa Martelli	1
+186	Villa Bosch	1
+187	Villa Raffo	1
+188	Villa Sarmiento	1
+189	Villa Centenario	1
+190	Villa Fiorito	1
+191	Villa Dominico	1
+192	Villa Celina	1
+193	Villa Luzuriaga	1
+194	Villa Insuperable	1
+195	Villa Maipú	1
+196	Villa Tesei	1
+197	Villa Udaondo	1
+198	Villa de Mayo	1
+199	Villa Astolfi	1
+200	Villa Adelina	1
+202	Neuquen	14
+203	la Boulaye	1
+204	Trelew	19
+1609	Posadas	13
+207	Diamante	7
+209	Concordia	7
+210	Rawson	19
+211	Unquillo	5
+1610	Oberá	13
+1611	Eldorado	13
+216	La Paz	7
+1612	Puerto Iguazú	13
+218	La Pampa	10
+219	San Luis	18
+220	Punamarca	18
+221	San Salvador	9
+1613	San Vicente	13
+225	Federacion	7
+226	San Fernando del Valle de Catamarca	2
+227	Valle Viejo	2
+228	Fray Mamerto Esquiú	2
+229	Ambato	2
+230	Paclín	2
+231	Santa María	2
+232	Andalgalá	2
+233	Belén	2
+234	Santa Rosa	2
+235	Tinogasta	2
+236	Antofagasta de la Sierra	2
+237	Capayán	2
+238	Ancasti	2
+239	El Alto	2
+240	La Paz	2
+241	Pomán	2
+242	Recreo	2
+243	Fiambalá	2
+244	Hualfín	2
+245	Londres	2
+246	Mutquín	2
+247	San José	2
+248	Saujil	2
+249	Villa Vil	2
+250	Aconquija	2
+251	Alijilán	2
+252	Balcosna	2
+253	Barranca Larga	2
+254	Buena Vista	2
+255	Chumbicha	2
+256	Colpes	2
+257	Concepción	2
+258	Copacabana	2
+259	Corral Quemado	2
+260	El Aybal	2
+261	El Bañado	2
+262	El Divisadero	2
+263	El Hueco	2
+264	El Pajonal	2
+265	El Rodeo	2
+266	Esquiú	2
+267	Icaño	2
+268	Infanzón	2
+269	Ipizca	2
+270	La Carrera	2
+271	La Dorada	2
+272	La Falda	2
+273	La Merced	2
+274	La Tercena	2
+275	Las Chacritas	2
+276	Las Esquinas	2
+277	Las Juntas	2
+278	Las Lajas	2
+279	Las Tejas	2
+280	Los Altos	2
+281	Los Angeles	2
+282	Los Varela	2
+283	Manantiales	2
+284	Medanitos	2
+285	Miraflores	2
+286	Monte Potrero	2
+287	Palo Labrado	2
+288	Palo Seco	2
+289	Piedra Larga	2
+290	Pomancio	2
+291	Pozo de La Piedra	2
+292	Puerta de Corral Quemado	2
+293	Puerta de San José	2
+294	San Antonio	2
+295	San Isidro	2
+296	San Pedro	2
+297	Santa Lucía	2
+298	Siján	2
+299	Sumalao	2
+300	Tapso	2
+301	Tatón	2
+302	Vilismán	2
+303	Villa Cubas	2
+304	Villa de Pomán	2
+305	Resistencia	3
+306	Barranqueras	3
+307	Fontana	3
+308	Puerto Vilelas	3
+309	Presidencia Roque Sáenz Peña	3
+310	Charata	3
+311	Villa Ángela	3
+312	General San Martín	3
+313	Quitilipi	3
+314	Machagai	3
+315	Las Breñas	3
+316	Tres Isletas	3
+317	La Leonesa	3
+318	General Pinedo	3
+319	Corzuela	3
+320	Gancedo	3
+321	Hermoso Campo	3
+322	Colonia Benítez	3
+323	Margarita Belén	3
+324	Colonia Popular	3
+325	La Escondida	3
+326	La Verde	3
+327	Laguna Limpia	3
+328	Pampa del Infierno	3
+329	Puerto Tirol	3
+330	Taco Pozo	3
+331	Concepción del Bermejo	3
+332	Los Frentones	3
+333	Avia Terai	3
+334	Campo Largo	3
+335	Capitan Solari	3
+336	Colonia Elisa	3
+337	Colonias Unidas	3
+338	Enrique Urien	3
+339	Horquilla	3
+340	Juan José Castelli	3
+341	La Clotilde	3
+342	La Tigra	3
+343	Laguna Blanca	3
+344	Lapachito	3
+345	Las Palmas	3
+346	Makallé	3
+347	Napenay	3
+348	Pampa Landriel	3
+349	Presidencia de la Plaza	3
+350	Puerto Bermejo	3
+351	Puerto Las Palmas	3
+352	Samuhú	3
+353	San Bernardo	3
+354	Santa Sylvina	3
+355	Selvas del Río de Oro	3
+356	Tres Mojones	3
+357	Venados Grandes	3
+358	Villa Berthet	3
+359	Villa El Palmar	3
+360	Villa Río Bermejito	3
+361	Wichi	3
+362	Zaparinqui	3
+363	Colonia Aborigen	3
+364	Fortín Lavalle	3
+365	Miraflores	3
+366	Nueva Pompeya	3
+367	Pozo del Indio	3
+368	Río Muerto	3
+369	Taco Pozo	3
+370	Villa Rural Nueva	3
+371	El Espinillo	3
+372	Fuerte Esperanza	3
+373	El Sauzalito	3
+374	Misión Nueva Pompeya	3
+375	Misión El Cruce	3
+376	Parque Nacional Chaco	3
+377	Río Tapenagá	3
+378	Villa Alvear	3
+379	Villa San Martín	3
+380	Colonia Pozo del Mortero	3
+381	Colonia Pozo del Tigre	3
+382	Colonia Pampa del Indio	3
+383	Colonia La Florida	3
+384	Colonia La Tambora	3
+385	Colonia Aborigen Chaco	3
+386	Colonia Popular	3
+387	Colonia El Pastoril	3
+388	Colonia La Matanza	3
+389	Colonia La Eduvigis	3
+390	Colonia Benítez	3
+391	Colonia Baranda	3
+392	Colonia Elisa	3
+393	Colonia Juan José Paso	3
+394	Colonia La Verde	3
+395	Colonia Pampa Landriel	3
+396	Colonia Pampa del Infierno	3
+397	Colonia Pozo del Indio	3
+398	Colonia Resistencia	3
+399	Colonia San Antonio	3
+400	Colonia Santa Rosa	3
+401	Colonia Tacuarí	3
+402	Colonia Tres Isletas	3
+403	Colonia Villa Ángela	3
+404	Colonia Wichi	3
+405	Colonia Zaparinqui	3
+406	Rawson	4
+407	Trelew	4
+408	Puerto Madryn	4
+409	Comodoro Rivadavia	4
+410	Esquel	4
+411	Sarmiento	4
+412	Gaiman	4
+413	Dolavon	4
+414	28 de Julio	4
+415	Rada Tilly	4
+416	Paso de Indios	4
+417	Alto Río Senguer	4
+418	Río Mayo	4
+419	El Maitén	4
+420	Tecka	4
+421	Gobernador Costa	4
+422	José de San Martín	4
+423	Aldea Apeleg	4
+424	Aldea Epulef	4
+425	Aldea Escolar	4
+426	Camarones	4
+427	Carrenleufú	4
+428	Colan Conhué	4
+429	Corcovado	4
+430	Dique Florentino Ameghino	4
+431	El Hoyo	4
+432	Facundo	4
+433	Fofo Cahuel	4
+434	Gan Gan	4
+435	Gastre	4
+436	Lagunita Salada	4
+437	Las Plumas	4
+438	Lago Blanco	4
+439	Lago Puelo	4
+440	Los Altares	4
+441	Paso del Sapo	4
+442	Península Valdés	4
+443	Playa Unión	4
+444	Puerto Pirámides	4
+445	Puerto Lobos	4
+446	Río Pico	4
+447	Telsen	4
+448	Villa Futalaufquen	4
+449	Villa Lago Rivadavia	4
+450	Cholila	4
+451	El Mirasol	4
+452	Epuyén	4
+453	Leleque	4
+454	Pueblo Nuevo	4
+455	Villa Dique Florentino Ameghino	4
+456	Villa Unión	4
+457	Bahía Bustamante	4
+458	Caleta Córdova	4
+459	Comodoro Py	4
+460	Diadema Argentina	4
+461	Holdich	4
+462	Km. 11	4
+463	Km. 5	4
+464	Km. 8	4
+465	Lago Rosario	4
+466	Las Chapas	4
+467	Pampa del Castillo	4
+468	Pampa Salamanca	4
+469	Paso de Indios	4
+470	Punta Delgada	4
+471	Punta Ninfas	4
+472	Quinta El Mirador	4
+473	Río Chico	4
+474	Río Corintos	4
+475	Río Percy	4
+476	Sierra Colorada	4
+477	Sierra Chata	4
+478	Villa Sarmiento	4
+479	Villa Tehuelches	4
+480	Blancuntre	4
+481	Cerro Condor	4
+482	Chacay Oeste	4
+483	Cushamen	4
+484	El Escorial	4
+485	Frontera de Río Pico	4
+486	Languiñeo	4
+487	Mina Angela	4
+488	Paso de Indios	4
+489	Paso Huemules	4
+490	Puesto Huanaco	4
+491	Puesto Jaramillo	4
+492	Puesto Telsen	4
+493	Puesto Villegas	4
+494	Rancho Hambre	4
+495	Río Chubut	4
+496	Río Pico	4
+497	Sierra Nevada	4
+498	Villa Cerro Centinela	4
+499	Villa Chubut	4
+500	Yala Laubat	4
+501	Corrientes	6
+502	Goya	6
+503	Mercedes	6
+504	Curuzú Cuatiá	6
+505	Paso de los Libres	6
+506	Monte Caseros	6
+507	Bella Vista	6
+508	Santo Tomé	6
+509	Ituzaingó	6
+510	Empedrado	6
+511	Saladas	6
+512	San Luis del Palmar	6
+513	Esquina	6
+514	San Cosme	6
+515	Santa Lucía	6
+516	La Cruz	6
+517	Mburucuyá	6
+518	Lavalle	6
+519	Concepción	6
+520	San Roque	6
+521	Berón de Astrada	6
+522	Itá Ibaté	6
+523	Colonia Carlos Pellegrini	6
+524	Yapeyú	6
+525	Pueblo Libertador	6
+526	Alvear	6
+527	Chavarría	6
+528	Cruz de los Milagros	6
+529	El Sombrero	6
+530	Felipe Yofré	6
+531	Garruchos	6
+532	Gobernador Virasoro	6
+533	Herlitzka	6
+534	Itatí	6
+535	Juan Pujol	6
+536	Lomas de Vallejos	6
+537	Loreto	6
+538	Mariano I. Loza	6
+539	Nuestra Señora del Rosario de Caá Catí	6
+540	Palmar Grande	6
+541	Pedro R. Fernández	6
+542	Perugorría	6
+543	Ramada Paso	6
+544	San Lorenzo	6
+545	Santa Rosa	6
+546	Tatacuá	6
+547	Villa Olivari	6
+548	Yahapé	6
+549	9 de Julio	6
+550	Colonia Liebig's	6
+551	Pago de los Deseos	6
+552	San Miguel	6
+553	Colonia Pando	6
+554	Colonia Romero	6
+555	Colonia San Martín	6
+556	Estación Torrent	6
+557	Guaviraví	6
+558	Ingenio Primer Correntino	6
+559	Isla Apipé	6
+560	Itá Corá	6
+561	Juan de Vera	6
+562	La Casualidad	6
+563	Mocoretá	6
+564	Naranjito	6
+565	Parada Pucheta	6
+566	Paso Florentín	6
+567	Pueblo General Belgrano	6
+568	Rincón de Ambrosio	6
+569	Rincón de Santa María	6
+570	San Carlos	6
+571	San Antonio	6
+572	Santa Ana	6
+573	Tapebicuá	6
+574	Villa Córdoba	6
+575	Villa García	6
+576	Colonia Carolina	6
+577	Colonia Libertad	6
+578	Colonia Santa Teresa	6
+579	Estación Garabí	6
+580	Estación González	6
+581	Estación Lomas	6
+582	Estación Yeruá	6
+583	Paraje San Isidro	6
+584	Paraje Santa Rosa	6
+585	Paso Naranjo	6
+586	Pueblo Libertador	6
+587	Rincón del Agua	6
+588	San Alonso	6
+589	San Eugenio	6
+590	Santa María	6
+591	Tacuabé	6
+592	Villa Zorraquín	6
+593	Yataytí Calle	6
+594	Colonia Progreso	6
+595	Colonia Unión	6
+596	Paraje Anguá	6
+597	Paraje Buena Vista	6
+598	Paraje Capillitas	6
+599	Paraje Cuay Grande	6
+600	Paraje El Carmen	6
+601	Paraje La Lechuza	6
+602	Paraje Mbopicuá	6
+603	Paraje Riachuelo	6
+604	Paraje San Cayetano	6
+605	Paraje San Fernando	6
+606	Paraje San Luis	6
+607	Paraje Santa Isabel	6
+608	Paraje Tacuaral	6
+609	Paraje Tres Bocas	6
+610	Paraje Yacaré	6
+611	Paso Potrero	6
+612	Puesto Díaz	6
+613	San José	6
+614	Santa Rosa	6
+615	Tacuaritas	6
+616	Villa Blanquita	6
+617	Villa Nueva	6
+618	Yapeyú	6
+619	Paraná	7
+620	Concordia	7
+621	Gualeguaychú	7
+622	Concepción del Uruguay	7
+623	Gualeguay	7
+624	Victoria	7
+625	Colón	7
+626	Villaguay	7
+627	San José de Feliciano	7
+628	La Paz	7
+629	Nogoyá	7
+630	Diamante	7
+631	Rosario del Tala	7
+632	Chajarí	7
+633	Basavilbaso	7
+634	Santa Elena	7
+635	Hasenkamp	7
+636	General Campos	7
+637	Ubajay	7
+638	Aldea Brasilera	7
+639	Aldea Protestante	7
+640	Aldea San Antonio	7
+641	Aldea San Juan	7
+642	Aldea Santa María	7
+643	Aranguren	7
+644	Betbeder	7
+645	Bovril	7
+646	Caseros	7
+647	Ceibas	7
+648	Crespo	7
+649	El Pingo	7
+650	El Solar	7
+651	Enrique Carbó	7
+652	Estación Campos	7
+653	General Galarza	7
+654	General Ramírez	7
+655	Gilbert	7
+656	Hernández	7
+657	Herrera	7
+658	Holt	7
+659	Ibicuy	7
+660	Ingeniero Miguel Sajaroff	7
+661	Jubileo	7
+662	Larroque	7
+663	Libertador San Martín	7
+664	Los Charrúas	7
+665	Los Conquistadores	7
+666	Maciá	7
+667	Mansilla	7
+668	María Grande	7
+669	Molino Doll	7
+670	Oro Verde	7
+671	Piedras Blancas	7
+672	Pronunciamiento	7
+673	Pueblo Bellocq	7
+674	Pueblo Brugo	7
+675	Pueblo General San Martín	7
+676	Puerto Yeruá	7
+677	Puerto Ruiz	7
+678	Punta del Este	7
+679	Quebracho	7
+680	Ramírez	7
+681	Rocamora	7
+682	San Benito	7
+683	San Gustavo	7
+684	San Jaime de la Frontera	7
+685	San Justo	7
+686	San Salvador	7
+687	Santa Anita	7
+688	Seguí	7
+689	Tabossi	7
+690	Tezanos Pinto	7
+691	Viale	7
+692	Villa Clara	7
+693	Villa del Rosario	7
+694	Villa Domínguez	7
+695	Villa Elisa	7
+696	Villa Fontana	7
+697	Villa Gobernador Etchevehere	7
+698	Villa Mantero	7
+699	Villa Paranacito	7
+700	Villa Urquiza	7
+701	Antelo	7
+702	Colonia Avellaneda	7
+703	Colonia Ensayo	7
+704	Colonia La Argentina	7
+705	Colonia Merou	7
+706	Colonia Oficial N° 5	7
+707	Colonia Oficial N° 14	7
+708	Don Cristóbal	7
+709	El Cimarrón	7
+710	El Redomón	7
+711	Estación Líbaros	7
+712	Estación Raíces	7
+713	Estación Yuquerí	7
+714	Faustino M. Parera	7
+715	General Almada	7
+716	General Alvear	7
+717	General Racedo	7
+718	General Urquiza	7
+719	Gobernador Mansilla	7
+720	Jubileo	7
+721	La Clarita	7
+722	La Criolla	7
+723	La Ollada	7
+724	Las Moscas	7
+725	Las Tunas	7
+726	Lucas González	7
+727	Médanos	7
+728	Mojones Norte	7
+729	Ñancay	7
+730	Pueblo Cazes	7
+731	Pueblo Liebig's	7
+732	Puerto Cupalén	7
+733	San Cipriano	7
+734	San Marcial	7
+735	San Pedro	7
+736	San Víctor	7
+737	Sauce Montrull	7
+738	Sauce Pinto	7
+739	Sir Leonard	7
+740	Suburbios	7
+741	Tala	7
+742	Villa Zorraquín	7
+743	Walter Moss	7
+744	Yeruá	7
+745	Formosa	8
+746	Clorinda	8
+747	Pirané	8
+748	El Colorado	8
+749	Las Lomitas	8
+750	Ingeniero Juárez	8
+751	Villa General Güemes	8
+752	Comandante Fontana	8
+753	Laguna Blanca	8
+754	Palo Santo	8
+755	Villa Escolar	8
+756	Ibarreta	8
+757	Estanislao del Campo	8
+758	Colonia Pastoril	8
+759	Riacho He-Hé	8
+760	Buena Vista	8
+761	Misión Tacaaglé	8
+762	Portón Negro	8
+763	Gran Guardia	8
+764	Colonia Sarmiento	8
+765	Mariano Boedo	8
+766	Villa Dos Trece	8
+767	El Espinillo	8
+768	Laguna Gallo	8
+769	Laguna Naick Neck	8
+770	Pozo del Tigre	8
+771	San Francisco de Laishí	8
+772	Subteniente Perín	8
+773	Villa General Manuel Belgrano	8
+774	Colonia Villafañe	8
+775	Fortín Lugones	8
+776	General Lucio V. Mansilla	8
+777	Herradura	8
+778	Juan G. Bazán	8
+779	Misión San Andrés	8
+780	Posta Cambio Zalazar	8
+781	San Hilario	8
+782	Tatane	8
+783	Villa Trinidad	8
+784	Colonia Cano	8
+785	Colonia Elisa	8
+786	Colonia José E. Gómez	8
+787	Colonia La Primavera	8
+788	Colonia Monte Lindo	8
+789	Colonia San Lorenzo	8
+790	El Recreo	8
+791	Estancia El Quebracho	8
+792	Fortín Sargento Primero Leyes	8
+793	Guadalcázar	8
+794	Kilómetro 503	8
+795	Laguna Yema	8
+796	Lamadrid	8
+797	Los Chiriguanos	8
+798	Mayor Vicente Villafañe	8
+799	Misión Franciscana Tacaaglé	8
+800	Puesto de Fierro	8
+801	San Martín 1	8
+802	San Martín 2	8
+803	Siete Palmas	8
+804	Vaca Perdida	8
+805	Villa del Carmen	8
+806	Colonia Campo Villafañe	8
+807	Colonia Ensanche Norte	8
+808	Colonia Ensanche Sur	8
+809	Colonia Francisco Gauna	8
+810	Colonia Isla Sola	8
+811	Colonia Juan Bautista Alberdi	8
+812	Colonia La Florencia	8
+813	Colonia Loma Porá	8
+814	Colonia Loma Senés	8
+815	Colonia María Cristina	8
+816	Colonia Puerta del Cielo	8
+817	Colonia San Antonio	8
+818	Colonia San Francisco	8
+819	Colonia San Isidro	8
+820	Colonia Santa Rosa	8
+821	Colonia Sarita	8
+822	Colonia Tacuarí	8
+823	Colonia Tres Lagunas	8
+824	Comunidad Aborigen La Primavera	8
+825	Comunidad Qom Potae Napocna Navogoh	8
+826	El Quebracho	8
+827	Establecimiento La Florencia	8
+828	Estancia El Descanso	8
+829	Estancia San Juan	8
+830	Fortín Cabo 1ro. Lugones	8
+831	Fortín General Belgrano	8
+832	Fortín Médanos	8
+833	Kilómetro 15	8
+834	Kilómetro 213	8
+835	Kilómetro 49	8
+836	La Florencia	8
+837	Laguna Sian	8
+838	Lote 101	8
+839	Lote 22	8
+840	Lote 32	8
+841	Lote 42	8
+842	Lote 8	8
+843	Misión El Quebrachal	8
+844	Misión Toba	8
+845	Paraje El Perdido	8
+846	Paraje Guaycolec	8
+847	Paraje Pozo de Maza	8
+848	Paraje San Camilo	8
+849	Puesto El Silencio	8
+850	Puesto Santa Rosa	8
+851	Riacho Lindo	8
+852	San Antonio	8
+853	San Cayetano	8
+854	San Francisco	8
+855	Santa Isabel	8
+856	Tres Marías	8
+857	Villa Kilómetro 213	8
+858	San Salvador de Jujuy	9
+859	Palpalá	9
+860	Libertador General San Martín	9
+861	San Pedro de Jujuy	9
+862	Perico	9
+863	Ledesma	9
+864	El Carmen	9
+865	La Quiaca	9
+866	Humahuaca	9
+867	San Antonio	9
+868	Purmamarca	9
+869	Tilcara	9
+870	Yala	9
+871	Caimancito	9
+872	Fraile Pintado	9
+873	Libertad	9
+874	Rinconada	9
+875	Abra Pampa	9
+876	Maimará	9
+877	San Francisco	9
+878	Vinalito	9
+879	Yuto	9
+880	El Talar	9
+881	La Mendieta	9
+882	Pampa Blanca	9
+883	Santa Clara	9
+884	Arrayanal	9
+885	Bananal	9
+886	Barro Negro	9
+887	Caspalá	9
+888	Catua	9
+889	Cieneguillas	9
+890	Cochinoca	9
+891	Colonia San José	9
+892	El Aguilar	9
+893	El Cóndor	9
+894	El Fuerte	9
+895	El Piquete	9
+896	Hipólito Yrigoyen	9
+897	Huacalera	9
+898	Lagunillas del Farallón	9
+899	Leon	9
+900	Lozano	9
+901	Mina Pirquitas	9
+902	Monterrico	9
+903	Nuevo Pirquitas	9
+904	Puesto del Marqués	9
+905	Puesto Viejo	9
+906	Rodeíto	9
+907	Rosario de Río Grande	9
+908	San Juan de Dios	9
+909	Santa Catalina	9
+910	Santa Ana	9
+911	Santo Domingo	9
+912	Susques	9
+913	Tesorero	9
+914	Tumbaya	9
+915	Uquía	9
+916	Valle Colorado	9
+917	Valle Grande	9
+918	Volcán	9
+919	Abdón Castro Tolay	9
+920	Carahunco	9
+921	Casabindo	9
+922	Chalicán	9
+923	Coranzulí	9
+924	Don Emilio	9
+925	El Moreno	9
+926	El Ceibal	9
+927	El Perchel	9
+928	Guerrero	9
+929	La Almona	9
+930	La Esperanza	9
+931	La Intermedia	9
+932	Lagunilla	9
+933	Las Capillas	9
+934	Los Lapachos	9
+935	Manantiales	9
+936	Mina Ajedrez	9
+937	Mina Pan de Azúcar	9
+938	Nuevo Ledesma	9
+939	Ocloyas	9
+940	Olaroz Chico	9
+941	Paicone	9
+942	Palma Sola	9
+943	Pampichuela	9
+944	Parapetí	9
+945	Pueblo Viejo	9
+946	Pueblo Lavalle	9
+947	Puesto Sey	9
+948	Rinconadillas	9
+949	Río Blanco	9
+950	Río Negro	9
+951	San Lucas	9
+952	San Pablo de Reyes	9
+953	Santa Bárbara	9
+954	Santa Victoria	9
+955	Sauzal	9
+956	Suripugio	9
+957	Tafna	9
+958	Termas de Reyes	9
+959	Tiraxi	9
+960	Tres Cruces	9
+961	Tusaquillas	9
+962	Yaví	9
+963	Yoscaba	9
+964	Yuto	9
+965	Santa Rosa	10
+966	General Pico	10
+967	Toay	10
+968	Realicó	10
+969	Eduardo Castex	10
+970	General Acha	10
+971	Quemú Quemú	10
+972	Intendente Alvear	10
+973	Macachín	10
+974	Victorica	10
+975	Trenel	10
+976	Catriló	10
+977	Guatraché	10
+978	Colonia Barón	10
+979	Doblas	10
+980	Anguil	10
+981	Winifreda	10
+982	Bernardo Larroudé	10
+983	Alta Italia	10
+984	Rancul	10
+985	Caleufú	10
+986	Adolfo Van Praet	10
+987	Conhelo	10
+988	Miguel Riglos	10
+989	Parera	10
+990	Telen	10
+991	Uriburu	10
+992	Ataliva Roca	10
+993	Cuchillo-Có	10
+994	La Adela	10
+995	Puelches	10
+996	Algarrobo del Águila	10
+997	Limay Mahuida	10
+998	Loventuel	10
+999	Puelén	10
+1000	Rucanelo	10
+1001	Santa Isabel	10
+1002	Speluzzi	10
+1003	Tomás Manuel de Anchorena	10
+1004	Veinticinco de Mayo	10
+1005	Arata	10
+1006	Bernasconi	10
+1007	Carro Quemado	10
+1008	Colonia Santa María	10
+1009	Dorila	10
+1010	Embajador Martini	10
+1011	Falucho	10
+1012	Ingeniero Luiggi	10
+1013	Jacinto Arauz	10
+1014	La Humada	10
+1015	Lonquimay	10
+1016	Mauricio Mayer	10
+1017	Metileo	10
+1018	Monte Nievas	10
+1019	Naicó	10
+1020	Ojeda	10
+1021	Pichi Huinca	10
+1022	Relmo	10
+1023	Rolón	10
+1024	Santa Teresa	10
+1025	Telén	10
+1026	Vértiz	10
+1027	Villa Mirasol	10
+1028	Anzoátegui	10
+1029	Caleu Caleu	10
+1030	Chacharramendi	10
+1031	Colonia San José	10
+1032	Domingo Gentile	10
+1033	General Campos	10
+1034	General San Martín	10
+1035	Hucal	10
+1036	La Maruja	10
+1037	Luan Toro	10
+1038	Maisonnave	10
+1039	Paso de los Algarrobos	10
+1040	Perú	10
+1041	Puelén	10
+1042	Remecó	10
+1043	Roosevelt	10
+1044	San Martín	10
+1045	Sarah	10
+1046	Stroeder	10
+1047	Trenque Lauquen	10
+1048	Unanue	10
+1049	Villa Salles	10
+1050	Zona Río Colorado	10
+1051	Agustoni	10
+1052	Alpachiri	10
+1053	Ancaló	10
+1054	Bella Vista	10
+1055	Casa de Piedra	10
+1056	Chamaicó	10
+1057	Colonia La Pastoril	10
+1058	Coronel Hilario Lagos	10
+1059	Estación Emilio Mitre	10
+1060	Estación La Copeta	10
+1061	Estación Sol de Mayo	10
+1062	General Manuel Campos	10
+1063	Gobernador Duval	10
+1064	Ingeniero Foster	10
+1065	La Reforma	10
+1066	Lihuel Calel	10
+1067	Médanos	10
+1068	Paso del Durazno	10
+1069	Pincén	10
+1070	Primera Junta	10
+1071	San Juan	10
+1072	Santa Rosa de Toay	10
+1073	Santo Tomás	10
+1074	Sierra Colorada	10
+1075	Tte. Gral. Emilio Mitre	10
+1076	Villa Germinal	10
+1077	La Rioja	11
+1078	Chilecito	11
+1079	Aimogasta	11
+1080	Chamical	11
+1081	Chepes	11
+1082	Villa Unión	11
+1083	Villa San José de Vinchina	11
+1084	Nonogasta	11
+1085	San Blas de los Sauces	11
+1086	Tama	11
+1087	Ulapes	11
+1088	Villa Castelli	11
+1089	Villa Mazán	11
+1090	Aminga	11
+1091	Anillaco	11
+1092	Anjullón	11
+1093	Atiles	11
+1094	Banda Florida	11
+1095	Castro Barros	11
+1096	Chañar	11
+1097	Chuquis	11
+1098	Colonia Anguinán	11
+1099	Colonia Catinzaco	11
+1100	Colonia Ortiz de Ocampo	11
+1101	Colonia Vichigasta	11
+1102	El Alto	11
+1103	El Barreal	11
+1104	El Chiflón	11
+1105	El Divisadero	11
+1106	El Portezuelo	11
+1107	El Potrerillo	11
+1108	El Quebracho	11
+1109	El Retamo	11
+1110	Famatina	11
+1111	Guandacol	11
+1112	Jagüé	11
+1113	La Aguadita	11
+1114	La Calera	11
+1115	Las Peñas	11
+1116	Los Molinos	11
+1117	Los Palacios	11
+1118	Los Robles	11
+1119	Malanzán	11
+1120	Milagro	11
+1121	Olta	11
+1122	Paganzo	11
+1123	Patquía	11
+1124	Pinchas	11
+1125	Pituil	11
+1126	Polco	11
+1127	Punta de los Llanos	11
+1128	Salicas	11
+1129	San Antonio	11
+1130	San Nicolás	11
+1131	San Pedro	11
+1132	Santa Rita de Catuna	11
+1133	Santa Vera Cruz	11
+1134	Sañogasta	11
+1135	Termas de Santa Teresita	11
+1136	Totoralejos	11
+1137	Tuizón	11
+1138	Vichigasta	11
+1139	Villa Sanagasta	11
+1140	Vinchina	11
+1141	Alpasinche	11
+1142	Alto Carrizal	11
+1143	Amuschina	11
+1144	Andolucas	11
+1145	Angulos	11
+1146	Antinaco	11
+1147	Bajo Hondo	11
+1148	Campanas	11
+1149	Casa Blanca	11
+1150	Catinzaco	11
+1151	Chañarmuyo	11
+1152	Cuipan	11
+1153	El Cantadero	11
+1154	El Condado	11
+1155	El Pueblito	11
+1156	El Vallecito	11
+1157	Esperanza de los Cerrillos	11
+1158	Estación Mazán	11
+1159	La Banda	11
+1160	La Candelaria	11
+1161	La Falda de San Antonio	11
+1162	La Puntilla	11
+1163	Las Talas	11
+1164	Loma Blanca	11
+1165	Los Colorados	11
+1166	Los Tambillos	11
+1167	Machigasta	11
+1168	Mascasín	11
+1169	Miranda	11
+1170	Punta Colorada	11
+1171	San Miguel	11
+1172	Santa Clara	11
+1173	Santa Cruz	11
+1174	Schaqui	11
+1175	Suriyaco	11
+1176	Talamuyuna	11
+1177	Tilimuqui	11
+1178	Villa Nidia	11
+1179	Yacampis	11
+1180	Yacochuya	11
+1614	Apóstoles	13
+1615	Montecarlo	13
+1616	Leandro N. Alem	13
+1617	Jardín América	13
+1618	Puerto Rico	13
+1619	Aristóbulo del Valle	13
+1620	Campo Grande	13
+1621	Capioví	13
+1622	Candelaria	13
+1623	Garupá	13
+1624	San Ignacio	13
+1625	25 de Mayo	13
+1626	Alba Posse	13
+1627	Bernardo de Irigoyen	13
+1628	Campo Ramón	13
+1629	Campo Viera	13
+1630	Colonia Aurora	13
+1631	Colonia Wanda	13
+1632	Dos de Mayo	13
+1633	El Soberbio	13
+1634	General Alvear	13
+1635	Guaraní	13
+1636	Hipólito Yrigoyen	13
+1637	Itacaruaré	13
+1638	Loreto	13
+1639	Mártires	13
+1640	Mojón Grande	13
+1641	Panambí	13
+1642	Puerto Esperanza	13
+1643	Puerto Libertad	13
+1644	Puerto Piray	13
+1645	Ruiz de Montoya	13
+1646	San Antonio	13
+1647	San Javier	13
+1648	San José	13
+1649	San Martín	13
+1650	San Pedro	13
+1651	Santa Ana	13
+1652	Santa María	13
+1653	Santiago de Liniers	13
+1654	Santo Pipó	13
+1655	Tres Capones	13
+1656	Cerro Azul	13
+1657	Cerro Corá	13
+1658	Colonia Alberdi	13
+1659	Colonia Delicia	13
+1660	Colonia Polana	13
+1661	Colonia Victoria	13
+1662	Concepción de la Sierra	13
+1663	Corpus	13
+1664	Dos Arroyos	13
+1665	Fachinal	13
+1666	Garuhapé	13
+1667	Gobernador López	13
+1668	Gobernador Roca	13
+1669	Bonpland	13
+1670	Almafuerte	13
+1671	Arroyo del Medio	13
+1672	Azara	13
+1673	Caá Yarí	13
+1674	Caraguatay	13
+1675	Comandante Andresito	13
+1676	El Alcázar	13
+1677	Florentino Ameghino	13
+1678	General Urquiza	13
+1679	Gobernador Lanús	13
+1680	Los Helechos	13
+1681	Olegario Víctor Andrade	13
+1682	Picada Gobernador López	13
+1683	Pozo Azul	13
+1684	Profundidad	13
+1685	Puerto Leoni	13
+1686	Salto Encantado	13
+1687	San Gotardo	13
+1688	Villa Urrutia	13
+1689	Neuquén	14
+1690	San Martín de los Andes	14
+1691	Plottier	14
+1692	Cutral Có	14
+1693	Centenario	14
+1694	Zapala	14
+1695	Plaza Huincul	14
+1696	Junín de los Andes	14
+1697	Rincón de los Sauces	14
+1698	Villa La Angostura	14
+1699	Chos Malal	14
+1700	San Patricio del Chañar	14
+1701	Senillosa	14
+1702	Añelo	14
+1703	Aluminé	14
+1704	Las Lajas	14
+1705	Picún Leufú	14
+1706	Piedra del Águila	14
+1707	Villa el Chocón	14
+1708	Loncopué	14
+1709	Mariano Moreno	14
+1710	Buta Ranquil	14
+1711	El Huecú	14
+1712	Las Ovejas	14
+1713	Andacollo	14
+1714	Villa Pehuenia	14
+1715	Caviahue	14
+1716	Copahue	14
+1717	Tricao Malal	14
+1718	Los Miches	14
+1719	Taquimilán	14
+1720	El Cholar	14
+1721	Huinganco	14
+1722	Chorriaca	14
+1723	Bajada del Agrio	14
+1724	Los Catutos	14
+1725	Covunco Abajo	14
+1726	Covunco Centro	14
+1727	Manzano Amargo	14
+1728	Villa Curi Leuvú	14
+1729	Varvarco	14
+1730	Aguada San Roque	14
+1731	Las Coloradas	14
+1732	Sauzal Bonito	14
+1733	Paso Aguerre	14
+1734	Vista Alegre	14
+1735	Octavio Pico	14
+1736	Quili Malal	14
+1737	Santo Tomás	14
+1738	Ramón Castro	14
+1739	Barrancas	14
+1740	Pilo Lil	14
+1741	Colipilli	14
+1742	El Sauce	14
+1743	Los Chihuidos	14
+1744	Naunauco	14
+1745	Aquihuecó	14
+1746	Coyuco-Cochico	14
+1747	Guañacos	14
+1748	Los Menucos	14
+1749	Bella Vista	14
+1750	Cochico	14
+1751	El Portón	14
+1752	Las Cortaderas	14
+1753	Villa del Nahueve	14
+1754	Los Carrizos	14
+1755	Lago Pellegrini	14
+1756	Península Ruca Có	14
+1757	Mari Menuco	14
+1758	Los Barreales	14
+1759	El Cruce	14
+1760	Arroyito	14
+1761	Balsa Las Perlas	14
+1762	Villa Traful	14
+1763	Villa Meliquina	14
+1764	Dina Huapi	14
+1765	Confluencia	14
+1766	Viedma	15
+1767	San Carlos de Bariloche	15
+1768	General Roca	15
+1769	Cipolletti	15
+1770	Villa Regina	15
+1771	Allen	15
+1772	Cinco Saltos	15
+1773	Catriel	15
+1774	El Bolsón	15
+1775	Choele Choel	15
+1776	San Antonio Oeste	15
+1777	Ingeniero Jacobacci	15
+1778	Río Colorado	15
+1779	Luis Beltrán	15
+1780	Lamarque	15
+1781	Campo Grande	15
+1782	Cervantes	15
+1783	Chichinales	15
+1784	Chimpay	15
+1785	Coronel Belisle	15
+1786	Darwin	15
+1787	Fernández Oro	15
+1788	General Conesa	15
+1789	General Enrique Godoy	15
+1790	Guardia Mitre	15
+1791	Ingeniero Huergo	15
+1792	Mainqué	15
+1793	Maquinchao	15
+1794	Mencué	15
+1795	Pilcaniyeu	15
+1796	Pomona	15
+1797	Río Chico	15
+1798	Sierra Colorada	15
+1799	Sierra Grande	15
+1800	Valcheta	15
+1801	Comallo	15
+1802	Dina Huapi	15
+1803	Los Menucos	15
+1804	Ñorquincó	15
+1805	Ramos Mexía	15
+1806	Sierra Pailemán	15
+1807	Comicó	15
+1808	Cona Niyeu	15
+1809	Ministro Ramos Mexía	15
+1810	Prahuaniyeu	15
+1811	Clemente Onelli	15
+1812	Colonia Catriel	15
+1813	Colonia Julia y Echarren	15
+1814	Coronel Suárez	15
+1815	Cubanea	15
+1816	El Cuy	15
+1817	Lago Pellegrini	15
+1818	Las Bayas	15
+1819	Las Grutas	15
+1820	Mamuel Choique	15
+1821	Naupa Huen	15
+1822	Ojos de Agua	15
+1823	Paso Córdova	15
+1824	Peñas Blancas	15
+1825	Pichi Mahuida	15
+1826	Pilquiniyeu	15
+1827	Pilquiniyeu del Limay	15
+1395	Mendoza	12
+1396	San Rafael	12
+1397	Godoy Cruz	12
+1398	Las Heras	12
+1399	Guaymallén	12
+1400	Luján de Cuyo	12
+1401	Maipú	12
+1402	Tunuyán	12
+1403	San Martín	12
+1404	Rivadavia	12
+1405	Junín	12
+1406	Santa Rosa	12
+1407	La Paz	12
+1408	San Carlos	12
+1409	Malargüe	12
+1410	General Alvear	12
+1411	Tupungato	12
+1412	Lavalle	12
+1413	Capital	12
+1414	Ciudad	12
+1415	Dorrego	12
+1416	Gobernador Benegas	12
+1417	Pedro Molina	12
+1418	General Ortega	12
+1419	Chacras de Coria	12
+1420	El Challao	12
+1421	El Plumerillo	12
+1422	Las Tortugas	12
+1423	El Resguardo	12
+1424	El Sauce	12
+1425	Fray Luis Beltrán	12
+1426	La Florida	12
+1427	Las Cañas	12
+1428	Las Heras	12
+1429	Luzuriaga	12
+1430	San Francisco del Monte	12
+1431	Villa Hipódromo	12
+1432	Villa Marini	12
+1433	Villa Nueva	12
+1434	Villa Paula	12
+1435	Villa San Martín	12
+1436	Barrio Civit	12
+1437	Barrio Cooperativa Los Campamentos	12
+1438	Barrio El Nevado	12
+1439	Barrio Empleados de Comercio	12
+1440	Barrio La Estación	12
+1441	Barrio La Favorita	12
+1442	Barrio La Gloria	12
+1443	Barrio La Pega	12
+1444	Barrio Los Boulevares	12
+1445	Barrio Los Olivos	12
+1446	Barrio Los Tamarindos	12
+1447	Barrio San Eduardo	12
+1448	Barrio San José	12
+1449	Barrio San Martín	12
+1450	Barrio Santa Ana	12
+1451	Barrio Santa María	12
+1452	Barrio Santa Rita	12
+1453	Barrio Universitario	12
+1454	Barrio Virgen del Rosario	12
+1455	Bermejo	12
+1456	Buena Nueva	12
+1457	Capdevila	12
+1458	Capilla del Rosario	12
+1459	Carril Norte	12
+1460	Cipolletti	12
+1461	Coquimbito	12
+1462	Cruz de Piedra	12
+1463	El Bermejo	12
+1464	El Borbollón	12
+1465	El Carrizal	12
+1466	El Central	12
+1467	El Cerrito	12
+1468	El Challao	12
+1469	El Manzano	12
+1470	El Nihuil	12
+1471	El Paramillo	12
+1472	El Pastal	12
+1473	El Peral	12
+1474	El Plumerillo	12
+1475	El Resguardo	12
+1476	El Sauce	12
+1477	El Tropezón	12
+1478	Fray Luis Beltrán	12
+1479	General Gutiérrez	12
+1480	Gobernador Benegas	12
+1481	Godoy Cruz	12
+1482	Goudge	12
+1483	Guaymallén	12
+1484	Ingeniero Giagnoni	12
+1485	Jocolí	12
+1486	La Arboleda	12
+1487	La Central	12
+1488	La Consulta	12
+1489	La Dormida	12
+1490	La Florida	12
+1491	La Libertad	12
+1492	La Primavera	12
+1493	Las Catitas	12
+1494	Las Heras	12
+1495	Las Leñas	12
+1496	Las Paredes	12
+1497	Las Violetas	12
+1498	Los Árboles	12
+1499	Los Campamentos	12
+1500	Los Corralitos	12
+1501	Los Sauces	12
+1502	Luján de Cuyo	12
+1503	Lunlunta	12
+1504	Luzuriaga	12
+1505	Maipú	12
+1506	Malargüe	12
+1507	Media Luna	12
+1508	Mundo Nuevo	12
+1509	Palmira	12
+1510	Pedro Molina	12
+1511	Perdriel	12
+1512	Potrerillos	12
+1513	Puente del Inca	12
+1514	Punta de Vacas	12
+1515	Rodeo del Medio	12
+1516	Russell	12
+1517	San Carlos	12
+1518	San Francisco del Monte	12
+1519	San José	12
+1520	San Martín	12
+1521	San Roque	12
+1522	Santa María de Oro	12
+1523	Tunuyán	12
+1524	Ugarteche	12
+1525	Uspallata	12
+1526	Valle Grande	12
+1527	Villa Atuel	12
+1528	Villa Bastías	12
+1529	Villa Edelmira	12
+1530	Villa Hipódromo	12
+1531	Villa Marini	12
+1532	Villa Nueva	12
+1533	Villa Paula	12
+1534	Villa San Martín	12
+1535	Villa Seca	12
+1536	Vistalba	12
+1537	Barrancas	12
+1538	Cacheuta	12
+1539	Costa de Araujo	12
+1540	El Carrizal	12
+1541	El Manzano	12
+1542	El Nihuil	12
+1543	El Paramillo	12
+1544	El Pastal	12
+1545	El Peral	12
+1546	El Plumerillo	12
+1547	El Resguardo	12
+1548	El Sauce	12
+1549	El Tropezón	12
+1550	Fray Luis Beltrán	12
+1551	General Gutiérrez	12
+1552	Gobernador Benegas	12
+1553	Godoy Cruz	12
+1554	Goudge	12
+1555	Guaymallén	12
+1556	Ingeniero Giagnoni	12
+1557	Jocolí	12
+1558	La Arboleda	12
+1559	La Central	12
+1560	La Consulta	12
+1561	La Dormida	12
+1562	La Florida	12
+1563	La Libertad	12
+1564	La Primavera	12
+1565	Las Catitas	12
+1566	Las Heras	12
+1567	Las Leñas	12
+1568	Las Paredes	12
+1569	Las Violetas	12
+1570	Los Árboles	12
+1571	Los Campamentos	12
+1572	Los Corralitos	12
+1573	Los Sauces	12
+1574	Luján de Cuyo	12
+1575	Lunlunta	12
+1576	Luzuriaga	12
+1577	Maipú	12
+1578	Malargüe	12
+1579	Media Luna	12
+1580	Mundo Nuevo	12
+1581	Palmira	12
+1582	Pedro Molina	12
+1583	Perdriel	12
+1584	Potrerillos	12
+1585	Puente del Inca	12
+1586	Punta de Vacas	12
+1587	Rodeo del Medio	12
+1588	Russell	12
+1589	San Carlos	12
+1590	San Francisco del Monte	12
+1591	San José	12
+1592	San Martín	12
+1593	San Roque	12
+1594	Santa María de Oro	12
+1595	Tunuyán	12
+1596	Ugarteche	12
+1597	Uspallata	12
+1598	Valle Grande	12
+1599	Villa Atuel	12
+1600	Villa Bastías	12
+1601	Villa Edelmira	12
+1602	Villa Hipódromo	12
+1603	Villa Marini	12
+1604	Villa Nueva	12
+1605	Villa Paula	12
+1606	Villa San Martín	12
+1607	Villa Seca	12
+1608	Vistalba	12
+1828	Playas Doradas	15
+1829	Saco Viejo	15
+1830	San Javier	15
+1831	Yaminué	15
+1832	Aguada Cecilio	15
+1833	Aguada de Guerra	15
+1834	Aguada Guzmán	15
+1835	Arroyo de la Ventana	15
+1836	Arroyo Los Berros	15
+1837	Blancura Centro	15
+1838	Calte. Cordero	15
+1839	Cerro Policía	15
+1840	Colán Conhué	15
+1841	El Caín	15
+1842	El Manso	15
+1843	El Cóndor	15
+1844	Laguna Blanca	15
+1845	Nahuel Niyeu	15
+1846	Paso Flores	15
+1847	Punta Colorada	15
+1848	Río Villegas	15
+1849	Sargento Vidal	15
+1850	Villa Alberdi	15
+1851	Villa Mascardi	15
+1852	Villa Llanquín	15
+1853	Balsa Las Perlas	15
+1854	Colonia Josefa	15
+1855	Negro Muerto	15
+1856	Contralmirante Guerrico	15
+1857	General Fernández Oro	15
+1858	Salta	16
+1859	San Ramón de la Nueva Orán	16
+1860	Tartagal	16
+1861	General Güemes	16
+1862	Metán	16
+1863	Rosario de la Frontera	16
+1864	Cafayate	16
+1865	Cerrillos	16
+1866	Rosario de Lerma	16
+1867	San Antonio de los Cobres	16
+1868	Joaquín V. González	16
+1869	Aguaray	16
+1870	Embarcación	16
+1871	Cachi	16
+1872	General Mosconi	16
+1873	El Carril	16
+1874	Chicoana	16
+1875	El Galpón	16
+1876	San Lorenzo	16
+1877	Vaqueros	16
+1878	Campo Santo	16
+1879	La Merced	16
+1880	Las Lajitas	16
+1881	Pichanal	16
+1882	Colonia Santa Rosa	16
+1883	Hipólito Yrigoyen	16
+1884	Santa Victoria Este	16
+1885	El Quebrachal	16
+1886	Apolinario Saravia	16
+1887	Río Piedras	16
+1888	Campo Quijano	16
+1889	La Viña	16
+1890	Salvador Mazza	16
+1891	El Tala	16
+1892	La Candelaria	16
+1893	El Jardín	16
+1894	La Poma	16
+1895	Iruya	16
+1896	Isla de Cañas	16
+1897	Rivadavia Banda Norte	16
+1898	Rivadavia Banda Sur	16
+1899	Santa Victoria Oeste	16
+1900	Molinos	16
+1901	Angastaco	16
+1902	San Carlos	16
+1903	Animaná	16
+1904	Seclantás	16
+1905	Guachipas	16
+1906	Payogasta	16
+1907	El Bordo	16
+1908	General Ballivián	16
+1909	Coronel Moldes	16
+1910	La Silleta	16
+1911	Tolar Grande	16
+1912	Campo Durán	16
+1913	Nazareno	16
+1914	Santa Victoria	16
+1915	Los Toldos	16
+1916	Aguas Blancas	16
+1917	San Agustín	16
+1918	Urundel	16
+1919	La Unión	16
+1920	Rivadavia	16
+1921	La Estrella	16
+1922	Roberto Romero	16
+1923	Los Blancos	16
+1924	Capitán Pagé	16
+1925	Coronel Olleros	16
+1926	El Potrero	16
+1927	Tolloche	16
+1928	Palermo Oeste	16
+1929	Palermo Este	16
+1930	Río del Valle	16
+1931	El Naranjo	16
+1932	Rosario del Dorado	16
+1933	El Jardín	16
+1934	La Caldera	16
+1935	Vado de Castro	16
+1936	Pampa Grande	16
+1937	Cobos	16
+1938	La Isla	16
+1939	Las Palmas	16
+1940	Viñaco	16
+1941	El Barrial	16
+1942	San José de Escalchi	16
+1943	Puerta de Díaz	16
+1944	Talapampa	16
+1945	La Aguada	16
+1946	Dragones	16
+1947	El Dorado	16
+1948	El Espinillo	16
+1949	El Tabacal	16
+1950	Gaona	16
+1951	General Pizarro	16
+1952	Maroma	16
+1953	Padre Lozano	16
+1954	Palomitas	16
+1955	Río Blanco	16
+1956	San José de Orquera	16
+1957	Corralito	16
+1958	El Chamical	16
+1959	Las Mochas	16
+1960	Monte Carmelo	16
+1961	Potrero de Castilla	16
+1962	San Luis	18
+1963	Villa Mercedes	18
+1964	Merlo	18
+1965	La Punta	18
+1966	Justo Daract	18
+1967	Santa Rosa del Conlara	18
+1968	Tilisarao	18
+1969	Naschel	18
+1970	La Toma	18
+1971	Quines	18
+1972	Candelaria	18
+1973	Luján	18
+1974	Renca	18
+1975	San Francisco del Monte de Oro	18
+1976	Carpintería	18
+1977	Villa General Roca	18
+1978	Concarán	18
+1979	Villa del Carmen	18
+1980	Cortaderas	18
+1981	Villa Larca	18
+1982	Unión	18
+1983	Nueva Galia	18
+1984	Fortuna	18
+1985	Anchorena	18
+1986	Arizona	18
+1987	Bagual	18
+1988	Batavia	18
+1989	Beazley	18
+1990	Buena Esperanza	18
+1991	Carolina	18
+1992	Cautana	18
+1993	Cerro de Oro	18
+1994	Desaguadero	18
+1995	Donovan	18
+1996	El Morro	18
+1997	El Trapiche	18
+1998	El Volcán	18
+1999	Fortín El Patria	18
+2000	Fraga	18
+2001	Juan Jorba	18
+2002	Juan Llerena	18
+2003	Juana Koslay	18
+2004	La Angelina	18
+2005	La Bajada	18
+2006	La Calera	18
+2007	La Florida	18
+2008	La Punilla	18
+2009	La Vertiente	18
+2010	Lavaisse	18
+2011	Leandro N. Alem	18
+2012	Los Molles	18
+2013	Nogolí	18
+2014	Papagayos	18
+2015	Paso Grande	18
+2016	Potrero de los Funes	18
+2017	Río Juan Gómez	18
+2018	Salinas del Bebedero	18
+2019	San Gerónimo	18
+2020	San Martín	18
+2021	San Pablo	18
+2022	Santa Rosa de Conlara	18
+2023	Talita	18
+2024	Villa de la Quebrada	18
+2025	Villa Elena	18
+2026	Villa Reynolds	18
+2027	Zanjitas	18
+2028	Alto Pelado	18
+2029	Alto Pencoso	18
+2030	Balde	18
+2031	Charlone	18
+2032	Eleodoro Lobos	18
+2033	Estancia Grande	18
+2034	La Aguada	18
+2035	La Botija	18
+2036	La Esquina	18
+2037	La Maroma	18
+2038	La Petra	18
+2039	La Represita	18
+2040	Las Aguadas	18
+2041	Las Chacras	18
+2042	Las Lagunas	18
+2043	Las Vertientes	18
+2044	Lince	18
+2045	Los Cajones	18
+2046	Los Tapiales	18
+2047	Navia	18
+2048	Pampa del Tamboreo	18
+2049	Paso del Rey	18
+2050	Piedra Blanca	18
+2051	Riocito	18
+2052	Saladillo	18
+2053	San Antonio	18
+2054	San Felipe	18
+2055	San Roque	18
+2056	Villa de Praga	18
+2057	Villa Salles	18
+2058	El Durazno	18
+2059	El Rincón	18
+2060	La Tranca	18
+2061	Las Isletas	18
+2062	Quebrada de San Vicente	18
+2063	Río Gallegos	19
+2064	Caleta Olivia	19
+2065	Pico Truncado	19
+2066	Las Heras	19
+2067	Puerto Deseado	19
+2068	El Calafate	19
+2069	Puerto San Julián	19
+2070	Puerto Santa Cruz	19
+2071	Comandante Luis Piedra Buena	19
+2072	Perito Moreno	19
+2073	Los Antiguos	19
+2074	Gobernador Gregores	19
+2075	El Chaltén	19
+2076	28 de Noviembre	19
+2077	Río Turbio	19
+2078	Puerto Moreno	19
+2079	Koluel Kaike	19
+2080	Cañadón Seco	19
+2081	Fitz Roy	19
+2082	Jaramillo	19
+2083	Tres Lagos	19
+2084	Lago Posadas	19
+2085	Hipólito Yrigoyen	19
+2086	Bajo Caracoles	19
+2087	Rospentek	19
+2088	Julia Dufour	19
+2089	Mina 3	19
+2090	Yacimiento Río Turbio	19
+2091	Esperanza	19
+2092	Lago Buenos Aires	19
+2093	Las Horquetas	19
+2094	Tres Cerros	19
+2095	Tellier	19
+2096	Ramón Santos	19
+2097	Laguna Palacios	19
+2098	Cañadón León	19
+2099	Estancia La Madrugada	19
+2100	La Esperanza	19
+2101	Lago Roca	19
+2102	Puerto Coig	19
+2103	El Zurdo	19
+2104	Güer Aike	19
+2105	Monte León	19
+2106	Río Chico	19
+2107	Cabo Blanco	19
+2108	Calafate Chico	19
+2109	Coy Inlet	19
+2110	El Turbio	19
+2111	Estancia Cóndor	19
+2112	Fuentes del Coyle	19
+2113	Glencross	19
+2114	Güer Aike	19
+2115	Julia Dufour	19
+2116	La Laurita	19
+2117	Las Vegas	19
+2118	Mata Amarilla	19
+2119	Palermo Aike	19
+2120	Paso Río Bote	19
+2121	Puerto Bandera	19
+2122	Punta Loyola	19
+2123	Río Pelque	19
+2124	San Roque	19
+2125	Tehuelches	19
+2126	Tres Lagunas	19
+2127	Truncado	19
+2128	Bella Vista	19
+2129	Cañadón Escondido	19
+2130	Cardiel Chico	19
+2131	Charles Fuhr	19
+2132	Comandante Espora	19
+2133	Coronel Fitz Roy	19
+2134	El Calafate	19
+2135	El Cerrito	19
+2136	El Cordón	19
+2137	El Mangrullo	19
+2138	El Pluma	19
+2139	El Rodeo	19
+2140	Estación Tehuelches	19
+2141	Facundo	19
+2142	Gobernador Moyano	19
+2143	Güent Aike	19
+2144	Koluel Kayke	19
+2145	La Argentina	19
+2146	La Bajada	19
+2147	La Manchuria	19
+2148	La María	19
+2149	La Oriental	19
+2150	La Porfiada	19
+2151	Laguna Grande	19
+2152	Las Martinetas	19
+2153	Monte Dinero	19
+2154	Ocho de Diciembre	19
+2155	Paso Ibáñez	19
+2156	Piedra Clavada	19
+2157	Puerto Punta Quilla	19
+2158	Rospentek Aike	19
+2159	Tamel Aike	19
+2160	Tapi Aike	19
+2161	Veintiocho de Noviembre	19
+2162	Santa Fe	20
+2163	Rosario	20
+2164	Rafaela	20
+2165	Venado Tuerto	20
+2166	Reconquista	20
+2167	Santo Tomé	20
+2168	Villa Gobernador Gálvez	20
+2169	Esperanza	20
+2170	Casilda	20
+2171	Cañada de Gómez	20
+2172	Firmat	20
+2173	San Lorenzo	20
+2174	Gálvez	20
+2175	Rufino	20
+2176	Capitán Bermúdez	20
+2177	Granadero Baigorria	20
+2178	Sunchales	20
+2179	San Cristóbal	20
+2180	Funes	20
+2181	El Trébol	20
+2182	Villa Constitución	20
+2183	Arroyo Seco	20
+2184	San Jorge	20
+2185	Las Parejas	20
+2186	Las Rosas	20
+2187	Armstrong	20
+2188	Pérez	20
+2189	Carcarañá	20
+2190	Caseros	20
+2191	Ceres	20
+2192	Laguna Paiva	20
+2193	Coronda	20
+2194	Vera	20
+2195	Avellaneda	20
+2196	Tostado	20
+2197	Recreo	20
+2198	San Justo	20
+2199	San Javier	20
+2200	Sastre	20
+2201	Frontera	20
+2202	San Carlos Centro	20
+2203	San Vicente	20
+2204	Totoras	20
+2205	Roldán	20
+2206	Helvecia	20
+2207	Calchaquí	20
+2208	Malabrigo	20
+2209	Alcorta	20
+2210	Alvear	20
+2211	Alvarez	20
+2212	Arteaga	20
+2213	Arrufó	20
+2214	Ataliva	20
+2215	Aurelia	20
+2216	Avellaneda	20
+2217	Barrancas	20
+2218	Bella Italia	20
+2219	Berabevú	20
+2220	Berna	20
+2221	Bernardo de Irigoyen	20
+2222	Bigand	20
+2223	Bombal	20
+2224	Bouquet	20
+2225	Bustinza	20
+2226	Cabal	20
+2227	Cacique Ariacaiquín	20
+2228	Cafferata	20
+2229	Cañada Rosquín	20
+2230	Cañada Rica	20
+2231	Chabás	20
+2232	Chañar Ladeado	20
+2233	Chapuy	20
+2234	Chovet	20
+2235	Christophersen	20
+2236	Classon	20
+2237	Cnel. Arnold	20
+2238	Cnel. Bogado	20
+2239	Cnel. Dominguez	20
+2240	Cnel. Fraga	20
+2241	Colonia Belgrano	20
+2242	Colonia Bicha	20
+2243	Colonia Bigand	20
+2244	Colonia Bossi	20
+2245	Colonia Castelar	20
+2246	Colonia Cello	20
+2247	Colonia Dolores	20
+2248	Colonia Dos Rosas	20
+2249	Colonia Durán	20
+2250	Colonia Iturraspe	20
+2251	Colonia Margarita	20
+2252	Colonia Mascias	20
+2253	Colonia Raquel	20
+2254	Colonia Rosa	20
+2255	Colonia San José	20
+2256	Constanza	20
+2257	Correa	20
+2258	Crispi	20
+2259	Cululú	20
+2260	Curupayti	20
+2261	Desvío Arijón	20
+2262	Díaz	20
+2263	Diego de Alvear	20
+2264	Egusquiza	20
+2265	El Arazá	20
+2266	El Rabón	20
+2267	El Sombrerito	20
+2268	El Toba	20
+2269	Elisa	20
+2270	Elortondo	20
+2271	Emilia	20
+2272	Empalme San Carlos	20
+2273	Empalme Villa Constitución	20
+2274	Esmeralda	20
+2275	Esperanza	20
+2276	Estación Alvear	20
+2277	Estación Clucellas	20
+2278	Esteban Rams	20
+2279	Esther	20
+2280	Esustolia	20
+2281	Eusebia	20
+2282	Felicia	20
+2283	Fidela	20
+2284	Fighiera	20
+2285	Florencia	20
+2286	Fortín Olmos	20
+2287	Franck	20
+2288	Fray Luis Beltrán	20
+2289	Fuentes	20
+2290	Gaboto	20
+2291	Galisteo	20
+2292	Gálvez	20
+2293	Garabato	20
+2294	Garibaldi	20
+2295	Gato Colorado	20
+2296	Gdor. Crespo	20
+2297	Gessler	20
+2298	Godeken	20
+2299	Godoy	20
+2300	Golondrina	20
+2301	Gregoria Pérez de Denis	20
+2302	Grutly	20
+2303	Guadalupe Norte	20
+2304	Gödeken	20
+2305	Hereford	20
+2306	Hersilia	20
+2307	Hipatía	20
+2308	Huanqueros	20
+2309	Hugentobler	20
+2310	Hughes	20
+2311	Humberto 1º	20
+2312	Humboldt	20
+2313	Ibarlucea	20
+2314	Ingeniero Chanourdie	20
+2315	Intiyaco	20
+2316	Ituzaingó	20
+2317	Jacinto L. Aráuz	20
+2318	Josefina	20
+2319	Juan B. Molina	20
+2320	Juan de Garay	20
+2321	Juncal	20
+2322	La Brava	20
+2323	La Cabral	20
+2324	La Camila	20
+2325	La Chispa	20
+2326	La Clara	20
+2327	La Criolla	20
+2328	La Gallareta	20
+2329	La Lucila	20
+2330	La Pelada	20
+2331	La Penca	20
+2332	La Rubia	20
+2333	La Sarita	20
+2334	La Vanguardia	20
+2335	Labordeboy	20
+2336	Landeta	20
+2337	Lanteri	20
+2338	Larrechea	20
+2339	Las Avispas	20
+2340	Las Bandurrias	20
+2341	Las Garzas	20
+2342	Las Palmeras	20
+2343	Las Petacas	20
+2344	Las Toscas	20
+2345	Las Tunas	20
+2346	Lazzarino	20
+2347	Lehmann	20
+2348	Llambi Campbell	20
+2349	Logroño	20
+2350	Loma Alta	20
+2351	López	20
+2352	Los Amores	20
+2353	Los Cardos	20
+2354	Los Laureles	20
+2355	Los Molinos	20
+2356	Los Quirquinchos	20
+2357	Lucio V. López	20
+2358	Luis Palacios	20
+2359	Ma. Juana	20
+2360	Ma. Luisa	20
+2361	Ma. Susana	20
+2362	Ma. Teresa	20
+2363	Maciel	20
+2364	Maggiolo	20
+2365	Manucho	20
+2366	Marcelino Escalada	20
+2367	Margarita	20
+2368	María Juana	20
+2369	María Luisa	20
+2370	María Susana	20
+2371	María Teresa	20
+2372	Matilde	20
+2373	Mauá	20
+2374	Máximo Paz	20
+2375	Melincué	20
+2376	Miguel Torres	20
+2377	Moisés Ville	20
+2378	Monigotes	20
+2379	Monje	20
+2380	Monte Oscuridad	20
+2381	Monte Vera	20
+2382	Montefiore	20
+2383	Montes de Oca	20
+2384	Murphy	20
+2385	Ñanducita	20
+2386	Naré	20
+2387	Nelson	20
+2388	Nicanor E. Molinas	20
+2389	Nuevo Torino	20
+2390	Oliveros	20
+2391	Palacios	20
+2392	Pavón	20
+2393	Pavón Arriba	20
+2394	Pedro Gómez Cello	20
+2395	Pérez	20
+2396	Peyrano	20
+2397	Piamonte	20
+2398	Pilar	20
+2399	Piñero	20
+2400	Plaza Clucellas	20
+2401	Portugalete	20
+2402	Pozo Borrado	20
+2403	Progreso	20
+2404	Providencia	20
+2405	Pte. Roca	20
+2406	Pueblo Andino	20
+2407	Pueblo Esther	20
+2408	Pueblo Gral. San Martín	20
+2409	Pueblo Irigoyen	20
+2410	Pueblo Marini	20
+2411	Pueblo Muñoz	20
+2412	Pueblo Uranga	20
+2413	Pujato	20
+2414	Pujato N.	20
+2415	Rafaela	20
+2416	Ramayón	20
+2417	Ramona	20
+2418	Reconquista	20
+2419	Recreo	20
+2420	Ricardone	20
+2421	Rivadavia	20
+2422	Roldán	20
+2423	Romang	20
+2424	Rosario	20
+2425	Rueda	20
+2426	Rufino	20
+2427	Sa Pereira	20
+2428	Saguier	20
+2429	Saladero M. Cabal	20
+2430	Salto Grande	20
+2431	San Agustín	20
+2432	San Antonio de Obligado	20
+2433	San Bernardo (N.J.)	20
+2434	San Bernardo (S.J.)	20
+2435	San Carlos Centro	20
+2436	San Carlos Norte	20
+2437	San Carlos Sud	20
+2438	San Cristóbal	20
+2439	San Eduardo	20
+2440	San Eugenio	20
+2441	San Fabián	20
+2442	San Fco. de Santa Fé	20
+2443	San Genaro	20
+2444	San Genaro N.	20
+2445	San Gregorio	20
+2446	San Guillermo	20
+2447	San Gustavo	20
+2448	San Javier	20
+2449	San Jerónimo del Sauce	20
+2450	San Jerónimo N.	20
+2451	San Jerónimo Sud	20
+2452	San Jorge	20
+2453	San José de La Esquina	20
+2454	San José del Rincón	20
+2455	San Justo	20
+2456	San Lorenzo	20
+2457	San Mariano	20
+2458	San Martín de las Escobas	20
+2459	San Martín N.	20
+2460	San Mauro	20
+2461	San Miguel	20
+2462	San Nicolas	20
+2463	San Ricardo	20
+2464	San Vicente	20
+2465	Sancti Spititu	20
+2466	Sanford	20
+2467	Sta. Clara de Buena Vista	20
+2468	Sta. Clara de Saguier	20
+2469	Sta. Isabel	20
+2470	Sta. Margarita	20
+2471	Sta. Maria Centro	20
+2472	Sta. María N.	20
+2473	Sta. Rosa	20
+2474	Sta. Teresa	20
+2475	Santo Domingo	20
+2476	Santo Tomé	20
+2477	Santurce	20
+2478	Sargento Cabral	20
+2479	Sarmiento	20
+2480	Sastre	20
+2481	Santiago del Estero	21
+2482	La Banda	21
+2483	Termas de Río Hondo	21
+2484	Añatuya	21
+2485	Frías	21
+2486	Loreto	21
+2487	Quimilí	21
+2488	Clodomira	21
+2489	Monte Quemado	21
+2490	Campo Gallo	21
+2491	Suncho Corral	21
+2492	Fernández	21
+2493	Beltrán	21
+2494	Bandera	21
+2495	Forres	21
+2496	Villa Ojo de Agua	21
+2497	Pinto	21
+2498	Selva	21
+2499	Colonia Dora	21
+2500	Los Juríes	21
+2501	El Hoyo	21
+2502	Herrera	21
+2503	Icaño	21
+2504	Lugones	21
+2505	Real Sayana	21
+2506	Villa Atamisqui	21
+2507	Brea Pozo	21
+2508	Estación Atamisqui	21
+2509	Pozo Hondo	21
+2510	El Bobadal	21
+2511	Tintina	21
+2512	Colonia El Simbolar	21
+2513	Los Telares	21
+2514	Villa Salavina	21
+2515	Chilca Juliana	21
+2516	Los Quiroga	21
+2517	Villa Silípica	21
+2518	Simbol	21
+2519	Sumampa	21
+2520	Nueva Esperanza	21
+2521	Villa Nueva	21
+2522	Villa Unión	21
+2523	Arraga	21
+2524	Bobadal	21
+2525	Caspi Corral	21
+2526	Chaupi Pozo	21
+2527	Chuña Huasi	21
+2528	Colonia Jaime	21
+2529	El Arenal	21
+2530	El Caburé	21
+2531	El Mojón	21
+2532	El Zanjón	21
+2533	Estación Robles	21
+2534	Estación Taboada	21
+2535	Gramilla	21
+2536	Guardia Escolta	21
+2537	Isca Yacu	21
+2538	Kilometro 30	21
+2539	La Cañada	21
+2540	La Invernada	21
+2541	La Nueva Donosa	21
+2542	Lamadrid	21
+2543	Laprida	21
+2544	Lavalle	21
+2545	Maco	21
+2546	Malbrán	21
+2547	Matará	21
+2548	Medellín	21
+2549	Minerva	21
+2550	Pampa de los Guanacos	21
+2551	Pampa Muyoj	21
+2552	Pedro R. Fernández	21
+2553	Pozo Betbeder	21
+2554	Rapelli	21
+2555	Sabagasta	21
+2556	San Gregorio	21
+2557	San José del Boquerón	21
+2558	San Pedro	21
+2559	San Pedro de Guasayán	21
+2560	San Ramón	21
+2561	San Vicente	21
+2562	Santo Domingo	21
+2563	Sol de Julio	21
+2564	Tacañitas	21
+2565	Taboada	21
+2566	Tapso	21
+2567	Tomás Young	21
+2568	Toro Pozo	21
+2569	Upianita	21
+2570	Vilelas	21
+2571	Villa Figueroa	21
+2572	Villa General Mitre	21
+2573	Villa Giménez	21
+2574	Villa La Punta	21
+2575	Villa Mailín	21
+2576	Villa Matoque	21
+2577	Villa Palmar	21
+2578	Villa Río Hondo	21
+2579	Villa Robles	21
+2580	Villa Turística del Embalse	21
+2581	Villa Zanjon	21
+2582	Vilmer	21
+2583	Vinalito	21
+2584	Weisburd	21
+2585	Yanda	21
+2586	Abra Grande	21
+2587	Alhuampa	21
+2588	Árraga	21
+2589	Averías	21
+2590	Bandera Bajada	21
+2591	Barrialito	21
+2592	Burruyacú	21
+2593	Cañada Escobar	21
+2594	Cardón Esquina	21
+2595	Casares	21
+2596	Chauchillas	21
+2597	Colonia Alpina	21
+2598	Colonia Tinco	21
+2599	Coronel Manuel L. Rico	21
+2600	Cuatro Bocas	21
+2601	Donadeu	21
+2602	El Aibal	21
+2603	El Charco	21
+2604	El Colorado	21
+2605	El Crucero	21
+2606	El Deán	21
+2607	El Fortín	21
+2608	El Luján	21
+2609	El Polear	21
+2610	El Quemado	21
+2611	El Rincón	21
+2612	El Sauzal	21
+2613	Estación Simbolar	21
+2614	Fortín Inca	21
+2615	Garza	21
+2616	Girardet	21
+2617	Hasse	21
+2618	Huyamampa	21
+2619	Ingeniero Forres	21
+2620	Jumial Grande	21
+2621	La Bajada	21
+2622	La Falda	21
+2623	La Firmeza	21
+2624	La Fragua	21
+2625	La Guardia	21
+2626	La Nena	21
+2627	La Palisa	21
+2628	La Puerta	21
+2629	La Simona	21
+2630	Las Cejas	21
+2631	Las Delicias	21
+2632	Las Encrucijadas	21
+2633	Las Lomitas	21
+2634	Las Tinajas	21
+2635	Libertad	21
+2636	Los Cardozos	21
+2637	Los Juries	21
+2638	Los Núñez	21
+2639	Los Pereyra	21
+2640	Los Pocitos	21
+2641	Los Soria	21
+2642	Loza	21
+2643	Manogasta	21
+2644	Morales	21
+2645	Otumpa	21
+2646	Palermo	21
+2647	Pozo del Castaño	21
+2648	Pozuelos	21
+2649	Quimilioj	21
+2650	Ranchitos	21
+2651	Roversi	21
+2652	San Bernardo	21
+2653	Santa Rosa	21
+2654	Santos Lugares	21
+2655	Sachayoj	21
+2656	Tres Cruces	21
+2657	Vilelas	21
+2658	Vinará	21
+2659	Ushuaia	22
+2660	Río Grande	22
+2661	Tolhuin	22
+2662	Puerto Almanza	22
+2663	San Sebastián	22
+2664	Lago Escondido	22
+2665	Estancia Harberton	22
+2666	Puerto Williams	22
+2667	Cerro Sombrero	22
+2668	Cameron	22
+2669	Estancia Viamonte	22
+2670	Estancia María Behety	22
+2671	Estancia San Pablo	22
+2672	Estancia Cullen	22
+2673	Estancia Sara	22
+2674	Estancia Río Irigoyen	22
+2675	Estancia José Menéndez	22
+2676	Estancia Río Claro	22
+2677	Estancia Las Violetas	22
+2678	Estancia Cabo Peñas	22
+2679	Estancia La Fueguina	22
+2680	Lago Fagnano	22
+2681	Lago Yehuin	22
+2682	Rancho Hambre	22
+2683	Río Olivia	22
+2684	Bahía San Sebastián	22
+2685	Cabo Domingo	22
+2686	Punta María	22
+2687	Estancia Moat	22
+2688	Estancia Remolino	22
+2689	Las Heras	22
+2690	Almirante Brown	22
+2691	Base Esperanza	22
+2692	Base Marambio	22
+2693	Base Belgrano II	22
+2694	Base Orcadas	22
+2695	Base San Martín	22
+2696	Base Jubany	22
+2697	Puerto Argentino	22
+2698	Darwin	22
+2699	Pradera del Ganso	22
+2700	Puerto San Carlos	22
+2701	Bahía Fox	22
+2702	Douglas	22
+2703	Teal Inlet	22
+2704	Estancia La Indiana	22
+2705	Estancia La Despedida	22
+2706	Estancia Los Flamencos	22
+2707	Estancia Río Chico	22
+2708	Estancia La Retranca	22
+2709	Kaiken	22
+2710	Radman	22
+2711	Río Pipo	22
+2712	Valle de Andorra	22
+2713	Lapataia	22
+2714	Estancia Túnel	22
+2715	Estancia Nueva Argentina	22
+2716	Estancia Río Fuego	22
+2717	Cabo Espíritu Santo	22
+2718	Caleta La Misión	22
+2719	Puerto Brown	22
+2720	Bahía Thetis	22
+2721	Río Azopardo	22
+2722	Río Moneta	22
+2723	Sección Río Grande	22
+2724	Bella Vista	22
+2725	Punta Arenas	22
+2726	San Miguel de Tucumán	23
+2727	Concepción	23
+2728	Banda del Río Salí	23
+2729	Yerba Buena	23
+2730	Tafí Viejo	23
+2731	Famaillá	23
+2732	Monteros	23
+2733	Aguilares	23
+2734	Alderetes	23
+2735	Bella Vista	23
+2736	Lules	23
+2737	Tafí del Valle	23
+2738	Simoca	23
+2739	Juan Bautista Alberdi	23
+2740	La Cocha	23
+2741	Graneros	23
+2742	Burruyacú	23
+2743	Trancas	23
+2744	El Siambón	23
+2745	Villa Nougués	23
+2746	San Pablo	23
+2747	Villa Alberdi	23
+2748	Ranchillos	23
+2749	San Andrés	23
+2750	El Manantial	23
+2751	Delfín Gallo	23
+2752	Las Talitas	23
+2753	Los Ralos	23
+2754	El Cadillal	23
+2755	Acheral	23
+2756	Amaicha del Valle	23
+2757	Santa Lucía	23
+2758	Río Seco	23
+2759	El Mollar	23
+2760	Los Nogales	23
+2761	Santa Ana	23
+2762	Río Colorado	23
+2763	El Chañar	23
+2764	Colombres	23
+2765	El Bracho	23
+2766	La Esperanza	23
+2767	Los Sarmientos	23
+2768	Río Chico	23
+2769	Nueva Trinidad	23
+2770	Chicligasta	23
+2771	Cevil Redondo	23
+2772	Manuel García Fernández	23
+2773	Monteagudo	23
+2774	La Trinidad	23
+2775	San Felipe	23
+2776	Santa Rosa de Leales	23
+2777	Laguna de Robles	23
+2778	León Rougés	23
+2779	Santa Cruz	23
+2780	Manuela Pedraza	23
+2781	Soldado Maldonado	23
+2782	Teniente Berdina	23
+2783	Capitán Cáceres	23
+2784	Villa Quinteros	23
+2785	La Reducción	23
+2786	Alpachiri	23
+2787	Arcadia	23
+2788	Atahona	23
+2789	Buena Vista	23
+2790	El Sacrificio	23
+2791	Huasa Pampa	23
+2792	La Ramada	23
+2793	Medinas	23
+2794	Pueblo Independencia	23
+2795	Quilmes	23
+2796	Raco	23
+2797	San Pedro de Colalao	23
+2798	Tapia	23
+2799	Vipos	23
+2800	Choromoro	23
+2801	Ciudacita	23
+2802	Colalao del Valle	23
+2803	El Indio	23
+2804	El Molino	23
+2805	El Puestito	23
+2806	El Rodeo	23
+2807	El Timbó	23
+2808	Escaba	23
+2809	Esquina	23
+2810	Estación Aráoz	23
+2811	Famabalasto	23
+2812	Gastone	23
+2813	Gdor. Garmendia	23
+2814	Gdor. Piedrabuena	23
+2815	Huacra	23
+2816	Lamadrid	23
+2817	Las Cejas	23
+2818	Las Talas	23
+2819	Los Gómez	23
+2820	Los Pérez	23
+2821	Los Puestos	23
+2822	Los Sosas	23
+2823	Macomitas	23
+2824	Miguel Lillo	23
+2825	Mixta	23
+2826	Norco	23
+2827	Ñuñorco	23
+2828	Pacará	23
+2829	Pampa Mayo	23
+2830	Pinar del Zapallar	23
+2831	Potrero	23
+2832	Potrero de las Tablas	23
+2833	Puerta de San Javier	23
+2834	Puesto del Medio	23
+2835	Quilmes y Los Sueldos	23
+2836	Rachaite	23
+2837	Rumi Punco	23
+2838	San Javier	23
+2839	San José	23
+2840	San José de la Quintana	23
+2841	San Miguel	23
+2842	San Pedro	23
+2843	San Rafael	23
+2844	Santa Bárbara	23
+2845	Sauce Huacho	23
+2846	Tacanas	23
+2847	Taco Ralo	23
+2848	Talamuyo	23
+2849	Taruca Pampa	23
+2850	Timbo Nuevo	23
+2851	Timbo Viejo	23
+2852	Tolombon	23
+2853	Villa Benjamín Aráoz	23
+2854	Villa Carmela	23
+2855	Villa Chicligasta	23
+2856	Villa de Leales	23
+2857	Villa Fiad	23
+2858	Villa Mariano Moreno	23
+2859	Yánima	23
+2860	Yasyamayo	23
+2861	Yerba Buena	23
+2862	Alto Verde	23
+2863	Amberes	23
+2864	Anca Juli	23
+2865	Aranilla	23
+2866	Belicha Huaico	23
+2867	Benjamín Paz	23
+2868	Campo Bello	23
+2869	Campo de Herrera	23
+2870	Caspichango	23
+2871	Chulca	23
+2872	Chuscha	23
+2873	Colonia Mayo	23
+2874	Dique La Aguadita	23
+2875	El Alamito	23
+2876	El Arbolar	23
+2877	El Naranjito	23
+2878	El Naranjo	23
+2879	El Polear	23
+2880	El Potrerillo	23
+2881	El Rincón	23
+2882	Empalme	23
+2883	Entre Ríos	23
+2884	Gastona	23
+2885	Gobernador Garmendia	23
+2886	Gonzalo	23
+2887	Güemes	23
+2888	Horco Molle	23
+2889	Huacra	23
+2890	Iltico	23
+2891	Ingenio Fronterita	23
+2892	Ingenio La Trinidad	23
+2893	Ingenio Leales	23
+2894	Ingenio San Juan	23
+2895	Invernada	23
+2896	La Cruz	23
+2897	La Florida	23
+2898	La Higuera	23
+2899	La Invernada	23
+2900	La Madrid	23
+2901	La Posta	23
+2902	La Tipa	23
+2903	Las Arcas	23
+2904	Las Mesadas	23
+2905	Las Tipas	23
+2906	Los Aguirre	23
+2907	Los Bulacio	23
+2908	Los Camperos	23
+2909	Los Campos	23
+2910	Los Córdoba	23
+2911	Los Herrera	23
+2912	Los Luna	23
+2913	Los Molinos	23
+2914	Los Pereyra	23
+2915	Los Pizarro	23
+2916	Los Pocitos	23
+2917	Los Rojos	23
+2918	Los Romanos	23
+2919	Los Vallistos	23
+2920	Los Vázquez	23
+2921	Los Villagra	23
+2922	Manchalá	23
+2923	Mancopa	23
+2924	Mata Redonda	23
+2925	Monte Bello	23
+2926	Monte Grande	23
+2927	Ñorco	23
+2928	Pala Pala	23
+2929	Piedra Grande	23
+2930	Quilmes	23
+2931	Rinconada	23
+2932	Rodeo Grande	23
+2933	Rouges	23
+2934	San Antonio	23
+2935	San Carlos	23
+2936	San Ignacio	23
+2937	San Isidro	23
+2938	San José de Flores	23
+2939	San Luis	23
+2940	San Roque	23
+2941	San Vicente	23
+2942	Sargento Moya	23
+2943	Senda de Varela	23
+2944	Siete de Abril	23
+2945	Tacuil	23
+2946	Taficillo	23
+2947	Timbo	23
+2948	Villa Clodomiro Hileret	23
+2949	Villa de Medinas	23
+2950	Villa Luján	23
+2951	Villa Padre Monti	23
+2952	Yacuchina	23
+2953	Yonopongo	23
+2954	Silleta	16
+2955	Sitges	17
+2956	Mar de Apio	1
+2957	Rio Ceballos	5
+2958	Capital Federal	1
+2959	Esquina	20
+2960	CABA	1
+2962	Lujan	17
+\.
+
+
+--
+-- Data for Name: nucleo_log_auditoria; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_log_auditoria (id, idusuario, fecha_cambio, nombre_tabla, idregistro, accion, cambio) FROM stdin;
+1	1	2025-09-23 19:21:36.101881+00	auth_user	70	insert	{"email": "prueba@prueba.com", "is_staff": true, "username": "pruebalog", "last_name": "Log", "first_name": "Prueba"}
+2	1	2025-09-23 19:21:36.10412+00	Empleado	70	insert	{"dni": "11.111.223", "cuil": "20-11111223-2", "nombres": "Prueba", "apellido": "Log", "telefono": "03544854", "fecha_nac": "2006-12-31"}
+3	1	2025-09-23 19:21:36.105208+00	Empleado_el	44	insert	{"alta_ant": "2025-12-31", "id_estado": 1, "id_puesto": 4, "id_convenio": 1}
+4	1	2025-09-23 19:21:36.106143+00	Plan_trabajo	59	insert	{"dias": {"lunes": true, "jueves": true, "martes": true, "sabado": true, "domingo": false, "viernes": true, "miercoles": true}, "nombres": "Prueba", "apellido": "Log", "end_time": "08:00:00", "idempleado": 70, "start_time": "00:00:00"}
+5	1	2025-09-23 19:21:36.106937+00	Empleado_eo	43	insert	{"nombres": "Prueba", "apellido": "Log", "fecha_eo": "2025-09-23", "idempleado": 70, "id_sucursal": 4}
+6	1	2025-09-23 19:22:58.504919+00	Empleado	70	update	{"fields_changed": ["Nombres: 'Prueba' → 'Prueba1'", "Apellido: 'Log' → 'Log1'", "DNI: '11.111.223' → '11.111.221'", "Fecha Nacimiento: '2006-12-31' → '2006-12-01'", "Nacionalidad: 'Argentina' → 'Boliviana'", "Estado Civil: 'Soltero/a' → 'Casado/a'", "Cantidad de hijos: '0' → '1'", "Sexo: 'Masculino' → 'Femenino'", "Localidad: 'CABA' → 'Barranca Larga'", "Provincia: 'Buenos Aires' → 'Catamarca'", "Dirección: 'Calle Prueba 123' → 'Calle Prueba 1'", "Teléfono: '03544854' → '0354485411'", "CUIL: '20-11.111.223-2' → '27-11.111.221-0'", "Email: 'prueba@prueba.com' → 'prueba1@prueba.com'", "Estado: 'Activo' → 'Baja'", "Fecha Estado: '2022-12-31' → '2022-12-01'", "Convenio: 'CCT 430/05' → 'Fuera de convenio'", "Antigüedad: '2025-12-31' → '2025-12-01'", "Puesto: 'Administrador general' → 'Cadete'", "Dejó de ser Gestor"], "target_username": "pruebalog"}
+7	1	2025-09-23 19:22:58.517136+00	Empleado_el	44	update	{"id": null, "changed": {"alta_ant": {"new": "2025-12-01", "old": "2025-12-31"}, "fecha_est": {"new": "2022-12-01", "old": "2022-12-31"}, "id_estado": {"new": "Baja", "old": "Activo"}, "id_puesto": {"new": "Cadete", "old": "Administrador general"}, "id_convenio": {"new": "Fuera de convenio", "old": "CCT 430/05"}}}
+8	1	2025-09-23 19:22:58.519384+00	Empleado_eo	43	update	{"id": 43, "changed": {"id_sucursal": {"new": 5, "old": 4}}}
+9	1	2025-09-23 19:22:58.52144+00	Plan_trabajo	59	update	{"id": null, "changed": {"sabado": {"new": false, "old": true}, "end_time": {"new": "08:01", "old": "08:00"}, "start_time": {"new": "00:01", "old": "00:00"}}}
+10	1	2025-09-23 19:23:21.148702+00	Plan_trabajo	59	delete	{"id": 59, "dias": {"lunes": true, "jueves": true, "martes": true, "sabado": false, "domingo": false, "viernes": true, "miercoles": true}, "end_time": "08:01", "idempleado": 70, "start_time": "00:01", "target_username": "pruebalog"}
+11	1	2025-09-23 19:23:21.152101+00	Empleado_el	44	delete	{"id": 44, "alta_ant": "2025-12-01", "fecha_est": "2022-12-01", "id_estado": 2, "id_puesto": 7, "idempleado": 70, "id_convenio": 4, "target_username": "pruebalog"}
+12	1	2025-09-23 19:23:21.154187+00	Empleado_eo	43	delete	{"id": 43, "fecha_eo": "2025-09-23", "idempleado": 70, "id_sucursal": 5, "target_username": "pruebalog"}
+13	1	2025-09-23 19:23:21.155065+00	Empleado	70	delete	{"dni": "11111221", "cuil": "27111112210", "nombres": "Prueba1", "apellido": "Log1", "telefono": "0354485411", "idempleado": 70, "id_localidad": 253, "target_username": "pruebalog"}
+14	1	2025-09-23 19:23:21.155894+00	auth_user	70	delete	{"email": "prueba1@prueba.com", "username": "pruebalog", "target_username": "pruebalog"}
+\.
+
+
+--
+-- Data for Name: nucleo_nacionalidad; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_nacionalidad (id, nacionalidad) FROM stdin;
+1	Argentina
+2	Boliviana
+3	Brasileña
+4	Chilena
+5	Colombiana
+6	Ecuatoriana
+7	Guyanes
+8	Paraguaya
+9	Peruana
+10	Surinamesa
+11	Uruguaya
+12	Venezolana
+\.
+
+
+--
+-- Data for Name: nucleo_pers_juridica; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_pers_juridica (id_pers_juridica, pers_juridica, domicilio, cond_iva, cuit, cond_iibb) FROM stdin;
+1	Ana Maria Gomez de Galarze	San Juan 272 - Rio Ceballos	Responsable Inscripto	27118684139	Ingresos Brutos Local - Mensual
+\.
+
+
+--
+-- Data for Name: nucleo_plan_trabajo; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_plan_trabajo (id, lunes, martes, miercoles, jueves, viernes, sabado, domingo, start_time, end_time, idempleado) FROM stdin;
+16	t	t	t	t	t	t	f	09:00:00	21:00:00	15
+5	t	t	f	f	t	t	t	09:00:00	21:00:00	5
+1	f	f	t	t	t	f	f	09:00:00	18:00:00	1
+15	t	t	t	t	t	t	f	09:01:00	21:00:00	3
+\.
+
+
+--
+-- Data for Name: nucleo_provincia; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_provincia (id, provincia) FROM stdin;
+1	Buenos Aires
+2	Catamarca
+3	Chaco
+4	Chubut
+5	Córdoba
+6	Corrientes
+7	Entre Ríos
+8	Formosa
+9	Jujuy
+10	La Pampa
+11	La Rioja
+12	Mendoza
+13	Misiones
+14	Neuquén
+15	Río Negro
+16	Salta
+17	San Juan
+18	San Luis
+19	Santa Cruz
+20	Santa Fe
+21	Santiago del Estero
+22	Tierra del Fuego
+23	Tucumán
+\.
+
+
+--
+-- Data for Name: nucleo_puesto; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_puesto (id_puesto, tipo_puesto) FROM stdin;
+4	Administrador general
+5	Responsable Farmacia
+6	Responsable Pago Servicios
+7	Cadete
+8	Cajero/a
+9	Jefe Atención
+10	Responsable Atención Particular
+11	Responsable Atención Obras Sociales
+12	Responsable Atención Regalería y Perfumería
+13	Responsable Atención Correo
+\.
+
+
+--
+-- Data for Name: nucleo_sexo; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_sexo (id, sexo) FROM stdin;
+1	Masculino
+2	Femenino
+3	No-Binario
+\.
+
+
+--
+-- Data for Name: nucleo_solicitud_licencia; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_solicitud_licencia (idsolicitudlic, fecha_sqllc, fecha_desde, fecha_hasta, comentario, texto_gestor, archivo, id_estado, idempleado, id_licencia) FROM stdin;
+74	2025-08-30	2025-10-24	2026-01-21		algo	\N	4	15	1
+14	2025-08-25	2025-09-07	2025-09-08	ji	\nsolapa con otra licencia	\N	4	5	2
+79	2025-09-09	2025-09-08	2025-09-08	Examen TESIS	Usted no esta estudiando.	\N	4	5	6
+13	2025-08-23	2025-08-26	2025-08-27			\N	4	15	26
+80	2025-09-09	2025-09-09	2025-09-09			\N	4	5	26
+73	2025-08-30	2025-08-29	2025-08-31			\N	3	3	26
+85	2025-09-09	2025-06-08	2025-06-08			\N	3	3	26
+122	2025-09-22	2025-11-18	2025-11-19			\N	3	5	2
+124	2025-09-22	2025-10-02	2025-10-04	Solicitud normal para aprobar		\N	1	5	1
+125	2025-09-22	2025-10-07	2025-10-07			\N	3	5	5
+129	2025-09-23	2025-12-01	2025-12-02			\N	3	5	2
+\.
+
+
+--
+-- Data for Name: nucleo_solicitud_vacaciones; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_solicitud_vacaciones (idsolicitudvac, fecha_sol_vac, fecha_desde, fecha_hasta, comentario, id_estado, idempleado) FROM stdin;
+33	2025-09-22	2025-10-20	2025-10-26		1	3
+3	2024-11-01	2024-12-12	2024-12-22	Solicitud creada manualmente para pruebas: periodo 12/12/2024 - 22/12/2024 - Motivo rechazo: Test motivo de rechazo desde consola	4	5
+\.
+
+
+--
+-- Data for Name: nucleo_sucursal; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_sucursal (id_sucursal, sucursal, suc_dire, suc_mail, id_pers_juridica) FROM stdin;
+4	Sucursal San Basilio	Rivadavia 276 -San Basilio	farmaciagg@gmail.com	1
+5	Sucursal San Roque	Suipacha 476 - San RoqueRoque	farmaciapp@gmail.com	1
+6	Sucursal Centro	Colon 1276 - Centro	farmaciass@gmail.com	1
+\.
+
+
+--
+-- Data for Name: nucleo_tipo_licencia; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_tipo_licencia (id_licencia, descripcion, dias, pago) FROM stdin;
+2	Nacimiento de hijo/a	2	t
+5	Por fallecimiento de hermano, hermana	1	t
+7	Vacaciones	0	t
+3	Matrimonio	10	t
+4	Fallecimiento de esposo, esposa, concubino, concubina, hijos, hijas o padres	3	t
+1	Licencia por maternidad	90	t
+6	Para rendir examen en la enseñanza media o universitaria	1	t
+26	Licencia Medica	\N	t
+\.
+
+
+--
+-- Data for Name: nucleo_vacaciones_otorgadas; Type: TABLE DATA; Schema: public; Owner: -
+--
+
+COPY public.nucleo_vacaciones_otorgadas (id_vacaciones, inicio_consumo, fin_consumo, dias_disponibles, dias_consumidos, idempleado) FROM stdin;
+116	2025-01-01	2025-12-31	14	0	3
+117	2025-01-01	2025-12-31	35	0	15
+118	2025-01-01	2025-12-31	14	0	5
+119	2025-01-01	2025-12-31	21	0	1
+22	2024-12-12	2024-12-22	14	11	5
+\.
+
+
+--
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
+
+
+--
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
+
+
+--
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 116, true);
+
+
+--
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
+
+
+--
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_id_seq', 70, true);
+
+
+--
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
+
+
+--
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
+
+
+--
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 29, true);
+
+
+--
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 32, true);
+
+
+--
+-- Name: nucleo_convenio_id_convenio_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_convenio_id_convenio_seq', 6, true);
+
+
+--
+-- Name: nucleo_empleado_el_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_empleado_el_id_seq', 44, true);
+
+
+--
+-- Name: nucleo_empleado_eo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_empleado_eo_id_seq', 43, true);
+
+
+--
+-- Name: nucleo_estado_empleado_ID_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."nucleo_estado_empleado_ID_estado_seq"', 11, true);
+
+
+--
+-- Name: nucleo_estado_lic_vac_ID_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."nucleo_estado_lic_vac_ID_estado_seq"', 7, true);
+
+
+--
+-- Name: nucleo_estadocivil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_estadocivil_id_seq', 6, true);
+
+
+--
+-- Name: nucleo_feriado_id_Feriado_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."nucleo_feriado_id_Feriado_seq"', 84, true);
+
+
+--
+-- Name: nucleo_localidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_localidad_id_seq', 2966, true);
+
+
+--
+-- Name: nucleo_log_auditoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_log_auditoria_id_seq', 14, true);
+
+
+--
+-- Name: nucleo_nacionalidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_nacionalidad_id_seq', 17, true);
+
+
+--
+-- Name: nucleo_pers_juridica_id_pers_juridica_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_pers_juridica_id_pers_juridica_seq', 3, true);
+
+
+--
+-- Name: nucleo_plan_trabajo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_plan_trabajo_id_seq', 59, true);
+
+
+--
+-- Name: nucleo_provincia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_provincia_id_seq', 28, true);
+
+
+--
+-- Name: nucleo_puesto_id_puesto_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_puesto_id_puesto_seq', 15, true);
+
+
+--
+-- Name: nucleo_sexo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_sexo_id_seq', 5, true);
+
+
+--
+-- Name: nucleo_solicitud_licencia_idSolicitudLic_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."nucleo_solicitud_licencia_idSolicitudLic_seq"', 130, true);
+
+
+--
+-- Name: nucleo_solicitud_vacaciones_idSolicitudVac_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."nucleo_solicitud_vacaciones_idSolicitudVac_seq"', 40, true);
+
+
+--
+-- Name: nucleo_sucursal_id_sucursal_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_sucursal_id_sucursal_seq', 9, true);
+
+
+--
+-- Name: nucleo_tipo_licencia_id_Licencia_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public."nucleo_tipo_licencia_id_Licencia_seq"', 38, true);
+
+
+--
+-- Name: nucleo_vacaciones_otorgadas_id_vacaciones_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+--
+
+SELECT pg_catalog.setval('public.nucleo_vacaciones_otorgadas_id_vacaciones_seq', 120, true);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_name_key UNIQUE (name);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group
+    ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
+
+
+--
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
+
+
+--
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
+
+
+--
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user
+    ADD CONSTRAINT auth_user_username_key UNIQUE (username);
+
+
+--
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
+
+
+--
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_content_type
+    ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_migrations
+    ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_session
+    ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
+
+
+--
+-- Name: nucleo_convenio nucleo_convenio_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_convenio
+    ADD CONSTRAINT nucleo_convenio_pkey PRIMARY KEY (id_convenio);
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_CUIL_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT "nucleo_empleado_CUIL_key" UNIQUE (cuil);
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_Dni_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT "nucleo_empleado_Dni_key" UNIQUE (dni);
+
+
+--
+-- Name: nucleo_empleado_el nucleo_empleado_el_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_el
+    ADD CONSTRAINT nucleo_empleado_el_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_Fecha_EO_Idempleado_854dd74d_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_eo
+    ADD CONSTRAINT "nucleo_empleado_eo_Fecha_EO_Idempleado_854dd74d_uniq" UNIQUE (fecha_eo, idempleado);
+
+
+--
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_eo
+    ADD CONSTRAINT nucleo_empleado_eo_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT nucleo_empleado_pkey PRIMARY KEY ("Idempleado");
+
+
+--
+-- Name: nucleo_estado_empleado nucleo_estado_empleado_estado_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_estado_empleado
+    ADD CONSTRAINT nucleo_estado_empleado_estado_key UNIQUE (estado);
+
+
+--
+-- Name: nucleo_estado_empleado nucleo_estado_empleado_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_estado_empleado
+    ADD CONSTRAINT nucleo_estado_empleado_pkey PRIMARY KEY (id_estado);
+
+
+--
+-- Name: nucleo_estado_lic_vac nucleo_estado_lic_vac_estado_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_estado_lic_vac
+    ADD CONSTRAINT nucleo_estado_lic_vac_estado_key UNIQUE (estado);
+
+
+--
+-- Name: nucleo_estado_lic_vac nucleo_estado_lic_vac_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_estado_lic_vac
+    ADD CONSTRAINT nucleo_estado_lic_vac_pkey PRIMARY KEY (id_estado);
+
+
+--
+-- Name: nucleo_estadocivil nucleo_estadocivil_estado_civil_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_estadocivil
+    ADD CONSTRAINT nucleo_estadocivil_estado_civil_key UNIQUE (estado_civil);
+
+
+--
+-- Name: nucleo_estadocivil nucleo_estadocivil_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_estadocivil
+    ADD CONSTRAINT nucleo_estadocivil_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_feriado nucleo_feriado_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_feriado
+    ADD CONSTRAINT nucleo_feriado_pkey PRIMARY KEY (id_feriado);
+
+
+--
+-- Name: nucleo_localidad nucleo_localidad_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_localidad
+    ADD CONSTRAINT nucleo_localidad_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_log_auditoria nucleo_log_auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_log_auditoria
+    ADD CONSTRAINT nucleo_log_auditoria_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_nacionalidad nucleo_nacionalidad_nacionalidad_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_nacionalidad
+    ADD CONSTRAINT nucleo_nacionalidad_nacionalidad_key UNIQUE (nacionalidad);
+
+
+--
+-- Name: nucleo_nacionalidad nucleo_nacionalidad_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_nacionalidad
+    ADD CONSTRAINT nucleo_nacionalidad_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_pers_juridica nucleo_pers_juridica_pers_juridica_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_pers_juridica
+    ADD CONSTRAINT nucleo_pers_juridica_pers_juridica_key UNIQUE (pers_juridica);
+
+
+--
+-- Name: nucleo_pers_juridica nucleo_pers_juridica_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_pers_juridica
+    ADD CONSTRAINT nucleo_pers_juridica_pkey PRIMARY KEY (id_pers_juridica);
+
+
+--
+-- Name: nucleo_plan_trabajo nucleo_plan_trabajo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_plan_trabajo
+    ADD CONSTRAINT nucleo_plan_trabajo_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_provincia nucleo_provincia_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_provincia
+    ADD CONSTRAINT nucleo_provincia_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_puesto nucleo_puesto_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_puesto
+    ADD CONSTRAINT nucleo_puesto_pkey PRIMARY KEY (id_puesto);
+
+
+--
+-- Name: nucleo_sexo nucleo_sexo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_sexo
+    ADD CONSTRAINT nucleo_sexo_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: nucleo_sexo nucleo_sexo_sexo_key; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_sexo
+    ADD CONSTRAINT nucleo_sexo_sexo_key UNIQUE (sexo);
+
+
+--
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_licencia_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_solicitud_licencia
+    ADD CONSTRAINT nucleo_solicitud_licencia_pkey PRIMARY KEY (idsolicitudlic);
+
+
+--
+-- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vacaciones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
+    ADD CONSTRAINT nucleo_solicitud_vacaciones_pkey PRIMARY KEY (idsolicitudvac);
+
+
+--
+-- Name: nucleo_sucursal nucleo_sucursal_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_sucursal
+    ADD CONSTRAINT nucleo_sucursal_pkey PRIMARY KEY (id_sucursal);
+
+
+--
+-- Name: nucleo_tipo_licencia nucleo_tipo_licencia_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_tipo_licencia
+    ADD CONSTRAINT nucleo_tipo_licencia_pkey PRIMARY KEY (id_licencia);
+
+
+--
+-- Name: nucleo_vacaciones_otorgadas nucleo_vacaciones_otorgadas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_vacaciones_otorgadas
+    ADD CONSTRAINT nucleo_vacaciones_otorgadas_pkey PRIMARY KEY (id_vacaciones);
+
+
+--
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
+
+
+--
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
+
+
+--
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
+
+
+--
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
+
+
+--
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
+
+
+--
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
+
+
+--
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
+
+
+--
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
+
+
+--
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
+
+
+--
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
+
+
+--
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
+
+
+--
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_empleado_CUIL_253991d8_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_CUIL_253991d8_like" ON public.nucleo_empleado USING btree (cuil varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_empleado_Dni_9de4e6ca_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_Dni_9de4e6ca_like" ON public.nucleo_empleado USING btree (dni varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_empleado_Id_Localidad_d192a204; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_Id_Localidad_d192a204" ON public.nucleo_empleado USING btree (id_localidad);
+
+
+--
+-- Name: nucleo_empleado_Id_civil_be0f3906; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_Id_civil_be0f3906" ON public.nucleo_empleado USING btree (id_civil);
+
+
+--
+-- Name: nucleo_empleado_Id_nacionalidad_5c76fe0e; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_Id_nacionalidad_5c76fe0e" ON public.nucleo_empleado USING btree (id_nacionalidad);
+
+
+--
+-- Name: nucleo_empleado_Id_sexo_9099efca; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_Id_sexo_9099efca" ON public.nucleo_empleado USING btree (id_sexo);
+
+
+--
+-- Name: nucleo_empleado_el_Id_estado_7a3ae9a3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_el_Id_estado_7a3ae9a3" ON public.nucleo_empleado_el USING btree (id_estado);
+
+
+--
+-- Name: nucleo_empleado_el_Idempleado_749748e6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_el_Idempleado_749748e6" ON public.nucleo_empleado_el USING btree (idempleado);
+
+
+--
+-- Name: nucleo_empleado_el_id_convenio_a67c8975; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_empleado_el_id_convenio_a67c8975 ON public.nucleo_empleado_el USING btree (id_convenio);
+
+
+--
+-- Name: nucleo_empleado_el_id_puesto_2c73d494; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_empleado_el_id_puesto_2c73d494 ON public.nucleo_empleado_el USING btree (id_puesto);
+
+
+--
+-- Name: nucleo_empleado_eo_Idempleado_4332c487; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_eo_Idempleado_4332c487" ON public.nucleo_empleado_eo USING btree (idempleado);
+
+
+--
+-- Name: nucleo_empleado_eo_id_Sucursal_505c9652; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_empleado_eo_id_Sucursal_505c9652" ON public.nucleo_empleado_eo USING btree (id_sucursal);
+
+
+--
+-- Name: nucleo_estado_empleado_estado_52695d69_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_estado_empleado_estado_52695d69_like ON public.nucleo_estado_empleado USING btree (estado varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_estado_lic_vac_estado_8fad8906_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_estado_lic_vac_estado_8fad8906_like ON public.nucleo_estado_lic_vac USING btree (estado varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_estadocivil_estado_civil_e187f56f_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_estadocivil_estado_civil_e187f56f_like ON public.nucleo_estadocivil USING btree (estado_civil varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_localidad_provincia_id_2e9deb89; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_localidad_provincia_id_2e9deb89 ON public.nucleo_localidad USING btree (provincia_id);
+
+
+--
+-- Name: nucleo_log_auditoria_idUsuario_78a2cf1f; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_log_auditoria_idUsuario_78a2cf1f" ON public.nucleo_log_auditoria USING btree (idusuario);
+
+
+--
+-- Name: nucleo_nacionalidad_nacionalidad_7a729e49_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_nacionalidad_nacionalidad_7a729e49_like ON public.nucleo_nacionalidad USING btree (nacionalidad varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_pers_juridica_pers_juridica_d625af9e_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_pers_juridica_pers_juridica_d625af9e_like ON public.nucleo_pers_juridica USING btree (pers_juridica varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_plan_trabajo_Idempleado_cf5ae9c9; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_plan_trabajo_Idempleado_cf5ae9c9" ON public.nucleo_plan_trabajo USING btree (idempleado);
+
+
+--
+-- Name: nucleo_sexo_sexo_8a586732_like; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_sexo_sexo_8a586732_like ON public.nucleo_sexo USING btree (sexo varchar_pattern_ops);
+
+
+--
+-- Name: nucleo_solicitud_licencia_ID_estado_69972f47; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_solicitud_licencia_ID_estado_69972f47" ON public.nucleo_solicitud_licencia USING btree (id_estado);
+
+
+--
+-- Name: nucleo_solicitud_licencia_Id_Licencia_2016feb6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_solicitud_licencia_Id_Licencia_2016feb6" ON public.nucleo_solicitud_licencia USING btree (id_licencia);
+
+
+--
+-- Name: nucleo_solicitud_licencia_Idempleado_10b8e362; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_solicitud_licencia_Idempleado_10b8e362" ON public.nucleo_solicitud_licencia USING btree (idempleado);
+
+
+--
+-- Name: nucleo_solicitud_vacaciones_ID_estado_339495b8; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_solicitud_vacaciones_ID_estado_339495b8" ON public.nucleo_solicitud_vacaciones USING btree (id_estado);
+
+
+--
+-- Name: nucleo_solicitud_vacaciones_Idempleado_c56a15c6; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_solicitud_vacaciones_Idempleado_c56a15c6" ON public.nucleo_solicitud_vacaciones USING btree (idempleado);
+
+
+--
+-- Name: nucleo_sucursal_id_pers_juridica_2c360be7; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX nucleo_sucursal_id_pers_juridica_2c360be7 ON public.nucleo_sucursal USING btree (id_pers_juridica);
+
+
+--
+-- Name: nucleo_vacaciones_otorgadas_Idempleado_3ab9a9f3; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX "nucleo_vacaciones_otorgadas_Idempleado_3ab9a9f3" ON public.nucleo_vacaciones_otorgadas USING btree (idempleado);
+
+
+--
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_Id_civil_be0f3906_fk_nucleo_estadocivil_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT "nucleo_empleado_Id_civil_be0f3906_fk_nucleo_estadocivil_id" FOREIGN KEY (id_civil) REFERENCES public.nucleo_estadocivil(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_Id_nacionalidad_5c76fe0e_fk_nucleo_na; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT "nucleo_empleado_Id_nacionalidad_5c76fe0e_fk_nucleo_na" FOREIGN KEY (id_nacionalidad) REFERENCES public.nucleo_nacionalidad(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_Id_sexo_9099efca_fk_nucleo_sexo_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT "nucleo_empleado_Id_sexo_9099efca_fk_nucleo_sexo_id" FOREIGN KEY (id_sexo) REFERENCES public.nucleo_sexo(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_Idempleado_89383695_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT "nucleo_empleado_Idempleado_89383695_fk_auth_user_id" FOREIGN KEY ("Idempleado") REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado_el nucleo_empleado_el_Id_estado_7a3ae9a3_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_el
+    ADD CONSTRAINT "nucleo_empleado_el_Id_estado_7a3ae9a3_fk_nucleo_es" FOREIGN KEY (id_estado) REFERENCES public.nucleo_estado_empleado(id_estado) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado_el nucleo_empleado_el_Idempleado_749748e6_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_el
+    ADD CONSTRAINT "nucleo_empleado_el_Idempleado_749748e6_fk_nucleo_em" FOREIGN KEY (idempleado) REFERENCES public.nucleo_empleado("Idempleado") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado_el nucleo_empleado_el_id_convenio_a67c8975_fk_nucleo_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_el
+    ADD CONSTRAINT nucleo_empleado_el_id_convenio_a67c8975_fk_nucleo_co FOREIGN KEY (id_convenio) REFERENCES public.nucleo_convenio(id_convenio) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado_el nucleo_empleado_el_id_puesto_2c73d494_fk_nucleo_pu; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_el
+    ADD CONSTRAINT nucleo_empleado_el_id_puesto_2c73d494_fk_nucleo_pu FOREIGN KEY (id_puesto) REFERENCES public.nucleo_puesto(id_puesto) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_Idempleado_4332c487_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_eo
+    ADD CONSTRAINT "nucleo_empleado_eo_Idempleado_4332c487_fk_nucleo_em" FOREIGN KEY (idempleado) REFERENCES public.nucleo_empleado("Idempleado") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_id_Sucursal_505c9652_fk_nucleo_su; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado_eo
+    ADD CONSTRAINT "nucleo_empleado_eo_id_Sucursal_505c9652_fk_nucleo_su" FOREIGN KEY (id_sucursal) REFERENCES public.nucleo_sucursal(id_sucursal) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_empleado nucleo_empleado_id_Localidad_b86bdb1d_fk_nucleo_localidad_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_empleado
+    ADD CONSTRAINT "nucleo_empleado_id_Localidad_b86bdb1d_fk_nucleo_localidad_id" FOREIGN KEY (id_localidad) REFERENCES public.nucleo_localidad(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_localidad nucleo_localidad_provincia_id_2e9deb89_fk_nucleo_provincia_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_localidad
+    ADD CONSTRAINT nucleo_localidad_provincia_id_2e9deb89_fk_nucleo_provincia_id FOREIGN KEY (provincia_id) REFERENCES public.nucleo_provincia(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_log_auditoria nucleo_log_auditoria_idUsuario_78a2cf1f_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_log_auditoria
+    ADD CONSTRAINT "nucleo_log_auditoria_idUsuario_78a2cf1f_fk_auth_user_id" FOREIGN KEY (idusuario) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_plan_trabajo nucleo_plan_trabajo_Idempleado_cf5ae9c9_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_plan_trabajo
+    ADD CONSTRAINT "nucleo_plan_trabajo_Idempleado_cf5ae9c9_fk_nucleo_em" FOREIGN KEY (idempleado) REFERENCES public.nucleo_empleado("Idempleado") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_ID_estado_69972f47_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_solicitud_licencia
+    ADD CONSTRAINT "nucleo_solicitud_lic_ID_estado_69972f47_fk_nucleo_es" FOREIGN KEY (id_estado) REFERENCES public.nucleo_estado_lic_vac(id_estado) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_Id_Licencia_2016feb6_fk_nucleo_ti; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_solicitud_licencia
+    ADD CONSTRAINT "nucleo_solicitud_lic_Id_Licencia_2016feb6_fk_nucleo_ti" FOREIGN KEY (id_licencia) REFERENCES public.nucleo_tipo_licencia(id_licencia) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_Idempleado_10b8e362_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_solicitud_licencia
+    ADD CONSTRAINT "nucleo_solicitud_lic_Idempleado_10b8e362_fk_nucleo_em" FOREIGN KEY (idempleado) REFERENCES public.nucleo_empleado("Idempleado") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vac_ID_estado_339495b8_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
+    ADD CONSTRAINT "nucleo_solicitud_vac_ID_estado_339495b8_fk_nucleo_es" FOREIGN KEY (id_estado) REFERENCES public.nucleo_estado_lic_vac(id_estado) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vac_Idempleado_c56a15c6_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
+    ADD CONSTRAINT "nucleo_solicitud_vac_Idempleado_c56a15c6_fk_nucleo_em" FOREIGN KEY (idempleado) REFERENCES public.nucleo_empleado("Idempleado") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_sucursal nucleo_sucursal_id_pers_juridica_2c360be7_fk_nucleo_pe; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_sucursal
+    ADD CONSTRAINT nucleo_sucursal_id_pers_juridica_2c360be7_fk_nucleo_pe FOREIGN KEY (id_pers_juridica) REFERENCES public.nucleo_pers_juridica(id_pers_juridica) DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- Name: nucleo_vacaciones_otorgadas nucleo_vacaciones_ot_Idempleado_3ab9a9f3_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.nucleo_vacaciones_otorgadas
+    ADD CONSTRAINT "nucleo_vacaciones_ot_Idempleado_3ab9a9f3_fk_nucleo_em" FOREIGN KEY (idempleado) REFERENCES public.nucleo_empleado("Idempleado") DEFERRABLE INITIALLY DEFERRED;
+
+
+--
+-- PostgreSQL database dump complete
+--
+
+\unrestrict MScay9UfAIfzQ0LbtcLbTGgQJGs1G35huOZvKVbLp0yiMiwOMs6OT1CM89S1Y8s
+

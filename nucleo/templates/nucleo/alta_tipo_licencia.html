@@ -1,0 +1,53 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'nucleo/css/tipo_licencias.css' %}">
+{% endblock %}
+{% block main %}
+<div class="dashboard-box tipo-licencia-box">
+    <h2 class="tipo-licencia-titulo">Alta nueva licencia</h2>
+    <form method="post" class="form-alta-licencia">
+        {% csrf_token %}
+        <label>Nombre de licencia
+            <input type="text" name="Descripcion" required value="{{ descripcion }}">
+        </label>
+        <label>Días a solicitar (En blanco licencia libre)
+            <input type="number" name="Dias" min="1" value="{{ dias }}">
+        </label>
+        <label class="label-checkbox">
+            <input type="checkbox" name="Pago" {% if pago_checked %}checked{% endif %}>
+            Marcar si la licencia es paga
+        </label>
+        <button type="submit" class="btn-guardar">Guardar</button>
+    </form>
+    {% if mensaje_exito %}
+    <div class="mensaje-exito">
+        {{ mensaje_exito }}
+    </div>
+    {% endif %}
+    {% if mensaje_error %}
+    <div class="mensaje-error">
+        {{ mensaje_error }}
+    </div>
+    {% endif %}
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const nombre = document.querySelector('input[name="Descripcion"]');
+    const btn = document.querySelector('.btn-guardar');
+
+    function checkCompleto() {
+        if (nombre.value.trim()) {
+            btn.classList.add('completo');
+        } else {
+            btn.classList.remove('completo');
+        }
+    }
+
+    if (nombre && btn) {
+        nombre.addEventListener('input', checkCompleto);
+        checkCompleto();
+    }
+});
+</script>
+{% endblock %}
