@@ -2,7 +2,7 @@
 -- PostgreSQL database dump
 --
 
-\restrict MScay9UfAIfzQ0LbtcLbTGgQJGs1G35huOZvKVbLp0yiMiwOMs6OT1CM89S1Y8s
+\restrict dpDWgzrnQMGWAb062iKIdNCfvWOZVGnacjpRKdaacAKtYNuJuQFrAEcNRjpzdWm
 
 -- Dumped from database version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
 -- Dumped by pg_dump version 16.10 (Ubuntu 16.10-0ubuntu0.24.04.1)
@@ -18,167 +18,21 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
-ALTER TABLE IF EXISTS ONLY public.nucleo_vacaciones_otorgadas DROP CONSTRAINT IF EXISTS "nucleo_vacaciones_ot_Idempleado_3ab9a9f3_fk_nucleo_em";
-ALTER TABLE IF EXISTS ONLY public.nucleo_sucursal DROP CONSTRAINT IF EXISTS nucleo_sucursal_id_pers_juridica_2c360be7_fk_nucleo_pe;
-ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_vacaciones DROP CONSTRAINT IF EXISTS "nucleo_solicitud_vac_Idempleado_c56a15c6_fk_nucleo_em";
-ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_vacaciones DROP CONSTRAINT IF EXISTS "nucleo_solicitud_vac_ID_estado_339495b8_fk_nucleo_es";
-ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS "nucleo_solicitud_lic_Idempleado_10b8e362_fk_nucleo_em";
-ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS "nucleo_solicitud_lic_Id_Licencia_2016feb6_fk_nucleo_ti";
-ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS "nucleo_solicitud_lic_ID_estado_69972f47_fk_nucleo_es";
-ALTER TABLE IF EXISTS ONLY public.nucleo_plan_trabajo DROP CONSTRAINT IF EXISTS "nucleo_plan_trabajo_Idempleado_cf5ae9c9_fk_nucleo_em";
-ALTER TABLE IF EXISTS ONLY public.nucleo_log_auditoria DROP CONSTRAINT IF EXISTS "nucleo_log_auditoria_idUsuario_78a2cf1f_fk_auth_user_id";
-ALTER TABLE IF EXISTS ONLY public.nucleo_localidad DROP CONSTRAINT IF EXISTS nucleo_localidad_provincia_id_2e9deb89_fk_nucleo_provincia_id;
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_id_Localidad_b86bdb1d_fk_nucleo_localidad_id";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS "nucleo_empleado_eo_id_Sucursal_505c9652_fk_nucleo_su";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS "nucleo_empleado_eo_Idempleado_4332c487_fk_nucleo_em";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS nucleo_empleado_el_id_puesto_2c73d494_fk_nucleo_pu;
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS nucleo_empleado_el_id_convenio_a67c8975_fk_nucleo_co;
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS "nucleo_empleado_el_Idempleado_749748e6_fk_nucleo_em";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS "nucleo_empleado_el_Id_estado_7a3ae9a3_fk_nucleo_es";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Idempleado_89383695_fk_auth_user_id";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Id_sexo_9099efca_fk_nucleo_sexo_id";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Id_nacionalidad_5c76fe0e_fk_nucleo_na";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Id_civil_be0f3906_fk_nucleo_estadocivil_id";
-ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_user_id_c564eba6_fk_auth_user_id;
-ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_content_type_id_c4bce8eb_fk_django_co;
-ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id;
-ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm;
-ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_user_id_6a12ed8b_fk_auth_user_id;
-ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_group_id_97559544_fk_auth_group_id;
-ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_content_type_id_2f476e4b_fk_django_co;
-ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_group_id_b120cbf9_fk_auth_group_id;
-ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissio_permission_id_84c5c92e_fk_auth_perm;
-DROP INDEX IF EXISTS public."nucleo_vacaciones_otorgadas_Idempleado_3ab9a9f3";
-DROP INDEX IF EXISTS public.nucleo_sucursal_id_pers_juridica_2c360be7;
-DROP INDEX IF EXISTS public."nucleo_solicitud_vacaciones_Idempleado_c56a15c6";
-DROP INDEX IF EXISTS public."nucleo_solicitud_vacaciones_ID_estado_339495b8";
-DROP INDEX IF EXISTS public."nucleo_solicitud_licencia_Idempleado_10b8e362";
-DROP INDEX IF EXISTS public."nucleo_solicitud_licencia_Id_Licencia_2016feb6";
-DROP INDEX IF EXISTS public."nucleo_solicitud_licencia_ID_estado_69972f47";
-DROP INDEX IF EXISTS public.nucleo_sexo_sexo_8a586732_like;
-DROP INDEX IF EXISTS public."nucleo_plan_trabajo_Idempleado_cf5ae9c9";
-DROP INDEX IF EXISTS public.nucleo_pers_juridica_pers_juridica_d625af9e_like;
-DROP INDEX IF EXISTS public.nucleo_nacionalidad_nacionalidad_7a729e49_like;
-DROP INDEX IF EXISTS public."nucleo_log_auditoria_idUsuario_78a2cf1f";
-DROP INDEX IF EXISTS public.nucleo_localidad_provincia_id_2e9deb89;
-DROP INDEX IF EXISTS public.nucleo_estadocivil_estado_civil_e187f56f_like;
-DROP INDEX IF EXISTS public.nucleo_estado_lic_vac_estado_8fad8906_like;
-DROP INDEX IF EXISTS public.nucleo_estado_empleado_estado_52695d69_like;
-DROP INDEX IF EXISTS public."nucleo_empleado_eo_id_Sucursal_505c9652";
-DROP INDEX IF EXISTS public."nucleo_empleado_eo_Idempleado_4332c487";
-DROP INDEX IF EXISTS public.nucleo_empleado_el_id_puesto_2c73d494;
-DROP INDEX IF EXISTS public.nucleo_empleado_el_id_convenio_a67c8975;
-DROP INDEX IF EXISTS public."nucleo_empleado_el_Idempleado_749748e6";
-DROP INDEX IF EXISTS public."nucleo_empleado_el_Id_estado_7a3ae9a3";
-DROP INDEX IF EXISTS public."nucleo_empleado_Id_sexo_9099efca";
-DROP INDEX IF EXISTS public."nucleo_empleado_Id_nacionalidad_5c76fe0e";
-DROP INDEX IF EXISTS public."nucleo_empleado_Id_civil_be0f3906";
-DROP INDEX IF EXISTS public."nucleo_empleado_Id_Localidad_d192a204";
-DROP INDEX IF EXISTS public."nucleo_empleado_Dni_9de4e6ca_like";
-DROP INDEX IF EXISTS public."nucleo_empleado_CUIL_253991d8_like";
-DROP INDEX IF EXISTS public.django_session_session_key_c0390e0f_like;
-DROP INDEX IF EXISTS public.django_session_expire_date_a5c62663;
-DROP INDEX IF EXISTS public.django_admin_log_user_id_c564eba6;
-DROP INDEX IF EXISTS public.django_admin_log_content_type_id_c4bce8eb;
-DROP INDEX IF EXISTS public.auth_user_username_6821ab7c_like;
-DROP INDEX IF EXISTS public.auth_user_user_permissions_user_id_a95ead1b;
-DROP INDEX IF EXISTS public.auth_user_user_permissions_permission_id_1fbb5f2c;
-DROP INDEX IF EXISTS public.auth_user_groups_user_id_6a12ed8b;
-DROP INDEX IF EXISTS public.auth_user_groups_group_id_97559544;
-DROP INDEX IF EXISTS public.auth_permission_content_type_id_2f476e4b;
-DROP INDEX IF EXISTS public.auth_group_permissions_permission_id_84c5c92e;
-DROP INDEX IF EXISTS public.auth_group_permissions_group_id_b120cbf9;
-DROP INDEX IF EXISTS public.auth_group_name_a6ea08ec_like;
-ALTER TABLE IF EXISTS ONLY public.nucleo_vacaciones_otorgadas DROP CONSTRAINT IF EXISTS nucleo_vacaciones_otorgadas_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_tipo_licencia DROP CONSTRAINT IF EXISTS nucleo_tipo_licencia_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_sucursal DROP CONSTRAINT IF EXISTS nucleo_sucursal_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_vacaciones DROP CONSTRAINT IF EXISTS nucleo_solicitud_vacaciones_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_solicitud_licencia DROP CONSTRAINT IF EXISTS nucleo_solicitud_licencia_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_sexo DROP CONSTRAINT IF EXISTS nucleo_sexo_sexo_key;
-ALTER TABLE IF EXISTS ONLY public.nucleo_sexo DROP CONSTRAINT IF EXISTS nucleo_sexo_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_puesto DROP CONSTRAINT IF EXISTS nucleo_puesto_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_provincia DROP CONSTRAINT IF EXISTS nucleo_provincia_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_plan_trabajo DROP CONSTRAINT IF EXISTS nucleo_plan_trabajo_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_pers_juridica DROP CONSTRAINT IF EXISTS nucleo_pers_juridica_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_pers_juridica DROP CONSTRAINT IF EXISTS nucleo_pers_juridica_pers_juridica_key;
-ALTER TABLE IF EXISTS ONLY public.nucleo_nacionalidad DROP CONSTRAINT IF EXISTS nucleo_nacionalidad_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_nacionalidad DROP CONSTRAINT IF EXISTS nucleo_nacionalidad_nacionalidad_key;
-ALTER TABLE IF EXISTS ONLY public.nucleo_log_auditoria DROP CONSTRAINT IF EXISTS nucleo_log_auditoria_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_localidad DROP CONSTRAINT IF EXISTS nucleo_localidad_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_feriado DROP CONSTRAINT IF EXISTS nucleo_feriado_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_estadocivil DROP CONSTRAINT IF EXISTS nucleo_estadocivil_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_estadocivil DROP CONSTRAINT IF EXISTS nucleo_estadocivil_estado_civil_key;
-ALTER TABLE IF EXISTS ONLY public.nucleo_estado_lic_vac DROP CONSTRAINT IF EXISTS nucleo_estado_lic_vac_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_estado_lic_vac DROP CONSTRAINT IF EXISTS nucleo_estado_lic_vac_estado_key;
-ALTER TABLE IF EXISTS ONLY public.nucleo_estado_empleado DROP CONSTRAINT IF EXISTS nucleo_estado_empleado_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_estado_empleado DROP CONSTRAINT IF EXISTS nucleo_estado_empleado_estado_key;
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS nucleo_empleado_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS nucleo_empleado_eo_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_eo DROP CONSTRAINT IF EXISTS "nucleo_empleado_eo_Fecha_EO_Idempleado_854dd74d_uniq";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado_el DROP CONSTRAINT IF EXISTS nucleo_empleado_el_pkey;
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_Dni_key";
-ALTER TABLE IF EXISTS ONLY public.nucleo_empleado DROP CONSTRAINT IF EXISTS "nucleo_empleado_CUIL_key";
-ALTER TABLE IF EXISTS ONLY public.nucleo_convenio DROP CONSTRAINT IF EXISTS nucleo_convenio_pkey;
-ALTER TABLE IF EXISTS ONLY public.django_session DROP CONSTRAINT IF EXISTS django_session_pkey;
-ALTER TABLE IF EXISTS ONLY public.django_migrations DROP CONSTRAINT IF EXISTS django_migrations_pkey;
-ALTER TABLE IF EXISTS ONLY public.django_content_type DROP CONSTRAINT IF EXISTS django_content_type_pkey;
-ALTER TABLE IF EXISTS ONLY public.django_content_type DROP CONSTRAINT IF EXISTS django_content_type_app_label_model_76bd3d3b_uniq;
-ALTER TABLE IF EXISTS ONLY public.django_admin_log DROP CONSTRAINT IF EXISTS django_admin_log_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_user DROP CONSTRAINT IF EXISTS auth_user_username_key;
-ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permissions_user_id_permission_id_14a6b632_uniq;
-ALTER TABLE IF EXISTS ONLY public.auth_user_user_permissions DROP CONSTRAINT IF EXISTS auth_user_user_permissions_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_user DROP CONSTRAINT IF EXISTS auth_user_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_user_id_group_id_94350c0c_uniq;
-ALTER TABLE IF EXISTS ONLY public.auth_user_groups DROP CONSTRAINT IF EXISTS auth_user_groups_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_permission DROP CONSTRAINT IF EXISTS auth_permission_content_type_id_codename_01ab375a_uniq;
-ALTER TABLE IF EXISTS ONLY public.auth_group DROP CONSTRAINT IF EXISTS auth_group_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_pkey;
-ALTER TABLE IF EXISTS ONLY public.auth_group_permissions DROP CONSTRAINT IF EXISTS auth_group_permissions_group_id_permission_id_0cd325b0_uniq;
-ALTER TABLE IF EXISTS ONLY public.auth_group DROP CONSTRAINT IF EXISTS auth_group_name_key;
-DROP TABLE IF EXISTS public.nucleo_vacaciones_otorgadas;
-DROP TABLE IF EXISTS public.nucleo_tipo_licencia;
-DROP TABLE IF EXISTS public.nucleo_sucursal;
-DROP TABLE IF EXISTS public.nucleo_solicitud_vacaciones;
-DROP TABLE IF EXISTS public.nucleo_solicitud_licencia;
-DROP TABLE IF EXISTS public.nucleo_sexo;
-DROP TABLE IF EXISTS public.nucleo_puesto;
-DROP TABLE IF EXISTS public.nucleo_provincia;
-DROP TABLE IF EXISTS public.nucleo_plan_trabajo;
-DROP TABLE IF EXISTS public.nucleo_pers_juridica;
-DROP TABLE IF EXISTS public.nucleo_nacionalidad;
-DROP TABLE IF EXISTS public.nucleo_log_auditoria;
-DROP TABLE IF EXISTS public.nucleo_localidad;
-DROP TABLE IF EXISTS public.nucleo_feriado;
-DROP TABLE IF EXISTS public.nucleo_estadocivil;
-DROP TABLE IF EXISTS public.nucleo_estado_lic_vac;
-DROP TABLE IF EXISTS public.nucleo_estado_empleado;
-DROP TABLE IF EXISTS public.nucleo_empleado_eo;
-DROP TABLE IF EXISTS public.nucleo_empleado_el;
-DROP TABLE IF EXISTS public.nucleo_empleado;
-DROP TABLE IF EXISTS public.nucleo_convenio;
-DROP TABLE IF EXISTS public.django_session;
-DROP TABLE IF EXISTS public.django_migrations;
-DROP TABLE IF EXISTS public.django_content_type;
-DROP TABLE IF EXISTS public.django_admin_log;
-DROP TABLE IF EXISTS public.auth_user_user_permissions;
-DROP TABLE IF EXISTS public.auth_user_groups;
-DROP TABLE IF EXISTS public.auth_user;
-DROP TABLE IF EXISTS public.auth_permission;
-DROP TABLE IF EXISTS public.auth_group_permissions;
-DROP TABLE IF EXISTS public.auth_group;
--- *not* dropping schema, since initdb creates it
 --
--- Name: public; Type: SCHEMA; Schema: -; Owner: -
+-- Name: public; Type: SCHEMA; Schema: -; Owner: rrhh_user
 --
 
 -- *not* creating schema, since initdb creates it
 
 
+ALTER SCHEMA public OWNER TO rrhh_user;
+
+SET default_tablespace = '';
+
 SET default_table_access_method = heap;
 
 --
--- Name: auth_group; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_group; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.auth_group (
@@ -187,8 +41,10 @@ CREATE TABLE public.auth_group (
 );
 
 
+ALTER TABLE public.auth_group OWNER TO rrhh_user;
+
 --
--- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.auth_group ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -202,7 +58,7 @@ ALTER TABLE public.auth_group ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTI
 
 
 --
--- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.auth_group_permissions (
@@ -212,8 +68,10 @@ CREATE TABLE public.auth_group_permissions (
 );
 
 
+ALTER TABLE public.auth_group_permissions OWNER TO rrhh_user;
+
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.auth_group_permissions ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -227,7 +85,7 @@ ALTER TABLE public.auth_group_permissions ALTER COLUMN id ADD GENERATED BY DEFAU
 
 
 --
--- Name: auth_permission; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_permission; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.auth_permission (
@@ -238,8 +96,10 @@ CREATE TABLE public.auth_permission (
 );
 
 
+ALTER TABLE public.auth_permission OWNER TO rrhh_user;
+
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.auth_permission ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -253,7 +113,7 @@ ALTER TABLE public.auth_permission ALTER COLUMN id ADD GENERATED BY DEFAULT AS I
 
 
 --
--- Name: auth_user; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_user; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.auth_user (
@@ -262,17 +122,19 @@ CREATE TABLE public.auth_user (
     last_login timestamp with time zone,
     is_superuser boolean NOT NULL,
     username character varying(150) NOT NULL,
-    first_name character varying(150) NOT NULL,
-    last_name character varying(150) NOT NULL,
     email character varying(254) NOT NULL,
     is_staff boolean NOT NULL,
     is_active boolean NOT NULL,
-    date_joined timestamp with time zone NOT NULL
+    date_joined timestamp with time zone NOT NULL,
+    first_name character varying(150) NOT NULL,
+    last_name character varying(150) NOT NULL
 );
 
 
+ALTER TABLE public.auth_user OWNER TO rrhh_user;
+
 --
--- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.auth_user_groups (
@@ -282,8 +144,10 @@ CREATE TABLE public.auth_user_groups (
 );
 
 
+ALTER TABLE public.auth_user_groups OWNER TO rrhh_user;
+
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.auth_user_groups ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -297,7 +161,7 @@ ALTER TABLE public.auth_user_groups ALTER COLUMN id ADD GENERATED BY DEFAULT AS 
 
 
 --
--- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.auth_user ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -311,7 +175,7 @@ ALTER TABLE public.auth_user ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTIT
 
 
 --
--- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: -
+-- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.auth_user_user_permissions (
@@ -321,8 +185,10 @@ CREATE TABLE public.auth_user_user_permissions (
 );
 
 
+ALTER TABLE public.auth_user_user_permissions OWNER TO rrhh_user;
+
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.auth_user_user_permissions ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -336,7 +202,7 @@ ALTER TABLE public.auth_user_user_permissions ALTER COLUMN id ADD GENERATED BY D
 
 
 --
--- Name: django_admin_log; Type: TABLE; Schema: public; Owner: -
+-- Name: django_admin_log; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.django_admin_log (
@@ -352,8 +218,10 @@ CREATE TABLE public.django_admin_log (
 );
 
 
+ALTER TABLE public.django_admin_log OWNER TO rrhh_user;
+
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.django_admin_log ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -367,7 +235,7 @@ ALTER TABLE public.django_admin_log ALTER COLUMN id ADD GENERATED BY DEFAULT AS 
 
 
 --
--- Name: django_content_type; Type: TABLE; Schema: public; Owner: -
+-- Name: django_content_type; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.django_content_type (
@@ -377,8 +245,10 @@ CREATE TABLE public.django_content_type (
 );
 
 
+ALTER TABLE public.django_content_type OWNER TO rrhh_user;
+
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.django_content_type ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -392,7 +262,7 @@ ALTER TABLE public.django_content_type ALTER COLUMN id ADD GENERATED BY DEFAULT 
 
 
 --
--- Name: django_migrations; Type: TABLE; Schema: public; Owner: -
+-- Name: django_migrations; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.django_migrations (
@@ -403,8 +273,10 @@ CREATE TABLE public.django_migrations (
 );
 
 
+ALTER TABLE public.django_migrations OWNER TO rrhh_user;
+
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.django_migrations ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -418,7 +290,7 @@ ALTER TABLE public.django_migrations ALTER COLUMN id ADD GENERATED BY DEFAULT AS
 
 
 --
--- Name: django_session; Type: TABLE; Schema: public; Owner: -
+-- Name: django_session; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.django_session (
@@ -428,8 +300,10 @@ CREATE TABLE public.django_session (
 );
 
 
+ALTER TABLE public.django_session OWNER TO rrhh_user;
+
 --
--- Name: nucleo_convenio; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_convenio; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_convenio (
@@ -438,8 +312,10 @@ CREATE TABLE public.nucleo_convenio (
 );
 
 
+ALTER TABLE public.nucleo_convenio OWNER TO rrhh_user;
+
 --
--- Name: nucleo_convenio_id_convenio_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_convenio_id_convenio_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_convenio ALTER COLUMN id_convenio ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -453,7 +329,7 @@ ALTER TABLE public.nucleo_convenio ALTER COLUMN id_convenio ADD GENERATED BY DEF
 
 
 --
--- Name: nucleo_empleado; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_empleado; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_empleado (
@@ -474,13 +350,15 @@ CREATE TABLE public.nucleo_empleado (
 );
 
 
+ALTER TABLE public.nucleo_empleado OWNER TO rrhh_user;
+
 --
--- Name: nucleo_empleado_el; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_empleado_el; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_empleado_el (
     id bigint NOT NULL,
-    fecha_el date NOT NULL,
+    fecha_el timestamp with time zone NOT NULL,
     alta_ant date NOT NULL,
     id_estado integer NOT NULL,
     idempleado integer NOT NULL,
@@ -490,8 +368,10 @@ CREATE TABLE public.nucleo_empleado_el (
 );
 
 
+ALTER TABLE public.nucleo_empleado_el OWNER TO rrhh_user;
+
 --
--- Name: nucleo_empleado_el_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_empleado_el_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_empleado_el ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -505,7 +385,7 @@ ALTER TABLE public.nucleo_empleado_el ALTER COLUMN id ADD GENERATED BY DEFAULT A
 
 
 --
--- Name: nucleo_empleado_eo; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_empleado_eo (
@@ -516,8 +396,10 @@ CREATE TABLE public.nucleo_empleado_eo (
 );
 
 
+ALTER TABLE public.nucleo_empleado_eo OWNER TO rrhh_user;
+
 --
--- Name: nucleo_empleado_eo_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_empleado_eo ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -531,7 +413,7 @@ ALTER TABLE public.nucleo_empleado_eo ALTER COLUMN id ADD GENERATED BY DEFAULT A
 
 
 --
--- Name: nucleo_estado_empleado; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_estado_empleado; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_estado_empleado (
@@ -540,8 +422,10 @@ CREATE TABLE public.nucleo_estado_empleado (
 );
 
 
+ALTER TABLE public.nucleo_estado_empleado OWNER TO rrhh_user;
+
 --
--- Name: nucleo_estado_empleado_ID_estado_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_estado_empleado_ID_estado_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_estado_empleado ALTER COLUMN id_estado ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -555,7 +439,7 @@ ALTER TABLE public.nucleo_estado_empleado ALTER COLUMN id_estado ADD GENERATED B
 
 
 --
--- Name: nucleo_estado_lic_vac; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_estado_lic_vac; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_estado_lic_vac (
@@ -564,8 +448,10 @@ CREATE TABLE public.nucleo_estado_lic_vac (
 );
 
 
+ALTER TABLE public.nucleo_estado_lic_vac OWNER TO rrhh_user;
+
 --
--- Name: nucleo_estado_lic_vac_ID_estado_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_estado_lic_vac_ID_estado_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_estado_lic_vac ALTER COLUMN id_estado ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -579,7 +465,7 @@ ALTER TABLE public.nucleo_estado_lic_vac ALTER COLUMN id_estado ADD GENERATED BY
 
 
 --
--- Name: nucleo_estadocivil; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_estadocivil; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_estadocivil (
@@ -588,8 +474,10 @@ CREATE TABLE public.nucleo_estadocivil (
 );
 
 
+ALTER TABLE public.nucleo_estadocivil OWNER TO rrhh_user;
+
 --
--- Name: nucleo_estadocivil_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_estadocivil_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_estadocivil ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -603,7 +491,7 @@ ALTER TABLE public.nucleo_estadocivil ALTER COLUMN id ADD GENERATED BY DEFAULT A
 
 
 --
--- Name: nucleo_feriado; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_feriado; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_feriado (
@@ -613,8 +501,10 @@ CREATE TABLE public.nucleo_feriado (
 );
 
 
+ALTER TABLE public.nucleo_feriado OWNER TO rrhh_user;
+
 --
--- Name: nucleo_feriado_id_Feriado_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_feriado_id_Feriado_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_feriado ALTER COLUMN id_feriado ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -628,7 +518,7 @@ ALTER TABLE public.nucleo_feriado ALTER COLUMN id_feriado ADD GENERATED BY DEFAU
 
 
 --
--- Name: nucleo_localidad; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_localidad; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_localidad (
@@ -638,8 +528,10 @@ CREATE TABLE public.nucleo_localidad (
 );
 
 
+ALTER TABLE public.nucleo_localidad OWNER TO rrhh_user;
+
 --
--- Name: nucleo_localidad_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_localidad_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_localidad ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -653,7 +545,7 @@ ALTER TABLE public.nucleo_localidad ALTER COLUMN id ADD GENERATED BY DEFAULT AS 
 
 
 --
--- Name: nucleo_log_auditoria; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_log_auditoria; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_log_auditoria (
@@ -667,8 +559,10 @@ CREATE TABLE public.nucleo_log_auditoria (
 );
 
 
+ALTER TABLE public.nucleo_log_auditoria OWNER TO rrhh_user;
+
 --
--- Name: nucleo_log_auditoria_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_log_auditoria_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_log_auditoria ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -682,7 +576,7 @@ ALTER TABLE public.nucleo_log_auditoria ALTER COLUMN id ADD GENERATED BY DEFAULT
 
 
 --
--- Name: nucleo_nacionalidad; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_nacionalidad; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_nacionalidad (
@@ -691,8 +585,10 @@ CREATE TABLE public.nucleo_nacionalidad (
 );
 
 
+ALTER TABLE public.nucleo_nacionalidad OWNER TO rrhh_user;
+
 --
--- Name: nucleo_nacionalidad_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_nacionalidad_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_nacionalidad ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -706,7 +602,7 @@ ALTER TABLE public.nucleo_nacionalidad ALTER COLUMN id ADD GENERATED BY DEFAULT 
 
 
 --
--- Name: nucleo_pers_juridica; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_pers_juridica; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_pers_juridica (
@@ -719,8 +615,10 @@ CREATE TABLE public.nucleo_pers_juridica (
 );
 
 
+ALTER TABLE public.nucleo_pers_juridica OWNER TO rrhh_user;
+
 --
--- Name: nucleo_pers_juridica_id_pers_juridica_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_pers_juridica_id_pers_juridica_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_pers_juridica ALTER COLUMN id_pers_juridica ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -734,7 +632,7 @@ ALTER TABLE public.nucleo_pers_juridica ALTER COLUMN id_pers_juridica ADD GENERA
 
 
 --
--- Name: nucleo_plan_trabajo; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_plan_trabajo; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_plan_trabajo (
@@ -752,8 +650,10 @@ CREATE TABLE public.nucleo_plan_trabajo (
 );
 
 
+ALTER TABLE public.nucleo_plan_trabajo OWNER TO rrhh_user;
+
 --
--- Name: nucleo_plan_trabajo_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_plan_trabajo_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_plan_trabajo ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -767,7 +667,7 @@ ALTER TABLE public.nucleo_plan_trabajo ALTER COLUMN id ADD GENERATED BY DEFAULT 
 
 
 --
--- Name: nucleo_provincia; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_provincia; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_provincia (
@@ -776,8 +676,10 @@ CREATE TABLE public.nucleo_provincia (
 );
 
 
+ALTER TABLE public.nucleo_provincia OWNER TO rrhh_user;
+
 --
--- Name: nucleo_provincia_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_provincia_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_provincia ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -791,7 +693,7 @@ ALTER TABLE public.nucleo_provincia ALTER COLUMN id ADD GENERATED BY DEFAULT AS 
 
 
 --
--- Name: nucleo_puesto; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_puesto; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_puesto (
@@ -800,8 +702,10 @@ CREATE TABLE public.nucleo_puesto (
 );
 
 
+ALTER TABLE public.nucleo_puesto OWNER TO rrhh_user;
+
 --
--- Name: nucleo_puesto_id_puesto_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_puesto_id_puesto_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_puesto ALTER COLUMN id_puesto ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -815,7 +719,7 @@ ALTER TABLE public.nucleo_puesto ALTER COLUMN id_puesto ADD GENERATED BY DEFAULT
 
 
 --
--- Name: nucleo_sexo; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_sexo; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_sexo (
@@ -824,8 +728,10 @@ CREATE TABLE public.nucleo_sexo (
 );
 
 
+ALTER TABLE public.nucleo_sexo OWNER TO rrhh_user;
+
 --
--- Name: nucleo_sexo_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_sexo_id_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_sexo ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -839,7 +745,7 @@ ALTER TABLE public.nucleo_sexo ALTER COLUMN id ADD GENERATED BY DEFAULT AS IDENT
 
 
 --
--- Name: nucleo_solicitud_licencia; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_solicitud_licencia (
@@ -856,8 +762,10 @@ CREATE TABLE public.nucleo_solicitud_licencia (
 );
 
 
+ALTER TABLE public.nucleo_solicitud_licencia OWNER TO rrhh_user;
+
 --
--- Name: nucleo_solicitud_licencia_idSolicitudLic_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia_idSolicitudLic_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_solicitud_licencia ALTER COLUMN idsolicitudlic ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -871,7 +779,7 @@ ALTER TABLE public.nucleo_solicitud_licencia ALTER COLUMN idsolicitudlic ADD GEN
 
 
 --
--- Name: nucleo_solicitud_vacaciones; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_solicitud_vacaciones (
@@ -885,8 +793,10 @@ CREATE TABLE public.nucleo_solicitud_vacaciones (
 );
 
 
+ALTER TABLE public.nucleo_solicitud_vacaciones OWNER TO rrhh_user;
+
 --
--- Name: nucleo_solicitud_vacaciones_idSolicitudVac_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones_idSolicitudVac_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_solicitud_vacaciones ALTER COLUMN idsolicitudvac ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -900,7 +810,7 @@ ALTER TABLE public.nucleo_solicitud_vacaciones ALTER COLUMN idsolicitudvac ADD G
 
 
 --
--- Name: nucleo_sucursal; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_sucursal; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_sucursal (
@@ -912,8 +822,10 @@ CREATE TABLE public.nucleo_sucursal (
 );
 
 
+ALTER TABLE public.nucleo_sucursal OWNER TO rrhh_user;
+
 --
--- Name: nucleo_sucursal_id_sucursal_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_sucursal_id_sucursal_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_sucursal ALTER COLUMN id_sucursal ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -927,7 +839,7 @@ ALTER TABLE public.nucleo_sucursal ALTER COLUMN id_sucursal ADD GENERATED BY DEF
 
 
 --
--- Name: nucleo_tipo_licencia; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_tipo_licencia; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_tipo_licencia (
@@ -938,8 +850,10 @@ CREATE TABLE public.nucleo_tipo_licencia (
 );
 
 
+ALTER TABLE public.nucleo_tipo_licencia OWNER TO rrhh_user;
+
 --
--- Name: nucleo_tipo_licencia_id_Licencia_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_tipo_licencia_id_Licencia_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_tipo_licencia ALTER COLUMN id_licencia ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -953,7 +867,7 @@ ALTER TABLE public.nucleo_tipo_licencia ALTER COLUMN id_licencia ADD GENERATED B
 
 
 --
--- Name: nucleo_vacaciones_otorgadas; Type: TABLE; Schema: public; Owner: -
+-- Name: nucleo_vacaciones_otorgadas; Type: TABLE; Schema: public; Owner: rrhh_user
 --
 
 CREATE TABLE public.nucleo_vacaciones_otorgadas (
@@ -966,8 +880,10 @@ CREATE TABLE public.nucleo_vacaciones_otorgadas (
 );
 
 
+ALTER TABLE public.nucleo_vacaciones_otorgadas OWNER TO rrhh_user;
+
 --
--- Name: nucleo_vacaciones_otorgadas_id_vacaciones_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: nucleo_vacaciones_otorgadas_id_vacaciones_seq; Type: SEQUENCE; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE public.nucleo_vacaciones_otorgadas ALTER COLUMN id_vacaciones ADD GENERATED BY DEFAULT AS IDENTITY (
@@ -981,7 +897,7 @@ ALTER TABLE public.nucleo_vacaciones_otorgadas ALTER COLUMN id_vacaciones ADD GE
 
 
 --
--- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.auth_group (id, name) FROM stdin;
@@ -989,7 +905,7 @@ COPY public.auth_group (id, name) FROM stdin;
 
 
 --
--- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
@@ -997,7 +913,7 @@ COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 
 
 --
--- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
@@ -1121,35 +1037,16 @@ COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 
 
 --
--- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
-COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-55	pbkdf2_sha256$1000000$vn1Q9Vc0rUwYzmb2MsKeTb$a/CAvkR7vGRUnVH/7TeIb/HcIRPqHQGY6x7LJVAmiys=	\N	f	ignacioborghi	Ignacio	Borghi	ygumy44@gmail.com	t	t	2025-08-28 09:39:48.885406+00
-40		\N	f	u_test1				f	t	2025-08-27 03:41:07.587284+00
-56	pbkdf2_sha256$1000000$Jxmx0YJ5Xy1BwwUlhTHgkP$96jXEeKU824VwBCO04ZF43FluSA8iYjqwRZvld7YLvE=	\N	f	ignaciossssborghiss	Ignaciossss	Borghiss	ygumy44@gmail.com	t	t	2025-08-30 02:31:19.713794+00
-41		\N	f	u_test2				f	t	2025-08-27 03:41:07.589829+00
-57	pbkdf2_sha256$1000000$kE7nIbb8i8mT7P5LcAOM1Z$KXvs5uSTJQu4dO0KwL5JPARdlb/1CNFmvKxU0Zsa2RQ=	\N	f	ignacionnnnnnnnnborghi	Ignacionnnnnnnnn	Borghi	ygumy44@gmail.com	t	t	2025-08-30 03:18:31.810577+00
-58	pbkdf2_sha256$1000000$Ug6aIDC5cG70xmpHqYixfJ$Op8M5djru7/AtBKCKlYJPNUzU88hgHVzsIDZ8a2c7VA=	\N	f	ignacioborghi1	Ignacio	Borghi	ygumy44@gmail.com	t	t	2025-08-30 04:15:22.88773+00
-23	pbkdf2_sha256$1000000$9bAiR3CMvdD2AqprkaVJil$M9UWD1zoFRrdFCNS70PXegeTv6U3tTPsKwS07EZQ2F8=	\N	f	test_emp_http				f	t	2025-08-27 00:40:20.740447+00
-24	pbkdf2_sha256$1000000$eB61hlRCUasi15JQMDqLW8$QuNUdvpRp4kqcDXMMNtc+seHWedPkhlAL4y1LbjlQOY=	\N	f	test_gestor_255305				t	t	2025-08-27 00:41:45.862161+00
-26	pbkdf2_sha256$1000000$x69Oe3Y7ZYfch5G7qfEiTV$atlm4q6WSdW+IG3+g6LTdQw4GoIZSkFfN+hAndKM2uM=	\N	f	test_gestor_255334				t	t	2025-08-27 00:42:14.604729+00
-42	pbkdf2_sha256$1000000$7Gw9Ur1Zp44ANuCtn9wMcf$GcY2K07gdkK/KAhu6Dgd4KPlRycbeLsufK98M6jNW8I=	2025-08-27 04:15:26.255967+00	t	admin_temp			admin_temp@example.com	t	t	2025-08-27 04:15:25.522062+00
-35	pbkdf2_sha256$1000000$OXOmo8NBdws8w9xkkIOqAP$yMFmoDr4JWwsBDj+iNwx9h1yp2N7oewI5D92+SSybTk=	2025-08-27 01:28:34.896838+00	f	test_gestor_delete				t	t	2025-08-27 01:28:05.525442+00
-28	pbkdf2_sha256$1000000$jud0o6h423HBZb6fIVvkA3$l/uh01wjtP6k86N93ykfEm5C5IDnAWEv6DWkmZexNVY=	\N	f	test_gestor_256323				t	t	2025-08-27 00:58:43.923029+00
-15	pbkdf2_sha256$1000000$xWHAqWrjUNcxBlM1u38Qts$ZnDfU1/78yo2PujTI4KxvDCH/v3TPm8ie6ge0rVejWE=	2025-08-30 15:10:38.503307+00	f	anamariagomez	Ana Maria	Gomez	jeregalarze@gmail.com	t	t	2025-08-23 21:16:00.579116+00
-52	pbkdf2_sha256$1000000$wNAapgvaCWMypJ988wv26W$RsZLtS6zaWq8PdkAojMj5JBObuSbT6MBRT02mQJG6vM=	2025-08-28 09:26:44.412776+00	t	dbg_admin			dbg@example.com	t	t	2025-08-28 08:59:42.582079+00
-30	pbkdf2_sha256$1000000$lmzjn15EyZFf9iK8QHFtX0$m0MzfTaa7W2wDgQgqGF9ElZ80VVBEo0ZZiM2pQTOkeA=	\N	f	test_gestor_256393				t	t	2025-08-27 00:59:53.799079+00
-22	pbkdf2_sha256$1000000$SXPzO9OvOwUT2N0qAjow50$qMs+hNy6GQpfhRz8y4OAvIEyP34PY027n5roqnJjepw=	2025-08-27 00:59:54.83782+00	f	test_gestor				t	t	2025-08-27 00:40:20.294616+00
-44	pbkdf2_sha256$1000000$A3ypAcRuAGeEY5sKAAVuqH$dioQlDY+MBRa0Lpykeek82qb6YYeXJG/aoEewMpVha4=	2025-08-27 05:09:28.853439+00	f	gestor_test			gestor@example.com	t	t	2025-08-27 04:31:29.830271+00
-5	pbkdf2_sha256$1000000$aZHmlAmL7at6B2Rh8Tw1qI$uea8AXD+mgroNJZzDtP5e++sLl3P0S8zFH+VDXHRMlc=	2025-09-23 18:16:40.947843+00	f	rafaelgalarze	Rafael	Galarze	jeregalarze@gmail.com	f	t	2025-08-19 23:36:37.695718+00
-1	pbkdf2_sha256$1000000$QnNecP7TX7sGwBiYcLbzDl$JCN2RQu7Y1VaTv237d1om3nfDc++bARhdKT2e2Ux2bw=	2025-09-23 18:25:19.497878+00	t	admin	TestCambio	Principal	admin@admin.com	t	t	2025-08-01 08:56:01.841564+00
-3	pbkdf2_sha256$1000000$8Vdxjrbsq8iyigYd5vA0gB$8tC1Ec2N7WvywBjoOPfnczcpnS9F9W35nlWn8gDaXnQ=	2025-09-22 23:52:05.488164+00	f	jeremiasgalarze	Jeremias	Galarze	jeregalarze@gmail.com	t	t	2025-08-01 12:00:04.68777+00
+COPY public.auth_user (id, password, last_login, is_superuser, username, email, is_staff, is_active, date_joined, first_name, last_name) FROM stdin;
+1	pbkdf2_sha256$1000000$yd7q5ErlXWQggpNxP9Ct2O$sGIf9rt03Uf+1MEQvDHlQAcYJA/d4jB+M5jlicA5ogo=	2025-10-13 15:37:55.773423-03	t	admin	admin@admin.com	t	t	2025-08-01 05:56:01.841564-03		
 \.
 
 
 --
--- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
@@ -1157,7 +1054,7 @@ COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 
 
 --
--- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
@@ -1165,7 +1062,7 @@ COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 
 
 --
--- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
@@ -1173,7 +1070,7 @@ COPY public.django_admin_log (id, action_time, object_id, object_repr, action_fl
 
 
 --
--- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.django_content_type (id, app_label, model) FROM stdin;
@@ -1210,182 +1107,198 @@ COPY public.django_content_type (id, app_label, model) FROM stdin;
 
 
 --
--- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.django_migrations (id, app, name, applied) FROM stdin;
-1	contenttypes	0001_initial	2025-06-11 17:32:06.369144+00
-2	auth	0001_initial	2025-06-11 17:32:06.620457+00
-3	admin	0001_initial	2025-06-11 17:32:06.682293+00
-4	admin	0002_logentry_remove_auto_add	2025-06-11 17:32:06.709221+00
-5	admin	0003_logentry_add_action_flag_choices	2025-06-11 17:32:06.727172+00
-6	contenttypes	0002_remove_content_type_name	2025-06-11 17:32:06.760085+00
-7	auth	0002_alter_permission_name_max_length	2025-06-11 17:32:06.780032+00
-8	auth	0003_alter_user_email_max_length	2025-06-11 17:32:06.803967+00
-9	auth	0004_alter_user_username_opts	2025-06-11 17:32:06.830898+00
-10	auth	0005_alter_user_last_login_null	2025-06-11 17:32:06.855829+00
-11	auth	0006_require_contenttypes_0002	2025-06-11 17:32:06.860815+00
-12	auth	0007_alter_validators_add_error_messages	2025-06-11 17:32:06.897716+00
-13	auth	0008_alter_user_username_max_length	2025-06-11 17:32:06.958585+00
-14	auth	0009_alter_user_last_name_max_length	2025-06-11 17:32:06.972553+00
-15	auth	0010_alter_group_name_max_length	2025-06-11 17:32:06.996489+00
-16	auth	0011_update_proxy_permissions	2025-06-11 17:32:07.020426+00
-17	auth	0012_alter_user_first_name_max_length	2025-06-11 17:32:07.046356+00
-18	nucleo	0001_initial	2025-06-11 17:32:07.60483+00
-19	sessions	0001_initial	2025-06-11 17:32:07.63831+00
-20	nucleo	0002_alter_empleado_id_localidad_and_more	2025-06-16 03:25:05.352627+00
-21	nucleo	0003_remove_empleado_id_sucursal_alter_empleado_fecha_e_and_more	2025-06-16 03:51:02.008139+00
-22	nucleo	0004_empleado_email	2025-06-18 03:25:27.669199+00
-23	nucleo	0005_remove_empleado_email_empleado_user	2025-06-18 19:44:04.603602+00
-24	nucleo	0006_remove_solicitud_licencia_toma_gestor_and_more	2025-07-05 04:48:37.40841+00
-25	nucleo	0002_rename_dias_permisados_vacaciones_otorgadas_dias_disponibles_and_more	2025-07-05 04:53:28.771058+00
-26	nucleo	0003_empleado_email	2025-07-07 05:11:53.914396+00
-27	nucleo	0004_remove_empleado_email_alter_log_auditoria_idusuario_and_more	2025-07-07 06:16:32.405463+00
-28	nucleo	0005_alter_empleado_idempleado	2025-07-08 21:26:13.532314+00
-29	nucleo	0002_empleado_el_fecha_est	2025-08-01 09:07:34.488285+00
-30	nucleo	0003_estado_laboral	2025-08-01 09:11:18.215639+00
-31	nucleo	0004_rename_estado_laboral_estado_laboral_estado_and_more	2025-08-01 09:25:02.79463+00
-32	nucleo	0005_alter_tipo_licencia_dias	2025-08-26 19:08:29.550632+00
+1	contenttypes	0001_initial	2025-06-11 14:32:06.369144-03
+2	auth	0001_initial	2025-06-11 14:32:06.620457-03
+3	admin	0001_initial	2025-06-11 14:32:06.682293-03
+4	admin	0002_logentry_remove_auto_add	2025-06-11 14:32:06.709221-03
+5	admin	0003_logentry_add_action_flag_choices	2025-06-11 14:32:06.727172-03
+6	contenttypes	0002_remove_content_type_name	2025-06-11 14:32:06.760085-03
+7	auth	0002_alter_permission_name_max_length	2025-06-11 14:32:06.780032-03
+8	auth	0003_alter_user_email_max_length	2025-06-11 14:32:06.803967-03
+9	auth	0004_alter_user_username_opts	2025-06-11 14:32:06.830898-03
+10	auth	0005_alter_user_last_login_null	2025-06-11 14:32:06.855829-03
+11	auth	0006_require_contenttypes_0002	2025-06-11 14:32:06.860815-03
+12	auth	0007_alter_validators_add_error_messages	2025-06-11 14:32:06.897716-03
+13	auth	0008_alter_user_username_max_length	2025-06-11 14:32:06.958585-03
+14	auth	0009_alter_user_last_name_max_length	2025-06-11 14:32:06.972553-03
+15	auth	0010_alter_group_name_max_length	2025-06-11 14:32:06.996489-03
+16	auth	0011_update_proxy_permissions	2025-06-11 14:32:07.020426-03
+17	auth	0012_alter_user_first_name_max_length	2025-06-11 14:32:07.046356-03
+18	nucleo	0001_initial	2025-06-11 14:32:07.60483-03
+19	sessions	0001_initial	2025-06-11 14:32:07.63831-03
+20	nucleo	0002_alter_empleado_id_localidad_and_more	2025-06-16 00:25:05.352627-03
+21	nucleo	0003_remove_empleado_id_sucursal_alter_empleado_fecha_e_and_more	2025-06-16 00:51:02.008139-03
+22	nucleo	0004_empleado_email	2025-06-18 00:25:27.669199-03
+23	nucleo	0005_remove_empleado_email_empleado_user	2025-06-18 16:44:04.603602-03
+24	nucleo	0006_remove_solicitud_licencia_toma_gestor_and_more	2025-07-05 01:48:37.40841-03
+25	nucleo	0002_rename_dias_permisados_vacaciones_otorgadas_dias_disponibles_and_more	2025-07-05 01:53:28.771058-03
+26	nucleo	0003_empleado_email	2025-07-07 02:11:53.914396-03
+27	nucleo	0004_remove_empleado_email_alter_log_auditoria_idusuario_and_more	2025-07-07 03:16:32.405463-03
+28	nucleo	0005_alter_empleado_idempleado	2025-07-08 18:26:13.532314-03
+29	nucleo	0002_empleado_el_fecha_est	2025-08-01 06:07:34.488285-03
+30	nucleo	0003_estado_laboral	2025-08-01 06:11:18.215639-03
+31	nucleo	0004_rename_estado_laboral_estado_laboral_estado_and_more	2025-08-01 06:25:02.79463-03
+32	nucleo	0005_alter_tipo_licencia_dias	2025-08-26 16:08:29.550632-03
+33	nucleo	0006_alter_empleado_el_fecha_el	2025-10-09 01:34:26.879783-03
+35	auth	0013_auto_20251010_1933	2025-10-10 20:11:32.691045-03
+36	auth	0014_user_first_name_user_last_name	2025-10-10 20:11:51.835483-03
 \.
 
 
 --
--- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
-2fayqyovfpubacyzxmouv7w6937vcpxe	.eJxVjEEOwiAQRe_C2pDCSDu4dN8zkIGZStVAUtqV8e7apAvd_vfef6lA25rD1mQJM6uLsur0u0VKDyk74DuVW9WplnWZo94VfdCmx8ryvB7u30Gmlr-1ODJAzntnQYSS7aGTFA1OU0TkwQGQB0Ig2yNIZD8YQLFn2zEJonp_AOieN9o:1uPmEx:1YkhbFTSFx0VI1BOK4L3BDxtwI_YsybV4NuFU2pyPlM	2025-06-26 18:01:27.867615+00
-u7aj4abx7nlqk3vuog4e39ganphn5qad	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQgII:MPkcehIOd_68FQFiFGrED6h4XtCJ9aovwc_Vk7mTOgU	2025-06-29 05:52:38.480294+00
-0gczdkztepue8t7r51o0180ncd7uvswg	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQTST:NPEzLYUUN7A7QCnfCqqbfp1CzXbwUjHI5hO0lNzKIU4	2025-06-28 16:10:17.37376+00
-en2hoge6bd9m7ni1sqm8fmnva6bxy0v4	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1urOTp:13oUXhL-tPXHM1TEJdifquK9sYOohMNSCIJjdoz7o2M	2025-09-10 22:18:57.694923+00
-d644nl5i5yh0ywubypiwafxjovpeyv3r	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uPq95:9XLzf6WGre-vm4rtgG9J6XBi2IxT98Coj-N7iZgaDLw	2025-06-26 22:11:39.629819+00
-blpie01h97rh8mm0bboobxze6loe4hov	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uPtcl:lOtGAVXMTmdXnsVnms5n2UplBKmxXBSv0NJUvXiy4D8	2025-06-27 01:54:31.12679+00
-cbts4zomx6ctiwkr350ort0iy91dmpq5	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXDj:C39twvMI0K9jYNavzlSBUTOLJCCT8uuyYWKYa4QgrOA	2025-09-11 07:38:55.015399+00
-5xz4ek779jouor89iijjfkug3bj0i8me	.eJxVjEEOwiAQRe_C2pDSDrS4dO8ZCDPMSNVAUtqV8e7apAvd_vfef6kQtzWHrfES5qTOCkCdfkeM9OCyk3SP5VY11bIuM-pd0Qdt-loTPy-H-3eQY8vfWgwDgwMRiySDB-DEYxd7JIyIEznxkGgwhicybK1Yy86O0pneC5N6fwBBwTli:1ur7oo:xuznQuu9ceQHRY-HQnYSDj46d-e0MaFq4Dcp4BE0AII	2025-09-10 04:31:30.913529+00
-6w5ejdy2so9umjo7fkjumysnf5hq2r71	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ80:dnDEyJ7OBGJKTugBRoDMoXActgZLC7GNT_4CxkGYHxA	2025-09-11 09:41:08.101977+00
-yudd0rba606xw4qqix9m87jalogj7tj5	.eJxVjMEOwiAQRP-FsyEgWxY8evcbyMJupWrapLQn47_bJj3oaZJ5b-atEq1LTWuTOQ2sLgpAnX7LTOUp4074QeN90mUal3nIelf0QZu-TSyv6-H-HVRqdVv7gMZ1hbk3Z7KAyEgEYozDzjvn0GNvJfZRwpYZ2BobIIqXbNF1oD5f8M83VA:1ur8Jm:lSBu2fAWBGfPSkZb6YnboCFPL-8xtC4fMj_DkC-7LT4	2025-09-10 05:03:30.722642+00
-n29hxqb4v78zjijsam4hewlyhqqej5rk	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQxGv:TNGIVHsGu7N11zoxrZ4ZJkxCIyPoLiiImPfFTWGGctc	2025-06-30 00:00:21.130231+00
-ep9m1q1pfah1en5ftj9oujahxvly75vm	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uZi8J:crj1Ewzh_gghST0ngyX1hs4pHCtuBB5qbcOR3yL81qw	2025-07-24 03:39:39.351642+00
-4fu24152yufsed0fcnrk4p92l36d5et5	.eJxVjEEOwiAQRe_C2pDCSDu4dN8zkIGZStVAUtqV8e7apAvd_vfef6lA25rD1mQJM6uLsur0u0VKDyk74DuVW9WplnWZo94VfdCmx8ryvB7u30Gmlr-1ODJAzntnQYSS7aGTFA1OU0TkwQGQB0Ig2yNIZD8YQLFn2zEJonp_AOieN9o:1uPluw:VaZGRAvQShgBbyKRQkOwV2akEKjb1E8zMa9Cs7iaNgM	2025-06-26 17:40:46.985126+00
-v7lqzy10afrppgmyxw6ixpd1314uoc4d	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWRK:vvX23CuamSB2V5r4J3mkh7YnjdkuAUSQYtESqXJIGDo	2025-09-11 06:48:54.980746+00
-cg3svudkpitzvvzxsiicz2felzmfw9k2	.eJxVjE0OwiAYBe_C2hCo_Lp03zOQBx9I1dCktCvj3bVJF7p9M_NeLGBba9h6XsJE7MKUZqffMSI9ctsJ3dFuM09zW5cp8l3hB-18nCk_r4f7d1DR67fORmkZhc8RZGyE1kJjUGUonqSDNcVpyt5JiLMHJYLzioorCSiWEnt_ACAJOWc:1ur9tK:co65nwOLOqnyIKUuCc2aTu9S0kXWMMFPLs-u29_aMSY	2025-09-10 06:44:18.487926+00
-xxgwq0xohlo3vjznazjhdgptuiyaxu9z	.eJxVjMsOwiAQRf-FtSGAPF267zeQgRmkaiAp7cr479qkC93ec859sQjbWuM2aIkzsgvTjp1-xwT5QW0neId26zz3ti5z4rvCDzr41JGe18P9O6gw6rd2WufgEpqkjKcCkjxICMIEZ1AiWQBrnIXizp5USdkaVYRHykIDqsDeHxpkOKk:1urA0I:RlriwozBCJX9uNLGjKTwKeMy-FdT6XxfK4fx8a-tcJE	2025-09-10 06:51:30.975097+00
-nzax8sx7mtx0v9ax3rkh62lzltsew3kt	e30:1upBdg:i93Z5K_Xw3X69IUoCyi_Z5zE5E-Dmv1wNsI56txN7_s	2025-09-04 20:12:00.234801+00
-g7xhk0390q77p97tgfdzgt6m743xf5i4	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWTL:8v9yQZHnvd99YZCQc_UiSp-aG67EVnul446jEntlIQk	2025-09-11 06:50:59.555972+00
-pp5j6gp5tfbh05kkg048a8re28fkb7ty	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWXV:4m56VChOYUcLbBEvpIxqFupa5XgXrApyEQDEIqQbTdg	2025-09-11 06:55:17.752069+00
-rnkra57ryppsxtaflzmicoicpgg3698q	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXrg:hUQ0Rz0UUcrFRjtDmp3Vy6jRvRRH9WPtxt_Wza89r6o	2025-09-11 08:20:12.018326+00
-d12vcwbg54qunqpxh1ninsw5ke7orvd1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWiS:g0yIS6BQezF5ntubJKwSMktHRAlCFjdhmP-9vHUGRCA	2025-09-11 07:06:36.470274+00
-bwski8v6twysrgbbnu1myvxs9e7nio37	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWlc:gLvfr12uoCvOH_210fj00oKHF1b84rK-KzNotJGQv7A	2025-09-11 07:09:52.993633+00
-ipq7y2lfktfgjjt9438x182s9fme5w7w	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXu5:BSF0gcnplh9dI8H8lXQE-kQGHUYCBkjroEX5oIiOLlQ	2025-09-11 08:22:41.918531+00
-15kdgcfiu6b0grdynyddb4v6oiron69n	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWp3:05n6TbxQUvFKWzRLmegvkzEbikkdj5KKE0j3NKGYBOM	2025-09-11 07:13:25.244846+00
-ed6vim95n5w5qm829clqab4yg9t057wu	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWwZ:VVYNNZxs8Ffi0Qq5gwaDzVbOaRlx1YCKtGBVbh6hfbs	2025-09-11 07:21:11.974266+00
-spn7u9xjn0b4j6s0e6dvh11mv8e4rz0b	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX5V:ojmuf8URWTVX8qxUAy7qDcvt-ld0fqjTjhNK1R2UvgM	2025-09-11 07:30:25.060693+00
-ict5p1pcxgbn7p8anw5djysxo74kzc1x	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYd0:ljZTPd42Zciez3lwfvrYMgmpahAeYi5StaXUo-j5szM	2025-09-11 09:09:06.241764+00
-wc83ltt9qcls1vc7ws794lk82dzkddaj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZE6:ETqQeGxxAg6pWufN8JMucasTvVvKVZTBwbCqyPU7MW8	2025-09-11 09:47:26.322425+00
-7fu4zh589qz3btzbfbbnihbnkr6bidci	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlFr:yQodROO3titxnUlui4es6m2crl7vTd_S2n_WRH_wgXM	2025-09-11 22:38:03.266379+00
-hwx5ugvo90gmus5herm8tegbj6g0q1p8	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urk94:1RFiRSKY1JLE155-lOqEyASHXY0jyjyIrUoJEgg_6PM	2025-09-11 21:26:58.061933+00
-l95fdmfft5s6k5i6qzlolunrmy8qcl42	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXYb:8dtGU2ilLZgvEp3ajToBMOT8F7osSq8UT5UGqeXan5Q	2025-09-11 08:00:29.898658+00
-2r162y4r28xfci8fxihfd5ftckukozok	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkDp:j8gHNJyyoG5R6eBpArh9-sWcrT-JO-MvRDgnI41QsbA	2025-09-11 21:31:53.120974+00
-b5kuy4p41mgijdluh778wuqplybgquxo	.eJxVjMEOgjAQRP-lZ9Ms3W3revTuN5BtWSxqIKFwMv67kHDQ48x7M2_TyrqUdq06t0NnLobInH7LJPmp4066h4z3yeZpXOYh2V2xB632NnX6uh7u30GRWrZ1kAbFEZNj8NCzT86jniNoUGJuckCO1EtE4OQh-y0DkXhoFAHZfL7MiTYs:1ur88t:8qRp35s4Z9aCvZGAIh5OTH2ZJcork13oc0SiTy790kk	2025-09-10 04:52:15.328883+00
-qbh4qc44chlb0fzx3t327oa4z6q8nfc3	.eJxVjEEOwiAQRe_C2hCgA60u3fcMZJiZStVAUtqV8e7apAvd_vfef6mI25rj1mSJM6uLCladfseE9JCyE75juVVNtazLnPSu6IM2PVaW5_Vw_w4ytvytgVkSAjkMFBi8EBgi56feGwhi6GwGnJI1ltGR7V1KQWw3dEKWmEG9PzHBOQA:1uhYOx:QA1k6hVsDFsn68TGfws0B3Hyhc5Il8c1f0wbeFU390s	2025-08-14 18:53:15.995188+00
-wsn2xj7mckckvcvhi2b9dn2ivwlclvtd	.eJxVjLsOAiEUBf-F2hAReVna7zcQuA9ZNZAsu5Xx35VkC-1OzkzmJWLa1hK3TkucUVyE8eLwe-YED6qD4D3VW5PQ6rrMWQ5F7rTLqSE9r7v7Fyipl9HV7I7OaWUheMvE3p-NIWCHnE9aE1L-Th8UKwwZiGwCZ1IIFghBifcHHtA5XQ:1ugR4e:C2rh5b95uuxUx2Cyd9WOoQZDxhaeKJA13Ce4IV8Rpk0	2025-08-11 16:51:40.840977+00
-6t9vbf5w29gu4f3w1e35cfryunl19dh8	.eJxVjE0OwiAYBe_C2pDSQgCX7j0D4fuTqoGktCvj3bVJF7p9M_NeKuVtLWnrvKSZ1FlZq06_I2R8cN0J3XO9NY2trssMelf0Qbu-NuLn5XD_Dkru5VsHQ1OmLBFi9OAocmAZA3kvSITgOAwg1jiDyDJFnuxoYxiCAIJhVu8PRB45pw:1ur8PY:Tn9OJA5g6FehrWD3wTcZkwk9xE9u6W5sWMLw_F9wDMM	2025-09-10 05:09:28.854353+00
-84oa45x2lp8pt7oj9r1apohyz87p9xru	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWSG:X_t0LSx6fvkPNSVd3yTo13xsQOS5uRzsaA1cLMZKU6Q	2025-09-11 06:49:52.124921+00
-0i0dkmzg244b4ttp77kpxyyrv355t2mw	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1ueQ6c:VJgVxw7BG_xrN2e5U7oh3BZhoSv4H_lz2deaYfQ0i3k	2025-08-06 03:25:22.028238+00
-ap9ol6uzutmojrojwpawm2k6nw550p84	.eJxVjEEOwiAQRe_C2hAGKB1duu8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnER1onT7xgoPlLdCd-p3pqMra7LHOSuyIN2OTVOz-vh_h0U6uVbBySrUjDMEUE50jzCiBpdzgZIAZHSTEBJk0OV3ZAxB9DRuvOAyhjx_gAWPTft:1ur9tr:bufWl8nhG9H1KdytTZWeeD-MKf2BT5wotlYyh5uL4dw	2025-09-10 06:44:51.403184+00
-twg9ey7kgdmhkb0akjkc1t5u4gjn4ajj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWU8:lbBFVA7qOAc6SPY8kTN1TM0oXltiAiqYCOeY2dFGdWM	2025-09-11 06:51:48.586488+00
-mwr9rpu1jom1i9v6hymbwyajnpr7aozz	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uqemq:KkuI9jTrDfdecPFyBUr8lJoSYUW4-6iS48_tPIyakNk	2025-09-08 21:31:32.570981+00
-blmdpgjmilotxmq0hckidc5tqnq3zn5n	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urLbw:Qb6gd2Yba6dCVP17WaH3_cAhCfyNoxeywcx4Av7Onoo	2025-09-10 19:15:08.526679+00
-5hcozha5oebtw9b5hqtwrksr7f6xhzga	.eJxVjDkOwjAUBe_iGlnYeMmnpOcMkfMXHEC2FCcV4u5gKQW0b2beS41pW_O4NV7GmdRZGVCH33FK-ODSCd1TuVWNtazLPOmu6J02fa3Ez8vu_h3k1PK3RhyQaTAeU0DPkYidY2sFPEFMhCIQxFvvjFhDEAg6OwEco0Tx6v0BQH44zw:1urLer:9I9QDIAPzwn6SH7b-HD5QZ3v4yq04y22Rh6-2tHBn78	2025-09-10 19:18:09.220455+00
-5rqzlm033wtnka8hwa89ssiuswm484dp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWYO:DT9xBUyxTFgqGYXOKXkMqiSA4IrIrC1Hr_kI55rRDEE	2025-09-11 06:56:12.337933+00
-eq27x1lt4knu5y57ct1ozzpzuxi67fyb	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uqfUl:UawexSb7GidOOogW5Hcgj8MY4ntLL1AFRk0fI5An1LA	2025-09-08 22:16:55.805563+00
-3pk7r8lvg94hjbb98qbtwz632qswyfa4	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1ur7Yx:3PFXmVRBGXs-O6TUzaLYuqy416qHOa6LppcGgv0FGgo	2025-09-10 04:15:07.816692+00
-09msezibww4sqosfwyy2ocm3g8q49sai	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWje:Jqhgl2SrazjkulkvUqvtJR1OX5wgov_ev0kkyaXUyBg	2025-09-11 07:07:50.039388+00
-fn9dvbg7oto1r2xvhtvt277d4p8x3py1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ8o:RKFq5i5pyuSKF-lqxCtFdx4wJEIJjuwYQPYr6BOrElY	2025-09-11 09:41:58.782842+00
-xpb52oyjfftbsqpzfm4b3ooqtm2xd7fb	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWnD:7qk7YvjrZnAlgP8IEEmm95ZN1cNWYka9YHQEMWmxDsk	2025-09-11 07:11:31.704244+00
-das1pusjqaeswp7nuxiiw9z3xsl3qwhy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXsc:MLOdB98q1TlyAVI0YXiATb3fbuGlmqYN1_U3ofYn8GA	2025-09-11 08:21:10.606061+00
-7mui0wjjfd1apbcwjgih407ip72o7ygr	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWsQ:MITlShmTWRzXR9uj3k7-MHcBiml5WifbrVq2Ky15a0w	2025-09-11 07:16:54.521645+00
-86twsih041wxn737mgbwr0ik59k9w0ks	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX2S:aDYKN-nBNyipwHhfKmOSTzgmVaHX3byLl_Gx0sNZVVM	2025-09-11 07:27:16.841685+00
-t5l8zdhdpl15bt5k19onq6mus37d1kzy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXCz:QrpUVU761w_pZR0_G_bZV6c6SzPA429qYZxaeCNBclo	2025-09-11 07:38:09.559134+00
-dedi44gsm46uyhfvxs7ffe8zhuxdbhn2	.eJxVjEsOwjAMBe-SNYqI6zopS_Y9Q2QnLi2gROpnhbg7VOoCtm9m3stE3tYxbovOccrmYho0p99ROD207CTfudyqTbWs8yR2V-xBF9vXrM_r4f4djLyM3xoDthQ8YDNkZk9-IDw7HxiIAqljJWwQHac2iQCqBAUv0nUdSAto3h_iMTdW:1ur4oK:trWY-5s6vE9dC3f90Y8KECHI_P273NPZuSi5CpAF0Yo	2025-09-10 01:18:48.86953+00
-oeqjhhg70r09kciphcirr6gfbhhpw9gy	.eJxVjEEOwiAQRe_C2pCBMpS6dO8ZmgFmbNVAUtqV8e7apAvd_vfef6mRtnUat8bLOGd1Vh2q0-8YKT247CTfqdyqTrWsyxz1ruiDNn2tmZ-Xw_07mKhN39pKsLGHbAZneknGY7CCneEuDR6wR6BgmYhkICeQwEWPwA4FJKCP6v0B76A3og:1ur4xm:8hsKT-35EH0o6U8GbgmvdbGpXfoNit8_jEGz028bL0c	2025-09-10 01:28:34.898593+00
-ao6gvymq6aeondpckehsmeyf1ku5fugy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1ut7pl:SUKwDOvbNo9hPENxfCfFv0g6Taga1aQFXJuYjEmRRyY	2025-09-15 16:56:45.522297+00
-020fpjg3bdrabq6vrlpwum02eoqdmgbf	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWQo:E9CL0hBU5gN8jd0cRIzYG4jchT1OKOMQS0lf4gIckYk	2025-09-11 06:48:22.54068+00
-p7c4zbenlycol6tqrl400hs1ph2uko4v	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYkw:kFMSkgusTKuj9pOqYHfNbF3zdsHXBUwQXg_1tuZhpAU	2025-09-11 09:17:18.782353+00
-pcsbyccyhfrez82idoj378i3aku28ac0	.eJxVjMsOgjAUBf-la9PUlkvRpXu_gdynoKYkFFbGf1cSFro9M3Nersd1Gfq16tyP4s4uZXf4HQn5oWUjcsdymzxPZZlH8pvid1r9dRJ9Xnb372DAOnxrDmJdiAoErYZ4xJgxU2NqIADImTmRIjdJQ7CmlQ4JT0aQo0C0zr0_MmY5Sw:1ur5s9:AR5LOuUYenxayZ3dWxUgsRltIKflBpCWNdOGeHABk_M	2025-09-10 02:26:49.741764+00
-09udzqqqemalys5plgv2i01nr4obolqy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZEi:AXootHNVM5iF5JD15TOxTR-SFd6cBghP8_6FUXu9QIE	2025-09-11 09:48:04.883228+00
-s67w5m1r86v4686qz3hi595wk8sgx9dc	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWSf:vGkj39Pgg63pf6xC7G_5LBL32do0P0z4yyObkC4ba4U	2025-09-11 06:50:17.297793+00
-u7d18wly43g3lemuxzqdpqwxsujhe55x	.eJxVjMsOwiAQRf-FtSFlGAZw6d5vIDylaiAp7cr479qkC93ec859Mee3tbpt5MXNiZ0ZIjv9jsHHR247SXffbp3H3tZlDnxX-EEHv_aUn5fD_TuoftRvDSKDxSKmRFpFAdKWAkYYQENS-2BAkwo4FWFFIsopSsiSbFCko8bA3h_YoTb5:1ur8Ep:iH9NeUJfXXisf7mpR8OOdAn_iWxbfGYjckJq9sQdLv8	2025-09-10 04:58:23.887971+00
-rw9rjjx516kgbnk68ix6p84oxr5cu0tx	.eJxVjDsOwjAQRO_iGln-JNimpOcM1q53jQPIkeKkQtwdR0oBzRTz3sxbRNjWErfGS5xIXMRgxOm3REhPrjuhB9T7LNNc12VCuSvyoE3eZuLX9XD_Dgq00tfo0GaDgFoNnlmNPS1SZrJJq5CNDjoYUMkzmETeqTPxyN12hpwl8fkCJK84gw:1ur7ZG:rxgt2G1n-Lk5Cde8L-LkZvWR71GcL4-J7FblSK6NhlQ	2025-09-10 04:15:26.257213+00
-tcnhut5zrp35sg1lbnivjsw3fy5p84po	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ9X:5yQQZMOYkgvrndtQkJ_Vbn-aIhKCIjDMZfbW01QsGgM	2025-09-11 09:42:43.129171+00
-9qanes5qhaowm80xmwyiuqkta0do4mzp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWVJ:oo5Op8_RBaz9YZAFqeA925WkVw768NZl0wuMmzblyyI	2025-09-11 06:53:01.312386+00
-oqr14itsmdz72cjmmvuzupiybdt6yk8c	.eJxVjDkOwjAUBe_iGlnYeMmnpOcMkfMXHEC2FCcV4u5gKQW0b2beS41pW_O4NV7GmdRZGVCH33FK-ODSCd1TuVWNtazLPOmu6J02fa3Ez8vu_h3k1PK3RhyQaTAeU0DPkYidY2sFPEFMhCIQxFvvjFhDEAg6OwEco0Tx6v0BQH44zw:1ur9w0:99itUHFCljHbqOF5VQHOLU49M1TIoGG32U6OXnHGE8E	2025-09-10 06:47:04.283532+00
-4u45t20r6rd8aahmhmc0ogjuko6cm7o6	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXLM:sn6mEncs2QxM5gRaFfJqubZlc502vEh_AWeuVGm7ldU	2025-09-11 07:46:48.294033+00
-zr5hmmds67mxp933ftxakxllkuxh1iwn	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWlF:zuSz6yI5buoU9bwbxLyIazyz2zP3cmcaodFNm8aIj-o	2025-09-11 07:09:29.241039+00
-u8gzsumy51jo4gttx3752bpwbaijt69x	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXa3:581RbD3A2xKzlhGrkUaJLUmUY2pVEDerWQwHMLMhIWs	2025-09-11 08:01:59.811076+00
-hnp09psgr9fmtjgazf5jjqw01no21pwy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWo1:YjMk_cPfEx2TPWpOGnw7V6yiXXaI8utOb6RBQgE7APs	2025-09-11 07:12:21.911168+00
-2mg8bqjnla5mgc1jvea36gzdwe4xjtzz	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWsj:Vx-vdY4dkFBGQzk9kv-xw7sEnmMmFbG3COqlaZLse1E	2025-09-11 07:17:13.150612+00
-yyadjpneyytdjdq1uu0v7qs2dh67mz6g	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXqk:EdPvSG0Ytjsiea7jUZy3eRTSxm1Gb7UpPxiLjIxeNYQ	2025-09-11 08:19:14.868843+00
-7cbctpthaveetz3aejopjtztcraf8rny	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX2l:HefnUsdl-m1Sfw-3VkXBjiH9QQOgzF0-sFN1Bv97r20	2025-09-11 07:27:35.699535+00
-2zs3j38rccvkrs63ne3iitj54ajt9qet	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXtX:RApcRW5At7rOqCBaiJf76PPuLA9i1zirx16jYmKlZIU	2025-09-11 08:22:07.253356+00
-4xrzx3m2s6kz8pu8hxflzv764ap41mv7	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4Ex:J7hMNIuXbaUuCsUfEjG6CIcpfz6xSRg9KMz578XS9Ys	2025-09-10 00:42:15.844966+00
-ck7rtoedzei3jshifmyk092lys1jyiek	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4Uv:rVmxUnaL8Tipzv3A9j-9clk0S5wywL_BgaFGaBpHNs4	2025-09-10 00:58:45.087712+00
-pvo04zhmg0bmdmywnrisdzip51oo91id	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4W2:_2LZkjUiJiSbRwecPy-_MFDHHu3iBM7ev9PkDUwR6u0	2025-09-10 00:59:54.839371+00
-bjeu280ez36lo8q6dv54kht79cisq89g	.eJxVjEEOwiAQRe_C2hBgWjp16d4zkGGGStVAUtqV8e7apAvd_vfef6lA25rD1tISZlFnBU6dfsdI_EhlJ3Kncquaa1mXOepd0Qdt-lolPS-H-3eQqeVvTWx79kLYxc46AQ_TGEkQgQB6Fz0yJB5Gdh4JDA0AE4FFYzB5YqPeHw7YN_I:1ur4XU:HOKEYTx7hbagzJH3UWlLW3dakFvWq8Hd7DQ1BGo54KQ	2025-09-10 01:01:24.131949+00
-k3oj14eq8alcfonq78azn4vxgftpde3p	.eJxVjDsOwyAQBe9CHSHzWQwp0_sMaPlscBKBZOwqyt0jJBdJ-2bmvZnHYy_-6Hnza2JXphS7_I4B4zPXQdID673x2Oq-rYEPhZ-086Wl_Lqd7t9BwV5GLRI6kjkaQKUzkNPRkkmAAYHkrAiCylbMgigICzpqN-GkBUltwEj2-QItZTg7:1ur4dO:cznFdlTHeSGKCAYs_9VBmfVVAoKGPLKV7Zt8WU4o6I4	2025-09-10 01:07:30.33881+00
-ndqxomfctufk7u09s07i9lzyuah1ioz0	.eJylVU1zmzAQ_SseLrnEHhDYxj417tekbXJo-jFt3WEELLZcQK4EbuNM_ntXrMCQ1qcePKN9b7Vard7DD07E62ob1RpUJFJn6UyZc9kHY578gNIw6Y6XGzlJZFkpEU9MysSyenIjU8hXNndQYMv1FncH0zgJMgYQch4yL0v5bA4QgO9CEPqZC-BPvZAHs5kfMh9gHruLZMFTmHrBDHwfiya8iIXUEU-qmufiyJWz_ObcwW-5HF28ggJKUcqL0bpm3oKNLm64TurcQLj3XV2CXo7u1rXrQtrm3EqkbriqznICVCLzc_SbGg7nuE-49cyZ3y-dvdRVlPKKO8sHJ9EqK0Sa5vCLK6gkDhEntov3L79ev87eXtfbn6vX_Mcejs83tyIIss-fQbzfvQu-HPnmvth8fH98FbMPYXD3pfAOx9s3bjjXC-yhlEWsQGOx603JE2H64nvIc5FKBFdSbbYCsbQUGPpswjzf_BDKINnyCDchwVx3MXbDsWu0IdKoKVXiE6TcCMMjNBEHkZuXNgfXRbQVO6lPtMZ3stFeyYMoE8FtnMukK_b8anVFG_ooW8xc06eK9qC0ORvBq7yC0UrJX-WIzWdIV5BDJktzjOsH01kw89jUEEnddMbm49Mdx3MkoOANc7-pi_sgeLYxMUq8oBZAV7yZFOsmglAzETYde2zst3eX5QHlJ-31eV7xiJf_ytzXWKHNEzrCE7IMw0rV0OoUw06Xdt3qkELSHa2tzii44zE1jOsXshBoWArwGFVFlSjADMdbumac6NUOCgkyD1UntdK8fUqemMfGoGe7nn6jnW7Yh_W_ZLx2lqP1fyt57VxiFStmKmn1TEwraaJI1cSgsAk8vTsRnbyJPimc6CcipySv4xqpExjY5lrBP001sh9gnfgHaCd2Qo0LuhJPOOMFe7uTHYgaOoKSWlNQRs8XRBtr2LpDdxDdGIT4vzzSNUg2sVX680WinW_rgtMMrWUGY2yNc3YX2WewpzURgcZHhDdWIpAAMtQAaW3VB8lcfcRarA-R0fqItVsfOpnODt_4zs7VWs8SYUf0DDicTGNDgk5OXDuP5vMmy0yogqvBX2Pzae0ojLVwHh__ADW9Z_w:1urYTv:Z83RhRGwpjTb5Wg4wHR-PrmSdxOJb60KSCwFbncCrrw	2025-09-11 08:59:43.259129+00
-q5tbxen40j4ab14szbubqs6hik58hwqa	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlGH:upecGzv49VjU-liBIWyyUfJ7xkCdZ8NduvZn6lebjyI	2025-09-11 22:38:29.360273+00
-7q158jgw3m4ofdioulfj67fsmsd6acji	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZFY:dqiQ5V-BbL_xo7UBGmq4P8y6ID2VB68Lzl6tEK-XrFM	2025-09-11 09:48:56.68859+00
-b4ii5dudqrz6fhf49r5azg1tgk2zth67	.eJxVjEsOwjAMBe-SNYpiXDUJS_acobIdmxRQK_Wzqrg7VOoCtm9m3uY6WpfarbNOXV_cxaE7_W5M8tRhB-VBw330Mg7L1LPfFX_Q2d_Goq_r4f4dVJrrtxZQK0WkERBJkAXZEGLUaNYCZWNsOGlWIwbJAThaaM8qARMhBvf-ACkuORk:1uvoHA:16s2XxVNMhQa1c4q8bR9JFAoWpo5Oo3H9NEq5tEkStI	2025-09-23 02:40:08.36417+00
-yo14wbeqaavjhlyzvu86qk3dfslnf74e	.eJylVU1v2zgQ_SuGLrnEhj4d2afGTZt2sV4UcLOXdSHQ1MhmKpFeUnLzgfz3DjWULHXr0x4CaN6bGQ6H7zmvXsaa-pA1BnQmcm_pJaF3PQR3jH8HaZn8kcm9mnElay12M5syc6yZrVUO5crljhocmDlgdZzseFyEACljaRgUOZvfAMQQ-RCnUeEDREmQsng-j9IwArjZ-Qu-YDkkQTyHKMKmnFU7oUzGeN2wUrww7S3_8TbwpJaTqzUzvCmFVFeTbRMGi3By9REqkBbB2j8bCWY52Wwb34e8S_lLIbVmur7ICdBclZfoPxo4XeL-xtILZ3679o7K1FnOauYtXz1udFGJPC_hB9NQK1wibux2nSbK3BcbdQeF_JjKry8-n683p_RhfRA7_9_PXx6a1cPmfvEh-aSK57vF_dfH6oNZAX96unn5hDNIVe00GGz2eS8ZF3YudoSyFLlCcKX0_iAQy6XAMApnYRDZP4QK4AeWYRESoe8vpn469a02RJ61rSQ-Qc6sMAJCuTiJ0mbbg5sqO4hHZVyMtMF3ctFRq5OQXDBXXCreN3t_u7qlgiEaLua-nVNnR9DGnm0XVNYwWWn1Q07CmznSNZRQKGmP8aM4mcfzIEwswRuazJ-e7zi1k0DFWuZ531TPcfxub2OUeEUjgKlZ3k1NG0Go7RQm0yCcRt3dlTyh1mxqbHdc1ixj8neZxwY7dHnCZHhCUWBY6wY6nWLY69J9dzqkkHRH305nFGzYjgbG7ztVCTQsBXiMrrNaVGCXEyx9u070ag-lBNmHanijTbvh9i7cPjYGA9sN9Js9mpZ93f5OxltvOdn-byVvvWvs4sRMLZ2eiekkTRSpmhgUNoHndyeilzfRZ4UT_YvIKSnouVbqrtIN1wl-hDrZj7Be_KOmvdgJtS7oW_zCWS-4253t4BY9cgQldaagjIEviLbW6HYwcgfRrUGI_49H-gHJJqNb9mbpencuOO_QWYYSYveSzjgXq8g-o5rORARaHxHeWolAAshQI6Sz1RAkcw0RZ7EhREYbIs5uQ-hsOrd86zu3V2c9R6Q9MTDgeDOtDQk6O3HrvdmfNyULoSumR_8a25_WnsLYCO_t7SctDmb2:1urYoO:hdwrnUnHSH__fICH4EYXyMJqRmF6v21-sJvgn3LoURw	2025-09-11 09:20:52.74004+00
-iuw7zby84gwnyyxlf7r83h2xuet5raqz	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uwTwI:Sxo4OVa-zc681C15u2wEfeNxYhahcs66xunCCxCghO8	2025-09-24 23:09:22.752971+00
-1se35ih6eotspi5xbaf27ywzd0j6akyk	.eJy1VE1T2zAQ_SseX7iQjC1_EZ-aQBkyQ0LaUtoOYTxrSU5EZSmV7VDC8N-7cj4ptD31lNm3b3efdv3y5GbQ1POsqbjJBHNT13ePD7Ec6HeubILdg5rpLtWqNiLvWkp3k626I824HGy4LxrMoZpjdeFT8H1G86iAII5pEgfgs8A_gTz2co-GeZhElBY0iFns9yiNkiiBiHG_gB7NCTalUOZCVxnV-Ks4arp1z8bD1DkKAhKEAQmPnGlD_B6xSBehrsWw8vTz8BJpxNsSkz2TeJ09uZNY-mWjeJU6Y70lfZo2nocD7_YigNYNSLEC859kHMySkGsD0g76m7SFruqMQQ1u-uTSyhSlYEzyBzC81ngYvMLN6jq46k3OosnV-fJrKcPVBW3iVXIx6X_5FhQXajWC3nkyoh9mH9-Ph3L26E-uf_QJvY76N6fLE3yEwu0bXmGz4UwBFRoxWHApBdMIDrSZzQViTAkM929CqOB0DhkWYYJ4Xq_jnXQ8e1nBsraVwo0y2H6FiFKxFHITqqbM5uJe29HeOl3xn3qTXRi9FIoK2MRS012zAUgKhvJ10WHGDyIr1WQLbio7HrFTkJI7fVkKA6rmzsDoB-WM7Z5zzyFJfOycc8ZNKxiray55oZUV4gVhFIexT6LYfq9Nq_23y2KCl9BmHmdN-RiG72Y2RmOVa4G8qqHdJdntDKG2E4k6PukE2-1oteRKbFcAsoYMJb_BXDTYwfLsGUSV4YSiwLA2Dd9-8Bi27xmBqfcRMk2d1aLk9n1-6tmOaPIdRNLtCauGNqZqd2jHAG0XlLoHVtl_0_dVm7udvvbOG-aZusfO9G3__MlA65IDv-wMs3bM1L1zX1nsQNY_K7UqhCnBvPgrwEM8P_8CKROQGw:1us5Z5:oqxMdPqvJbL3DAPIPBCawfxdY41F_ScOVW41O6hAR6Q	2025-09-12 20:19:15.078221+00
-mcr3719lrg87j3v2b7vafxhtublsf2ta	e30:1ut9AL:qv2rp-YcHbCx8G-BESoRaxu8Hvq2HpuYYRHnWzpvve0	2025-09-15 18:22:05.059426+00
-m79xrwfha4j8eet59qnzrrt6qo2h9mj2	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utBD0:0_DRzIBg1N8vTfNQDj2X2dgxkGz2z9M4QKUWsh28uSE	2025-09-15 20:32:58.858194+00
-qnwn7jh585axqmwrw18ogmapmnc254oj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urm7f:wqDl3jQUU6aZftbKY9SlI9--YPWERJhZO4KqjFTADxs	2025-09-11 23:33:39.1625+00
-y312xiejzukhdoezo7duod66s58tavim	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uw9o9:kH4CjzlepnpuopyAsZYseYylvAkX-On8j3-0Hpx_vBI	2025-09-24 01:39:37.526134+00
-r950hrdhbin8nn629dvc7f4z2q0trdcf	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkFP:GsFOVC_dYgAQJADSt8IfHU_zpB9TIM5GjRByyCeObDE	2025-09-11 21:33:31.986431+00
-bpa8344b3wimtsspejfqz942c814vnpb	.eJxtk9tu2zAMht9F17Xhs5pcDekGdECzYiswFAgKgaZkW50spbKd9IC8-yQnRRKnuiP_j-QvgfogDIa-YUMnLJOczElMrk5zJeA_ob3An0HXJkSjeyvL0CPhQe3CpeFCLQ7sWYMGusZVVzFCHHMs8wrSokBapBDzNL6GsojKCLMyozlihWnBi3iGmNOcQs5FXMEMy8Q13cp3sJyB6oGJdq0EcMP2STL_IF0v1m6QgtJYUKJzFT7FOPTg9bWwndGj4iLsbNVKzpXYghW9ccbJfEWsTrdo4Tc3y8fml7q7E0W1eHl4-ZGlkDz87XFYvt9maYebqFwuNvWS3mi8Te7r7eP9zXfbkqcr8pXBAAdrhe7Z3uXq1I0rOUaBNm1pvccV-VlrQGkmAKyFUpIbTyyMrRs5AbiWXqM0LGgR0tn1RK8ENsBca08lUUSDOAmS2YSSnHXidZwSX0qjMRdJDnxEoksG5Uaqr-r10LJGPpvuKFqzkRoljJnRijJ4bP8Htq74csQZlFyY4JZ9Rh4YTs6E7IUSldHjdYv89ExAHPZ3SqKAUve-7nmD6f1EC3vorR7atyz7VvuE-zluPXa7w1pW8rCJZ3vpZfHaW_hc291u9x9qlT7I:1utsyX:-fovPJr_oGgoV0tlryxTTqldt2XesZILGlk3Zs7MMKo	2025-09-17 19:16:57.162187+00
-914kjtuglupqpases46irz7ozqe8rtc9	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1usJje:TGhU5Qx4olJy1nV6hh4ylV_rlILTauSl4Cpi1RNUSeg	2025-09-13 11:27:06.872887+00
-y7tt51nmtidu7hljmxpyrv3l02hgr0ui	.eJy1U01P3DAQ_StRLlzYlfPN5lQCRaVaFiEEKpQqmtjOxtSxFzsBFsR_7zhs2G1V9daTNW_ezDy_sV_9EvquKXvLTSmYn_uBv7-LVUB_cuUS7B7UUk-pVp0R1dRRppusnZ5pxmWx4f7WoAHbYHUdUAgCRqukhihNaZZGELAoOIAqJRWhcRVnCaU1jVKWBjNKkyzJIGE8qGFGqxCbUmgroW1JNZ6Ko6bv_vHiNPf2oiiM4iiM97y7PgxmoUOmCE0dhpVHV6dzpIVkJGZbZkgmW_Ikc_R5r7jNvYUeSZd3PSE48MdWBNCuBylewPwnGTuzJFTagHSD_iVtpW1XMujAz199ak3dCsYkfwLDO42LwS201xftib5fn93eRtfH4vxLgkuZzw-Lh_P2pulfYkvmq9viRhx-XTyrq8_XL7PZt8qoy4KsH8xJhJdQ6L7hFpudLhVQoRGDFZdSMI1goc2yEYgxJTDc3gmhmtMGSizCREjIbEIOJsRtVrByaKXQUQbjK0SUikchN6Hq27IR99qNJu9py5_1Jrsy-lEoKmATS00_mhUgKRjK34t2M0GUOKmmXHFj3XjEjkBK7h3KVhhQHfcKo5-Ut3A-V8QLs3TfO-GMm0EwVndc8lorJ4REcZLGaRAmqXuv_aD9j81igrcwZNbLvl3H8aeli_Fjte8Cue1g8DL88AyhoVOYTIJwEo3uaPXIlRgtANlBiZL_wlz12MHx3BqELXFCXWPYmZ6PDx7D4T5nYLpthEzTlZ1oubtfkBPXET_5BxTm4wptT3tjBw_dGKCDQbm_81Xe3n4BXX5RhQ:1urqYS:tRAGqoJMHef46sS8j0AYAh1q4IrwfAEZDv9OpHJUx68	2025-09-12 04:17:36.118658+00
-41gzj3521j5cqoqsezooki4x5exzmsls	.eJylVdtymzAQ_RUPL3mJPSDw9alxem_TTpv07g4ji8VWAsiVIJdm8u9dsQJDWj_1wTPac1ar1eocfO_FvCq3cWVAxzLxFt6YecddcM3FFRSWSS55sVEjoYpSy_XIpowca0ZnKoFs6XJ7BbbcbHF3NF6LKGUAM85nLEgTPpkCRBD6EM3C1AcIx8GMR5NJOGMhwHTtz8WcJzAOogmEIRYVPF9LZWIuyopn8jfX3uKHdw63ajE4eg45FLJQR4NVxYI5GxydcSOqzEK4921VgFkMzleV70PS5LxTSJ1xXR7kJGihskP06wquD3GfceuBM38eeztlyjjhJfcW954wOs1lkmRwwzWUCoeIE6u-XXz8Ch9_RU9_fYewAnX6-9nZxeb7RQSf1tE4PL26Ei8-PL-Uz968S1n26Tz_8vL2xd1r-eH2pkjfL7GHQuVrDQaLvdoUXEjbF99BlslEIbhUerOViCWFxDBkIxaE9odQCmLLY9yEBPP9-dCfDX2rDZnEdakCnyDhVhgBoUJey8y-tD24yuOtvFRmTxt8JxfttLqWhZDcxZkSbbHTk-UJbeiibD7xbZ863oE29mwET7ISBkutbooBm06QLiGDVBX2GD-MxpNoErCxJURVd8amw_0dh1MkIOc1c7ep8rsoerKxMUo8pxbAlLyeFGsnglA9ETYeBmwYNndXxTXKT7nr86zkMS_-lbmrsEKTJ02MJ6QphqWuoNEphq0u3brRIYWkO1o7nVFwztfUMK6fqlyiYSnAY3QZlzIHO5xg4dtxoldbaEaQfahKVNrw5im5sI-NQcd2Hf3Gl6Zm71f_kvHKWwxW_63klXeMVZyYqaTTMzGNpIkiVRODwiZw_-5EtPImeq9woh-JnJKClqulTmDkmmsE_zjVyr6HteLvoa3YCbUuaEs84qwX3O32diCq7whKakxBGR1fEG2t4er23UF0bRDi__JI2yDZxFXpzheJZr6NC_YzdJbpjbExzsFdZJ_ensZEBFofEV5biUACyFA9pLFVFyRzdRFnsS5ERusizm5daG86N3zrOzdXZz1HzFqiY8D-ZGobErR34sp7sJ83VaRS51z3_hrrT2tLYWyk9_DwB6XjaB4:1urYdo:VLmdA8tQwUOWK21eyBXGIbCv7KqWn6w2rb4_I_9aHcM	2025-09-11 09:09:56.844568+00
-cmi35inqtip6nzjv5o21aiy8ci52sfgs	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYu4:jNrSW9JDkwuPgm58ltZ0g7P0W6AOm5S9lCcJI_oWStM	2025-09-11 09:26:44.413979+00
-3pmmc2l4xb15aueup98as78mn403mpor	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlHz:3VH6m-MuLCK3KSa_nf595H_3cMnghN6kBHHKEeQVjNQ	2025-09-11 22:40:15.222122+00
-o6dlaipjcaumra6wr0pa7o944ldgtmol	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZGd:vU8d6Wk_NP6eO7J_QuXTpAfKbh83VLw7jFH6yKnwslE	2025-09-11 09:50:03.195145+00
-4yj8k3o9p8tyzeivu287ukuz3ba9tw7o	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ7U:-Cz3fFjzD1_FyNSgRpGSSxax7gFj_RZFDFmB8y9slFk	2025-09-11 09:40:36.184486+00
-ft6c3wefauj9wzf96j69ibn2vclu48l2	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utA51:sn6UfENNdpaJfZNGqC4q4h9UQh84pEKkIe-YvYeLvFA	2025-09-15 19:20:39.285162+00
-x67452kee00i2dgxthrgxod2925ka9wq	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uu0um:rcENifBVXXcthk0jNrcNorRk8xtSaVWkmfLQimu4dUI	2025-09-18 03:45:36.082293+00
-2wkfksybgnmq6n5z6gkvh1zwnh9ra5mt	.eJylVU1z2zgM_SsenWMP9enYp113nTQ7TreetGkzdUcDkZTNRBJVSrLrZvLfFxQpWc6mp70J7xEgAOJBz04MTb2Lm4qrWDBn7rjOxRBLgD7xQhPsEYqtnFBZ1EokE31kYtlqcisZzxb27FmAHVQ79E5dCq7LaBKm4EcRnUY-uMx3LyGJSEJokATTkNKU-hGL3Bml4TScQsi4m8KMJh4GpZAnQlYx0LqBTPwC5cy_Oaum4NV89EGONo3nzrzR3aYhhDPn-4VTyqqOGdTgzJ8dWqk0F4xl_ACK1xJT1f7-crnyv86uPkuePB1-PNyFs3tCqtVy9f5K7Kn7syivHm58-Wm9hNtaBplPBNmuYHmcXQO9CTCx9cd_3gnmlmodlXxx_SXkD1xt35P19GuSu-mnp-OvA3u4v_whDvL6uPSO9ONCHUi5_lxSfrP6cpZq_FhJTMx53ryV8caZjzb_-8KNc4FRCpknilcm5M22ACqkYaDkWSaYNNRCqu1OGIYVwoC-P_H8YOJ7gSFSTncQYwxDe4TMxuRyTDxDCxa38Qt8OAbMHHJ7joq9yM7AosnjnXiUNj3SH634T3l2slRyLwoq4AzNJB1etYCMgqK8D_OKd_3QFqjikqtKJ2qYd5BlfPRnlgsFRc1HCyUPxejDRk9ZQkbeNLoYXXHGVVueCVLzjKeysHkSPwijIHK9MDI0bbpiPTI-NXI8NTTPoeOP2yY_BsEfWw2h9PI-f17V0D2QN3wCJLrYXjh2vbE_aLMs9rwQ5_2DDIcOS_utV9lgTOtjX1tUMd6fpgasVWMb24rRgF0vbkHVrzH0VXVci5zbDrlzYu_D_TEkvPlggqqGNqrqHsamAtT0fd5-d5vB3i24ojLrrjfg3w3fnyP3eKw4h-4g6dtrkL9kLnD_ddDLYCFZxX7bDJdRv43MOto43wceGSRSQdZ7as7KEU2rRcQ6ISJoVIgYShDN09gg1IsPiZPykHglO7veO8FZs5ca2sTQWmSW7eVl7V44OierKuM0ZFBPOtWTmBD7nZLeFBJ6dyrSaZ0kpLvYtLm_Eg8SrXKQ-Y9sTIJGM9qz7xlCbaRu6G13rE5syZ1C3jhptIGEfoZOFWhqSSDSzgOabT1GCZ110oCuTwtAF2CnX0N69O1r2Lm315iJR2PwI7w4zToSaJopN992vo1hJtt825k2BhadCpWDOvvBtg3oKbQr4by8_AszYYb-:1uriSY:8aG1gJeT1LS0zUiQWAk4Na9VTOYpgiMVvOjt_BJ4uig	2025-09-11 19:38:58.08457+00
-skx99p2o8elvtf7arz2jffvfbz4ltmkm	.eJy1Vtty4jgQ_RWXX-YFKN9JeNoh5MIkZCbJbLKzccolyzKIGAtkG0hS-fdtWfIFQna3amt5wX1Od6vVLR37TQ9Qkc-CIiM8oJE-0E2908ZChJ9JKohojtIp62GW5pyGPeHSU2zWm7CIJEPlu5NghrIZRMcmRqYZ4dCNke15uO_ZyIxs8wiFnhEa2AmdvotxjG0v8sxjjN2-20duRMwYHePQgqQYLULKsgDhvEAJfUVcHzzqo-vxQPti25bt2JbzRfMLyzy2BNIDqCcwiD35fXwFbpbRrTy7_ca3hCt3IPSnZrUEhYyjRCx1VaQkG2jXrAq88wvDIFHbHTP4TwH7v0rr_G0ZS5blQYRypA_edJzxeEGjKCEbxEnOYDgwCevWWp_8oDcP1sTgp1d8e3Mz2Xh09eti8-31ZRRGN46z_joJV_nFw_zc-Xk3-r7a3F-u-_NrPA5zQ2-tEswzJnK--YcW8_WB9ujrLqNXDz9PbvnRapyMyO1yNP5jm28u0NHyz9ia0mn6_Pzj1MP3r8lpdLadX67Oh1v6azK_PM_Ymdf39Y7m_-eyfWgPpElhPpxkojRfH09ThCmTC6AlSRIaMUkNGZ_OqGSilEqwmYQkYoJnKIAckrYM47hrHHUNS9I0Csr8KZzWCEXSyaw5TNc02QHTYhHM6Jyp8ozaNSNbtuO55GxNU0zRDpow3F5qiBKMOCZ1mj3etF21QR4sCc9EoZI5QUlCtK_JgnKU5kQbcrZJtWtfHLTQ0Ky-19HOSER4uT2ZJCcJiVmq6jRsx_Ucz7RcT9K4qDa7d6QlTRao4l-mxeLFcX6bCgj0ZlHXT7IcVQOy2iMAosptuV3T6tqtNrN0TVK62z-UwOGFrX0atSwgp4pR06ZZAOvHsQRzXqjGlvdRglUvJojn-xjE8jzI6YKoDpkDQ60HotkmrEHrBGUFLnhWDUaVgrDs-6B8ruRQNVopkbia0uPR9_2PYgS_j3okPDuC-0yWmqh9ZWpCWwJVu9-Vj0KmhMfTbqlKY_dL_vd5WBpTvkA8aDejNe7aQaKZutgTSjhmSTUpCX4ryHoXuQe3dBe6Q2F9EiUyYgsK78cKem-9sJRIPh4awoERlOk-a_9nzW9OompY3S7ZLP1J__BOaxX2T5FKNsFZaSZglWACKNUSMJBKMJvSAKpFUrx7aoUEYk8e1bdHJYzKrCURbEPSQgwVW8ugsmuBEzUp9ZNBbQZ0T5TaiB5gnyneQcGD6ErtRFmN1IkeF2XtewMColQ4YD7ImyxQapuIrHsGUJmpEifVHaVnasuVkh3wlBoGhBhDpV5gCumqviPALPcjFauyGq0S-xNCJTagVEpAQqLUNJQ-qWWkMoHR-krrHLygqv6aAjsTR6i-lACAKa-jfFYXURryCspndfmE8f7-F95INTU:1urlkG:hqY1oXgJnJXqGuFuwdGjOeaRW8LpmkkOllgtCUOuc6k	2025-09-11 23:09:28.160464+00
-i1w885fekffw8o9ft0700o1vl84f26ps	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urk8i:KZk3YFUn5o149qcjAW81vjyM_2f2ZYCm3B7M0awiZws	2025-09-11 21:26:36.618931+00
-fo0im3aedgndzd5pqagc752qea6nf5r8	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkFb:uABDThH-neQfogkBzZ7u1uQQtvFwIwtAGP7xVRUmNX4	2025-09-11 21:33:43.658636+00
-wuwz8811z67tn5hx6sl0knseinq2mzp6	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urm7z:XSSGMn076aEKkY0tPywhSL0xMKELjubewmKX7phzRCg	2025-09-11 23:33:59.935788+00
-avwyfwszyljv8hp0vd0w09kuk93hkajp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlQU:LrVk-zgE21Ma1PUsA5Gyw6Jxryv2zEgjI-xI3zIQn4g	2025-09-11 22:49:02.467532+00
-sp69ycf5npsyy9afxs28kk0mmtwrnvhr	.eJy1Vk1z0zAQ_SseX7gkGX-b-gRNoS0DmUIpH0MYz1qWE7W2lZHtQOn0v7OyJMdJWzgw3LLvrVa7q33r3NkpdO067RoqUpbbie3akzGWAbmhtSTya6hXfEZ43QqWzaTLTLPN7B3PaXmsffcCrKFZ4-nCJeC6OcnCAvwoInHkg5v77nPIIidzSJAFcUhIQfwoj9wjQsI4jCHMqVvAEck8DEqgyhhvUiBtByX7BcJOvtkni_PEeub7nh_4XvDMWnaee-RJZIbQTGJ4dn51_hbdPGdqPKfxzreHjTsS9veJveFNm-bQgp3c2aQRRcXyvKQ_QNCWY5lYU3DRXH347J7FP7-e_np5eRqKL7dVe-p_3r5fXH8s4_aqfRU5YeOdLeY3J_F8c3YTfLg9ieZfeTu_uVjbo1vS64bLmHfLxy5b2om1_Of7lvYEo9S8ygRtVMjzVQ2EccXAhpYly7mijrlYrZli8popcNcmRRSUrCHFGIr2HOdo6jyfOp6iWZ728Wt8rxxy5eQOHGFbVu6BdVela3bNdXrO4NrQn3zPcyP4ltWEwR5acjK-6hhKAoLQIcwB7_qhLlCkGyoamahi5lCW1HpZVkxA3VLrWPAftbVYLjsHx9Xy4mhivaY5FX15KkhLS1rwWufp-EEYBZHrhZGiSWeKPZg3RdMKDH-76qrbIHixkhAqrhryp00L5oG88RMgYWJ74dT1pv6ozbze0prt9w9KHDos7clTmw5j6jP6tVmT4v1FocBWdLqxb7vaDJTpxTsQ7SGGZ0WbtqyiukNu4uj7cG2MCS8ZTVDTkU405mF0KkBU35P-t1kI-m5GBeGluV6Bbzq63Uc-oVu9D11CNrRXISe8Yrj2DHQ_2kNasd-WD3fQI0tIhXtiDz21iEbtTawFHxwv-zmkOMXfRwmVkHEB5Sixv53UuwCd9SJAzGwBBNUKQAz1j-YuNYQG5SOxkz0SB5rXnxSjdm0OOkfbUbRUuGYHbWt7UK3MSUtaHRozKGaZ6k7JiD0l40dVjKeNhGVaO_3KHnd97gcPhEQvW2QeaFYlqAQrTw49Q6iPZBSnu6NFqks28nzEUwlTfn-krSWJptQjIv2bo9nXo2RorJ0AZX1SfbIALT0JSd3p19Ci09couaEx-vhOdkJDAk0lMfVbi0sZSlbqtxaUMrDogokKxN5HvW_AQKHdMPv-wZjLj_9ovs1499MtP-DGHZ8iYzVi_-vPwuQPadz_BpIkxSg:1urn9R:YXoTDxKwypE0qSTbwpxnM6M7DORN_oO912raMnq6riQ	2025-09-12 00:39:33.472002+00
-x4dxtnyni4n96n2z14bf0f764gakjo95	.eJy1VE1T2zAQ_SseX3ohGVv-SnJqA5OSEtLpAJ0OhPGsJTkRlaVUlkOB4b935XxSaHvqKbNv3-4-7frlyc-hsYu8qbnJBfMHfugfHWIF0O9cuQS7AzXXXaqVNaLoOkp3k62755pxOdxwXzRYQL3A6jKkEIaMFkkJUZrSLI0gZFHYgyINioDGRZwllJY0Slka9ilNsiSDhPGwhD4tCDalUBVC1znV-Ks4arrxT6bjgfcuikgURyR-580aEvaJQ7oIdR2GlcdX4wnSSLAlZnsmCTp7cidz9EmjeD3wpnpLupg1QYADb_cigNoGpHgE859kHMySUGgD0g36m7Slrm3OwII_ePJpbcpKMCb5PRhuNR4GrzCdXCZfe7FZ8NUk-3Z91RATn8VjGp9Fp_fVl-WP0dX4UX2yI3NycR0PH9KP48tT2_vcm1KVjqoMH6Fw-4bX2Gw8V0CFRgyWXErBNIJDbeYLgRhTAsP9mxAqOV1AjkWYIEHQ7wS9TuAuK1jetlK4UQbbrxBRKlZCbkLVVPlC3Gk3Olina_5Tb7JLo1dCUQGbWGq6azYEScFQvi46zIRR4qSafMlN7cYjdgxScu-DrIQBZbk3NPpeeVO35yLwSJYeeSPOuGkFY7XlkpdaOSFBFCdpnIYkSd332rTaf7ssJngFbeZh3lQPcfx-7mI0VrUWyGsL7S7JbmcItZ1I0glJJ9puR6sVV2K7ApAWcpT8BnPZYAfHc2cQdY4TyhJDaxq-_eAxbN9zDsbuI2Qam1tRcfe-cBC4jmjyHUQG2xPWDW1M3e7QjQHaLmjgH1hl_03f1W3uZvbaO2-YZ-YfebO3_fMnA61LDvyyM8zaMTP_1n9lsQNZ_6zUqhSmAvPirwAP8fz8C_5zkA8:1ursE1:7SyPrk8SeEe8pBee2EMzUGYVgof8eregIbcFswKN1gI	2025-09-12 06:04:37.317019+00
-xt50kco96ndtnuwpdi00u23mtd1bzg2e	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1us8Uc:3M2PZJO9cErrrOF_fe8Fs6e5fI6vR2YIAVIOOo01LHM	2025-09-12 23:26:50.206371+00
-b8erc9io2f41ajlhhn4psq47dgy5it4o	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkDY:9O0-NRWObmhCnCFOmWTO77P-fPqs61OWxKnVwkv-cSs	2025-09-11 21:31:36.582056+00
-hsvjf7d4i98bb7osj7fqys295nqnnmr1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uu0yT:-DhxkSz2WFX1MHQ2GUI2A3spmokLCbRvkvvyxLs76o0	2025-09-18 03:49:25.340138+00
-s07dpp205mtecohjv70zz2jfl33e879h	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utBt4:rXPOYXskrz7mP8dvbIQ1d0WPqnSrhteqcxZTi-x8Mkw	2025-09-15 21:16:26.463216+00
-ipd9xh2j9gpawht33lre4y573mu7gu6f	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1ut7pl:SUKwDOvbNo9hPENxfCfFv0g6Taga1aQFXJuYjEmRRyY	2025-09-15 16:56:45.060914+00
-a9bd0h689ccv22qbuz3rkh177cmoutow	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlRO:M5Fx2hUEQjjE4-39KRTlxB0-HYnRtIv0MF6msx5sSRw	2025-09-11 22:49:58.44151+00
-e0s88wkc8s1sys61uq46wzu4afsfjcqq	.eJxVjMEOwiAQRP-FsyGwwrbx6N1vIAu7StVAUtpT479Lkx70Mod5b2ZTgdYlh7XJHCZWF4VOnX7LSOklZSf8pPKoOtWyzFPUu6IP2vStsryvh_t3kKnlvpYhAcUeACx-9Nb4OCAYcdY7Er4DiiGMlsczgUWbxBtnumlELKP6fAEHKje4:1uwEX7:dGbcnnuY21B-PJOe8VWzYP9s1qwfTlHD1UVC-sB5U4Q	2025-09-24 06:42:21.751717+00
-zq72fmsj38n36zfrzi1e479hpcsrj2v0	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1us6eP:Lw9Ax_-XgNLcNt0WqZzDZ0yrve0eKpTB7I50vAdR8oI	2025-09-12 21:28:49.121725+00
-bekt6yjrzq0lv2abqq0e8ng264kvl3ty	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1uu12G:cvKrPM-jo0o7u5Miw4On3UVVQ7S_kJZLxSCC1e73bWc	2025-09-18 03:53:20.879489+00
-tvcmi3liunlhkrcjjiezytl6g174okpa	.eJylVl1v4joQ_StRXvoCKN8sPN3SqisosLuiX9qmihzHAdMkZp2E0lb973ccOyGwVLvSPpE5Z2Y8nrGPedcDVBaroMwJD2ikD3VT77SxEOFnkgkiWqNsyXqYZQWnYU-49BSb92YsIslI-R4kWKF8BdGxiZFpRjh0Y2R7Hu57NjIj2_yCQs8IDeyETt_FOMa2F3nmAGO37_aRGxEzRgMcWpAUozSkLA8wg9-MQE2P-rTMSD7U5kzzS8scWNrCLw0DuKe9P8JFiRL6hjhEtPAEhYyj5E9pNiwvgggVSB--6zjncUqjKCEviJOCwX5Fa1Zv6eX82_PXcDKJvpKouLp2N2_u9flNn0y-3_-a5mg9vl2O3MVV9MKL-_nMni7xzpz3ry8IGzO9tUqwzpnI-e6fWszXh9qjr_ObX84E_-i_Zvd3ePzwfH_74yGa7UZj_nCzvJi-_XRM89uasgdnsdkW2F6ag0tn83Nxd3W-moa7na93NP-fy_ahPZAmg3lwkovSfH28zBCmTC6ANiRJaMQkNWJ8uaJq6YxK0LZ7lu30bMuRREzwCgWQQ9KWYQy6xpeuYUmaRkGVP4OBRiiSTmbDYbqlyQGYlWmwomumyjMa15zs2IHnhrMtzTBFB2jCcHupEUow4pg0aY5403bVBnmwITwXhUrmAiUJ0c6TlHKUFUQbcfaSaXNfHLTQ0Ky-19GuSER4tT2ZpCAJiVmm6jRsx_Ucz7RcT9K4rDdrGd19I7t9SZMU1fzrskxfHee_pYDgCqdN_SQvUD0gqz0CIOrclts1ra7dajPLtiSjh_1DCRxe2NqnUZsScqoYNW2aB7B-HEuw4KVqbHUfJVj3YoZ4cYxBLC-CgqZEdcgcGmo90KE2YQ1bJygvccnzejCqFIRl34fVd60YqtFKMcTVlB6Pvu_rl_PxUDuzbeg7tP1MA0zJx9l-GmfCsyM4_eJ2PIWAalgypts_iDoaYyu0JVCN-6L6FDIlPJ4OS1Xidlzy3-dhWUx5injQbkZr3I2DRHN1sWeUcMySelISnJRke4jcgVt2CC1Q2JxEiVyylMKTU0MfrTdAieTjqSGcGEGV7rP2f9b8_UlUDWvaJZulP-m_PSatwv4UqWQTnJVmAlYLJoBSLQEDqQRzXxpAjUgCsVdIII7kUT3ntTAqs5FEsA1JCzFUbCODym4ETtSk1E8GtRnQPVHqXvQA-0zxTgoeRNdqJ8raS53ocVnVfjQgICqFA-Y3eZMFSm0TkU3PAKoy1eKkuqP0TG25VrITnlLDgBBjqNULTCFdgFQzB7Paj1Ss2tprldifECqxAaVSAhISpaah9EktI5UJjNYfmc7JC6rqbyiwc3GEmksJAJjyOspvdRGlIa-g_FaXTxgfH_8DyIsR8A:1urple:KZClBHJjZb5XVZHM0TNRD9sbj1MjdBzr9HMH6ULYqoE	2025-09-12 03:27:10.960157+00
-tconx595bmiabbzttldh3gejdp9v8wkg	.eJxVjc1uwjAQhN_F5yrCBDuFY-99Bmu8uyZp0ziyjYpAefc6bYTKceabn7tyuJTeXbIkN7A6Ka1e_nse9CnTCvgD0zk2FKeSBt-skWajuXmPLOPbln0a6JH72g6aoDWTNwGttdTZFppb_Qpvd35HB3_oDFGg1rLVRyLTmQ6GRQccye_r6PdwQ2KHscDJ1zwKOLo_U53uKheZ69EsKccJo-RaWT3HKKiBZZNhWNmvlmtJePBl-QEaVV1C:1usERh:bNYkqTfrAUb58Zk8T9_-QZTpFBZoGHo7-O0GrrRe0Vo	2025-09-13 05:48:13.422162+00
-2pmjo1s2wompauv2bu8ysxtmnjx1jvpi	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1utYrs:_gtyW8LbGhqf36lvIehMLICiYToqjLio0l9iBVg5lIk	2025-09-16 21:48:44.912724+00
-m3q5liid9s6fve4jaix2hecju19c1qks	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0std:nT00ro_ouWF15glzvBkFBq2GmRUa-t7G9d1iIo46olg	2025-09-24 02:36:49.608138+00
-h7lyqm3sr4gpohfonif4uklafeq63slk	.eJxVjMGOwjAQQ_8lZ1QRSlLokTvfEDkzE1oILWpSsVrUf9-yVAhutp_th3IYc-PGJINrWdVKq9Vn5kEX6Z6Az-hOfUF9l4fWF89KsdBUHHuWeFi6XwcNUjOvgyZozeRNQGktVbaE5lLv4O3ar2nrt5UhClRatnpPZCpTwbDogD35zXx6b38xsEPMcHK9RQH37hWq-qFSlpuquzHG1b92jIwZTIsNbZT08vKTB7z5NP0BQmFafQ:1uzhri:7mW6ii_kXfQUMJsUB0HJ1pDQ36egIH6yEpBkuFUzHhg	2025-10-03 20:37:58.091483+00
-rgsht3sap4bu2e0w806vmx4oxv7s208i	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0nuq:Jm0BC-hps4X9SkGZjKAXBpPSG_QIJCnBo21BaBV_uPg	2025-10-06 21:17:44.091932+00
-vjhsd9x02xziohg73ku745srpur4cyv4	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0pnM:dUriW864jNDQB9mOshtoIm7zRu1T2CkVMGGr2ALIYuE	2025-10-06 23:18:08.980322+00
-koc91vl1c5d6pnoh1jlkmz6iswa7opk4	.eJxVjMsOwiAQRf-FtSEMjwIu3fsNZIBBqgaS0q6M_65NutDtPefcFwu4rTVsg5YwZ3Zmk2Gn3zFielDbSb5ju3WeeluXOfJd4Qcd_NozPS-H-3dQcdRvnVCiLAk0akvaZyeggJeqCIJiJiVNdD6CQwfCoicSuqioZCoiyWwde38AC4Y3_Q:1v0ppm:MX_qep-AYMtPmPSRbno4aVJtz543k-kBn2PLu1bgCoc	2025-10-06 23:20:38.267569+00
-6ixtjazo44sc37ot5wekvrkl4196v4xr	.eJxVjMGOwjAQQ_8lZ1QRSlLokTvfEDkzE1oILWpSsVrUf9-yVAhutp_th3IYc-PGJINrWdVKq9Vn5kEX6Z6Az-hOfUF9l4fWF89KsdBUHHuWeFi6XwcNUjOvgyZozeRNQGktVbaE5lLv4O3ar2nrt5UhClRatnpPZCpTwbDogD35zXx6b38xsEPMcHK9RQH37hWq-qFSlpuquzHG1b92jIwZTIsNbZT08vKTB7z5NP0BQmFafQ:1v18bj:P8YacP2mLwZlZzvfY75CrmX0W49LgzlFZCKicVD0Zn4	2025-09-24 19:23:23.778686+00
+2fayqyovfpubacyzxmouv7w6937vcpxe	.eJxVjEEOwiAQRe_C2pDCSDu4dN8zkIGZStVAUtqV8e7apAvd_vfef6lA25rD1mQJM6uLsur0u0VKDyk74DuVW9WplnWZo94VfdCmx8ryvB7u30Gmlr-1ODJAzntnQYSS7aGTFA1OU0TkwQGQB0Ig2yNIZD8YQLFn2zEJonp_AOieN9o:1uPmEx:1YkhbFTSFx0VI1BOK4L3BDxtwI_YsybV4NuFU2pyPlM	2025-06-26 15:01:27.867615-03
+u7aj4abx7nlqk3vuog4e39ganphn5qad	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQgII:MPkcehIOd_68FQFiFGrED6h4XtCJ9aovwc_Vk7mTOgU	2025-06-29 02:52:38.480294-03
+0gczdkztepue8t7r51o0180ncd7uvswg	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQTST:NPEzLYUUN7A7QCnfCqqbfp1CzXbwUjHI5hO0lNzKIU4	2025-06-28 13:10:17.37376-03
+en2hoge6bd9m7ni1sqm8fmnva6bxy0v4	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1urOTp:13oUXhL-tPXHM1TEJdifquK9sYOohMNSCIJjdoz7o2M	2025-09-10 19:18:57.694923-03
+d644nl5i5yh0ywubypiwafxjovpeyv3r	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uPq95:9XLzf6WGre-vm4rtgG9J6XBi2IxT98Coj-N7iZgaDLw	2025-06-26 19:11:39.629819-03
+blpie01h97rh8mm0bboobxze6loe4hov	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uPtcl:lOtGAVXMTmdXnsVnms5n2UplBKmxXBSv0NJUvXiy4D8	2025-06-26 22:54:31.12679-03
+cbts4zomx6ctiwkr350ort0iy91dmpq5	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXDj:C39twvMI0K9jYNavzlSBUTOLJCCT8uuyYWKYa4QgrOA	2025-09-11 04:38:55.015399-03
+5xz4ek779jouor89iijjfkug3bj0i8me	.eJxVjEEOwiAQRe_C2pDSDrS4dO8ZCDPMSNVAUtqV8e7apAvd_vfef6kQtzWHrfES5qTOCkCdfkeM9OCyk3SP5VY11bIuM-pd0Qdt-loTPy-H-3eQY8vfWgwDgwMRiySDB-DEYxd7JIyIEznxkGgwhicybK1Yy86O0pneC5N6fwBBwTli:1ur7oo:xuznQuu9ceQHRY-HQnYSDj46d-e0MaFq4Dcp4BE0AII	2025-09-10 01:31:30.913529-03
+6w5ejdy2so9umjo7fkjumysnf5hq2r71	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ80:dnDEyJ7OBGJKTugBRoDMoXActgZLC7GNT_4CxkGYHxA	2025-09-11 06:41:08.101977-03
+yudd0rba606xw4qqix9m87jalogj7tj5	.eJxVjMEOwiAQRP-FsyEgWxY8evcbyMJupWrapLQn47_bJj3oaZJ5b-atEq1LTWuTOQ2sLgpAnX7LTOUp4074QeN90mUal3nIelf0QZu-TSyv6-H-HVRqdVv7gMZ1hbk3Z7KAyEgEYozDzjvn0GNvJfZRwpYZ2BobIIqXbNF1oD5f8M83VA:1ur8Jm:lSBu2fAWBGfPSkZb6YnboCFPL-8xtC4fMj_DkC-7LT4	2025-09-10 02:03:30.722642-03
+n29hxqb4v78zjijsam4hewlyhqqej5rk	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uQxGv:TNGIVHsGu7N11zoxrZ4ZJkxCIyPoLiiImPfFTWGGctc	2025-06-29 21:00:21.130231-03
+ep9m1q1pfah1en5ftj9oujahxvly75vm	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1uZi8J:crj1Ewzh_gghST0ngyX1hs4pHCtuBB5qbcOR3yL81qw	2025-07-24 00:39:39.351642-03
+4fu24152yufsed0fcnrk4p92l36d5et5	.eJxVjEEOwiAQRe_C2pDCSDu4dN8zkIGZStVAUtqV8e7apAvd_vfef6lA25rD1mQJM6uLsur0u0VKDyk74DuVW9WplnWZo94VfdCmx8ryvB7u30Gmlr-1ODJAzntnQYSS7aGTFA1OU0TkwQGQB0Ig2yNIZD8YQLFn2zEJonp_AOieN9o:1uPluw:VaZGRAvQShgBbyKRQkOwV2akEKjb1E8zMa9Cs7iaNgM	2025-06-26 14:40:46.985126-03
+v7lqzy10afrppgmyxw6ixpd1314uoc4d	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWRK:vvX23CuamSB2V5r4J3mkh7YnjdkuAUSQYtESqXJIGDo	2025-09-11 03:48:54.980746-03
+cg3svudkpitzvvzxsiicz2felzmfw9k2	.eJxVjE0OwiAYBe_C2hCo_Lp03zOQBx9I1dCktCvj3bVJF7p9M_NeLGBba9h6XsJE7MKUZqffMSI9ctsJ3dFuM09zW5cp8l3hB-18nCk_r4f7d1DR67fORmkZhc8RZGyE1kJjUGUonqSDNcVpyt5JiLMHJYLzioorCSiWEnt_ACAJOWc:1ur9tK:co65nwOLOqnyIKUuCc2aTu9S0kXWMMFPLs-u29_aMSY	2025-09-10 03:44:18.487926-03
+xxgwq0xohlo3vjznazjhdgptuiyaxu9z	.eJxVjMsOwiAQRf-FtSGAPF267zeQgRmkaiAp7cr479qkC93ec859sQjbWuM2aIkzsgvTjp1-xwT5QW0neId26zz3ti5z4rvCDzr41JGe18P9O6gw6rd2WufgEpqkjKcCkjxICMIEZ1AiWQBrnIXizp5USdkaVYRHykIDqsDeHxpkOKk:1urA0I:RlriwozBCJX9uNLGjKTwKeMy-FdT6XxfK4fx8a-tcJE	2025-09-10 03:51:30.975097-03
+nzax8sx7mtx0v9ax3rkh62lzltsew3kt	e30:1upBdg:i93Z5K_Xw3X69IUoCyi_Z5zE5E-Dmv1wNsI56txN7_s	2025-09-04 17:12:00.234801-03
+g7xhk0390q77p97tgfdzgt6m743xf5i4	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWTL:8v9yQZHnvd99YZCQc_UiSp-aG67EVnul446jEntlIQk	2025-09-11 03:50:59.555972-03
+pp5j6gp5tfbh05kkg048a8re28fkb7ty	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWXV:4m56VChOYUcLbBEvpIxqFupa5XgXrApyEQDEIqQbTdg	2025-09-11 03:55:17.752069-03
+rnkra57ryppsxtaflzmicoicpgg3698q	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXrg:hUQ0Rz0UUcrFRjtDmp3Vy6jRvRRH9WPtxt_Wza89r6o	2025-09-11 05:20:12.018326-03
+d12vcwbg54qunqpxh1ninsw5ke7orvd1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWiS:g0yIS6BQezF5ntubJKwSMktHRAlCFjdhmP-9vHUGRCA	2025-09-11 04:06:36.470274-03
+bwski8v6twysrgbbnu1myvxs9e7nio37	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWlc:gLvfr12uoCvOH_210fj00oKHF1b84rK-KzNotJGQv7A	2025-09-11 04:09:52.993633-03
+ipq7y2lfktfgjjt9438x182s9fme5w7w	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXu5:BSF0gcnplh9dI8H8lXQE-kQGHUYCBkjroEX5oIiOLlQ	2025-09-11 05:22:41.918531-03
+15kdgcfiu6b0grdynyddb4v6oiron69n	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWp3:05n6TbxQUvFKWzRLmegvkzEbikkdj5KKE0j3NKGYBOM	2025-09-11 04:13:25.244846-03
+ed6vim95n5w5qm829clqab4yg9t057wu	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWwZ:VVYNNZxs8Ffi0Qq5gwaDzVbOaRlx1YCKtGBVbh6hfbs	2025-09-11 04:21:11.974266-03
+spn7u9xjn0b4j6s0e6dvh11mv8e4rz0b	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX5V:ojmuf8URWTVX8qxUAy7qDcvt-ld0fqjTjhNK1R2UvgM	2025-09-11 04:30:25.060693-03
+ict5p1pcxgbn7p8anw5djysxo74kzc1x	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYd0:ljZTPd42Zciez3lwfvrYMgmpahAeYi5StaXUo-j5szM	2025-09-11 06:09:06.241764-03
+wc83ltt9qcls1vc7ws794lk82dzkddaj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZE6:ETqQeGxxAg6pWufN8JMucasTvVvKVZTBwbCqyPU7MW8	2025-09-11 06:47:26.322425-03
+7fu4zh589qz3btzbfbbnihbnkr6bidci	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlFr:yQodROO3titxnUlui4es6m2crl7vTd_S2n_WRH_wgXM	2025-09-11 19:38:03.266379-03
+hwx5ugvo90gmus5herm8tegbj6g0q1p8	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urk94:1RFiRSKY1JLE155-lOqEyASHXY0jyjyIrUoJEgg_6PM	2025-09-11 18:26:58.061933-03
+l95fdmfft5s6k5i6qzlolunrmy8qcl42	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXYb:8dtGU2ilLZgvEp3ajToBMOT8F7osSq8UT5UGqeXan5Q	2025-09-11 05:00:29.898658-03
+2r162y4r28xfci8fxihfd5ftckukozok	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkDp:j8gHNJyyoG5R6eBpArh9-sWcrT-JO-MvRDgnI41QsbA	2025-09-11 18:31:53.120974-03
+b5kuy4p41mgijdluh778wuqplybgquxo	.eJxVjMEOgjAQRP-lZ9Ms3W3revTuN5BtWSxqIKFwMv67kHDQ48x7M2_TyrqUdq06t0NnLobInH7LJPmp4066h4z3yeZpXOYh2V2xB632NnX6uh7u30GRWrZ1kAbFEZNj8NCzT86jniNoUGJuckCO1EtE4OQh-y0DkXhoFAHZfL7MiTYs:1ur88t:8qRp35s4Z9aCvZGAIh5OTH2ZJcork13oc0SiTy790kk	2025-09-10 01:52:15.328883-03
+qbh4qc44chlb0fzx3t327oa4z6q8nfc3	.eJxVjEEOwiAQRe_C2hCgA60u3fcMZJiZStVAUtqV8e7apAvd_vfef6mI25rj1mSJM6uLCladfseE9JCyE75juVVNtazLnPSu6IM2PVaW5_Vw_w4ytvytgVkSAjkMFBi8EBgi56feGwhi6GwGnJI1ltGR7V1KQWw3dEKWmEG9PzHBOQA:1uhYOx:QA1k6hVsDFsn68TGfws0B3Hyhc5Il8c1f0wbeFU390s	2025-08-14 15:53:15.995188-03
+wsn2xj7mckckvcvhi2b9dn2ivwlclvtd	.eJxVjLsOAiEUBf-F2hAReVna7zcQuA9ZNZAsu5Xx35VkC-1OzkzmJWLa1hK3TkucUVyE8eLwe-YED6qD4D3VW5PQ6rrMWQ5F7rTLqSE9r7v7Fyipl9HV7I7OaWUheMvE3p-NIWCHnE9aE1L-Th8UKwwZiGwCZ1IIFghBifcHHtA5XQ:1ugR4e:C2rh5b95uuxUx2Cyd9WOoQZDxhaeKJA13Ce4IV8Rpk0	2025-08-11 13:51:40.840977-03
+6t9vbf5w29gu4f3w1e35cfryunl19dh8	.eJxVjE0OwiAYBe_C2pDSQgCX7j0D4fuTqoGktCvj3bVJF7p9M_NeKuVtLWnrvKSZ1FlZq06_I2R8cN0J3XO9NY2trssMelf0Qbu-NuLn5XD_Dkru5VsHQ1OmLBFi9OAocmAZA3kvSITgOAwg1jiDyDJFnuxoYxiCAIJhVu8PRB45pw:1ur8PY:Tn9OJA5g6FehrWD3wTcZkwk9xE9u6W5sWMLw_F9wDMM	2025-09-10 02:09:28.854353-03
+84oa45x2lp8pt7oj9r1apohyz87p9xru	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWSG:X_t0LSx6fvkPNSVd3yTo13xsQOS5uRzsaA1cLMZKU6Q	2025-09-11 03:49:52.124921-03
+0i0dkmzg244b4ttp77kpxyyrv355t2mw	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1ueQ6c:VJgVxw7BG_xrN2e5U7oh3BZhoSv4H_lz2deaYfQ0i3k	2025-08-06 00:25:22.028238-03
+ap9ol6uzutmojrojwpawm2k6nw550p84	.eJxVjEEOwiAQRe_C2hAGKB1duu8ZyMCAVA0kpV0Z765NutDtf-_9l_C0rcVvPS1-ZnER1onT7xgoPlLdCd-p3pqMra7LHOSuyIN2OTVOz-vh_h0U6uVbBySrUjDMEUE50jzCiBpdzgZIAZHSTEBJk0OV3ZAxB9DRuvOAyhjx_gAWPTft:1ur9tr:bufWl8nhG9H1KdytTZWeeD-MKf2BT5wotlYyh5uL4dw	2025-09-10 03:44:51.403184-03
+twg9ey7kgdmhkb0akjkc1t5u4gjn4ajj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWU8:lbBFVA7qOAc6SPY8kTN1TM0oXltiAiqYCOeY2dFGdWM	2025-09-11 03:51:48.586488-03
+mwr9rpu1jom1i9v6hymbwyajnpr7aozz	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uqemq:KkuI9jTrDfdecPFyBUr8lJoSYUW4-6iS48_tPIyakNk	2025-09-08 18:31:32.570981-03
+blmdpgjmilotxmq0hckidc5tqnq3zn5n	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urLbw:Qb6gd2Yba6dCVP17WaH3_cAhCfyNoxeywcx4Av7Onoo	2025-09-10 16:15:08.526679-03
+5hcozha5oebtw9b5hqtwrksr7f6xhzga	.eJxVjDkOwjAUBe_iGlnYeMmnpOcMkfMXHEC2FCcV4u5gKQW0b2beS41pW_O4NV7GmdRZGVCH33FK-ODSCd1TuVWNtazLPOmu6J02fa3Ez8vu_h3k1PK3RhyQaTAeU0DPkYidY2sFPEFMhCIQxFvvjFhDEAg6OwEco0Tx6v0BQH44zw:1urLer:9I9QDIAPzwn6SH7b-HD5QZ3v4yq04y22Rh6-2tHBn78	2025-09-10 16:18:09.220455-03
+5rqzlm033wtnka8hwa89ssiuswm484dp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWYO:DT9xBUyxTFgqGYXOKXkMqiSA4IrIrC1Hr_kI55rRDEE	2025-09-11 03:56:12.337933-03
+eq27x1lt4knu5y57ct1ozzpzuxi67fyb	.eJxVjMsOwiAQRf-FtSEM4aVL934DmYFBqgaS0q4a_12bdKHbe865m4i4LjWug-c4ZXERVpx-N8L05LaD_MB27zL1tswTyV2RBx3y1jO_rof7d1Bx1G_twGRvfSmGmMErIGCPmZVN5JwJVkMJiOjAWQJ39oq80cmgJTKBtHh_AOYyN8c:1uqfUl:UawexSb7GidOOogW5Hcgj8MY4ntLL1AFRk0fI5An1LA	2025-09-08 19:16:55.805563-03
+3pk7r8lvg94hjbb98qbtwz632qswyfa4	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1ur7Yx:3PFXmVRBGXs-O6TUzaLYuqy416qHOa6LppcGgv0FGgo	2025-09-10 01:15:07.816692-03
+09msezibww4sqosfwyy2ocm3g8q49sai	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWje:Jqhgl2SrazjkulkvUqvtJR1OX5wgov_ev0kkyaXUyBg	2025-09-11 04:07:50.039388-03
+fn9dvbg7oto1r2xvhtvt277d4p8x3py1	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ8o:RKFq5i5pyuSKF-lqxCtFdx4wJEIJjuwYQPYr6BOrElY	2025-09-11 06:41:58.782842-03
+xpb52oyjfftbsqpzfm4b3ooqtm2xd7fb	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWnD:7qk7YvjrZnAlgP8IEEmm95ZN1cNWYka9YHQEMWmxDsk	2025-09-11 04:11:31.704244-03
+das1pusjqaeswp7nuxiiw9z3xsl3qwhy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXsc:MLOdB98q1TlyAVI0YXiATb3fbuGlmqYN1_U3ofYn8GA	2025-09-11 05:21:10.606061-03
+7mui0wjjfd1apbcwjgih407ip72o7ygr	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWsQ:MITlShmTWRzXR9uj3k7-MHcBiml5WifbrVq2Ky15a0w	2025-09-11 04:16:54.521645-03
+86twsih041wxn737mgbwr0ik59k9w0ks	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX2S:aDYKN-nBNyipwHhfKmOSTzgmVaHX3byLl_Gx0sNZVVM	2025-09-11 04:27:16.841685-03
+t5l8zdhdpl15bt5k19onq6mus37d1kzy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXCz:QrpUVU761w_pZR0_G_bZV6c6SzPA429qYZxaeCNBclo	2025-09-11 04:38:09.559134-03
+dedi44gsm46uyhfvxs7ffe8zhuxdbhn2	.eJxVjEsOwjAMBe-SNYqI6zopS_Y9Q2QnLi2gROpnhbg7VOoCtm9m3stE3tYxbovOccrmYho0p99ROD207CTfudyqTbWs8yR2V-xBF9vXrM_r4f4djLyM3xoDthQ8YDNkZk9-IDw7HxiIAqljJWwQHac2iQCqBAUv0nUdSAto3h_iMTdW:1ur4oK:trWY-5s6vE9dC3f90Y8KECHI_P273NPZuSi5CpAF0Yo	2025-09-09 22:18:48.86953-03
+oeqjhhg70r09kciphcirr6gfbhhpw9gy	.eJxVjEEOwiAQRe_C2pCBMpS6dO8ZmgFmbNVAUtqV8e7apAvd_vfef6mRtnUat8bLOGd1Vh2q0-8YKT247CTfqdyqTrWsyxz1ruiDNn2tmZ-Xw_07mKhN39pKsLGHbAZneknGY7CCneEuDR6wR6BgmYhkICeQwEWPwA4FJKCP6v0B76A3og:1ur4xm:8hsKT-35EH0o6U8GbgmvdbGpXfoNit8_jEGz028bL0c	2025-09-09 22:28:34.898593-03
+020fpjg3bdrabq6vrlpwum02eoqdmgbf	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWQo:E9CL0hBU5gN8jd0cRIzYG4jchT1OKOMQS0lf4gIckYk	2025-09-11 03:48:22.54068-03
+p7c4zbenlycol6tqrl400hs1ph2uko4v	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYkw:kFMSkgusTKuj9pOqYHfNbF3zdsHXBUwQXg_1tuZhpAU	2025-09-11 06:17:18.782353-03
+pcsbyccyhfrez82idoj378i3aku28ac0	.eJxVjMsOgjAUBf-la9PUlkvRpXu_gdynoKYkFFbGf1cSFro9M3Nersd1Gfq16tyP4s4uZXf4HQn5oWUjcsdymzxPZZlH8pvid1r9dRJ9Xnb372DAOnxrDmJdiAoErYZ4xJgxU2NqIADImTmRIjdJQ7CmlQ4JT0aQo0C0zr0_MmY5Sw:1ur5s9:AR5LOuUYenxayZ3dWxUgsRltIKflBpCWNdOGeHABk_M	2025-09-09 23:26:49.741764-03
+09udzqqqemalys5plgv2i01nr4obolqy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZEi:AXootHNVM5iF5JD15TOxTR-SFd6cBghP8_6FUXu9QIE	2025-09-11 06:48:04.883228-03
+s67w5m1r86v4686qz3hi595wk8sgx9dc	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWSf:vGkj39Pgg63pf6xC7G_5LBL32do0P0z4yyObkC4ba4U	2025-09-11 03:50:17.297793-03
+u7d18wly43g3lemuxzqdpqwxsujhe55x	.eJxVjMsOwiAQRf-FtSFlGAZw6d5vIDylaiAp7cr479qkC93ec859Mee3tbpt5MXNiZ0ZIjv9jsHHR247SXffbp3H3tZlDnxX-EEHv_aUn5fD_TuoftRvDSKDxSKmRFpFAdKWAkYYQENS-2BAkwo4FWFFIsopSsiSbFCko8bA3h_YoTb5:1ur8Ep:iH9NeUJfXXisf7mpR8OOdAn_iWxbfGYjckJq9sQdLv8	2025-09-10 01:58:23.887971-03
+rw9rjjx516kgbnk68ix6p84oxr5cu0tx	.eJxVjDsOwjAQRO_iGln-JNimpOcM1q53jQPIkeKkQtwdR0oBzRTz3sxbRNjWErfGS5xIXMRgxOm3REhPrjuhB9T7LNNc12VCuSvyoE3eZuLX9XD_Dgq00tfo0GaDgFoNnlmNPS1SZrJJq5CNDjoYUMkzmETeqTPxyN12hpwl8fkCJK84gw:1ur7ZG:rxgt2G1n-Lk5Cde8L-LkZvWR71GcL4-J7FblSK6NhlQ	2025-09-10 01:15:26.257213-03
+tcnhut5zrp35sg1lbnivjsw3fy5p84po	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ9X:5yQQZMOYkgvrndtQkJ_Vbn-aIhKCIjDMZfbW01QsGgM	2025-09-11 06:42:43.129171-03
+9qanes5qhaowm80xmwyiuqkta0do4mzp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWVJ:oo5Op8_RBaz9YZAFqeA925WkVw768NZl0wuMmzblyyI	2025-09-11 03:53:01.312386-03
+oqr14itsmdz72cjmmvuzupiybdt6yk8c	.eJxVjDkOwjAUBe_iGlnYeMmnpOcMkfMXHEC2FCcV4u5gKQW0b2beS41pW_O4NV7GmdRZGVCH33FK-ODSCd1TuVWNtazLPOmu6J02fa3Ez8vu_h3k1PK3RhyQaTAeU0DPkYidY2sFPEFMhCIQxFvvjFhDEAg6OwEco0Tx6v0BQH44zw:1ur9w0:99itUHFCljHbqOF5VQHOLU49M1TIoGG32U6OXnHGE8E	2025-09-10 03:47:04.283532-03
+4u45t20r6rd8aahmhmc0ogjuko6cm7o6	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXLM:sn6mEncs2QxM5gRaFfJqubZlc502vEh_AWeuVGm7ldU	2025-09-11 04:46:48.294033-03
+zr5hmmds67mxp933ftxakxllkuxh1iwn	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWlF:zuSz6yI5buoU9bwbxLyIazyz2zP3cmcaodFNm8aIj-o	2025-09-11 04:09:29.241039-03
+u8gzsumy51jo4gttx3752bpwbaijt69x	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXa3:581RbD3A2xKzlhGrkUaJLUmUY2pVEDerWQwHMLMhIWs	2025-09-11 05:01:59.811076-03
+hnp09psgr9fmtjgazf5jjqw01no21pwy	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWo1:YjMk_cPfEx2TPWpOGnw7V6yiXXaI8utOb6RBQgE7APs	2025-09-11 04:12:21.911168-03
+2mg8bqjnla5mgc1jvea36gzdwe4xjtzz	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urWsj:Vx-vdY4dkFBGQzk9kv-xw7sEnmMmFbG3COqlaZLse1E	2025-09-11 04:17:13.150612-03
+yyadjpneyytdjdq1uu0v7qs2dh67mz6g	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXqk:EdPvSG0Ytjsiea7jUZy3eRTSxm1Gb7UpPxiLjIxeNYQ	2025-09-11 05:19:14.868843-03
+7cbctpthaveetz3aejopjtztcraf8rny	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urX2l:HefnUsdl-m1Sfw-3VkXBjiH9QQOgzF0-sFN1Bv97r20	2025-09-11 04:27:35.699535-03
+2zs3j38rccvkrs63ne3iitj54ajt9qet	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urXtX:RApcRW5At7rOqCBaiJf76PPuLA9i1zirx16jYmKlZIU	2025-09-11 05:22:07.253356-03
+4xrzx3m2s6kz8pu8hxflzv764ap41mv7	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4Ex:J7hMNIuXbaUuCsUfEjG6CIcpfz6xSRg9KMz578XS9Ys	2025-09-09 21:42:15.844966-03
+ck7rtoedzei3jshifmyk092lys1jyiek	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4Uv:rVmxUnaL8Tipzv3A9j-9clk0S5wywL_BgaFGaBpHNs4	2025-09-09 21:58:45.087712-03
+pvo04zhmg0bmdmywnrisdzip51oo91id	.eJxVjEEOgjAQRe_StWmmYylTl-45A5nptIIaSCisjHdXEha6_e-9_zI9b-vQbzUv_ajmYhDN6XcUTo887UTvPN1mm-ZpXUaxu2IPWm03a35eD_fvYOA6fOsQUUmxKASRsyvZgTACtQy-zcE7iuRAibEAkJCPIQuVUKBJJTVs3h_-hDgD:1ur4W2:_2LZkjUiJiSbRwecPy-_MFDHHu3iBM7ev9PkDUwR6u0	2025-09-09 21:59:54.839371-03
+bjeu280ez36lo8q6dv54kht79cisq89g	.eJxVjEEOwiAQRe_C2hBgWjp16d4zkGGGStVAUtqV8e7apAvd_vfef6lA25rD1tISZlFnBU6dfsdI_EhlJ3Kncquaa1mXOepd0Qdt-lolPS-H-3eQqeVvTWx79kLYxc46AQ_TGEkQgQB6Fz0yJB5Gdh4JDA0AE4FFYzB5YqPeHw7YN_I:1ur4XU:HOKEYTx7hbagzJH3UWlLW3dakFvWq8Hd7DQ1BGo54KQ	2025-09-09 22:01:24.131949-03
+k3oj14eq8alcfonq78azn4vxgftpde3p	.eJxVjDsOwyAQBe9CHSHzWQwp0_sMaPlscBKBZOwqyt0jJBdJ-2bmvZnHYy_-6Hnza2JXphS7_I4B4zPXQdID673x2Oq-rYEPhZ-086Wl_Lqd7t9BwV5GLRI6kjkaQKUzkNPRkkmAAYHkrAiCylbMgigICzpqN-GkBUltwEj2-QItZTg7:1ur4dO:cznFdlTHeSGKCAYs_9VBmfVVAoKGPLKV7Zt8WU4o6I4	2025-09-09 22:07:30.33881-03
+uj2ijjsi30g2f4co7baa4qd0jvktu4ms	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v4Zi1:60DMbRrNiyAyM17rbthsvJRazUldibQgp4Ih9UZqsCU	2025-10-04 03:56:05.0426-03
+3efiiailhu3v0ie5w46weh3418xliz8n	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1v1xwh:t97kWwqFM69c7X2ujKsCzTsHBlBWiSRDyDPpwy3HZTE	2025-09-26 23:12:27.888392-03
+ndqxomfctufk7u09s07i9lzyuah1ioz0	.eJylVU1zmzAQ_SseLrnEHhDYxj417tekbXJo-jFt3WEELLZcQK4EbuNM_ntXrMCQ1qcePKN9b7Vard7DD07E62ob1RpUJFJn6UyZc9kHY578gNIw6Y6XGzlJZFkpEU9MysSyenIjU8hXNndQYMv1FncH0zgJMgYQch4yL0v5bA4QgO9CEPqZC-BPvZAHs5kfMh9gHruLZMFTmHrBDHwfiya8iIXUEU-qmufiyJWz_ObcwW-5HF28ggJKUcqL0bpm3oKNLm64TurcQLj3XV2CXo7u1rXrQtrm3EqkbriqznICVCLzc_SbGg7nuE-49cyZ3y-dvdRVlPKKO8sHJ9EqK0Sa5vCLK6gkDhEntov3L79ev87eXtfbn6vX_Mcejs83tyIIss-fQbzfvQu-HPnmvth8fH98FbMPYXD3pfAOx9s3bjjXC-yhlEWsQGOx603JE2H64nvIc5FKBFdSbbYCsbQUGPpswjzf_BDKINnyCDchwVx3MXbDsWu0IdKoKVXiE6TcCMMjNBEHkZuXNgfXRbQVO6lPtMZ3stFeyYMoE8FtnMukK_b8anVFG_ooW8xc06eK9qC0ORvBq7yC0UrJX-WIzWdIV5BDJktzjOsH01kw89jUEEnddMbm49Mdx3MkoOANc7-pi_sgeLYxMUq8oBZAV7yZFOsmglAzETYde2zst3eX5QHlJ-31eV7xiJf_ytzXWKHNEzrCE7IMw0rV0OoUw06Xdt3qkELSHa2tzii44zE1jOsXshBoWArwGFVFlSjADMdbumac6NUOCgkyD1UntdK8fUqemMfGoGe7nn6jnW7Yh_W_ZLx2lqP1fyt57VxiFStmKmn1TEwraaJI1cSgsAk8vTsRnbyJPimc6CcipySv4xqpExjY5lrBP001sh9gnfgHaCd2Qo0LuhJPOOMFe7uTHYgaOoKSWlNQRs8XRBtr2LpDdxDdGIT4vzzSNUg2sVX680WinW_rgtMMrWUGY2yNc3YX2WewpzURgcZHhDdWIpAAMtQAaW3VB8lcfcRarA-R0fqItVsfOpnODt_4zs7VWs8SYUf0DDicTGNDgk5OXDuP5vMmy0yogqvBX2Pzae0ojLVwHh__ADW9Z_w:1urYTv:Z83RhRGwpjTb5Wg4wHR-PrmSdxOJb60KSCwFbncCrrw	2025-09-11 05:59:43.259129-03
+q5tbxen40j4ab14szbubqs6hik58hwqa	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlGH:upecGzv49VjU-liBIWyyUfJ7xkCdZ8NduvZn6lebjyI	2025-09-11 19:38:29.360273-03
+7q158jgw3m4ofdioulfj67fsmsd6acji	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZFY:dqiQ5V-BbL_xo7UBGmq4P8y6ID2VB68Lzl6tEK-XrFM	2025-09-11 06:48:56.68859-03
+yo14wbeqaavjhlyzvu86qk3dfslnf74e	.eJylVU1v2zgQ_SuGLrnEhj4d2afGTZt2sV4UcLOXdSHQ1MhmKpFeUnLzgfz3DjWULHXr0x4CaN6bGQ6H7zmvXsaa-pA1BnQmcm_pJaF3PQR3jH8HaZn8kcm9mnElay12M5syc6yZrVUO5crljhocmDlgdZzseFyEACljaRgUOZvfAMQQ-RCnUeEDREmQsng-j9IwArjZ-Qu-YDkkQTyHKMKmnFU7oUzGeN2wUrww7S3_8TbwpJaTqzUzvCmFVFeTbRMGi3By9REqkBbB2j8bCWY52Wwb34e8S_lLIbVmur7ICdBclZfoPxo4XeL-xtILZ3679o7K1FnOauYtXz1udFGJPC_hB9NQK1wibux2nSbK3BcbdQeF_JjKry8-n683p_RhfRA7_9_PXx6a1cPmfvEh-aSK57vF_dfH6oNZAX96unn5hDNIVe00GGz2eS8ZF3YudoSyFLlCcKX0_iAQy6XAMApnYRDZP4QK4AeWYRESoe8vpn469a02RJ61rSQ-Qc6sMAJCuTiJ0mbbg5sqO4hHZVyMtMF3ctFRq5OQXDBXXCreN3t_u7qlgiEaLua-nVNnR9DGnm0XVNYwWWn1Q07CmznSNZRQKGmP8aM4mcfzIEwswRuazJ-e7zi1k0DFWuZ531TPcfxub2OUeEUjgKlZ3k1NG0Go7RQm0yCcRt3dlTyh1mxqbHdc1ixj8neZxwY7dHnCZHhCUWBY6wY6nWLY69J9dzqkkHRH305nFGzYjgbG7ztVCTQsBXiMrrNaVGCXEyx9u070ag-lBNmHanijTbvh9i7cPjYGA9sN9Js9mpZ93f5OxltvOdn-byVvvWvs4sRMLZ2eiekkTRSpmhgUNoHndyeilzfRZ4UT_YvIKSnouVbqrtIN1wl-hDrZj7Be_KOmvdgJtS7oW_zCWS-4253t4BY9cgQldaagjIEviLbW6HYwcgfRrUGI_49H-gHJJqNb9mbpencuOO_QWYYSYveSzjgXq8g-o5rORARaHxHeWolAAshQI6Sz1RAkcw0RZ7EhREYbIs5uQ-hsOrd86zu3V2c9R6Q9MTDgeDOtDQk6O3HrvdmfNyULoSumR_8a25_WnsLYCO_t7SctDmb2:1urYoO:hdwrnUnHSH__fICH4EYXyMJqRmF6v21-sJvgn3LoURw	2025-09-11 06:20:52.74004-03
+1se35ih6eotspi5xbaf27ywzd0j6akyk	.eJy1VE1T2zAQ_SseX7iQjC1_EZ-aQBkyQ0LaUtoOYTxrSU5EZSmV7VDC8N-7cj4ptD31lNm3b3efdv3y5GbQ1POsqbjJBHNT13ePD7Ec6HeubILdg5rpLtWqNiLvWkp3k626I824HGy4LxrMoZpjdeFT8H1G86iAII5pEgfgs8A_gTz2co-GeZhElBY0iFns9yiNkiiBiHG_gB7NCTalUOZCVxnV-Ks4arp1z8bD1DkKAhKEAQmPnGlD_B6xSBehrsWw8vTz8BJpxNsSkz2TeJ09uZNY-mWjeJU6Y70lfZo2nocD7_YigNYNSLEC859kHMySkGsD0g76m7SFruqMQQ1u-uTSyhSlYEzyBzC81ngYvMLN6jq46k3OosnV-fJrKcPVBW3iVXIx6X_5FhQXajWC3nkyoh9mH9-Ph3L26E-uf_QJvY76N6fLE3yEwu0bXmGz4UwBFRoxWHApBdMIDrSZzQViTAkM929CqOB0DhkWYYJ4Xq_jnXQ8e1nBsraVwo0y2H6FiFKxFHITqqbM5uJe29HeOl3xn3qTXRi9FIoK2MRS012zAUgKhvJ10WHGDyIr1WQLbio7HrFTkJI7fVkKA6rmzsDoB-WM7Z5zzyFJfOycc8ZNKxiray55oZUV4gVhFIexT6LYfq9Nq_23y2KCl9BmHmdN-RiG72Y2RmOVa4G8qqHdJdntDKG2E4k6PukE2-1oteRKbFcAsoYMJb_BXDTYwfLsGUSV4YSiwLA2Dd9-8Bi27xmBqfcRMk2d1aLk9n1-6tmOaPIdRNLtCauGNqZqd2jHAG0XlLoHVtl_0_dVm7udvvbOG-aZusfO9G3__MlA65IDv-wMs3bM1L1zX1nsQNY_K7UqhCnBvPgrwEM8P_8CKROQGw:1us5Z5:oqxMdPqvJbL3DAPIPBCawfxdY41F_ScOVW41O6hAR6Q	2025-09-12 17:19:15.078221-03
+qnwn7jh585axqmwrw18ogmapmnc254oj	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urm7f:wqDl3jQUU6aZftbKY9SlI9--YPWERJhZO4KqjFTADxs	2025-09-11 20:33:39.1625-03
+r950hrdhbin8nn629dvc7f4z2q0trdcf	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkFP:GsFOVC_dYgAQJADSt8IfHU_zpB9TIM5GjRByyCeObDE	2025-09-11 18:33:31.986431-03
+41gzj3521j5cqoqsezooki4x5exzmsls	.eJylVdtymzAQ_RUPL3mJPSDw9alxem_TTpv07g4ji8VWAsiVIJdm8u9dsQJDWj_1wTPac1ar1eocfO_FvCq3cWVAxzLxFt6YecddcM3FFRSWSS55sVEjoYpSy_XIpowca0ZnKoFs6XJ7BbbcbHF3NF6LKGUAM85nLEgTPpkCRBD6EM3C1AcIx8GMR5NJOGMhwHTtz8WcJzAOogmEIRYVPF9LZWIuyopn8jfX3uKHdw63ajE4eg45FLJQR4NVxYI5GxydcSOqzEK4921VgFkMzleV70PS5LxTSJ1xXR7kJGihskP06wquD3GfceuBM38eeztlyjjhJfcW954wOs1lkmRwwzWUCoeIE6u-XXz8Ch9_RU9_fYewAnX6-9nZxeb7RQSf1tE4PL26Ei8-PL-Uz968S1n26Tz_8vL2xd1r-eH2pkjfL7GHQuVrDQaLvdoUXEjbF99BlslEIbhUerOViCWFxDBkIxaE9odQCmLLY9yEBPP9-dCfDX2rDZnEdakCnyDhVhgBoUJey8y-tD24yuOtvFRmTxt8JxfttLqWhZDcxZkSbbHTk-UJbeiibD7xbZ863oE29mwET7ISBkutbooBm06QLiGDVBX2GD-MxpNoErCxJURVd8amw_0dh1MkIOc1c7ep8rsoerKxMUo8pxbAlLyeFGsnglA9ETYeBmwYNndXxTXKT7nr86zkMS_-lbmrsEKTJ02MJ6QphqWuoNEphq0u3brRIYWkO1o7nVFwztfUMK6fqlyiYSnAY3QZlzIHO5xg4dtxoldbaEaQfahKVNrw5im5sI-NQcd2Hf3Gl6Zm71f_kvHKWwxW_63klXeMVZyYqaTTMzGNpIkiVRODwiZw_-5EtPImeq9woh-JnJKClqulTmDkmmsE_zjVyr6HteLvoa3YCbUuaEs84qwX3O32diCq7whKakxBGR1fEG2t4er23UF0bRDi__JI2yDZxFXpzheJZr6NC_YzdJbpjbExzsFdZJ_ensZEBFofEV5biUACyFA9pLFVFyRzdRFnsS5ERusizm5daG86N3zrOzdXZz1HzFqiY8D-ZGobErR34sp7sJ83VaRS51z3_hrrT2tLYWyk9_DwB6XjaB4:1urYdo:VLmdA8tQwUOWK21eyBXGIbCv7KqWn6w2rb4_I_9aHcM	2025-09-11 06:09:56.844568-03
+cmi35inqtip6nzjv5o21aiy8ci52sfgs	.eJxVjEEOgjAURO_StWmg_7cUl-49A_ltB4uaklBYGe-uJCx0O--9ealBtjUPW8UyTEmdlTXq9DsGiQ-UnaS7lNus41zWZQp6V_RBq77OCc_L4f4dZKn5W7MNkUcDeBFv2jGJ6wAGNWBPYwOQbb2wc-QNAV1o-thLgm3ZgUi9PyUDOG0:1urYu4:jNrSW9JDkwuPgm58ltZ0g7P0W6AOm5S9lCcJI_oWStM	2025-09-11 06:26:44.413979-03
+3pmmc2l4xb15aueup98as78mn403mpor	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlHz:3VH6m-MuLCK3KSa_nf595H_3cMnghN6kBHHKEeQVjNQ	2025-09-11 19:40:15.222122-03
+o6dlaipjcaumra6wr0pa7o944ldgtmol	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZGd:vU8d6Wk_NP6eO7J_QuXTpAfKbh83VLw7jFH6yKnwslE	2025-09-11 06:50:03.195145-03
+4yj8k3o9p8tyzeivu287ukuz3ba9tw7o	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urZ7U:-Cz3fFjzD1_FyNSgRpGSSxax7gFj_RZFDFmB8y9slFk	2025-09-11 06:40:36.184486-03
+e34bf957uv17s6d1evefvf77k8rpf1lj	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v7Iix:rOiG7g4gDqPkcxcc1ObSFYDNIsrlKtUkt_x5rcsjyX0	2025-10-11 16:24:19.246696-03
+duxkncw56953u8j14j8vwadlyu81wjba	.eJxVjEEOwiAQRe_C2pCBCUJduvcMhBkGqRqalHbVeHdt0oVu_3vvbyqmdalx7TLHMauL8ladfkdK_JS2k_xI7T5pntoyj6R3RR-069uU5XU93L-Dmnr91gNjMWJ5cLacES0QZjbFWJtFAgGDw5CIGAQooGEOjoQDe58MAar3BxgwOKQ:1v6Z4m:YmYgyiAsEcmVgjjj3wqiFRWmnDDRbooLPj3tgfNvs7g	2025-10-09 15:39:48.714759-03
+rs80nqliz6u95wzvjwaz73gvripdh5g2	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v4Zmp:bmW76ES2JduZDwRrx0kceLkOnpUXxMUuDvjRnlSGppw	2025-10-04 04:01:03.316249-03
+2wkfksybgnmq6n5z6gkvh1zwnh9ra5mt	.eJylVU1z2zgM_SsenWMP9enYp113nTQ7TreetGkzdUcDkZTNRBJVSrLrZvLfFxQpWc6mp70J7xEgAOJBz04MTb2Lm4qrWDBn7rjOxRBLgD7xQhPsEYqtnFBZ1EokE31kYtlqcisZzxb27FmAHVQ79E5dCq7LaBKm4EcRnUY-uMx3LyGJSEJokATTkNKU-hGL3Bml4TScQsi4m8KMJh4GpZAnQlYx0LqBTPwC5cy_Oaum4NV89EGONo3nzrzR3aYhhDPn-4VTyqqOGdTgzJ8dWqk0F4xl_ACK1xJT1f7-crnyv86uPkuePB1-PNyFs3tCqtVy9f5K7Kn7syivHm58-Wm9hNtaBplPBNmuYHmcXQO9CTCx9cd_3gnmlmodlXxx_SXkD1xt35P19GuSu-mnp-OvA3u4v_whDvL6uPSO9ONCHUi5_lxSfrP6cpZq_FhJTMx53ryV8caZjzb_-8KNc4FRCpknilcm5M22ACqkYaDkWSaYNNRCqu1OGIYVwoC-P_H8YOJ7gSFSTncQYwxDe4TMxuRyTDxDCxa38Qt8OAbMHHJ7joq9yM7AosnjnXiUNj3SH634T3l2slRyLwoq4AzNJB1etYCMgqK8D_OKd_3QFqjikqtKJ2qYd5BlfPRnlgsFRc1HCyUPxejDRk9ZQkbeNLoYXXHGVVueCVLzjKeysHkSPwijIHK9MDI0bbpiPTI-NXI8NTTPoeOP2yY_BsEfWw2h9PI-f17V0D2QN3wCJLrYXjh2vbE_aLMs9rwQ5_2DDIcOS_utV9lgTOtjX1tUMd6fpgasVWMb24rRgF0vbkHVrzH0VXVci5zbDrlzYu_D_TEkvPlggqqGNqrqHsamAtT0fd5-d5vB3i24ojLrrjfg3w3fnyP3eKw4h-4g6dtrkL9kLnD_ddDLYCFZxX7bDJdRv43MOto43wceGSRSQdZ7as7KEU2rRcQ6ISJoVIgYShDN09gg1IsPiZPykHglO7veO8FZs5ca2sTQWmSW7eVl7V44OierKuM0ZFBPOtWTmBD7nZLeFBJ6dyrSaZ0kpLvYtLm_Eg8SrXKQ-Y9sTIJGM9qz7xlCbaRu6G13rE5syZ1C3jhptIGEfoZOFWhqSSDSzgOabT1GCZ110oCuTwtAF2CnX0N69O1r2Lm315iJR2PwI7w4zToSaJopN992vo1hJtt825k2BhadCpWDOvvBtg3oKbQr4by8_AszYYb-:1uriSY:8aG1gJeT1LS0zUiQWAk4Na9VTOYpgiMVvOjt_BJ4uig	2025-09-11 16:38:58.08457-03
+skx99p2o8elvtf7arz2jffvfbz4ltmkm	.eJy1Vtty4jgQ_RWXX-YFKN9JeNoh5MIkZCbJbLKzccolyzKIGAtkG0hS-fdtWfIFQna3amt5wX1Od6vVLR37TQ9Qkc-CIiM8oJE-0E2908ZChJ9JKohojtIp62GW5pyGPeHSU2zWm7CIJEPlu5NghrIZRMcmRqYZ4dCNke15uO_ZyIxs8wiFnhEa2AmdvotxjG0v8sxjjN2-20duRMwYHePQgqQYLULKsgDhvEAJfUVcHzzqo-vxQPti25bt2JbzRfMLyzy2BNIDqCcwiD35fXwFbpbRrTy7_ca3hCt3IPSnZrUEhYyjRCx1VaQkG2jXrAq88wvDIFHbHTP4TwH7v0rr_G0ZS5blQYRypA_edJzxeEGjKCEbxEnOYDgwCevWWp_8oDcP1sTgp1d8e3Mz2Xh09eti8-31ZRRGN46z_joJV_nFw_zc-Xk3-r7a3F-u-_NrPA5zQ2-tEswzJnK--YcW8_WB9ujrLqNXDz9PbvnRapyMyO1yNP5jm28u0NHyz9ia0mn6_Pzj1MP3r8lpdLadX67Oh1v6azK_PM_Ymdf39Y7m_-eyfWgPpElhPpxkojRfH09ThCmTC6AlSRIaMUkNGZ_OqGSilEqwmYQkYoJnKIAckrYM47hrHHUNS9I0Csr8KZzWCEXSyaw5TNc02QHTYhHM6Jyp8ozaNSNbtuO55GxNU0zRDpow3F5qiBKMOCZ1mj3etF21QR4sCc9EoZI5QUlCtK_JgnKU5kQbcrZJtWtfHLTQ0Ky-19HOSER4uT2ZJCcJiVmq6jRsx_Ucz7RcT9K4qDa7d6QlTRao4l-mxeLFcX6bCgj0ZlHXT7IcVQOy2iMAosptuV3T6tqtNrN0TVK62z-UwOGFrX0atSwgp4pR06ZZAOvHsQRzXqjGlvdRglUvJojn-xjE8jzI6YKoDpkDQ60HotkmrEHrBGUFLnhWDUaVgrDs-6B8ruRQNVopkbia0uPR9_2PYgS_j3okPDuC-0yWmqh9ZWpCWwJVu9-Vj0KmhMfTbqlKY_dL_vd5WBpTvkA8aDejNe7aQaKZutgTSjhmSTUpCX4ryHoXuQe3dBe6Q2F9EiUyYgsK78cKem-9sJRIPh4awoERlOk-a_9nzW9OompY3S7ZLP1J__BOaxX2T5FKNsFZaSZglWACKNUSMJBKMJvSAKpFUrx7aoUEYk8e1bdHJYzKrCURbEPSQgwVW8ugsmuBEzUp9ZNBbQZ0T5TaiB5gnyneQcGD6ErtRFmN1IkeF2XtewMColQ4YD7ImyxQapuIrHsGUJmpEifVHaVnasuVkh3wlBoGhBhDpV5gCumqviPALPcjFauyGq0S-xNCJTagVEpAQqLUNJQ-qWWkMoHR-krrHLygqv6aAjsTR6i-lACAKa-jfFYXURryCspndfmE8f7-F95INTU:1urlkG:hqY1oXgJnJXqGuFuwdGjOeaRW8LpmkkOllgtCUOuc6k	2025-09-11 20:09:28.160464-03
+i1w885fekffw8o9ft0700o1vl84f26ps	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urk8i:KZk3YFUn5o149qcjAW81vjyM_2f2ZYCm3B7M0awiZws	2025-09-11 18:26:36.618931-03
+fo0im3aedgndzd5pqagc752qea6nf5r8	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkFb:uABDThH-neQfogkBzZ7u1uQQtvFwIwtAGP7xVRUmNX4	2025-09-11 18:33:43.658636-03
+wuwz8811z67tn5hx6sl0knseinq2mzp6	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urm7z:XSSGMn076aEKkY0tPywhSL0xMKELjubewmKX7phzRCg	2025-09-11 20:33:59.935788-03
+avwyfwszyljv8hp0vd0w09kuk93hkajp	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlQU:LrVk-zgE21Ma1PUsA5Gyw6Jxryv2zEgjI-xI3zIQn4g	2025-09-11 19:49:02.467532-03
+sp69ycf5npsyy9afxs28kk0mmtwrnvhr	.eJy1Vk1z0zAQ_SseX7gkGX-b-gRNoS0DmUIpH0MYz1qWE7W2lZHtQOn0v7OyJMdJWzgw3LLvrVa7q33r3NkpdO067RoqUpbbie3akzGWAbmhtSTya6hXfEZ43QqWzaTLTLPN7B3PaXmsffcCrKFZ4-nCJeC6OcnCAvwoInHkg5v77nPIIidzSJAFcUhIQfwoj9wjQsI4jCHMqVvAEck8DEqgyhhvUiBtByX7BcJOvtkni_PEeub7nh_4XvDMWnaee-RJZIbQTGJ4dn51_hbdPGdqPKfxzreHjTsS9veJveFNm-bQgp3c2aQRRcXyvKQ_QNCWY5lYU3DRXH347J7FP7-e_np5eRqKL7dVe-p_3r5fXH8s4_aqfRU5YeOdLeY3J_F8c3YTfLg9ieZfeTu_uVjbo1vS64bLmHfLxy5b2om1_Of7lvYEo9S8ygRtVMjzVQ2EccXAhpYly7mijrlYrZli8popcNcmRRSUrCHFGIr2HOdo6jyfOp6iWZ728Wt8rxxy5eQOHGFbVu6BdVela3bNdXrO4NrQn3zPcyP4ltWEwR5acjK-6hhKAoLQIcwB7_qhLlCkGyoamahi5lCW1HpZVkxA3VLrWPAftbVYLjsHx9Xy4mhivaY5FX15KkhLS1rwWufp-EEYBZHrhZGiSWeKPZg3RdMKDH-76qrbIHixkhAqrhryp00L5oG88RMgYWJ74dT1pv6ozbze0prt9w9KHDos7clTmw5j6jP6tVmT4v1FocBWdLqxb7vaDJTpxTsQ7SGGZ0WbtqyiukNu4uj7cG2MCS8ZTVDTkU405mF0KkBU35P-t1kI-m5GBeGluV6Bbzq63Uc-oVu9D11CNrRXISe8Yrj2DHQ_2kNasd-WD3fQI0tIhXtiDz21iEbtTawFHxwv-zmkOMXfRwmVkHEB5Sixv53UuwCd9SJAzGwBBNUKQAz1j-YuNYQG5SOxkz0SB5rXnxSjdm0OOkfbUbRUuGYHbWt7UK3MSUtaHRozKGaZ6k7JiD0l40dVjKeNhGVaO_3KHnd97gcPhEQvW2QeaFYlqAQrTw49Q6iPZBSnu6NFqks28nzEUwlTfn-krSWJptQjIv2bo9nXo2RorJ0AZX1SfbIALT0JSd3p19Ci09couaEx-vhOdkJDAk0lMfVbi0sZSlbqtxaUMrDogokKxN5HvW_AQKHdMPv-wZjLj_9ovs1499MtP-DGHZ8iYzVi_-vPwuQPadz_BpIkxSg:1urn9R:YXoTDxKwypE0qSTbwpxnM6M7DORN_oO912raMnq6riQ	2025-09-11 21:39:33.472002-03
+x4dxtnyni4n96n2z14bf0f764gakjo95	.eJy1VE1T2zAQ_SseX3ohGVv-SnJqA5OSEtLpAJ0OhPGsJTkRlaVUlkOB4b935XxSaHvqKbNv3-4-7frlyc-hsYu8qbnJBfMHfugfHWIF0O9cuQS7AzXXXaqVNaLoOkp3k62755pxOdxwXzRYQL3A6jKkEIaMFkkJUZrSLI0gZFHYgyINioDGRZwllJY0Slka9ilNsiSDhPGwhD4tCDalUBVC1znV-Ks4arrxT6bjgfcuikgURyR-580aEvaJQ7oIdR2GlcdX4wnSSLAlZnsmCTp7cidz9EmjeD3wpnpLupg1QYADb_cigNoGpHgE859kHMySUGgD0g36m7Slrm3OwII_ePJpbcpKMCb5PRhuNR4GrzCdXCZfe7FZ8NUk-3Z91RATn8VjGp9Fp_fVl-WP0dX4UX2yI3NycR0PH9KP48tT2_vcm1KVjqoMH6Fw-4bX2Gw8V0CFRgyWXErBNIJDbeYLgRhTAsP9mxAqOV1AjkWYIEHQ7wS9TuAuK1jetlK4UQbbrxBRKlZCbkLVVPlC3Gk3Olina_5Tb7JLo1dCUQGbWGq6azYEScFQvi46zIRR4qSafMlN7cYjdgxScu-DrIQBZbk3NPpeeVO35yLwSJYeeSPOuGkFY7XlkpdaOSFBFCdpnIYkSd332rTaf7ssJngFbeZh3lQPcfx-7mI0VrUWyGsL7S7JbmcItZ1I0glJJ9puR6sVV2K7ApAWcpT8BnPZYAfHc2cQdY4TyhJDaxq-_eAxbN9zDsbuI2Qam1tRcfe-cBC4jmjyHUQG2xPWDW1M3e7QjQHaLmjgH1hl_03f1W3uZvbaO2-YZ-YfebO3_fMnA61LDvyyM8zaMTP_1n9lsQNZ_6zUqhSmAvPirwAP8fz8C_5zkA8:1ursE1:7SyPrk8SeEe8pBee2EMzUGYVgof8eregIbcFswKN1gI	2025-09-12 03:04:37.317019-03
+xt50kco96ndtnuwpdi00u23mtd1bzg2e	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1us8Uc:3M2PZJO9cErrrOF_fe8Fs6e5fI6vR2YIAVIOOo01LHM	2025-09-12 20:26:50.206371-03
+b8erc9io2f41ajlhhn4psq47dgy5it4o	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urkDY:9O0-NRWObmhCnCFOmWTO77P-fPqs61OWxKnVwkv-cSs	2025-09-11 18:31:36.582056-03
+a9bd0h689ccv22qbuz3rkh177cmoutow	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1urlRO:M5Fx2hUEQjjE4-39KRTlxB0-HYnRtIv0MF6msx5sSRw	2025-09-11 19:49:58.44151-03
+zq72fmsj38n36zfrzi1e479hpcsrj2v0	.eJxVjDsOwjAQBe_iGllZHK8JJT1nsPZj4wBypDipEHeHSCmgfTPzXibSupS4tjTHUc3ZgDn8bkzySHUDeqd6m6xMdZlHtptid9rsddL0vOzu30GhVr51BiEAFfaZHKIEdATq4ESMHXfScx-8SBaHijCI-OADeU2QaRA-mvcHA4M42A:1us6eP:Lw9Ax_-XgNLcNt0WqZzDZ0yrve0eKpTB7I50vAdR8oI	2025-09-12 18:28:49.121725-03
+jrtwnkk5tzsr9ki0916p35kvab252nrv	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v7K58:n2zEClEaSS29x_8rS49EiN-uNPTKzRSxJubdDO_pPx8	2025-10-11 17:51:18.854429-03
+tvcmi3liunlhkrcjjiezytl6g174okpa	.eJylVl1v4joQ_StRXvoCKN8sPN3SqisosLuiX9qmihzHAdMkZp2E0lb973ccOyGwVLvSPpE5Z2Y8nrGPedcDVBaroMwJD2ikD3VT77SxEOFnkgkiWqNsyXqYZQWnYU-49BSb92YsIslI-R4kWKF8BdGxiZFpRjh0Y2R7Hu57NjIj2_yCQs8IDeyETt_FOMa2F3nmAGO37_aRGxEzRgMcWpAUozSkLA8wg9-MQE2P-rTMSD7U5kzzS8scWNrCLw0DuKe9P8JFiRL6hjhEtPAEhYyj5E9pNiwvgggVSB--6zjncUqjKCEviJOCwX5Fa1Zv6eX82_PXcDKJvpKouLp2N2_u9flNn0y-3_-a5mg9vl2O3MVV9MKL-_nMni7xzpz3ry8IGzO9tUqwzpnI-e6fWszXh9qjr_ObX84E_-i_Zvd3ePzwfH_74yGa7UZj_nCzvJi-_XRM89uasgdnsdkW2F6ag0tn83Nxd3W-moa7na93NP-fy_ahPZAmg3lwkovSfH28zBCmTC6ANiRJaMQkNWJ8uaJq6YxK0LZ7lu30bMuRREzwCgWQQ9KWYQy6xpeuYUmaRkGVP4OBRiiSTmbDYbqlyQGYlWmwomumyjMa15zs2IHnhrMtzTBFB2jCcHupEUow4pg0aY5403bVBnmwITwXhUrmAiUJ0c6TlHKUFUQbcfaSaXNfHLTQ0Ky-19GuSER4tT2ZpCAJiVmm6jRsx_Ucz7RcT9K4rDdrGd19I7t9SZMU1fzrskxfHee_pYDgCqdN_SQvUD0gqz0CIOrclts1ra7dajPLtiSjh_1DCRxe2NqnUZsScqoYNW2aB7B-HEuw4KVqbHUfJVj3YoZ4cYxBLC-CgqZEdcgcGmo90KE2YQ1bJygvccnzejCqFIRl34fVd60YqtFKMcTVlB6Pvu_rl_PxUDuzbeg7tP1MA0zJx9l-GmfCsyM4_eJ2PIWAalgypts_iDoaYyu0JVCN-6L6FDIlPJ4OS1Xidlzy3-dhWUx5injQbkZr3I2DRHN1sWeUcMySelISnJRke4jcgVt2CC1Q2JxEiVyylMKTU0MfrTdAieTjqSGcGEGV7rP2f9b8_UlUDWvaJZulP-m_PSatwv4UqWQTnJVmAlYLJoBSLQEDqQRzXxpAjUgCsVdIII7kUT3ntTAqs5FEsA1JCzFUbCODym4ETtSk1E8GtRnQPVHqXvQA-0zxTgoeRNdqJ8raS53ocVnVfjQgICqFA-Y3eZMFSm0TkU3PAKoy1eKkuqP0TG25VrITnlLDgBBjqNULTCFdgFQzB7Paj1Ss2tprldifECqxAaVSAhISpaah9EktI5UJjNYfmc7JC6rqbyiwc3GEmksJAJjyOspvdRGlIa-g_FaXTxgfH_8DyIsR8A:1urple:KZClBHJjZb5XVZHM0TNRD9sbj1MjdBzr9HMH6ULYqoE	2025-09-12 00:27:10.960157-03
+tconx595bmiabbzttldh3gejdp9v8wkg	.eJxVjc1uwjAQhN_F5yrCBDuFY-99Bmu8uyZp0ziyjYpAefc6bYTKceabn7tyuJTeXbIkN7A6Ka1e_nse9CnTCvgD0zk2FKeSBt-skWajuXmPLOPbln0a6JH72g6aoDWTNwGttdTZFppb_Qpvd35HB3_oDFGg1rLVRyLTmQ6GRQccye_r6PdwQ2KHscDJ1zwKOLo_U53uKheZ69EsKccJo-RaWT3HKKiBZZNhWNmvlmtJePBl-QEaVV1C:1usERh:bNYkqTfrAUb58Zk8T9_-QZTpFBZoGHo7-O0GrrRe0Vo	2025-09-13 02:48:13.422162-03
+y7tt51nmtidu7hljmxpyrv3l02hgr0ui	.eJy1U01P3DAQ_StRLlzYlfPN5lQCRaVaFiEEKpQqmtjOxtSxFzsBFsR_7zhs2G1V9daTNW_ezDy_sV_9EvquKXvLTSmYn_uBv7-LVUB_cuUS7B7UUk-pVp0R1dRRppusnZ5pxmWx4f7WoAHbYHUdUAgCRqukhihNaZZGELAoOIAqJRWhcRVnCaU1jVKWBjNKkyzJIGE8qGFGqxCbUmgroW1JNZ6Ko6bv_vHiNPf2oiiM4iiM97y7PgxmoUOmCE0dhpVHV6dzpIVkJGZbZkgmW_Ikc_R5r7jNvYUeSZd3PSE48MdWBNCuBylewPwnGTuzJFTagHSD_iVtpW1XMujAz199ak3dCsYkfwLDO42LwS201xftib5fn93eRtfH4vxLgkuZzw-Lh_P2pulfYkvmq9viRhx-XTyrq8_XL7PZt8qoy4KsH8xJhJdQ6L7hFpudLhVQoRGDFZdSMI1goc2yEYgxJTDc3gmhmtMGSizCREjIbEIOJsRtVrByaKXQUQbjK0SUikchN6Hq27IR99qNJu9py5_1Jrsy-lEoKmATS00_mhUgKRjK34t2M0GUOKmmXHFj3XjEjkBK7h3KVhhQHfcKo5-Ut3A-V8QLs3TfO-GMm0EwVndc8lorJ4REcZLGaRAmqXuv_aD9j81igrcwZNbLvl3H8aeli_Fjte8Cue1g8DL88AyhoVOYTIJwEo3uaPXIlRgtANlBiZL_wlz12MHx3BqELXFCXWPYmZ6PDx7D4T5nYLpthEzTlZ1oubtfkBPXET_5BxTm4wptT3tjBw_dGKCDQbm_81Xe3n4BXX5RhQ:1urqYS:tRAGqoJMHef46sS8j0AYAh1q4IrwfAEZDv9OpHJUx68	2025-09-12 01:17:36.118658-03
+hjl0wx9ypv1qbhiz41ncqdzwlwhyfyh4	.eJx1k9tu2zAMht9F17VhWbZj52ruARmwrYcV2MWKQqAOjtXKUiLbTboi714rSZfGbS_J7yf5U6BeEIW-q2nfSkeVQFOE0cn7HAP-KI0H4gHM3Ibcms4pFnpJuKdt-MsKqU_32qMGNbT1UF1hDhgLztIKSJbxSUYAC4JzYFnEIp6wZJJyXnGSiQwXnKeTdAKpkLiCgrN4aLpS_8AJCroDKpuFliAs3SXR9AW1nVwMgzQw60DLdqjwKSqgA88X0rXWbMkQ8dZVjRJCyxU42dnBOJreIbecLQu9vL6az67Ln-m6_j3rb0uSX8zOm4J9__tIcHrzo6iIvkzW-opEf7Lm5tawjF-WZXS-Qvcn6DODAe-dk6ajO5d3790MJYcoMLZhznscNK6XDEYcFlJrJeyXAmGUZyQPcVyEBBcjXkleAzXAvQoXRR5EeRBPRiolaCvX2yn4IxqqlY-UAPGFhKsnpT9jpm9orR7sdsVoC519UoYr-C_Xlh-an5Wn5cf-R5K4yKLxMzj6FnlFEpM8GlvppJaVNdstSTymvN8tEEfB4TGD8RzZwE72PO-b5yT5NveJ4Zs06H6z2d9gpfZnd3SEHst15-DtRjebzSvG3DTw:1v30co:Xx3iKqJnNzCrb3jyN8fHGRNBC3hjQFlBkVReL5Fnwtk	2025-09-29 20:16:14.674222-03
+t6ew1wt27cloerwo3y8w37xw9wyopx0z	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v7MeS:OAU6CLKIfA6RKNjKBA1jugk084snOoteEplbyVAgzZw	2025-10-11 20:35:56.367356-03
+71q6v69tokysr119u0ty1kotiyuj286f	.eJxVjMGOwjAQQ_8lZ1QRSlLokTvfEDkzE1oILWpSsVrUf9-yVAhutp_th3IYc-PGJINrWdVKq9Vn5kEX6Z6Az-hOfUF9l4fWF89KsdBUHHuWeFi6XwcNUjOvgyZozeRNQGktVbaE5lLv4O3ar2nrt5UhClRatnpPZCpTwbDogD35zXx6b38xsEPMcHK9RQH37hWq-qFSlpuquzHG1b92jIwZTIsNbZT08vKTB7z5NP0BQmFafQ:1v33dl:sB39VSAUnBR10BtaOh4JyLcT5hj2NqpjuroFp5JN1S8	2025-09-29 23:29:25.156329-03
+jovlf5yw26balrkh2u3khxg87yfg41l5	.eJxVjEEOgjAQRe_SNSFtldaydO8ZmikzFbQCoSUaCXcXlBjdzf_vzZ-YhTHVdow02AZZyQrDst_SQXWldiV4gfbc5VXXpqFx-arkG435qUMKx839G6gh1st3paQGw_eScy-I1AG586SM8RKkJiFQHwAVFWqnKme033GxmE4KrwujxDJ6b54woIWQwNKtDwTY2U_JyonFRD0r2zGE7H1bhAQLmLfom0Dxk-mRBvjyeX4B3b5ZVg:1v1e23:SQ2zYCn16F21KjGgKyOD5dXFFS8MvafqO-mS6lVdjUQ	2025-09-26 01:56:39.204917-03
+lqsi8kk7lxx52htcp14ptxpldx4rcsjt	.eJxVjMsOwiAQRf-FtSEgb5fu-w2EmQGpGkhKuzL-uzbpQrf3nHNfLKZtrXEbeYkzsQtzZ3b6HSHhI7ed0D21W-fY27rMwHeFH3TwqVN-Xg_376CmUb-1cAa9tmiDNiFYoQyGkhDJaCdBliSKouxBKudIq-LBAQQEIQt5D8TeH_3OOHw:1v5py5:84PX4__I1vlK8sBaQ28qjHmVz6JFyBh9BGeZicwa894	2025-10-07 15:29:53.681651-03
+qus5bgykd0lqjxz363e798uqksg0f9a3	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v7K7V:uXlBlHgmICbAWDsyDgzgTQcJ9EBhI6vcIFVLXQA9MHU	2025-10-11 17:53:45.819598-03
+keo10wco1kii1jpcrandh864q15mepx8	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v7Ljj:naM57VCIE8PRpQv9m2BVk7rrslmhcUcf8a3AHya9vLU	2025-10-11 19:37:19.022951-03
+r6bw2ypflzfrm2vwva7owrap9pd9ycvs	.eJxdU-9vmzAQ_VcivuRLE4GBEvJp6Tp1m_pL6tZWWyd02EfjFGxm4zRN1f99Z8KSbhISeu-d7x73zGtQgOuWhbNoCimCeRAFR--5EvgTKi-IFahHPeVadUaWU18yHVQ7vdAC65Oh9p8GS7BLOs0ElCFPIJ5lWczKjM_iaFamIfKqynAWZWklWJlEPMkTrI65SDMiUl4KxrIkSqgph6aU2hZc01shefoZfLKjM7SdNvPR-JtxOB49OBblbDS-eXBhiGIc_DoKWm27QkAHwfw14NZUjRSixmcw2GmyTP7SPOcnfHsRtwu8vPoMi6crc_a8vXen1-v7Rbyt74z7oW-_LK6P083qdnm-Le--l_e_j-vN-im8rMifIl8GLTVbOVBEQIt1LYUmpiVvJRAnlCQYs2kcxVPGGFEV8iUUCrjffp6Hk5DRQ4IUnpVaAXUBn8HAcrmW9QCVa4qlXGl7kC1u9IBao9dScQkDrjXfN_sILbz0W4rU7uB7lcWZt2uKFo31FogjtcaR79NhjZVWfkzC4t13cLczFU8OnzfxwWEDvfLy6JqXJPnw6LG_SLuplB_0S8r3yyDKdwpZOonC_TLoxBqV1MMthbqDAtRQGU_CfF_ZOn8pfKwe24ImVBXBfuS5U31KPbiQaLiuD8RXh-sDuiX5XfUNlDurPTrVjaRf4i-kIaYrOtkgMSGb92bof_if8gk57oztd-odAvcpEwDeOUpgCyZ4e_sDF08etw:1v6z8F:_CxOKfeVO47h18NsFhxIIOSqTx2hYtUSBx9MFJm56yg	2025-10-10 19:29:07.310874-03
+6496g8b6eb64x4do7ytyrtatxmrsh4yp	.eJxVjEEOwiAQRe_C2hCgMnRcuvcMZIBBqgaS0q6Md7dNutDtf-_9t_C0LsWvnWc_JXERFsXpdwwUn1x3kh5U703GVpd5CnJX5EG7vLXEr-vh_h0U6mWrIxhHqM5GqayZYUwqZAbEbMg41jq5kRKwhQFiQJcHpTczGJ2dRdDi8wUHzDex:1v1nhW:YT7OOvOba4CU429Jp1HiG_0i6M6Z6y9ZbRjC9PiWVMY	2025-09-26 12:16:06.043642-03
+riz1vmkwz7cikymhlsqfrymsdtrdj6we	.eJxVjc2ugjAQhd-la0P6E6S6dO8zNDPTQbgiJW2NRsO7W5QY7_Kc7_w8hYNr7tw1cXS9F3vRaLH5NRHozONC_B-Mp1BRGHPssVoi1UpTdQyeh8Oa_TfQQepKe0emVaxpV-t2a4yWaDypVmntmS1KkrWxgEiSJVqjiGyNTJaaBhRKU0Zv_QOidzBkcHyZBgYf3McU-6dImadyNHFMYYSBU6ksnvOQoQTmVbb9wt6a7znCl8_zCxrmXQ4:1v6ilE:OeWa8tb0JZAFxjx0S1N9w-v9dWJCuYF1IH0-KV48OKY	2025-10-10 02:00:16.954218-03
+p5svpqvyvpbbi37xq891djyihebeultu	.eJxVjUEOwiAQRe_C2jSAFsSle89Ahs5gq7U0gNFoenepNkaX89_7f57MwjW39poo2g7ZjtWGrX5DB82ZhpngCYZjqJow5Ni5alaqhabqEJD6_eL-DbSQ2tJulNRg-EZy7gWR2iJ3npQxXoLUJATqLaCiWq1V44z2ay6K6aTwujZKlNFb94CIFvoMli5jT4DBfkK2e7KUaSyPRoopDNBTKpU5swgZijAtp-9m9r7pniN8-TS9AKx6XBs:1v1x7l:3ypLU0kVhrvQht5thGOUFEPFtoLPdNKS0voWifhzMB4	2025-09-26 22:19:49.54208-03
+sm4bu4izxo6k4vqrg6aukae72p1wowif	.eJxVjU0OgjAQhe_StSEUCgWW7j1DM3SmgiIlbYlGwt0tSowu3_vez8IUzKFTsyenemQNk5wdfs0W9JXGjeAFxrNNtB2D69tkiyQ79cnJIg3HPfs30IHvYhtIl8ZkRWWKOq9TA0JqyVGKSus2JS1LrrnMSAIvyoyAUm7yGg2RqEoUVRy9909wqGAIoOg2DQRo1cdkzcJ8oCkeTeS8HWEgHyubpxACxMC6S9Nv7K3pERx8-bq-ACmZXRY:1v54Tr:BJ90x8pYTxOXaOP_BfLfgUuQMbVbmRSi0eTAR3WxFYY	2025-10-05 12:47:31.567237-03
+vpomuay1aqxz2fa5cbavyqy0w5v11h7c	.eJxVjEEOwiAQRe_C2pBCBQaX7nsGMsyAVA0kpV0Z765NutDtf-_9lwi4rSVsPS1hZnERYMXpd4xIj1R3wnestyap1XWZo9wVedAup8bpeT3cv4OCvXxrxKS99axGsNmZSBYGGBV5AlYug8ZBWTZgdMJkmB1kyqSiB3922pN4fwANJTg0:1v8661:vJzpuIEXhu8VxOK9_UB1UFaPsbaunnF4JgI9HsN-eGM	2025-10-13 21:07:25.016487-03
+dcqb8akkr2lc7dwgf4xiyl5wndh7fayp	.eJxVjEEOgjAQRe_SNSG0FIss3XuGZtqZClqB0BKNhLsLQozu5r_3509MwxhrPQYadIOsYpwlv8yAvVG7CrxCe-lS27VxaEy6VtLdhvTcIfnT3v0bqCHUy7dAMJmVkJdK5cIoW-a8NEVG1jlFJVeFQ2Ekt_IoyR0sFmoBhTUohJJcLqOP5gUDavARNN17T4Cd3iCrJhYi9axqR--Tz60RIixi3qNrPIUt0zMO8PXz_Ab0RFnW:1v4s2i:zZjWAAeJjWJBdhT9aot3AyF58GsYpz3y3bHpXsPaieM	2025-10-04 23:30:40.922145-03
+kzqh5q69udhbl8hrghxzimph07ibja3x	.eJxVjMEOwiAQRP-FsyGsBel69N5vIAssUjWQlPZk_Hdp0oNe5jDz3ryFo23Nbmu8uDmKqwBx-u08hSeXfYgPKvcqQy3rMnu5I_JYm5xq5NftYP8OMrXcbWXPAyB6Th48GrRRo0oaBlDYAwIFhcoq4zWBTekyAifuCluDI7H4fAG59zcW:1v7OXS:GEl8mzW_w-gaq22JAdA4kRs7f8psZSIwT-snBLUbQW8	2025-10-11 22:36:50.772427-03
+umm4jpjfndcibch1fv2yvj5lplm4vcx9	.eJxVjMEOwiAQRP-FsyGsBel69N5vIAssUjWQlPZk_Hdp0oNe5jDz3ryFo23Nbmu8uDmKqwBx-u08hSeXfYgPKvcqQy3rMnu5I_JYm5xq5NftYP8OMrXcbWXPAyB6Th48GrRRo0oaBlDYAwIFhcoq4zWBTekyAifuCluDI7H4fAG59zcW:1v7OY9:Eomp2FSROCXJ6piJGWeJUblhxfwdCfkqUuRd2h0HJNo	2025-10-11 22:37:33.339995-03
+bgfapf4a0a9am4wbsf2r2bo3bgufx48q	.eJxVjMEOwiAQRP-FsyGsBel69N5vIAssUjWQlPZk_Hdp0oNe5jDz3ryFo23Nbmu8uDmKqwBx-u08hSeXfYgPKvcqQy3rMnu5I_JYm5xq5NftYP8OMrXcbWXPAyB6Th48GrRRo0oaBlDYAwIFhcoq4zWBTekyAifuCluDI7H4fAG59zcW:1v7OYW:UYfWvK5XZp779fGh951kzBNIgJE7qNJoWukKQn8v0F4	2025-10-11 22:37:56.225389-03
+c56tfhmloeimwn7eg2mqz1iqmz8ozf5u	.eJxVjEEOwiAQRe_C2hCgMnRcuvcMZIBBqgaS0q6Md7dNutDtf-_9t_C0LsWvnWc_JXERFsXpdwwUn1x3kh5U703GVpd5CnJX5EG7vLXEr-vh_h0U6mWrIxhHqM5GqayZYUwqZAbEbMg41jq5kRKwhQFiQJcHpTczGJ2dRdDi8wUHzDex:1v1oRd:rnGI8_IwqsyPF_e5UGgMbh_4spX3q2nOMhiSLv7qAt0	2025-09-26 13:03:45.988812-03
+ygzmg41jj5cetqc4md6sh4ppbam2g0pv	.eJxVjMEOwiAQRP-FsyGsBel69N5vIAssUjWQlPZk_Hdp0oNe5jDz3ryFo23Nbmu8uDmKqwBx-u08hSeXfYgPKvcqQy3rMnu5I_JYm5xq5NftYP8OMrXcbWXPAyB6Th48GrRRo0oaBlDYAwIFhcoq4zWBTekyAifuCluDI7H4fAG59zcW:1v7jc5:gIx6YfDMHkArLU7Y5cB0OkIbu2QX0Cv59ujq_LNSeLM	2025-10-12 21:07:01.786062-03
+cyh41u3ewb7ljjvu2wp44mvd7cglkt94	.eJxVjcEOwiAQRP-FsyFgWyk9evcbyFIWW63QAI3Gpv8u1cboZZOZNzM7EwVT6tQUMajekIZwsvv1NLRXdCswF3BnT1vvUug1XSN0o5GevMHhuGX_BjqIXW4zsS-4lBqt5lpWUphSMlvygjOZD2-hZZIJVukSuLD2UHO0mCsoKlkD5tF7_4RgFAwJFN7GAcF49TFJM5OYcMyPRgzROxgw5srqKQMJcmDZpO1X9tb4SAG-fFleIsNbgA:1v7OZ6:28lo-jvG_niVC-RXFwrjRWt7-dLHibvrI3wIaiSfP88	2025-10-11 22:38:32.124348-03
+t8q9c5ujbf6ru1a3s2awl2rjn5hws5fn	.eJxVjcEOwiAQRP-FsyFgWyk9evcbyFIWW63QAI3Gpv8u1cboZZOZNzM7EwVT6tQUMajekIZwsvv1NLRXdCswF3BnT1vvUug1XSN0o5GevMHhuGX_BjqIXW4zsS-4lBqt5lpWUphSMlvygjOZD2-hZZIJVukSuLD2UHO0mCsoKlkD5tF7_4RgFAwJFN7GAcF49TFJM5OYcMyPRgzROxgw5srqKQMJcmDZpO1X9tb4SAG-fFleIsNbgA:1v7OZJ:6WIV30-0wmpHsdD0oPSoJ1jjbqlC7EzwdpnonOBKYEQ	2025-10-11 22:38:45.825951-03
+afhlzzufk1kq95pweguc1ixksghwkp9u	.eJxVjDsOwjAQBe_iGlnxjzWU9DmD5d21cQDZUpxUiLuTSCmgnZn33iLEdSlh7WkOE4urUOL0yzDSM9Vd8CPWe5PU6jJPKPdEHrbLsXF63Y7276DEXra15ogD2Wg8gNEI5I3y6IZEOUPyClxmjVaRvdiUz8QONuAIWWuwyorPF_DDODE:1v6zz6:vzdBy_6gtSp072OIT9azwtm8EqvXvVV6ZY_37qHxevs	2025-10-10 20:23:44.826163-03
+cbkvmanpz55av4f38cecodg1f93eh2fg	.eJxVjMEOwiAQRP-FsyGsBel69N5vIAssUjWQlPZk_Hdp0oNe5jDz3ryFo23Nbmu8uDmKqwBx-u08hSeXfYgPKvcqQy3rMnu5I_JYm5xq5NftYP8OMrXcbWXPAyB6Th48GrRRo0oaBlDYAwIFhcoq4zWBTekyAifuCluDI7H4fAG59zcW:1v8JOn:ox9tbd1zFcDAZP7jqs0OqaaSag5lueDBiLtfOnudI7s	2025-10-14 11:19:41.747391-03
+sqxgfoz3gtj62jgbosct4xh3wxf9uzgs	.eJxVjMEOgjAQRP-lZ0JaAUs5evcbmm27lWoFQks0Ev7dIsToZbMzb2ZmImGKrZwCjtIZ0hBGsl9Pgb5htwJzhe7S57rv4uhUvkbynYb83Bv0pz37N9BCaFOb8kPBhFBoFVOiEtyUgtqSFYyKdJgGTQXltFIlMG7tsWZoMVWQV6IGTKMP94LRSPARJN4Hj2B6uZmkmUmIOJCmm7zPPr80ECGBZZfWeQybxmcc4cuX5Q1Y31i7:1v7OaL:JHrEB9apJMXFVmFyal9fXSaAAYO8AuEL7WquXSzAmxM	2025-10-11 22:39:49.639023-03
+jw7fpiq91xm9bkg1s4gkxaqfjgme3s7c	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v7KHd:ukynmzDsXJyAUu8uInhJ5yaWktZ7ratUqqTAE9BgyQs	2025-10-11 18:04:13.660838-03
+u8rgusjx2didnpvkjvsw288h1t4v34ea	.eJxVjMEOwiAQRP-FsyGsBel69N5vIAssUjWQlPZk_Hdp0oNe5jDz3ryFo23Nbmu8uDmKqwBx-u08hSeXfYgPKvcqQy3rMnu5I_JYm5xq5NftYP8OMrXcbWXPAyB6Th48GrRRo0oaBlDYAwIFhcoq4zWBTekyAifuCluDI7H4fAG59zcW:1v8NQk:vQeZta6FKPn51H1Oxw0_GtgrgSplWiO1j1yoevwZkLM	2025-10-14 15:37:58.7276-03
+3qs1j1r9hfue1ot1hj3auobg7mlslqwe	.eJxVjcEOwiAQRP-FsyFgWyk9evcbyFIWW63QAI3Gpv8u1cboZZOZNzM7EwVT6tQUMajekIZwsvv1NLRXdCswF3BnT1vvUug1XSN0o5GevMHhuGX_BjqIXW4zsS-4lBqt5lpWUphSMlvygjOZD2-hZZIJVukSuLD2UHO0mCsoKlkD5tF7_4RgFAwJFN7GAcF49TFJM5OYcMyPRgzROxgw5srqKQMJcmDZpO1X9tb4SAG-fFleIsNbgA:1v7OfK:ixNBkboO6p_xvhmD90qpFeS4hIDZRz1HlmSXS5xjbvo	2025-10-11 22:44:58.246943-03
+rediditc3n59lo41p9ymkz8lyfmc75w7	.eJw9im0KgCAMhu-y353Ay4wXnCCsFDcoEu9eWfTz-ei05xMtMtTBslYVxMKvpNDJXCoFqtKsbFAxWqbjCMc9jA9TftpkObzh72NcahQlNw:1v7LnY:nicbB1X7px-wZrRPudKCXd2AIcOWzL0YullizCdtzAs	2025-10-11 19:41:16.010632-03
+y5potucdp8haukdnr103anit9kee7pwu	.eJxVjcEOwiAQRP-FsyFgWyk9evcbyFIWW63QAI3Gpv8u1cboZZOZNzM7EwVT6tQUMajekIZwsvv1NLRXdCswF3BnT1vvUug1XSN0o5GevMHhuGX_BjqIXW4zsS-4lBqt5lpWUphSMlvygjOZD2-hZZIJVukSuLD2UHO0mCsoKlkD5tF7_4RgFAwJFN7GAcF49TFJM5OYcMyPRgzROxgw5srqKQMJcmDZpO1X9tb4SAG-fFleIsNbgA:1v7a6a:cn_dtDHN-WeJUnkwb10HnD4OQhZas8GhopxaaugqwFw	2025-10-12 10:57:52.414426-03
 \.
 
 
 --
--- Data for Name: nucleo_convenio; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_convenio; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_convenio (id_convenio, tipo_convenio) FROM stdin;
@@ -1395,43 +1308,32 @@ COPY public.nucleo_convenio (id_convenio, tipo_convenio) FROM stdin;
 
 
 --
--- Data for Name: nucleo_empleado; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_empleado; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_empleado (fecha_e, "Idempleado", nombres, apellido, dni, fecha_nac, num_hijos, dr_personal, telefono, cuil, id_civil, id_localidad, id_nacionalidad, id_sexo) FROM stdin;
-2025-08-23	15	Ana Maria	Gomez	11868411	1955-12-27	2	Rivadavia 276	3512456789	27-11868411-2	2	33	1	2
-2025-08-19	5	Rafael	Galarze	20222223	1986-03-30	1	Calle angosta 2	351-8796303	20202222235	1	2957	1	1
-2025-08-01	1	TestCambio	Principal	12345678	1990-01-01	0	Calle Falsa 123	000000000	20-12345678-9	1	2960	1	1
-2025-08-01	3	Jeremias	Galarze	29144742	1982-07-01	2	alta 234	54343432XYX	20291447423	1	2957	1	1
+2025-08-01	1	Admin	Principal	12345678	1990-01-01	0	Calle Falsa 123	000000000	20-12345678-9	1	2960	1	1
 \.
 
 
 --
--- Data for Name: nucleo_empleado_el; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_empleado_el; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_empleado_el (id, fecha_el, alta_ant, id_estado, idempleado, id_convenio, id_puesto, fecha_est) FROM stdin;
-4	2025-08-19	2023-08-15	1	5	4	6	2023-08-01
-15	2025-08-23	1980-05-19	1	15	1	4	1980-05-19
-29	2025-08-28	2020-01-01	2	1	1	4	\N
-14	2025-08-23	2025-05-01	1	3	1	4	2025-06-02
 \.
 
 
 --
--- Data for Name: nucleo_empleado_eo; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_empleado_eo; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_empleado_eo (id, fecha_eo, idempleado, id_sucursal) FROM stdin;
-5	2025-08-19	5	5
-1	2025-08-01	1	4
-14	2025-08-23	15	4
-34	2025-08-01	3	4
 \.
 
 
 --
--- Data for Name: nucleo_estado_empleado; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_estado_empleado; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_estado_empleado (id_estado, estado) FROM stdin;
@@ -1442,7 +1344,7 @@ COPY public.nucleo_estado_empleado (id_estado, estado) FROM stdin;
 
 
 --
--- Data for Name: nucleo_estado_lic_vac; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_estado_lic_vac; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_estado_lic_vac (id_estado, estado) FROM stdin;
@@ -1453,7 +1355,7 @@ COPY public.nucleo_estado_lic_vac (id_estado, estado) FROM stdin;
 
 
 --
--- Data for Name: nucleo_estadocivil; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_estadocivil; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_estadocivil (id, estado_civil) FROM stdin;
@@ -1465,7 +1367,7 @@ COPY public.nucleo_estadocivil (id, estado_civil) FROM stdin;
 
 
 --
--- Data for Name: nucleo_feriado; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_feriado; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_feriado (id_feriado, descripcion, fecha) FROM stdin;
@@ -1487,9 +1389,6 @@ COPY public.nucleo_feriado (id_feriado, descripcion, fecha) FROM stdin;
 33	Feriado turístico (puente por Día del Respeto a la Diversidad Cultural)	2025-10-10
 34	Feriado turístico (puente después de Navidad)	2025-12-26
 35	Viernes Santo	2025-04-18
-36	Pascua Judía (Festividad)	2025-04-13
-37	Día de la Pascua de los Judíos (Festividad)	2025-04-14
-38	Año Nuevo Judío (Festividad)	2025-09-23
 39	Día del Perdón (Festividad)	2025-10-02
 40	Año Nuevo	2026-01-01
 41	Día del Trabajador	2026-05-01
@@ -1509,15 +1408,12 @@ COPY public.nucleo_feriado (id_feriado, descripcion, fecha) FROM stdin;
 55	Feriado turístico (puente por Día del Respeto a la Diversidad Cultural)	2026-10-09
 56	Feriado turístico (puente después de Navidad)	2026-12-26
 57	Viernes Santo	2026-04-03
-58	Pascua Judía (Festividad)	2026-04-01
-59	Día de la Pascua de los Judíos (Festividad)	2026-04-02
-60	Año Nuevo Judío (Festividad)	2026-09-11
 61	Día del Perdón (Festividad)	2026-09-20
 \.
 
 
 --
--- Data for Name: nucleo_localidad; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_localidad; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_localidad (id, localidad, provincia_id) FROM stdin;
@@ -4256,33 +4152,23 @@ COPY public.nucleo_localidad (id, localidad, provincia_id) FROM stdin;
 2959	Esquina	20
 2960	CABA	1
 2962	Lujan	17
+2967	TestLocalidad123	20
+2968	TEST	22
+2969	Calandria	2
+2970	TEST	1
 \.
 
 
 --
--- Data for Name: nucleo_log_auditoria; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_log_auditoria; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_log_auditoria (id, idusuario, fecha_cambio, nombre_tabla, idregistro, accion, cambio) FROM stdin;
-1	1	2025-09-23 19:21:36.101881+00	auth_user	70	insert	{"email": "prueba@prueba.com", "is_staff": true, "username": "pruebalog", "last_name": "Log", "first_name": "Prueba"}
-2	1	2025-09-23 19:21:36.10412+00	Empleado	70	insert	{"dni": "11.111.223", "cuil": "20-11111223-2", "nombres": "Prueba", "apellido": "Log", "telefono": "03544854", "fecha_nac": "2006-12-31"}
-3	1	2025-09-23 19:21:36.105208+00	Empleado_el	44	insert	{"alta_ant": "2025-12-31", "id_estado": 1, "id_puesto": 4, "id_convenio": 1}
-4	1	2025-09-23 19:21:36.106143+00	Plan_trabajo	59	insert	{"dias": {"lunes": true, "jueves": true, "martes": true, "sabado": true, "domingo": false, "viernes": true, "miercoles": true}, "nombres": "Prueba", "apellido": "Log", "end_time": "08:00:00", "idempleado": 70, "start_time": "00:00:00"}
-5	1	2025-09-23 19:21:36.106937+00	Empleado_eo	43	insert	{"nombres": "Prueba", "apellido": "Log", "fecha_eo": "2025-09-23", "idempleado": 70, "id_sucursal": 4}
-6	1	2025-09-23 19:22:58.504919+00	Empleado	70	update	{"fields_changed": ["Nombres: 'Prueba' → 'Prueba1'", "Apellido: 'Log' → 'Log1'", "DNI: '11.111.223' → '11.111.221'", "Fecha Nacimiento: '2006-12-31' → '2006-12-01'", "Nacionalidad: 'Argentina' → 'Boliviana'", "Estado Civil: 'Soltero/a' → 'Casado/a'", "Cantidad de hijos: '0' → '1'", "Sexo: 'Masculino' → 'Femenino'", "Localidad: 'CABA' → 'Barranca Larga'", "Provincia: 'Buenos Aires' → 'Catamarca'", "Dirección: 'Calle Prueba 123' → 'Calle Prueba 1'", "Teléfono: '03544854' → '0354485411'", "CUIL: '20-11.111.223-2' → '27-11.111.221-0'", "Email: 'prueba@prueba.com' → 'prueba1@prueba.com'", "Estado: 'Activo' → 'Baja'", "Fecha Estado: '2022-12-31' → '2022-12-01'", "Convenio: 'CCT 430/05' → 'Fuera de convenio'", "Antigüedad: '2025-12-31' → '2025-12-01'", "Puesto: 'Administrador general' → 'Cadete'", "Dejó de ser Gestor"], "target_username": "pruebalog"}
-7	1	2025-09-23 19:22:58.517136+00	Empleado_el	44	update	{"id": null, "changed": {"alta_ant": {"new": "2025-12-01", "old": "2025-12-31"}, "fecha_est": {"new": "2022-12-01", "old": "2022-12-31"}, "id_estado": {"new": "Baja", "old": "Activo"}, "id_puesto": {"new": "Cadete", "old": "Administrador general"}, "id_convenio": {"new": "Fuera de convenio", "old": "CCT 430/05"}}}
-8	1	2025-09-23 19:22:58.519384+00	Empleado_eo	43	update	{"id": 43, "changed": {"id_sucursal": {"new": 5, "old": 4}}}
-9	1	2025-09-23 19:22:58.52144+00	Plan_trabajo	59	update	{"id": null, "changed": {"sabado": {"new": false, "old": true}, "end_time": {"new": "08:01", "old": "08:00"}, "start_time": {"new": "00:01", "old": "00:00"}}}
-10	1	2025-09-23 19:23:21.148702+00	Plan_trabajo	59	delete	{"id": 59, "dias": {"lunes": true, "jueves": true, "martes": true, "sabado": false, "domingo": false, "viernes": true, "miercoles": true}, "end_time": "08:01", "idempleado": 70, "start_time": "00:01", "target_username": "pruebalog"}
-11	1	2025-09-23 19:23:21.152101+00	Empleado_el	44	delete	{"id": 44, "alta_ant": "2025-12-01", "fecha_est": "2022-12-01", "id_estado": 2, "id_puesto": 7, "idempleado": 70, "id_convenio": 4, "target_username": "pruebalog"}
-12	1	2025-09-23 19:23:21.154187+00	Empleado_eo	43	delete	{"id": 43, "fecha_eo": "2025-09-23", "idempleado": 70, "id_sucursal": 5, "target_username": "pruebalog"}
-13	1	2025-09-23 19:23:21.155065+00	Empleado	70	delete	{"dni": "11111221", "cuil": "27111112210", "nombres": "Prueba1", "apellido": "Log1", "telefono": "0354485411", "idempleado": 70, "id_localidad": 253, "target_username": "pruebalog"}
-14	1	2025-09-23 19:23:21.155894+00	auth_user	70	delete	{"email": "prueba1@prueba.com", "username": "pruebalog", "target_username": "pruebalog"}
 \.
 
 
 --
--- Data for Name: nucleo_nacionalidad; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_nacionalidad; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_nacionalidad (id, nacionalidad) FROM stdin;
@@ -4302,28 +4188,24 @@ COPY public.nucleo_nacionalidad (id, nacionalidad) FROM stdin;
 
 
 --
--- Data for Name: nucleo_pers_juridica; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_pers_juridica; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_pers_juridica (id_pers_juridica, pers_juridica, domicilio, cond_iva, cuit, cond_iibb) FROM stdin;
-1	Ana Maria Gomez de Galarze	San Juan 272 - Rio Ceballos	Responsable Inscripto	27118684139	Ingresos Brutos Local - Mensual
+1	Jeremias Galarze	San Juan 272 - Rio Ceballos	Monotributista	289993234	89993
 \.
 
 
 --
--- Data for Name: nucleo_plan_trabajo; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_plan_trabajo; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_plan_trabajo (id, lunes, martes, miercoles, jueves, viernes, sabado, domingo, start_time, end_time, idempleado) FROM stdin;
-16	t	t	t	t	t	t	f	09:00:00	21:00:00	15
-5	t	t	f	f	t	t	t	09:00:00	21:00:00	5
-1	f	f	t	t	t	f	f	09:00:00	18:00:00	1
-15	t	t	t	t	t	t	f	09:01:00	21:00:00	3
 \.
 
 
 --
--- Data for Name: nucleo_provincia; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_provincia; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_provincia (id, provincia) FROM stdin;
@@ -4354,7 +4236,7 @@ COPY public.nucleo_provincia (id, provincia) FROM stdin;
 
 
 --
--- Data for Name: nucleo_puesto; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_puesto; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_puesto (id_puesto, tipo_puesto) FROM stdin;
@@ -4372,7 +4254,7 @@ COPY public.nucleo_puesto (id_puesto, tipo_puesto) FROM stdin;
 
 
 --
--- Data for Name: nucleo_sexo; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_sexo; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_sexo (id, sexo) FROM stdin;
@@ -4383,47 +4265,32 @@ COPY public.nucleo_sexo (id, sexo) FROM stdin;
 
 
 --
--- Data for Name: nucleo_solicitud_licencia; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_solicitud_licencia; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_solicitud_licencia (idsolicitudlic, fecha_sqllc, fecha_desde, fecha_hasta, comentario, texto_gestor, archivo, id_estado, idempleado, id_licencia) FROM stdin;
-74	2025-08-30	2025-10-24	2026-01-21		algo	\N	4	15	1
-14	2025-08-25	2025-09-07	2025-09-08	ji	\nsolapa con otra licencia	\N	4	5	2
-79	2025-09-09	2025-09-08	2025-09-08	Examen TESIS	Usted no esta estudiando.	\N	4	5	6
-13	2025-08-23	2025-08-26	2025-08-27			\N	4	15	26
-80	2025-09-09	2025-09-09	2025-09-09			\N	4	5	26
-73	2025-08-30	2025-08-29	2025-08-31			\N	3	3	26
-85	2025-09-09	2025-06-08	2025-06-08			\N	3	3	26
-122	2025-09-22	2025-11-18	2025-11-19			\N	3	5	2
-124	2025-09-22	2025-10-02	2025-10-04	Solicitud normal para aprobar		\N	1	5	1
-125	2025-09-22	2025-10-07	2025-10-07			\N	3	5	5
-129	2025-09-23	2025-12-01	2025-12-02			\N	3	5	2
 \.
 
 
 --
--- Data for Name: nucleo_solicitud_vacaciones; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_solicitud_vacaciones; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_solicitud_vacaciones (idsolicitudvac, fecha_sol_vac, fecha_desde, fecha_hasta, comentario, id_estado, idempleado) FROM stdin;
-33	2025-09-22	2025-10-20	2025-10-26		1	3
-3	2024-11-01	2024-12-12	2024-12-22	Solicitud creada manualmente para pruebas: periodo 12/12/2024 - 22/12/2024 - Motivo rechazo: Test motivo de rechazo desde consola	4	5
 \.
 
 
 --
--- Data for Name: nucleo_sucursal; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_sucursal; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_sucursal (id_sucursal, sucursal, suc_dire, suc_mail, id_pers_juridica) FROM stdin;
 4	Sucursal San Basilio	Rivadavia 276 -San Basilio	farmaciagg@gmail.com	1
-5	Sucursal San Roque	Suipacha 476 - San RoqueRoque	farmaciapp@gmail.com	1
-6	Sucursal Centro	Colon 1276 - Centro	farmaciass@gmail.com	1
 \.
 
 
 --
--- Data for Name: nucleo_tipo_licencia; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_tipo_licencia; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_tipo_licencia (id_licencia, descripcion, dias, pago) FROM stdin;
@@ -4439,223 +4306,218 @@ COPY public.nucleo_tipo_licencia (id_licencia, descripcion, dias, pago) FROM std
 
 
 --
--- Data for Name: nucleo_vacaciones_otorgadas; Type: TABLE DATA; Schema: public; Owner: -
+-- Data for Name: nucleo_vacaciones_otorgadas; Type: TABLE DATA; Schema: public; Owner: rrhh_user
 --
 
 COPY public.nucleo_vacaciones_otorgadas (id_vacaciones, inicio_consumo, fin_consumo, dias_disponibles, dias_consumidos, idempleado) FROM stdin;
-116	2025-01-01	2025-12-31	14	0	3
-117	2025-01-01	2025-12-31	35	0	15
-118	2025-01-01	2025-12-31	14	0	5
-119	2025-01-01	2025-12-31	21	0	1
-22	2024-12-12	2024-12-22	14	11	5
 \.
 
 
 --
--- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
--- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 
 
 --
--- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.auth_permission_id_seq', 116, true);
 
 
 --
--- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 
 
 --
--- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public.auth_user_id_seq', 70, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 89, true);
 
 
 --
--- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 
 
 --
--- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.django_admin_log_id_seq', 1, false);
 
 
 --
--- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.django_content_type_id_seq', 29, true);
 
 
 --
--- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public.django_migrations_id_seq', 32, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 36, true);
 
 
 --
--- Name: nucleo_convenio_id_convenio_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_convenio_id_convenio_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_convenio_id_convenio_seq', 6, true);
 
 
 --
--- Name: nucleo_empleado_el_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_empleado_el_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public.nucleo_empleado_el_id_seq', 44, true);
-
-
---
--- Name: nucleo_empleado_eo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.nucleo_empleado_eo_id_seq', 43, true);
+SELECT pg_catalog.setval('public.nucleo_empleado_el_id_seq', 1, false);
 
 
 --
--- Name: nucleo_estado_empleado_ID_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
+--
+
+SELECT pg_catalog.setval('public.nucleo_empleado_eo_id_seq', 1, false);
+
+
+--
+-- Name: nucleo_estado_empleado_ID_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public."nucleo_estado_empleado_ID_estado_seq"', 11, true);
 
 
 --
--- Name: nucleo_estado_lic_vac_ID_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_estado_lic_vac_ID_estado_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public."nucleo_estado_lic_vac_ID_estado_seq"', 7, true);
+SELECT pg_catalog.setval('public."nucleo_estado_lic_vac_ID_estado_seq"', 6, true);
 
 
 --
--- Name: nucleo_estadocivil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_estadocivil_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_estadocivil_id_seq', 6, true);
 
 
 --
--- Name: nucleo_feriado_id_Feriado_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_feriado_id_Feriado_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public."nucleo_feriado_id_Feriado_seq"', 84, true);
-
-
---
--- Name: nucleo_localidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.nucleo_localidad_id_seq', 2966, true);
+SELECT pg_catalog.setval('public."nucleo_feriado_id_Feriado_seq"', 94, true);
 
 
 --
--- Name: nucleo_log_auditoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_localidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public.nucleo_log_auditoria_id_seq', 14, true);
+SELECT pg_catalog.setval('public.nucleo_localidad_id_seq', 2970, true);
 
 
 --
--- Name: nucleo_nacionalidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_log_auditoria_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
+--
+
+SELECT pg_catalog.setval('public.nucleo_log_auditoria_id_seq', 1, false);
+
+
+--
+-- Name: nucleo_nacionalidad_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_nacionalidad_id_seq', 17, true);
 
 
 --
--- Name: nucleo_pers_juridica_id_pers_juridica_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_pers_juridica_id_pers_juridica_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_pers_juridica_id_pers_juridica_seq', 3, true);
 
 
 --
--- Name: nucleo_plan_trabajo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_plan_trabajo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public.nucleo_plan_trabajo_id_seq', 59, true);
+SELECT pg_catalog.setval('public.nucleo_plan_trabajo_id_seq', 1, false);
 
 
 --
--- Name: nucleo_provincia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_provincia_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_provincia_id_seq', 28, true);
 
 
 --
--- Name: nucleo_puesto_id_puesto_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_puesto_id_puesto_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_puesto_id_puesto_seq', 15, true);
 
 
 --
--- Name: nucleo_sexo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_sexo_id_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_sexo_id_seq', 5, true);
 
 
 --
--- Name: nucleo_solicitud_licencia_idSolicitudLic_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia_idSolicitudLic_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public."nucleo_solicitud_licencia_idSolicitudLic_seq"', 130, true);
-
-
---
--- Name: nucleo_solicitud_vacaciones_idSolicitudVac_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public."nucleo_solicitud_vacaciones_idSolicitudVac_seq"', 40, true);
+SELECT pg_catalog.setval('public."nucleo_solicitud_licencia_idSolicitudLic_seq"', 1, false);
 
 
 --
--- Name: nucleo_sucursal_id_sucursal_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones_idSolicitudVac_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
+--
+
+SELECT pg_catalog.setval('public."nucleo_solicitud_vacaciones_idSolicitudVac_seq"', 1, false);
+
+
+--
+-- Name: nucleo_sucursal_id_sucursal_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
 SELECT pg_catalog.setval('public.nucleo_sucursal_id_sucursal_seq', 9, true);
 
 
 --
--- Name: nucleo_tipo_licencia_id_Licencia_seq; Type: SEQUENCE SET; Schema: public; Owner: -
+-- Name: nucleo_tipo_licencia_id_Licencia_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
 --
 
-SELECT pg_catalog.setval('public."nucleo_tipo_licencia_id_Licencia_seq"', 38, true);
-
-
---
--- Name: nucleo_vacaciones_otorgadas_id_vacaciones_seq; Type: SEQUENCE SET; Schema: public; Owner: -
---
-
-SELECT pg_catalog.setval('public.nucleo_vacaciones_otorgadas_id_vacaciones_seq', 120, true);
+SELECT pg_catalog.setval('public."nucleo_tipo_licencia_id_Licencia_seq"', 37, true);
 
 
 --
--- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_vacaciones_otorgadas_id_vacaciones_seq; Type: SEQUENCE SET; Schema: public; Owner: rrhh_user
+--
+
+SELECT pg_catalog.setval('public.nucleo_vacaciones_otorgadas_id_vacaciones_seq', 1, false);
+
+
+--
+-- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_group
@@ -4663,7 +4525,7 @@ ALTER TABLE ONLY public.auth_group
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -4671,7 +4533,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -4679,7 +4541,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_group
@@ -4687,7 +4549,7 @@ ALTER TABLE ONLY public.auth_group
 
 
 --
--- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -4695,7 +4557,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -4703,7 +4565,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -4711,7 +4573,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -4719,7 +4581,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user
@@ -4727,7 +4589,7 @@ ALTER TABLE ONLY public.auth_user
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -4735,7 +4597,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -4743,7 +4605,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user
@@ -4751,7 +4613,7 @@ ALTER TABLE ONLY public.auth_user
 
 
 --
--- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -4759,7 +4621,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.django_content_type
@@ -4767,7 +4629,7 @@ ALTER TABLE ONLY public.django_content_type
 
 
 --
--- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.django_content_type
@@ -4775,7 +4637,7 @@ ALTER TABLE ONLY public.django_content_type
 
 
 --
--- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.django_migrations
@@ -4783,7 +4645,7 @@ ALTER TABLE ONLY public.django_migrations
 
 
 --
--- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.django_session
@@ -4791,7 +4653,7 @@ ALTER TABLE ONLY public.django_session
 
 
 --
--- Name: nucleo_convenio nucleo_convenio_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_convenio nucleo_convenio_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_convenio
@@ -4799,7 +4661,7 @@ ALTER TABLE ONLY public.nucleo_convenio
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_CUIL_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_CUIL_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -4807,7 +4669,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_Dni_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_Dni_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -4815,7 +4677,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_empleado_el nucleo_empleado_el_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_el nucleo_empleado_el_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_el
@@ -4823,7 +4685,7 @@ ALTER TABLE ONLY public.nucleo_empleado_el
 
 
 --
--- Name: nucleo_empleado_eo nucleo_empleado_eo_Fecha_EO_Idempleado_854dd74d_uniq; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_Fecha_EO_Idempleado_854dd74d_uniq; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_eo
@@ -4831,7 +4693,7 @@ ALTER TABLE ONLY public.nucleo_empleado_eo
 
 
 --
--- Name: nucleo_empleado_eo nucleo_empleado_eo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_eo
@@ -4839,7 +4701,7 @@ ALTER TABLE ONLY public.nucleo_empleado_eo
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -4847,7 +4709,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_estado_empleado nucleo_estado_empleado_estado_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_estado_empleado nucleo_estado_empleado_estado_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_estado_empleado
@@ -4855,7 +4717,7 @@ ALTER TABLE ONLY public.nucleo_estado_empleado
 
 
 --
--- Name: nucleo_estado_empleado nucleo_estado_empleado_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_estado_empleado nucleo_estado_empleado_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_estado_empleado
@@ -4863,7 +4725,7 @@ ALTER TABLE ONLY public.nucleo_estado_empleado
 
 
 --
--- Name: nucleo_estado_lic_vac nucleo_estado_lic_vac_estado_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_estado_lic_vac nucleo_estado_lic_vac_estado_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_estado_lic_vac
@@ -4871,7 +4733,7 @@ ALTER TABLE ONLY public.nucleo_estado_lic_vac
 
 
 --
--- Name: nucleo_estado_lic_vac nucleo_estado_lic_vac_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_estado_lic_vac nucleo_estado_lic_vac_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_estado_lic_vac
@@ -4879,7 +4741,7 @@ ALTER TABLE ONLY public.nucleo_estado_lic_vac
 
 
 --
--- Name: nucleo_estadocivil nucleo_estadocivil_estado_civil_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_estadocivil nucleo_estadocivil_estado_civil_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_estadocivil
@@ -4887,7 +4749,7 @@ ALTER TABLE ONLY public.nucleo_estadocivil
 
 
 --
--- Name: nucleo_estadocivil nucleo_estadocivil_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_estadocivil nucleo_estadocivil_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_estadocivil
@@ -4895,7 +4757,7 @@ ALTER TABLE ONLY public.nucleo_estadocivil
 
 
 --
--- Name: nucleo_feriado nucleo_feriado_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_feriado nucleo_feriado_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_feriado
@@ -4903,7 +4765,7 @@ ALTER TABLE ONLY public.nucleo_feriado
 
 
 --
--- Name: nucleo_localidad nucleo_localidad_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_localidad nucleo_localidad_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_localidad
@@ -4911,7 +4773,7 @@ ALTER TABLE ONLY public.nucleo_localidad
 
 
 --
--- Name: nucleo_log_auditoria nucleo_log_auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_log_auditoria nucleo_log_auditoria_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_log_auditoria
@@ -4919,7 +4781,7 @@ ALTER TABLE ONLY public.nucleo_log_auditoria
 
 
 --
--- Name: nucleo_nacionalidad nucleo_nacionalidad_nacionalidad_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_nacionalidad nucleo_nacionalidad_nacionalidad_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_nacionalidad
@@ -4927,7 +4789,7 @@ ALTER TABLE ONLY public.nucleo_nacionalidad
 
 
 --
--- Name: nucleo_nacionalidad nucleo_nacionalidad_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_nacionalidad nucleo_nacionalidad_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_nacionalidad
@@ -4935,7 +4797,7 @@ ALTER TABLE ONLY public.nucleo_nacionalidad
 
 
 --
--- Name: nucleo_pers_juridica nucleo_pers_juridica_pers_juridica_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_pers_juridica nucleo_pers_juridica_pers_juridica_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_pers_juridica
@@ -4943,7 +4805,7 @@ ALTER TABLE ONLY public.nucleo_pers_juridica
 
 
 --
--- Name: nucleo_pers_juridica nucleo_pers_juridica_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_pers_juridica nucleo_pers_juridica_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_pers_juridica
@@ -4951,7 +4813,7 @@ ALTER TABLE ONLY public.nucleo_pers_juridica
 
 
 --
--- Name: nucleo_plan_trabajo nucleo_plan_trabajo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_plan_trabajo nucleo_plan_trabajo_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_plan_trabajo
@@ -4959,7 +4821,7 @@ ALTER TABLE ONLY public.nucleo_plan_trabajo
 
 
 --
--- Name: nucleo_provincia nucleo_provincia_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_provincia nucleo_provincia_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_provincia
@@ -4967,7 +4829,7 @@ ALTER TABLE ONLY public.nucleo_provincia
 
 
 --
--- Name: nucleo_puesto nucleo_puesto_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_puesto nucleo_puesto_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_puesto
@@ -4975,7 +4837,7 @@ ALTER TABLE ONLY public.nucleo_puesto
 
 
 --
--- Name: nucleo_sexo nucleo_sexo_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_sexo nucleo_sexo_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_sexo
@@ -4983,7 +4845,7 @@ ALTER TABLE ONLY public.nucleo_sexo
 
 
 --
--- Name: nucleo_sexo nucleo_sexo_sexo_key; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_sexo nucleo_sexo_sexo_key; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_sexo
@@ -4991,7 +4853,7 @@ ALTER TABLE ONLY public.nucleo_sexo
 
 
 --
--- Name: nucleo_solicitud_licencia nucleo_solicitud_licencia_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_licencia_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_solicitud_licencia
@@ -4999,7 +4861,7 @@ ALTER TABLE ONLY public.nucleo_solicitud_licencia
 
 
 --
--- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vacaciones_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vacaciones_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
@@ -5007,7 +4869,7 @@ ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
 
 
 --
--- Name: nucleo_sucursal nucleo_sucursal_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_sucursal nucleo_sucursal_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_sucursal
@@ -5015,7 +4877,7 @@ ALTER TABLE ONLY public.nucleo_sucursal
 
 
 --
--- Name: nucleo_tipo_licencia nucleo_tipo_licencia_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_tipo_licencia nucleo_tipo_licencia_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_tipo_licencia
@@ -5023,7 +4885,7 @@ ALTER TABLE ONLY public.nucleo_tipo_licencia
 
 
 --
--- Name: nucleo_vacaciones_otorgadas nucleo_vacaciones_otorgadas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_vacaciones_otorgadas nucleo_vacaciones_otorgadas_pkey; Type: CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_vacaciones_otorgadas
@@ -5031,294 +4893,294 @@ ALTER TABLE ONLY public.nucleo_vacaciones_otorgadas
 
 
 --
--- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
 
 
 --
--- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
 
 
 --
--- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
 
 
 --
--- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
 
 
 --
--- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
 
 
 --
--- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
 
 
 --
--- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
 
 
 --
--- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: -
+-- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
 
 
 --
--- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: -
+-- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
 
 
 --
--- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: -
+-- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
 
 
 --
--- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: -
+-- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
 
 
 --
--- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: -
+-- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
 
 
 --
--- Name: nucleo_empleado_CUIL_253991d8_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_CUIL_253991d8_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_CUIL_253991d8_like" ON public.nucleo_empleado USING btree (cuil varchar_pattern_ops);
 
 
 --
--- Name: nucleo_empleado_Dni_9de4e6ca_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_Dni_9de4e6ca_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_Dni_9de4e6ca_like" ON public.nucleo_empleado USING btree (dni varchar_pattern_ops);
 
 
 --
--- Name: nucleo_empleado_Id_Localidad_d192a204; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_Id_Localidad_d192a204; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_Id_Localidad_d192a204" ON public.nucleo_empleado USING btree (id_localidad);
 
 
 --
--- Name: nucleo_empleado_Id_civil_be0f3906; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_Id_civil_be0f3906; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_Id_civil_be0f3906" ON public.nucleo_empleado USING btree (id_civil);
 
 
 --
--- Name: nucleo_empleado_Id_nacionalidad_5c76fe0e; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_Id_nacionalidad_5c76fe0e; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_Id_nacionalidad_5c76fe0e" ON public.nucleo_empleado USING btree (id_nacionalidad);
 
 
 --
--- Name: nucleo_empleado_Id_sexo_9099efca; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_Id_sexo_9099efca; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_Id_sexo_9099efca" ON public.nucleo_empleado USING btree (id_sexo);
 
 
 --
--- Name: nucleo_empleado_el_Id_estado_7a3ae9a3; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_el_Id_estado_7a3ae9a3; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_el_Id_estado_7a3ae9a3" ON public.nucleo_empleado_el USING btree (id_estado);
 
 
 --
--- Name: nucleo_empleado_el_Idempleado_749748e6; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_el_Idempleado_749748e6; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_el_Idempleado_749748e6" ON public.nucleo_empleado_el USING btree (idempleado);
 
 
 --
--- Name: nucleo_empleado_el_id_convenio_a67c8975; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_el_id_convenio_a67c8975; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_empleado_el_id_convenio_a67c8975 ON public.nucleo_empleado_el USING btree (id_convenio);
 
 
 --
--- Name: nucleo_empleado_el_id_puesto_2c73d494; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_el_id_puesto_2c73d494; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_empleado_el_id_puesto_2c73d494 ON public.nucleo_empleado_el USING btree (id_puesto);
 
 
 --
--- Name: nucleo_empleado_eo_Idempleado_4332c487; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo_Idempleado_4332c487; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_eo_Idempleado_4332c487" ON public.nucleo_empleado_eo USING btree (idempleado);
 
 
 --
--- Name: nucleo_empleado_eo_id_Sucursal_505c9652; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo_id_Sucursal_505c9652; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_empleado_eo_id_Sucursal_505c9652" ON public.nucleo_empleado_eo USING btree (id_sucursal);
 
 
 --
--- Name: nucleo_estado_empleado_estado_52695d69_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_estado_empleado_estado_52695d69_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_estado_empleado_estado_52695d69_like ON public.nucleo_estado_empleado USING btree (estado varchar_pattern_ops);
 
 
 --
--- Name: nucleo_estado_lic_vac_estado_8fad8906_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_estado_lic_vac_estado_8fad8906_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_estado_lic_vac_estado_8fad8906_like ON public.nucleo_estado_lic_vac USING btree (estado varchar_pattern_ops);
 
 
 --
--- Name: nucleo_estadocivil_estado_civil_e187f56f_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_estadocivil_estado_civil_e187f56f_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_estadocivil_estado_civil_e187f56f_like ON public.nucleo_estadocivil USING btree (estado_civil varchar_pattern_ops);
 
 
 --
--- Name: nucleo_localidad_provincia_id_2e9deb89; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_localidad_provincia_id_2e9deb89; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_localidad_provincia_id_2e9deb89 ON public.nucleo_localidad USING btree (provincia_id);
 
 
 --
--- Name: nucleo_log_auditoria_idUsuario_78a2cf1f; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_log_auditoria_idUsuario_78a2cf1f; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_log_auditoria_idUsuario_78a2cf1f" ON public.nucleo_log_auditoria USING btree (idusuario);
 
 
 --
--- Name: nucleo_nacionalidad_nacionalidad_7a729e49_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_nacionalidad_nacionalidad_7a729e49_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_nacionalidad_nacionalidad_7a729e49_like ON public.nucleo_nacionalidad USING btree (nacionalidad varchar_pattern_ops);
 
 
 --
--- Name: nucleo_pers_juridica_pers_juridica_d625af9e_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_pers_juridica_pers_juridica_d625af9e_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_pers_juridica_pers_juridica_d625af9e_like ON public.nucleo_pers_juridica USING btree (pers_juridica varchar_pattern_ops);
 
 
 --
--- Name: nucleo_plan_trabajo_Idempleado_cf5ae9c9; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_plan_trabajo_Idempleado_cf5ae9c9; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_plan_trabajo_Idempleado_cf5ae9c9" ON public.nucleo_plan_trabajo USING btree (idempleado);
 
 
 --
--- Name: nucleo_sexo_sexo_8a586732_like; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_sexo_sexo_8a586732_like; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_sexo_sexo_8a586732_like ON public.nucleo_sexo USING btree (sexo varchar_pattern_ops);
 
 
 --
--- Name: nucleo_solicitud_licencia_ID_estado_69972f47; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia_ID_estado_69972f47; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_solicitud_licencia_ID_estado_69972f47" ON public.nucleo_solicitud_licencia USING btree (id_estado);
 
 
 --
--- Name: nucleo_solicitud_licencia_Id_Licencia_2016feb6; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia_Id_Licencia_2016feb6; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_solicitud_licencia_Id_Licencia_2016feb6" ON public.nucleo_solicitud_licencia USING btree (id_licencia);
 
 
 --
--- Name: nucleo_solicitud_licencia_Idempleado_10b8e362; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia_Idempleado_10b8e362; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_solicitud_licencia_Idempleado_10b8e362" ON public.nucleo_solicitud_licencia USING btree (idempleado);
 
 
 --
--- Name: nucleo_solicitud_vacaciones_ID_estado_339495b8; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones_ID_estado_339495b8; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_solicitud_vacaciones_ID_estado_339495b8" ON public.nucleo_solicitud_vacaciones USING btree (id_estado);
 
 
 --
--- Name: nucleo_solicitud_vacaciones_Idempleado_c56a15c6; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones_Idempleado_c56a15c6; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_solicitud_vacaciones_Idempleado_c56a15c6" ON public.nucleo_solicitud_vacaciones USING btree (idempleado);
 
 
 --
--- Name: nucleo_sucursal_id_pers_juridica_2c360be7; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_sucursal_id_pers_juridica_2c360be7; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX nucleo_sucursal_id_pers_juridica_2c360be7 ON public.nucleo_sucursal USING btree (id_pers_juridica);
 
 
 --
--- Name: nucleo_vacaciones_otorgadas_Idempleado_3ab9a9f3; Type: INDEX; Schema: public; Owner: -
+-- Name: nucleo_vacaciones_otorgadas_Idempleado_3ab9a9f3; Type: INDEX; Schema: public; Owner: rrhh_user
 --
 
 CREATE INDEX "nucleo_vacaciones_otorgadas_Idempleado_3ab9a9f3" ON public.nucleo_vacaciones_otorgadas USING btree (idempleado);
 
 
 --
--- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -5326,7 +5188,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_group_permissions
@@ -5334,7 +5196,7 @@ ALTER TABLE ONLY public.auth_group_permissions
 
 
 --
--- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_permission
@@ -5342,7 +5204,7 @@ ALTER TABLE ONLY public.auth_permission
 
 
 --
--- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -5350,7 +5212,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_groups
@@ -5358,7 +5220,7 @@ ALTER TABLE ONLY public.auth_user_groups
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -5366,7 +5228,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.auth_user_user_permissions
@@ -5374,7 +5236,7 @@ ALTER TABLE ONLY public.auth_user_user_permissions
 
 
 --
--- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -5382,7 +5244,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.django_admin_log
@@ -5390,7 +5252,7 @@ ALTER TABLE ONLY public.django_admin_log
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_Id_civil_be0f3906_fk_nucleo_estadocivil_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_Id_civil_be0f3906_fk_nucleo_estadocivil_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -5398,7 +5260,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_Id_nacionalidad_5c76fe0e_fk_nucleo_na; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_Id_nacionalidad_5c76fe0e_fk_nucleo_na; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -5406,7 +5268,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_Id_sexo_9099efca_fk_nucleo_sexo_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_Id_sexo_9099efca_fk_nucleo_sexo_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -5414,7 +5276,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_Idempleado_89383695_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_Idempleado_89383695_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -5422,7 +5284,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_empleado_el nucleo_empleado_el_Id_estado_7a3ae9a3_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_el nucleo_empleado_el_Id_estado_7a3ae9a3_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_el
@@ -5430,7 +5292,7 @@ ALTER TABLE ONLY public.nucleo_empleado_el
 
 
 --
--- Name: nucleo_empleado_el nucleo_empleado_el_Idempleado_749748e6_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_el nucleo_empleado_el_Idempleado_749748e6_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_el
@@ -5438,7 +5300,7 @@ ALTER TABLE ONLY public.nucleo_empleado_el
 
 
 --
--- Name: nucleo_empleado_el nucleo_empleado_el_id_convenio_a67c8975_fk_nucleo_co; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_el nucleo_empleado_el_id_convenio_a67c8975_fk_nucleo_co; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_el
@@ -5446,7 +5308,7 @@ ALTER TABLE ONLY public.nucleo_empleado_el
 
 
 --
--- Name: nucleo_empleado_el nucleo_empleado_el_id_puesto_2c73d494_fk_nucleo_pu; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_el nucleo_empleado_el_id_puesto_2c73d494_fk_nucleo_pu; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_el
@@ -5454,7 +5316,7 @@ ALTER TABLE ONLY public.nucleo_empleado_el
 
 
 --
--- Name: nucleo_empleado_eo nucleo_empleado_eo_Idempleado_4332c487_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_Idempleado_4332c487_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_eo
@@ -5462,7 +5324,7 @@ ALTER TABLE ONLY public.nucleo_empleado_eo
 
 
 --
--- Name: nucleo_empleado_eo nucleo_empleado_eo_id_Sucursal_505c9652_fk_nucleo_su; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado_eo nucleo_empleado_eo_id_Sucursal_505c9652_fk_nucleo_su; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado_eo
@@ -5470,7 +5332,7 @@ ALTER TABLE ONLY public.nucleo_empleado_eo
 
 
 --
--- Name: nucleo_empleado nucleo_empleado_id_Localidad_b86bdb1d_fk_nucleo_localidad_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_empleado nucleo_empleado_id_Localidad_b86bdb1d_fk_nucleo_localidad_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_empleado
@@ -5478,7 +5340,7 @@ ALTER TABLE ONLY public.nucleo_empleado
 
 
 --
--- Name: nucleo_localidad nucleo_localidad_provincia_id_2e9deb89_fk_nucleo_provincia_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_localidad nucleo_localidad_provincia_id_2e9deb89_fk_nucleo_provincia_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_localidad
@@ -5486,7 +5348,7 @@ ALTER TABLE ONLY public.nucleo_localidad
 
 
 --
--- Name: nucleo_log_auditoria nucleo_log_auditoria_idUsuario_78a2cf1f_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_log_auditoria nucleo_log_auditoria_idUsuario_78a2cf1f_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_log_auditoria
@@ -5494,7 +5356,7 @@ ALTER TABLE ONLY public.nucleo_log_auditoria
 
 
 --
--- Name: nucleo_plan_trabajo nucleo_plan_trabajo_Idempleado_cf5ae9c9_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_plan_trabajo nucleo_plan_trabajo_Idempleado_cf5ae9c9_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_plan_trabajo
@@ -5502,7 +5364,7 @@ ALTER TABLE ONLY public.nucleo_plan_trabajo
 
 
 --
--- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_ID_estado_69972f47_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_ID_estado_69972f47_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_solicitud_licencia
@@ -5510,7 +5372,7 @@ ALTER TABLE ONLY public.nucleo_solicitud_licencia
 
 
 --
--- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_Id_Licencia_2016feb6_fk_nucleo_ti; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_Id_Licencia_2016feb6_fk_nucleo_ti; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_solicitud_licencia
@@ -5518,7 +5380,7 @@ ALTER TABLE ONLY public.nucleo_solicitud_licencia
 
 
 --
--- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_Idempleado_10b8e362_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_solicitud_licencia nucleo_solicitud_lic_Idempleado_10b8e362_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_solicitud_licencia
@@ -5526,7 +5388,7 @@ ALTER TABLE ONLY public.nucleo_solicitud_licencia
 
 
 --
--- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vac_ID_estado_339495b8_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vac_ID_estado_339495b8_fk_nucleo_es; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
@@ -5534,7 +5396,7 @@ ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
 
 
 --
--- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vac_Idempleado_c56a15c6_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_solicitud_vacaciones nucleo_solicitud_vac_Idempleado_c56a15c6_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
@@ -5542,7 +5404,7 @@ ALTER TABLE ONLY public.nucleo_solicitud_vacaciones
 
 
 --
--- Name: nucleo_sucursal nucleo_sucursal_id_pers_juridica_2c360be7_fk_nucleo_pe; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_sucursal nucleo_sucursal_id_pers_juridica_2c360be7_fk_nucleo_pe; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_sucursal
@@ -5550,7 +5412,7 @@ ALTER TABLE ONLY public.nucleo_sucursal
 
 
 --
--- Name: nucleo_vacaciones_otorgadas nucleo_vacaciones_ot_Idempleado_3ab9a9f3_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: nucleo_vacaciones_otorgadas nucleo_vacaciones_ot_Idempleado_3ab9a9f3_fk_nucleo_em; Type: FK CONSTRAINT; Schema: public; Owner: rrhh_user
 --
 
 ALTER TABLE ONLY public.nucleo_vacaciones_otorgadas
@@ -5558,8 +5420,15 @@ ALTER TABLE ONLY public.nucleo_vacaciones_otorgadas
 
 
 --
+-- Name: DEFAULT PRIVILEGES FOR TABLES; Type: DEFAULT ACL; Schema: public; Owner: postgres
+--
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public GRANT ALL ON TABLES TO rrhh_user;
+
+
+--
 -- PostgreSQL database dump complete
 --
 
-\unrestrict MScay9UfAIfzQ0LbtcLbTGgQJGs1G35huOZvKVbLp0yiMiwOMs6OT1CM89S1Y8s
+\unrestrict dpDWgzrnQMGWAb062iKIdNCfvWOZVGnacjpRKdaacAKtYNuJuQFrAEcNRjpzdWm
 
