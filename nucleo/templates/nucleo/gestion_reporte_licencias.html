@@ -77,7 +77,6 @@
         </div>
     </form>
     <table id="tabla-licencias-completa" class="tabla-licencias">
-        <tbody>
         <thead>
             <tr>
                 <th>ID</th>
@@ -91,6 +90,7 @@
                 <th class="btn-eliminar-cell"></th> {# columna para el botón eliminar a la derecha #}
             </tr>
         </thead>
+        <tbody>
             {% for s in page_obj %}
             <tr class="{% if s.id_licencia.descripcion|lower == 'vacaciones' %}vacaciones-row{% endif %}">
                 <td>{{ s.idempleado_id }}</td>
@@ -174,8 +174,10 @@
                         {% with estado_lower=s.id_estado.estado|lower %}
                             {% if estado_lower == 'en espera' or estado_lower == 'aceptada' or estado_lower == 'aprobada' or estado_lower == 'rechazada' %}
                                 {% if request.user.pk == s.idempleado.idempleado or request.user.is_staff %}
-                                    <button type="submit" title="Eliminar solicitud" class="btn-eliminar" style="background:transparent;border:none;cursor:pointer;padding:6px;">
-                                        <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:#ddd;color:#333;text-align:center;line-height:22px;font-weight:bold;">×</span>
+                                    <button type="submit" title="Eliminar solicitud" class="btn-eliminar">
+                                        <span class="btn-eliminar-badge">
+                                            <img src="{% static 'nucleo/icons/trash_icon.ico' %}" alt="Eliminar solicitud" class="btn-eliminar-icon">
+                                        </span>
                                     </button>
                                 {% endif %}
                             {% endif %}

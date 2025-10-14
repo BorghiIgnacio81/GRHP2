@@ -51,12 +51,12 @@
 
 .certificado-firma-area {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end; 
     align-items: center;
 }
 
 .certificado-firma {
-    display: flex;
+    align-items: flex-end;
     flex-direction: column;
     align-items: flex-start;
 }

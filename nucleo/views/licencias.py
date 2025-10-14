@@ -266,7 +266,7 @@ def eliminar_solicitud(request):
     estado_text = getattr(solicitud.id_estado, 'estado', '').lower()
 
     # Regla: permitir sólo si estado es 'aprobada'/'aceptada' o 'en espera'
-    allowed_states = {'aprobada', 'aceptada', 'en espera'}
+    allowed_states = {'aprobada', 'aceptada', 'en espera', 'rechazada'}
     if estado_text not in allowed_states:
         from django.contrib import messages
         messages.error(request, "No puede eliminar/cancelar esta solicitud en su estado actual.")

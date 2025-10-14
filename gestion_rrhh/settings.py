@@ -25,11 +25,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-vt=usd67mi35!hx4e!5f0zm5)_=ig07-m-3ig(t0%7h7xht3bl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['148.230.72.135', '148.230.072.135', 'localhost', '127.0.0.1', 'testserver']
 STATIC_URL = '/static/'
-# STATIC_ROOT = BASE_DIR / 'staticfiles'  # Solo para producción
+STATIC_ROOT = Path('/srv/static')
 STATICFILES_DIRS = [
     BASE_DIR / 'nucleo' / 'static',
 ]
@@ -157,6 +157,6 @@ EMAIL_HOST_PASSWORD = 'gmzn uijj qelb estz'
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
+MEDIA_ROOT = Path('/srv/gestion_rrhh_media')
 
 mimetypes.add_type("application/pdf", ".pdf", True)

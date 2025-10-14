@@ -250,15 +250,19 @@ document.addEventListener('DOMContentLoaded', function() {
                                 {% if request.user.is_staff %}
                                     {# Staff puede eliminar solicitudes en cualquier estado #}
                                     {% if estado_lower == 'en espera' or estado_lower == 'aceptada' or estado_lower == 'aprobada' %}
-                                        <button type="submit" title="Eliminar solicitud" class="btn-eliminar" style="background:transparent;border:none;cursor:pointer;padding:6px;">
-                                            <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:#ddd;color:#333;text-align:center;line-height:22px;font-weight:bold;">×</span>
+                                        <button type="submit" title="Eliminar solicitud" class="btn-eliminar">
+                                            <span class="btn-eliminar-badge">
+                                                <img src="{% static 'nucleo/icons/trash_icon.ico' %}" alt="Eliminar solicitud" class="btn-eliminar-icon">
+                                            </span>
                                         </button>
                                     {% endif %}
                                 {% elif request.user == s.idempleado.idempleado %}
                                     {# Empleados normales solo pueden eliminar solicitudes "En espera" #}
                                     {% if estado_lower == 'en espera' %}
-                                        <button type="submit" title="Eliminar solicitud" class="btn-eliminar" style="background:transparent;border:none;cursor:pointer;padding:6px;">
-                                            <span style="display:inline-block;width:22px;height:22px;border-radius:50%;background:#ddd;color:#333;text-align:center;line-height:22px;font-weight:bold;">×</span>
+                                        <button type="submit" title="Eliminar solicitud" class="btn-eliminar">
+                                            <span class="btn-eliminar-badge">
+                                                <img src="{% static 'nucleo/icons/trash_icon.ico' %}" alt="Eliminar solicitud" class="btn-eliminar-icon">
+                                            </span>
                                         </button>
                                     {% endif %}
                                 {% endif %}

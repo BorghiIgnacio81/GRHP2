@@ -74,19 +74,19 @@ def password_reset_request(request):
                 message = "No hay un email registrado para este usuario."
             else:
                 # Si quieres enviar la contraseña actual (no recomendado), usa user.password (pero está hasheada)
-                # Mejor: genera una nueva contraseña temporal y envíala
+                # Mejor: genera una nueva contraseña y envíala
                 import random, string
                 new_password = ''.join(random.choices(string.ascii_letters + string.digits, k=8))
                 user.set_password(new_password)
                 user.save()
                 send_mail(
                     subject="Recuperación de contraseña GRHP",
-                    message=f"Su nueva contraseña temporal es: {new_password}\nPor favor, cámbiela luego de ingresar.",
+                    message=f"Su nueva contraseña es: {new_password}\nPor favor, cámbiela luego de ingresar.",
                     from_email=settings.DEFAULT_FROM_EMAIL,
                     recipient_list=[user.email],
                     fail_silently=False,
                 )
-                message = "Se ha enviado una nueva contraseña temporal a su email."
+                message = "Se ha enviado una nueva contraseña a su email."
         except User.DoesNotExist:
             message = "No existe un usuario con ese nombre."
     return render(request, "nucleo/password_reset_form.html", {"form": form, "message": message})

@@ -138,4 +138,23 @@ body {
     background: #fff; border-radius: 10px; padding: 30px; box-shadow: 0 8px 24px rgba(0,0,0,0.20); min-width: 300px; text-align:center;
 }
 .modal button { margin: 15px 8px 0 8px; padding: 8px 22px; border-radius: 5px; border: none; font-size: 16px; cursor: pointer; }
-.modal button
+
+/* Botón “Recuperar Contraseña” (celeste claro) */
+#block-reset-password {
+    background: #0b5ed7;
+    color: #fff;
+    font-weight: 600;
+}
+#block-reset-password:hover {
+    background: #0a52be;
+}
+
+/* Botón “OK” del mismo modal (celeste oscuro) */
+#block-ok {
+    background: #0b5ed7;
+    color: #fff;
+    font-weight: 600;
+}
+#block-ok:hover {
+    background: #0a52be;
+}

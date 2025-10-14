@@ -212,3 +212,32 @@
     font-weight: bold;
     font-size: 1.2em;
 }
+.btn-eliminar {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 6px;
+}
+
+.btn-eliminar-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #ddd;
+    transition: background 0.2s;
+}
+
+.btn-eliminar:hover .btn-eliminar-badge {
+    background: #c8c8c8;
+}
+
+.btn-eliminar-icon {
+    width: 14px;
+    height: 14px;
+    display: block;
+    object-fit: contain;
+    background: transparent;
+}

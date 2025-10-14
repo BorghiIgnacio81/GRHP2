@@ -232,7 +232,7 @@ def generar_vacaciones(request):
                 dias_consumidos_reg = 0
 
             fecha_fin_ciclo = date(year, 12, 31)
-            antiguedad_str = calcular_antiguedad(alta_ant)
+            antiguedad_str = calcular_antiguedad(alta_ant, fecha_fin_ciclo)
             antiguedad_fin_ciclo_str = calcular_antiguedad(alta_ant, fecha_fin_ciclo)
 
             dias_consumidos = dias_consumidos_reg
@@ -313,7 +313,7 @@ def generar_vacaciones(request):
             dias_vacaciones = calcular_dias_vacaciones(alta_ant, fecha_corte_calculo)
 
             fecha_fin_ciclo = date(year, 12, 31)
-            antiguedad_str = calcular_antiguedad(alta_ant)
+            antiguedad_str = calcular_antiguedad(alta_ant, fecha_fin_ciclo)
             antiguedad_fin_ciclo_str = calcular_antiguedad(alta_ant, fecha_fin_ciclo)
 
             # Vacaciones solicitadas (solicitud_vacaciones)
