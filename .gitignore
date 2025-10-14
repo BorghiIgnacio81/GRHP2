@@ -1,0 +1,13 @@
+# Python cache and compiled artifacts
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+ENV/
+
+# Local environment and tooling files
+*.env
+*.log
+.DS_Store
