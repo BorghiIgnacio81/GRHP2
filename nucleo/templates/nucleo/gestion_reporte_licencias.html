@@ -64,7 +64,7 @@
             </label>
             <input type="date" id="fecha_hasta" name="fecha_hasta" value="{{ filtros.fecha_hasta|default:'' }}" style="margin-left:6px; padding:2px 4px; height:28px; {% if not filtros.fecha_rango and not filtros.fecha_hasta %}display:none;{% endif %}">
         </div>
-        <button type="button" id="limpiar-filtros">Limpiar</button>
+        <button type="button" id="limpiar-filtros" class="btn-limpiar-filtros">Limpiar Filtros</button>
         <div class="export-buttons-group">
             <!-- PDF button -->
             <button type="button" id="export-licencias-pdf" class="btn-pdf export-btn" data-export-target="#tabla-licencias-excel" data-export-filename="licencias.pdf" data-export-format="pdf" title="Descargar PDF">
