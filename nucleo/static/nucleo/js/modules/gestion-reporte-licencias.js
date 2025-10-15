@@ -43,6 +43,7 @@ class GestionReporteLicencias {
         this.hiddenEmpleado = document.getElementById('empleado-filtro');
         this.autocompleteEmpleado = document.getElementById('resultados-autocomplete');
         this.btnLimpiarEmpleado = document.getElementById('limpiar-empleado');
+        this.btnLimpiarFiltros = this.formFiltros ? this.formFiltros.querySelector('#limpiar-filtros') : document.getElementById('limpiar-filtros');
     }
 
     bindEvents() {
@@ -87,6 +88,53 @@ class GestionReporteLicencias {
         window.abrirModalComentarios = (solicitudId, comentario) => this.abrirModalComentarios(solicitudId, comentario);
 
         this.bindAutoFilterControls();
+        this.bindResetButton();
+    }
+
+    bindResetButton() {
+        if (!this.btnLimpiarFiltros) {
+            return;
+        }
+        if (this.btnLimpiarFiltros.dataset.bound === '1') {
+            return;
+        }
+        this.btnLimpiarFiltros.dataset.bound = '1';
+        this.btnLimpiarFiltros.addEventListener('click', () => this.resetFiltros());
+    }
+
+    resetFiltros() {
+        if (!this.formFiltros) {
+            return;
+        }
+
+        const selects = this.formFiltros.querySelectorAll('select[name]');
+        selects.forEach((select) => {
+            select.value = '';
+        });
+
+        const fechas = this.formFiltros.querySelectorAll('input[type="date"]');
+        fechas.forEach((input) => {
+            input.value = '';
+        });
+
+        if (this.checkboxRango) {
+            this.checkboxRango.checked = false;
+        }
+
+        if (this.inputEmpleado) {
+            this.inputEmpleado.value = '';
+        }
+        if (this.hiddenEmpleado) {
+            this.hiddenEmpleado.value = '';
+            this.hiddenEmpleado.dataset.origin = 'manual';
+        }
+        if (this.autocompleteEmpleado) {
+            this.autocompleteEmpleado.innerHTML = '';
+            this.autocompleteEmpleado.style.display = 'none';
+        }
+
+        this.updateFechaHasta();
+        this.fetchAndRenderResultados(this.options.urlFiltroBase);
     }
 
     applyInitialState() {
@@ -325,12 +373,14 @@ class GestionReporteLicencias {
         this.exportButtons = document.querySelectorAll('.export-btn');
         this.messageCloseButtons = document.querySelectorAll('.mensaje-cerrable .cerrar-mensaje');
         this.mensajesPrincipales = document.getElementById('mensajes-principales');
+        this.btnLimpiarFiltros = this.formFiltros ? this.formFiltros.querySelector('#limpiar-filtros') : document.getElementById('limpiar-filtros');
 
         this.bindDeletionConfirmation();
         this.ensureExportBindings();
         this.bindMessageClosers();
         this.scrollToImportantMessage();
         this.bindAutoFilterControls();
+        this.bindResetButton();
     }
 
     updateHistory(url) {
