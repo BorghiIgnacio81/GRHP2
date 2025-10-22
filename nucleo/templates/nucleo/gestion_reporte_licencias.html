@@ -159,7 +159,7 @@
                 </td>
                 <td class="btn-eliminar-cell" style="text-align:center;">
                     {# Botón eliminar desplazado a columna derecha para mejor visibilidad #}
-                    <form method="post" action="{% url 'nucleo:eliminar_solicitud' %}" style="display:inline;" class="form-eliminar">
+                    <form method="post" action="{% url 'nucleo:eliminar_solicitud' %}" style="display:inline;" class="form-eliminar" data-solicitud-id="{{ s.pk }}">
                         {% csrf_token %}
                         <input type="hidden" name="solicitud_id" value="{{ s.pk }}">
                         <!-- Preservar filtros actuales -->
@@ -192,6 +192,18 @@
             {% endfor %}
         </tbody>
     </table>
+    <!-- Modal de confirmación de eliminación personalizado -->
+    <div id="modal-confirmar-eliminacion" class="modal-confirmacion" aria-hidden="true">
+        <div class="modal-contenido">
+            <h3>Confirmar eliminación</h3>
+            <p>¿Desea eliminar esta solicitud? Esta acción no se puede deshacer.</p>
+            <div class="modal-botones">
+                <button type="button" id="cancelar-eliminacion" class="btn-modal-cancelar">Cancelar</button>
+                <button type="button" id="confirmar-eliminacion" class="btn-modal-confirmar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Modal compartido para motivo de rechazo (un único elemento) -->
     <div id="modal-rechazo" class="modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);z-index:999;align-items:center;justify-content:center;">
         <div style="background:#fff;padding:24px 18px;border-radius:8px;max-width:350px;width:90%;box-shadow:0 2px 12px #0002;position:relative;">

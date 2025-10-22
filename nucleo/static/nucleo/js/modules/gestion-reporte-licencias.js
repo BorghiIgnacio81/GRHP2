@@ -38,6 +38,10 @@ class GestionReporteLicencias {
         this.messageCloseButtons = document.querySelectorAll('.mensaje-cerrable .cerrar-mensaje');
         this.mensajesPrincipales = document.getElementById('mensajes-principales');
         this.formsEliminar = document.querySelectorAll('.form-eliminar');
+    this.modalEliminar = document.getElementById('modal-confirmar-eliminacion');
+    this.btnCancelarEliminar = document.getElementById('cancelar-eliminacion');
+    this.btnConfirmarEliminar = document.getElementById('confirmar-eliminacion');
+    this.formPendienteEliminar = null;
         this.exportButtons = document.querySelectorAll('.export-btn');
         this.inputEmpleado = document.getElementById('busqueda-empleado');
         this.hiddenEmpleado = document.getElementById('empleado-filtro');
@@ -89,6 +93,7 @@ class GestionReporteLicencias {
 
         this.bindAutoFilterControls();
         this.bindResetButton();
+        this.bindModalEliminarStatics();
     }
 
     bindResetButton() {
@@ -381,6 +386,7 @@ class GestionReporteLicencias {
         this.scrollToImportantMessage();
         this.bindAutoFilterControls();
         this.bindResetButton();
+        this.bindModalEliminarStatics();
     }
 
     updateHistory(url) {
@@ -559,12 +565,61 @@ class GestionReporteLicencias {
             }
             form.dataset.confirmBound = '1';
             form.addEventListener('submit', (event) => {
-                const ok = window.confirm('¿Confirma que desea eliminar/cancelar esta solicitud? Esta acción no podrá deshacerse.');
-                if (!ok) {
-                    event.preventDefault();
+                if (!this.modalEliminar) {
+                    const ok = window.confirm('¿Confirma que desea eliminar/cancelar esta solicitud? Esta acción no podrá deshacerse.');
+                    if (!ok) {
+                        event.preventDefault();
+                    }
+                    return;
                 }
+
+                event.preventDefault();
+                this.formPendienteEliminar = form;
+                this.toggleModalEliminar(true);
             });
         });
+    }
+
+    bindModalEliminarStatics() {
+        if (this.modalEliminar && !this.modalEliminar.dataset.overlayBound) {
+            this.modalEliminar.dataset.overlayBound = '1';
+            this.modalEliminar.addEventListener('click', (event) => {
+                if (event.target === this.modalEliminar) {
+                    this.toggleModalEliminar(false);
+                }
+            });
+        }
+
+        if (this.btnCancelarEliminar && this.btnCancelarEliminar.dataset.bound !== '1') {
+            this.btnCancelarEliminar.dataset.bound = '1';
+            this.btnCancelarEliminar.addEventListener('click', () => {
+                this.toggleModalEliminar(false);
+                this.formPendienteEliminar = null;
+            });
+        }
+
+        if (this.btnConfirmarEliminar && this.btnConfirmarEliminar.dataset.bound !== '1') {
+            this.btnConfirmarEliminar.dataset.bound = '1';
+            this.btnConfirmarEliminar.addEventListener('click', () => {
+                if (this.formPendienteEliminar) {
+                    const formToSubmit = this.formPendienteEliminar;
+                    this.formPendienteEliminar = null;
+                    this.toggleModalEliminar(false);
+                    formToSubmit.submit();
+                } else {
+                    this.toggleModalEliminar(false);
+                }
+            });
+        }
+    }
+
+    toggleModalEliminar(show) {
+        if (!this.modalEliminar) {
+            return;
+        }
+        this.modalEliminar.setAttribute('aria-hidden', show ? 'false' : 'true');
+        this.modalEliminar.classList.toggle('visible', !!show);
+        document.body.classList.toggle('modal-open', !!show);
     }
 
     ensureExportBindings() {

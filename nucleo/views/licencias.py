@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Optional
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
@@ -230,7 +231,6 @@ def eliminar_solicitud(request):
     - En vez de borrar físicamente, cambiamos estado a 'Cancelada' si existe; si no existe ese estado, borramos la instancia (suave fallback).
     """
     if request.method != 'POST':
-        from django.contrib import messages
         messages.error(request, "Acción no permitida (sólo POST).")
         referer = request.META.get('HTTP_REFERER')
         if referer:
@@ -239,7 +239,6 @@ def eliminar_solicitud(request):
 
     solicitud_id = request.POST.get('solicitud_id')
     if not solicitud_id:
-        from django.contrib import messages
         messages.error(request, "Solicitud inválida.")
         referer = request.META.get('HTTP_REFERER')
         if referer:
@@ -255,7 +254,6 @@ def eliminar_solicitud(request):
         tipo = 'vacaciones'
 
     if not solicitud:
-        from django.contrib import messages
         messages.error(request, "No se encontró la solicitud solicitada.")
         referer = request.META.get('HTTP_REFERER')
         if referer:
@@ -268,7 +266,6 @@ def eliminar_solicitud(request):
     # Regla: permitir sólo si estado es 'aprobada'/'aceptada' o 'en espera'
     allowed_states = {'aprobada', 'aceptada', 'en espera', 'rechazada'}
     if estado_text not in allowed_states:
-        from django.contrib import messages
         messages.error(request, "No puede eliminar/cancelar esta solicitud en su estado actual.")
         referer = request.META.get('HTTP_REFERER')
         if referer:
@@ -302,7 +299,6 @@ def eliminar_solicitud(request):
     # Eliminada la restricción por fecha pasada: ahora se puede eliminar cualquier solicitud, incluso si la fecha ya pasó.
 
     if not (es_dueno or usuario.is_staff):
-        from django.contrib import messages
         messages.error(request, "No tienes permisos para eliminar/cancelar esta solicitud.")
         referer = request.META.get('HTTP_REFERER')
         if referer:
@@ -373,18 +369,23 @@ def eliminar_solicitud(request):
             solicitud.delete()
     except Exception:
         # En caso de error, informar y volver en lugar de 403
-        from django.contrib import messages
         messages.error(request, "Error al procesar la eliminación de la solicitud.")
         referer = request.META.get('HTTP_REFERER')
         if referer:
             return redirect(referer)
         return redirect('nucleo:gestion_reporte_licencias')
 
-    # Al terminar, redirigimos a la página previa o a la gestión
-    referer = request.META.get('HTTP_REFERER')
-    if referer:
-        return redirect(referer)
-    return redirect('nucleo:gestion_reporte_licencias')
+    # Limpiar mensajes previos y preparar mensaje de éxito consistente
+    list(messages.get_messages(request))
+    success_message = "Solicitud eliminada correctamente."
+    messages.success(request, success_message)
+
+    redirect_url = _build_redirect_with_filters_from_post(
+        request,
+        success_message,
+        message_type='success',
+    )
+    return redirect(redirect_url)
 
 @login_required
 def detalle_licencia(request, solicitud_id):
