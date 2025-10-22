@@ -35,8 +35,9 @@
     const colCount = headerCells.length;
     
     // Define which columns we want to keep (same as PDF)
-  const wantedHeaders = ['id', 'empleado', 'nombre', 'apellido', 'tipo', 'desde', 'hasta', 'días', 'dias', 'estado', 'dni', 'fecha', 'feriado', 'descripcion', 'descripción', 'tabla', 'idregistro', 'cambio', 'usuario', 'email', 'nacionalidad', 'civil', 'sexo', 'localidad', 'direccion', 'fecha_nac', 'nacimiento'];
-    const keep = new Array(colCount).fill(false);
+  const wantedHeaders = ['id', 'empleado', 'nombre', 'apellido', 'tipo', 'desde', 'hasta', 'días', 'dias', 'estado', 'dni', 'fecha', 'feriado', 'descripcion', 'descripción', 'tabla', 'idregistro', 'cambio', 'usuario', 'email', 'nacionalidad', 'civil', 'sexo', 'localidad', 'direccion', 'fecha_nac', 'nacimiento', 'paga', 'pago'];
+    const skipHeaders = ['editar', 'acciones', 'acción', 'accion', 'opciones', 'action', 'opcion'];
+    const keep = new Array(colCount).fill(true);
     
     // Mark columns to keep based on header content
     for(let c=0; c<colCount; c++){
@@ -45,10 +46,9 @@
       
       // Keep columns that match our wanted headers
       const isWanted = wantedHeaders.some(wanted => txt.includes(wanted));
-      if(isWanted) {
-        keep[c] = true;
-      }
-      console.log(`CSV Column ${c}: "${txt}" -> ${isWanted ? 'KEEP' : 'SKIP'}`);
+      const isSkip = !txt || skipHeaders.some(skip => txt.includes(skip));
+      keep[c] = !isSkip;
+      console.log(`CSV Column ${c}: "${txt}" -> ${keep[c] ? 'KEEP' : 'SKIP'}`);
     }
     
     // Build CSV with only kept columns
@@ -157,8 +157,9 @@
       const colCount = headerCells.length;
       
       // Define which columns we want to keep based on header text
-  const wantedHeaders = ['id', 'empleado', 'nombre', 'apellido', 'tipo', 'desde', 'hasta', 'días', 'dias', 'estado', 'dni', 'fecha', 'feriado', 'descripcion', 'descripción', 'tabla', 'idregistro', 'cambio', 'usuario', 'email', 'nacionalidad', 'civil', 'sexo', 'localidad', 'direccion', 'fecha_nac', 'nacimiento'];
-      const keep = new Array(colCount).fill(false);
+  const wantedHeaders = ['id', 'empleado', 'nombre', 'apellido', 'tipo', 'desde', 'hasta', 'días', 'dias', 'estado', 'dni', 'fecha', 'feriado', 'descripcion', 'descripción', 'tabla', 'idregistro', 'cambio', 'usuario', 'email', 'nacionalidad', 'civil', 'sexo', 'localidad', 'direccion', 'fecha_nac', 'nacimiento', 'paga', 'pago'];
+      const skipHeaders = ['editar', 'acciones', 'acción', 'accion', 'opciones', 'action', 'opcion'];
+      const keep = new Array(colCount).fill(true);
       
       // Mark columns to keep based on header content
       for(let c=0; c<colCount; c++){
@@ -167,9 +168,8 @@
         
         // Keep columns that match our wanted headers
         const isWanted = wantedHeaders.some(wanted => txt.includes(wanted));
-        if(isWanted) {
-          keep[c] = true;
-        }
+        const isSkip = !txt || skipHeaders.some(skip => txt.includes(skip));
+        keep[c] = !isSkip;
         console.log(`Column ${c}: "${txt}" -> ${isWanted ? 'KEEP' : 'SKIP'}`);
       }
       
@@ -264,36 +264,54 @@
       
       if(jsPDFConstructor && autoTableAvailable){
         if(hasTableData){
-          const doc = new jsPDFConstructor('l','pt','a4'); // landscape for AutoTable
-          // Build autotable columns
-          const cols = headers.map(h => ({header: h, dataKey: h}));
-          // convert body array to objects keyed by header
-          const dataObjects = body.map(rowArr => {
-            const obj = {};
-            headers.forEach((h, idx) => obj[h] = rowArr[idx] || '');
-            return obj;
+          const doc = new jsPDFConstructor('l', 'pt', 'a4');
+          const autoTableOptions = {
+            head: [headers],
+            body,
+            startY: 24,
+            styles: {
+              overflow: 'linebreak',
+              cellWidth: 'wrap',
+              halign: 'center',
+              lineColor: [200, 200, 200],
+              lineWidth: 0.4,
+              fontSize: 9
+            },
+            headStyles: {
+              fillColor: [33, 150, 243],
+              textColor: 255,
+              fontStyle: 'bold',
+              halign: 'center'
+            },
+            alternateRowStyles: {
+              fillColor: [245, 245, 245]
+            },
+            bodyStyles: {
+              halign: 'center'
+            },
+            columnStyles: {}
+          };
+          const tipoIndex = headers.findIndex(h => {
+            const lower = h.toLowerCase();
+            return lower.includes('tipo') && lower.includes('licencia');
           });
-          // call autotable but guard with try/catch; if it fails, fallback to image rendering
-          console.log('🎯 Attempting AutoTable PDF generation...');
-          try{
-            if(typeof doc.autoTable === 'function'){
-              console.log('✅ Using doc.autoTable');
-              doc.autoTable({head:[headers], body: body, startY: 20});
-            } else if(typeof window.jspdfAutoTable !== 'undefined' && typeof jsPDFConstructor.autoTable === 'function'){
-              console.log('✅ Using jsPDFConstructor.autoTable');
-              doc.autoTable({head:[headers], body: body, startY: 20});
-            } else if(doc && doc.autoTable){
-              console.log('✅ Using doc.autoTable (fallback)');
-              doc.autoTable({head:[headers], body: body, startY: 20});
-            } else {
-              throw new Error('AutoTable not available on jsPDF instance');
-            }
-            console.log('🎉 AutoTable completed successfully, saving PDF...');
+          if (tipoIndex !== -1) {
+            autoTableOptions.columnStyles[tipoIndex] = { cellWidth: 'auto', minCellWidth: 180, halign: 'left' };
+            autoTableOptions.bodyStyles.halign = 'center';
+          }
+          const pagaIndex = headers.findIndex(h => {
+            const lower = h.toLowerCase();
+            return lower.includes('paga') || lower.includes('pago');
+          });
+          if (pagaIndex !== -1) {
+            autoTableOptions.columnStyles[pagaIndex] = { cellWidth: 70, halign: 'center' };
+          }
+          try {
+            doc.autoTable(autoTableOptions);
             doc.save(filename || 'export.pdf');
             return;
-          }catch(autoErr){
+          } catch (autoErr) {
             console.warn('export-utils: AutoTable generation failed, falling back to image-based PDF', autoErr);
-            // fall through to image fallback below
           }
         } else {
           // no tabular data to render via AutoTable — skip to image fallback
@@ -316,16 +334,18 @@
           // Adjust column widths - optimize for better text fitting
           const totalWidth = pageWidth - 2 * margin;
           const columnWidths = {
-            'ID': totalWidth * 0.03,           // 3% - reducido más (solo necesita 2 dígitos)
-            'Nombre': totalWidth * 0.08,       // 8% - mantener
-            'Apellido': totalWidth * 0.08,     // 8% - mantener
-            'DNI': totalWidth * 0.07,          // 7% - mantener
-            'Fec_Nac': totalWidth * 0.09,      // 9% - aumentado para fechas completas
-            'Email': totalWidth * 0.18,        // 18% - aumentado para emails completos
-            'Sexo': totalWidth * 0.06,         // 6% - mantener
-            'Localidad': totalWidth * 0.11,    // 11% - aumentado para nombres de ciudades
-            'Estado': totalWidth * 0.06,       // 6% - reducido (Activo/Inactivo)
-            'default': totalWidth * 0.08       // 8% - otros campos
+            'ID': totalWidth * 0.03,
+            'Nombre': totalWidth * 0.08,
+            'Apellido': totalWidth * 0.08,
+            'DNI': totalWidth * 0.07,
+            'Fec_Nac': totalWidth * 0.09,
+            'Email': totalWidth * 0.18,
+            'Sexo': totalWidth * 0.06,
+            'Localidad': totalWidth * 0.11,
+            'Estado': totalWidth * 0.06,
+            'TipoLicencia': totalWidth * 0.30,
+            'Paga': totalWidth * 0.08,
+            'default': totalWidth * 0.08
           };
           
           // Rename headers for better fit
@@ -344,7 +364,6 @@
             colPositions.push(currentX);
             const headerLower = header.toLowerCase();
             let width;
-            
             if (headerLower === 'id') width = columnWidths['ID'];
             else if (headerLower === 'nombre') width = columnWidths['Nombre'];
             else if (headerLower === 'apellido') width = columnWidths['Apellido'];
@@ -354,6 +373,8 @@
             else if (headerLower === 'sexo') width = columnWidths['Sexo'];
             else if (headerLower === 'localidad') width = columnWidths['Localidad'];
             else if (headerLower === 'estado') width = columnWidths['Estado'];
+            else if (headerLower.includes('tipo') && headerLower.includes('licencia')) width = columnWidths['TipoLicencia'];
+            else if (headerLower === 'paga' || headerLower === 'pago') width = columnWidths['Paga'];
             else width = columnWidths['default'];
             
             colWidths.push(width);
@@ -422,11 +443,11 @@
             const rowY = y;
             
             // Alternate row background
-            if (rowIndex % 2 === 1) {
-              doc.setFillColor(248, 248, 248);
+            const isAlternate = rowIndex % 2 === 1;
+            if (isAlternate) {
+              doc.setFillColor(245, 245, 245);
               doc.rect(margin, rowY, currentX - margin, rowHeight, 'F');
             }
-            
             row.forEach((cell, i) => {
               const text = String(cell || '');
               const headerLower = adjustedHeaders[i] ? adjustedHeaders[i].toLowerCase() : '';
@@ -442,19 +463,19 @@
               else if (headerLower === 'sexo') maxLength = 7;
               else if (headerLower === 'localidad') maxLength = 15; // Para nombres de ciudades
               else if (headerLower === 'estado') maxLength = 7;   // Activo/Inactivo
+              else if (headerLower.includes('tipo') && headerLower.includes('licencia')) maxLength = 35;
+              else if (headerLower === 'paga' || headerLower === 'pago') maxLength = 5;
               else maxLength = 12;
-              
-              const truncatedText = text.substring(0, maxLength);
-              
-              // Center text in cell
-              const textX = colPositions[i] + colWidths[i] / 2;
-              doc.text(truncatedText, textX, rowY + 8, { align: 'center' });
-              
-              // Vertical line at start of column
+
+              const align = (headerLower.includes('tipo') && headerLower.includes('licencia')) ? 'left' : 'center';
+              const textX = align === 'left'
+                ? colPositions[i] + 6
+                : colPositions[i] + colWidths[i] / 2;
+              doc.setTextColor(0, 0, 0);
+              doc.text(truncatedText, textX, rowY + 8, { align });
+              doc.setDrawColor(225, 225, 225);
               doc.line(colPositions[i], rowY, colPositions[i], rowY + rowHeight);
             });
-            
-            // Last vertical line and bottom border
             doc.line(currentX, rowY, currentX, rowY + rowHeight);
             doc.line(margin, rowY + rowHeight, currentX, rowY + rowHeight);
             

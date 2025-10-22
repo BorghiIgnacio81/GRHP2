@@ -10,7 +10,9 @@ import sys
 import traceback
 from django.views.decorators.csrf import csrf_protect
 from datetime import date, datetime, timedelta
+from collections import defaultdict
 import re
+import unicodedata
 # MODELOS Y FORMULARIOS
 from nucleo.models import Empleado, Empleado_el, Empleado_eo, Plan_trabajo, Sucursal, Provincia, Estado_empleado, Log_auditoria, Nacionalidad, EstadoCivil, Sexo, Localidad
 from nucleo.forms import EmpleadoModificarForm, EmpleadoELForm
@@ -2619,6 +2621,7 @@ def ver_log_auditoria(request):
     # Filtros opcionales
     tabla = request.GET.get('tabla', '')
     usuario = request.GET.get('usuario', '').strip()
+    modificado = request.GET.get('modificado', '').strip()
     fecha_desde = request.GET.get('fecha_desde', '')
     fecha_hasta = request.GET.get('fecha_hasta', '')
     rango_fecha = request.GET.get('rango_fecha', '')  # checkbox: present when checked
@@ -2637,6 +2640,68 @@ def ver_log_auditoria(request):
         else:
             logs = logs.filter(idusuario__username__icontains=usuario)
 
+    if modificado:
+        # Prefer structured matching against empleados and related records
+        try:
+            modificado_id = int(modificado)
+        except (TypeError, ValueError):
+            modificado_id = None
+
+        # Build a Q that matches logs that target the given empleado (by id or by related records)
+        mod_q = Q()
+
+        # If the input is numeric treat it as an id: match direct idregistro hits
+        if modificado_id is not None:
+            mod_q |= Q(idregistro=modificado_id)
+
+        # Try to match Empleado by name/surname when the input is textual
+        if modificado and not modificado_id:
+            nombre_txt = modificado.strip()
+            # Find empleados whose nombre or apellido match the query (case-insensitive)
+            empleados_qs = Empleado.objects.filter(
+                Q(nombres__icontains=nombre_txt) | Q(apellido__icontains=nombre_txt)
+            )
+        else:
+            empleados_qs = Empleado.objects.none()
+
+        # Collect candidate idregistro values for different tabla types related to the found empleados
+        empleado_ids = []
+        empleado_el_ids = []
+        empleado_eo_ids = []
+        plan_ids = []
+        for emp in empleados_qs:
+            # Empleado logs typically store the empleado's user/id in idregistro
+            try:
+                empleado_ids.append(getattr(emp, 'idempleado_id') or None)
+            except Exception:
+                pass
+            try:
+                empleado_el_ids += list(Empleado_el.objects.filter(idempleado=emp).values_list('id', flat=True))
+            except Exception:
+                pass
+            try:
+                empleado_eo_ids += list(Empleado_eo.objects.filter(idempleado=emp).values_list('id', flat=True))
+            except Exception:
+                pass
+            try:
+                plan_ids += list(Plan_trabajo.objects.filter(idempleado=emp).values_list('id', flat=True))
+            except Exception:
+                pass
+
+        if empleado_ids:
+            mod_q |= Q(nombre_tabla='Empleado', idregistro__in=empleado_ids)
+        if empleado_el_ids:
+            mod_q |= Q(nombre_tabla='Empleado_el', idregistro__in=empleado_el_ids)
+        if empleado_eo_ids:
+            mod_q |= Q(nombre_tabla='Empleado_eo', idregistro__in=empleado_eo_ids)
+        if plan_ids:
+            mod_q |= Q(nombre_tabla='Plan_trabajo', idregistro__in=plan_ids)
+
+        # As a last resort, if modificado looks numeric we already included idregistro match above.
+        # Do NOT match against raw JSON text to avoid spurious substring matches.
+        if mod_q:
+            logs = logs.filter(mod_q)
+
     if fecha_desde:
         if rango_fecha:
             # rango activo: use >=
@@ -2653,11 +2718,48 @@ def ver_log_auditoria(request):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
     
+    # Build a mapping of log.id -> human-friendly target name when applicable
+    log_targets = {}
+    try:
+        # Only inspect logs on the current page to limit DB queries
+        page_log_ids = [l.id for l in page_obj]
+        page_logs = Log_auditoria.objects.filter(id__in=page_log_ids)
+        for l in page_logs:
+            target_name = None
+            try:
+                if l.nombre_tabla == 'Empleado' and l.idregistro:
+                    emp = Empleado.objects.filter(idempleado_id=l.idregistro).first()
+                    if emp:
+                        target_name = f"{emp.apellido}, {emp.nombres} ({getattr(emp, 'idempleado_id', '')})"
+                elif l.nombre_tabla == 'Empleado_el' and l.idregistro:
+                    el = Empleado_el.objects.filter(id=l.idregistro).select_related('idempleado').first()
+                    if el and el.idempleado:
+                        emp = el.idempleado
+                        target_name = f"{emp.apellido}, {emp.nombres} ({getattr(emp, 'idempleado_id', '')})"
+                elif l.nombre_tabla == 'Empleado_eo' and l.idregistro:
+                    eo = Empleado_eo.objects.filter(id=l.idregistro).select_related('idempleado').first()
+                    if eo and eo.idempleado:
+                        emp = eo.idempleado
+                        target_name = f"{emp.apellido}, {emp.nombres} ({getattr(emp, 'idempleado_id', '')})"
+                elif l.nombre_tabla == 'Plan_trabajo' and l.idregistro:
+                    plan_obj = Plan_trabajo.objects.filter(id=l.idregistro).select_related('idempleado').first()
+                    if plan_obj and plan_obj.idempleado:
+                        emp = plan_obj.idempleado
+                        target_name = f"{emp.apellido}, {emp.nombres} ({getattr(emp, 'idempleado_id', '')})"
+            except Exception:
+                target_name = None
+            if target_name:
+                log_targets[l.id] = target_name
+    except Exception:
+        log_targets = {}
+
     context = {
         'logs': page_obj,
+        'log_targets': log_targets,
         'filtros': {
             'tabla': tabla,
             'usuario': usuario,
+            'modificado': modificado,
             'rango_fecha': bool(rango_fecha),
             'fecha_desde': fecha_desde,
             'fecha_hasta': fecha_hasta,

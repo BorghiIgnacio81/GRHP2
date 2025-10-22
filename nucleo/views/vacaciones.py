@@ -38,25 +38,61 @@ def obtener_fecha_corte_generacion(year):
     """Devuelve la fecha de corte (fin de ciclo) para calcular días de vacaciones."""
     return date(year, 12, 31)
 
+
 def calcular_dias_vacaciones(alta_ant, fecha_referencia=None):
+    """
+    Calcula días de vacaciones usando base 30/360 para proporcionalidades.
+    - Todos los meses cuentan 30 días y el año 360.
+    - Días 31 y 28/29 se ajustan a 30 antes del cálculo.
+    - Mantiene los tramos tradicionales (14/21/28/35) según antigüedad real.
+    """
     if not alta_ant:
         return 0
+
     if fecha_referencia is None:
         fecha_referencia = date.today()
-    dias_antiguedad = (fecha_referencia - alta_ant).days
 
-    if dias_antiguedad < 181:
-        return math.ceil(dias_antiguedad / 30)
-    else:
-        años = fecha_referencia.year - alta_ant.year - ((fecha_referencia.month, fecha_referencia.day) < (alta_ant.month, alta_ant.day))
-        if años < 5:
+    if alta_ant > fecha_referencia:
+        return 0
+
+    def _fecha_a_base_30(fecha):
+        """Convierte una fecha a su equivalente en base 30/360."""
+        dia = fecha.day
+        if fecha.month == 2 and dia >= 28:
+            dia = 30
+        elif dia > 30:
+            dia = 30
+        return fecha.year * 360 + (fecha.month - 1) * 30 + dia
+
+    dias_antiguedad_real = (fecha_referencia - alta_ant).days
+    dias_antiguedad_base = max(_fecha_a_base_30(fecha_referencia) - _fecha_a_base_30(alta_ant), 0)
+    corte_junio = date(fecha_referencia.year, 6, 1)
+
+    def _dias_proporcionales():
+        base = max(dias_antiguedad_base // 30, 0)
+        resto = dias_antiguedad_base % 30
+        if resto >= 15:
+            base += 1
+        return base
+
+    if alta_ant.year == fecha_referencia.year:
+        if alta_ant <= corte_junio:
             return 14
-        elif años < 10:
-            return 21
-        elif años < 20:
-            return 28
-        else:
-            return 35
+        return _dias_proporcionales()
+
+    if dias_antiguedad_base < 180:
+        return _dias_proporcionales()
+
+    años = fecha_referencia.year - alta_ant.year - (
+        (fecha_referencia.month, fecha_referencia.day) < (alta_ant.month, alta_ant.day)
+    )
+    if años < 5:
+        return 14
+    if años < 10:
+        return 21
+    if años < 20:
+        return 28
+    return 35
 
 
 def consumir_dias_vacaciones(empleado, fecha_desde, fecha_hasta):

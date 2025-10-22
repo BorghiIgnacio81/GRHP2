@@ -47,8 +47,15 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
     <div class="card-body py-2">
       <form method="get" class="form-inline" id="audit-filters" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
-        <!-- Usuario / Id -->
-        <input type="text" name="usuario" placeholder="Usuario o Id" class="form-control form-control-sm" value="{{ filtros.usuario }}" style="min-width:180px;">
+        <div class="audit-filter" style="display:flex;flex-direction:column;gap:4px;">
+          <label for="audit_usuario" class="form-label form-label-sm" style="font-size:0.85rem;">Modificador</label>
+          <input type="text" id="audit_usuario" name="usuario" placeholder="Usuario o ID" class="form-control form-control-sm" value="{{ filtros.usuario }}" style="min-width:180px;">
+        </div>
+
+        <div class="audit-filter" style="display:flex;flex-direction:column;gap:4px;">
+          <label for="audit_modificado" class="form-label form-label-sm" style="font-size:0.85rem;">Modificado</label>
+          <input type="text" id="audit_modificado" name="modificado" placeholder="Empleado (nombre o ID)" class="form-control form-control-sm" value="{{ filtros.modificado }}" style="min-width:200px;">
+        </div>
 
         <!-- Fecha desde -->
         <input type="date" name="fecha_desde" id="audit_fecha_desde" class="form-control form-control-sm" value="{{ filtros.fecha_desde }}">
@@ -94,8 +101,15 @@ document.addEventListener('DOMContentLoaded', function() {
             <td>{% if l.fecha_cambio %}{{ l.fecha_cambio|date:"d/m/Y" }}{% endif %}</td>
             <td>{{ l.nombre_tabla }}</td>
             <td>{{ l.idregistro }}</td>
-                    <td>{{ l.accion|accion_label }}</td>
-                    <td class="cambio-cell">{{ cambio_html|safe }}</td>
+            <td>{{ l.accion|accion_label }}</td>
+            <td class="cambio-cell">
+              {% with target=log_targets|get_item:l.id %}
+                {% if target %}
+                  <div class="cambio-target"><strong>Empleado modificado:</strong> {{ target }}</div>
+                {% endif %}
+              {% endwith %}
+              {{ cambio_html|safe }}
+            </td>
           </tr>
           {% endif %}
           {% empty %}
