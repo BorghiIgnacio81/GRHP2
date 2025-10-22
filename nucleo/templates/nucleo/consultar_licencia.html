@@ -225,17 +225,25 @@
                     <td>{{ s.fecha_hasta|date:"d/m/Y" }}</td>
                     <td>{{ s.dias_solicitados }}</td>
                     <td>
-                        {% if s.id_estado.estado|lower == "aceptada" %}
-                            <span class="licencia-badge aprobada">Aprobada</span>
-                        {% elif s.id_estado.estado|lower == "rechazada" %}
-                            {% if s.texto_gestor %}
-                                <span class="licencia-badge rechazada" title="{{ s.texto_gestor|escape }}">Rechazada</span>
-                            {% else %}
+                        <div class="estado-con-acciones">
+                            {% if s.id_estado.estado|lower == "aceptada" %}
+                                <span class="licencia-badge aprobada">Aprobada</span>
+                            {% elif s.id_estado.estado|lower == "rechazada" %}
                                 <span class="licencia-badge rechazada">Rechazada</span>
+                                {% if s.motivo_rechazo %}
+                                    <button type="button"
+                                            class="btn-motivo-rechazo"
+                                            data-motivo="{{ s.motivo_rechazo|escape }}"
+                                            aria-label="Ver motivo del rechazo"
+                                            title="Motivo rechazo">
+                                        <span class="icono-lupa" aria-hidden="true"></span>
+                                        <span class="sr-only">Ver motivo del rechazo</span>
+                                    </button>
+                                {% endif %}
+                            {% else %}
+                                <span class="licencia-badge espera">En espera</span>
                             {% endif %}
-                        {% else %}
-                            <span class="licencia-badge espera">En espera</span>
-                        {% endif %}
+                        </div>
                     </td>
                     <td>
                         {# Botón eliminar para el dueño si la solicitud está en espera o aceptada/aprobada #}
@@ -288,6 +296,15 @@
             <div class="modal-botones">
                 <button type="button" id="cancelar-eliminacion" class="btn-modal-cancelar">Cancelar</button>
                 <button type="button" id="confirmar-eliminacion" class="btn-modal-confirmar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+    <div id="modal-motivo-rechazo" class="modal-informativo" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-contenido">
+            <h3>Motivo del rechazo</h3>
+            <p id="motivo-rechazo-texto"></p>
+            <div class="modal-botones">
+                <button type="button" id="cerrar-motivo-rechazo" class="btn-modal-aceptar">Aceptar</button>
             </div>
         </div>
     </div>

@@ -4,37 +4,41 @@
     class ConsultarLicencias {
         constructor() {
             this.formsEliminar = document.querySelectorAll('form.form-eliminar');
-            this.modal = document.getElementById('modal-confirmar-eliminacion');
+            this.deleteModal = document.getElementById('modal-confirmar-eliminacion');
             this.btnCancelar = document.getElementById('cancelar-eliminacion');
             this.btnConfirmar = document.getElementById('confirmar-eliminacion');
+            this.reasonButtons = document.querySelectorAll('.btn-motivo-rechazo');
+            this.reasonModal = document.getElementById('modal-motivo-rechazo');
+            this.reasonText = document.getElementById('motivo-rechazo-texto');
+            this.reasonCloseButton = document.getElementById('cerrar-motivo-rechazo');
             this.messageCloseButtons = document.querySelectorAll('.mensaje-cerrable .cerrar-mensaje');
             this.formPendiente = null;
+            this.openModals = new Set();
 
-            this.bindEvents();
+            this.bindDeleteFlow();
+            this.bindReasonFlow();
             this.bindMessageClosers();
         }
 
-        bindEvents() {
-            if (!this.formsEliminar) {
-                return;
-            }
-
-            this.formsEliminar.forEach((form) => {
-                if (form.dataset.confirmBound === '1') {
-                    return;
-                }
-                form.dataset.confirmBound = '1';
-                form.addEventListener('submit', (event) => {
-                    event.preventDefault();
-                    this.formPendiente = form;
-                    this.toggleModal(true);
+        bindDeleteFlow() {
+            if (this.formsEliminar) {
+                this.formsEliminar.forEach((form) => {
+                    if (form.dataset.confirmBound === '1') {
+                        return;
+                    }
+                    form.dataset.confirmBound = '1';
+                    form.addEventListener('submit', (event) => {
+                        event.preventDefault();
+                        this.formPendiente = form;
+                        this.toggleModalElement(this.deleteModal, true);
+                    });
                 });
-            });
+            }
 
             if (this.btnCancelar && this.btnCancelar.dataset.bound !== '1') {
                 this.btnCancelar.dataset.bound = '1';
                 this.btnCancelar.addEventListener('click', () => {
-                    this.toggleModal(false);
+                    this.toggleModalElement(this.deleteModal, false);
                     this.formPendiente = null;
                 });
             }
@@ -45,20 +49,54 @@
                     if (this.formPendiente) {
                         const formToSubmit = this.formPendiente;
                         this.formPendiente = null;
-                        this.toggleModal(false);
+                        this.toggleModalElement(this.deleteModal, false);
                         window.setTimeout(() => formToSubmit.submit(), 0);
                     } else {
-                        this.toggleModal(false);
+                        this.toggleModalElement(this.deleteModal, false);
                     }
                 });
             }
 
-            if (this.modal && !this.modal.dataset.overlayBound) {
-                this.modal.dataset.overlayBound = '1';
-                this.modal.addEventListener('click', (event) => {
-                    if (event.target === this.modal) {
-                        this.toggleModal(false);
+            if (this.deleteModal && !this.deleteModal.dataset.overlayBound) {
+                this.deleteModal.dataset.overlayBound = '1';
+                this.deleteModal.addEventListener('click', (event) => {
+                    if (event.target === this.deleteModal) {
+                        this.toggleModalElement(this.deleteModal, false);
                         this.formPendiente = null;
+                    }
+                });
+            }
+        }
+
+        bindReasonFlow() {
+            if (this.reasonButtons && this.reasonButtons.length && this.reasonModal) {
+                this.reasonButtons.forEach((button) => {
+                    if (button.dataset.motivoBound === '1') {
+                        return;
+                    }
+                    button.dataset.motivoBound = '1';
+                    button.addEventListener('click', () => {
+                        const motivo = button.getAttribute('data-motivo') || '';
+                        if (this.reasonText) {
+                            this.reasonText.textContent = motivo.trim() || 'Sin motivo informado.';
+                        }
+                        this.toggleModalElement(this.reasonModal, true);
+                    });
+                });
+            }
+
+            if (this.reasonCloseButton && this.reasonCloseButton.dataset.bound !== '1') {
+                this.reasonCloseButton.dataset.bound = '1';
+                this.reasonCloseButton.addEventListener('click', () => {
+                    this.toggleModalElement(this.reasonModal, false);
+                });
+            }
+
+            if (this.reasonModal && !this.reasonModal.dataset.overlayBound) {
+                this.reasonModal.dataset.overlayBound = '1';
+                this.reasonModal.addEventListener('click', (event) => {
+                    if (event.target === this.reasonModal) {
+                        this.toggleModalElement(this.reasonModal, false);
                     }
                 });
             }
@@ -83,13 +121,21 @@
             });
         }
 
-        toggleModal(show) {
-            if (!this.modal) {
+        toggleModalElement(modalElement, show) {
+            if (!modalElement) {
                 return;
             }
-            this.modal.setAttribute('aria-hidden', show ? 'false' : 'true');
-            this.modal.classList.toggle('visible', !!show);
-            document.body.classList.toggle('modal-open', !!show);
+
+            modalElement.setAttribute('aria-hidden', show ? 'false' : 'true');
+            modalElement.classList.toggle('visible', !!show);
+
+            if (show) {
+                this.openModals.add(modalElement);
+            } else {
+                this.openModals.delete(modalElement);
+            }
+
+            document.body.classList.toggle('modal-open', this.openModals.size > 0);
         }
     }
 

@@ -12,6 +12,7 @@ from django.utils.http import url_has_allowed_host_and_scheme
 import os
 import json
 import logging
+import re
 
 from nucleo.models import (
     Empleado,
@@ -890,15 +891,28 @@ def consultar_licencia(request):
     
     # Unificar ambas listas y calcular días solicitados
     solicitudes = []
+
+    def _extraer_motivo_vacaciones(comentario):
+        if not comentario:
+            return ""
+        match = re.search(r"motivo rechazo:\s*(.+)", comentario, re.IGNORECASE)
+        if match:
+            motivo = match.group(1).strip()
+            # Quedarnos solo con la primera línea posterior al mensaje estándar
+            return motivo.splitlines()[0].strip()
+        return comentario.strip()
+
     for s in licencias:
         s.tipo = getattr(s.id_licencia, 'descripcion', 'Licencia')
         s.dias_solicitados = (s.fecha_hasta - s.fecha_desde).days + 1
         s.fecha_solicitud = s.fecha_sqllc
+        s.motivo_rechazo = (getattr(s, 'texto_gestor', '') or '').strip()
         solicitudes.append(s)
     for v in vacaciones:
         v.tipo = 'Vacaciones'
         v.dias_solicitados = (v.fecha_hasta - v.fecha_desde).days + 1
         v.fecha_solicitud = v.fecha_sol_vac
+        v.motivo_rechazo = _extraer_motivo_vacaciones(getattr(v, 'comentario', ''))
         solicitudes.append(v)
     
     # Aplicar filtros si existen
