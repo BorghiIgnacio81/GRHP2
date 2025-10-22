@@ -614,7 +614,7 @@ def solicitar_licencia(request):
                 for chunk in archivo.chunks():
                     destination.write(chunk)
 
-        from datetime import datetime
+        from datetime import datetime, timedelta
         try:
             fecha_desde_dt = datetime.strptime(fecha_desde, "%Y-%m-%d").date()
             fecha_hasta_dt = datetime.strptime(fecha_hasta, "%Y-%m-%d").date()
@@ -633,13 +633,12 @@ def solicitar_licencia(request):
                 "feriados": feriados,
             })
 
+        feriados_warning_message = None
         feriados_qs = Feriado.objects.all()
         feriados_fechas = {f.fecha for f in feriados_qs}
         # Lista legible de feriados en el rango
         feriados_en_rango = [f.strftime("%d/%m/%Y") for f in sorted(feriados_fechas) if fecha_desde_dt <= f <= fecha_hasta_dt]
         if feriados_en_rango:
-            from datetime import timedelta
-
             total_days = (fecha_hasta_dt - fecha_desde_dt).days + 1
             dias_solicitados_set = {fecha_desde_dt + timedelta(days=i) for i in range(total_days)}
 
@@ -651,12 +650,10 @@ def solicitar_licencia(request):
             elif dias_solicitados_set.issubset(feriados_fechas):
                 mensaje_error = "No se puede solicitar una licencia exclusivamente en días feriados."
             else:
-                # Mezcla de días hábiles y feriados: sólo advertir
-                aviso = f"Atención: Las fechas seleccionadas incluyen feriados: {', '.join(feriados_en_rango)}."
-                if mensaje_advertencia:
-                    mensaje_advertencia += "<br>" + aviso
-                else:
-                    mensaje_advertencia = aviso
+                # Mezcla de días hábiles y feriados: preparar advertencia (se unirá con la del plan)
+                feriados_warning_message = (
+                    f"Atención: Las fechas seleccionadas incluyen feriados: {', '.join(feriados_en_rango)}."
+                )
 
         colisiones = []
         licencias_colision = Solicitud_licencia.objects.filter(
@@ -738,23 +735,18 @@ def solicitar_licencia(request):
                 })
             plan = planes_qs.first() if planes_qs.exists() else None
             if plan:
+                plan_schedule = {
+                    0: bool(getattr(plan, "lunes", False)),
+                    1: bool(getattr(plan, "martes", False)),
+                    2: bool(getattr(plan, "miercoles", False)),
+                    3: bool(getattr(plan, "jueves", False)),
+                    4: bool(getattr(plan, "viernes", False)),
+                    5: bool(getattr(plan, "sabado", False)),
+                    6: bool(getattr(plan, "domingo", False)),
+                }
                 d = fecha_desde_dt
                 weekday = d.weekday()  # 0=lunes .. 6=domingo
-                works = None
-                if weekday == 0:
-                    works = bool(plan.lunes)
-                elif weekday == 1:
-                    works = bool(plan.martes)
-                elif weekday == 2:
-                    works = bool(plan.miercoles)
-                elif weekday == 3:
-                    works = bool(plan.jueves)
-                elif weekday == 4:
-                    works = bool(plan.viernes)
-                elif weekday == 5:
-                    works = bool(plan.sabado)
-                elif weekday == 6:
-                    works = bool(plan.domingo)
+                works = plan_schedule.get(weekday, False)
 
                 nombre_dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
                 nombre_dia = nombre_dias[weekday]
@@ -797,6 +789,57 @@ def solicitar_licencia(request):
                             "feriados": feriados,
                         })
 
+                if not mensaje_error:
+                    total_rango = (fecha_hasta_dt - fecha_desde_dt).days + 1
+                    dias_laborables_noferiado = []
+                    dias_no_laborables_plan = []
+                    dias_feriados_plan = []
+                    for offset in range(total_rango):
+                        dia = fecha_desde_dt + timedelta(days=offset)
+                        dia_weekday = dia.weekday()
+                        works_day = plan_schedule.get(dia_weekday, False)
+                        es_feriado = dia in feriados_fechas
+                        if works_day and not es_feriado:
+                            dias_laborables_noferiado.append(dia)
+                        else:
+                            if not works_day:
+                                dias_no_laborables_plan.append(dia)
+                            if es_feriado:
+                                dias_feriados_plan.append(dia)
+
+                    if not dias_laborables_noferiado:
+                        detalle_partes = []
+                        if dias_no_laborables_plan:
+                            detalle_partes.append("días no laborables según tu plan de trabajo")
+                        if dias_feriados_plan:
+                            detalle_partes.append("feriados")
+                        detalle_text = " y ".join(detalle_partes) if detalle_partes else "días no laborables"
+                        fechas_union = sorted(set(dias_no_laborables_plan) | set(dias_feriados_plan))
+                        fechas_texto = ", ".join(d.strftime("%d/%m/%Y") for d in fechas_union)
+                        mensaje_error = (
+                            f"No se puede solicitar una licencia compuesta únicamente por {detalle_text}."
+                        )
+                        if fechas_texto:
+                            mensaje_error += f" Fechas alcanzadas: {fechas_texto}."
+                    elif dias_no_laborables_plan or dias_feriados_plan:
+                        fechas_plan = [d.strftime("%d/%m/%Y") for d in sorted(set(dias_no_laborables_plan))]
+                        fechas_feriados = [d.strftime("%d/%m/%Y") for d in sorted(set(dias_feriados_plan))]
+                        detalle_partes = []
+                        if fechas_plan:
+                            detalle_partes.append(
+                                "días no laborables según tu plan de trabajo: " + ", ".join(fechas_plan)
+                            )
+                        if fechas_feriados:
+                            detalle_partes.append("feriados: " + ", ".join(fechas_feriados))
+                        if detalle_partes:
+                            aviso = "Atención: Las fechas seleccionadas incluyen " + " y ".join(detalle_partes) + "."
+                            if mensaje_advertencia:
+                                mensaje_advertencia += "<br>" + aviso
+                            else:
+                                mensaje_advertencia = aviso
+                            # Ya incorporamos el detalle de feriados dentro de esta advertencia
+                            feriados_warning_message = None
+
                 if tipo_lic and tipo_lic.descripcion.lower() == "vacaciones":
                     if not works:
                         mensaje_error = (
@@ -811,6 +854,12 @@ def solicitar_licencia(request):
         except Exception:
             # Silenciar si no podemos comprobar plan
             pass
+
+        if feriados_warning_message and not mensaje_error:
+            if mensaje_advertencia:
+                mensaje_advertencia += "<br>" + feriados_warning_message
+            else:
+                mensaje_advertencia = feriados_warning_message
 
         if mensaje_error:
             return render(request, "nucleo/solicitar_licencia.html", {
@@ -845,14 +894,21 @@ def solicitar_licencia(request):
                 archivo=archivo_url,
                 id_estado=estado,
             )
-               # Construir mensaje de éxito detallado
+
+        # Construir mensaje de éxito detallado
         tipo_nombre = tipo_lic.descripcion if tipo_lic else "Licencia"
         fecha_desde_str = fecha_desde_dt.strftime("%d/%m/%Y")
         fecha_hasta_str = fecha_hasta_dt.strftime("%d/%m/%Y")
-        mensaje_exito = f"Solicitud de licencia por {tipo_nombre} desde el {fecha_desde_str} al {fecha_hasta_str} enviada para su aprobación."
+        mensaje_exito = (
+            f"Solicitud de licencia por {tipo_nombre} desde el {fecha_desde_str} al {fecha_hasta_str} "
+            "enviada para su aprobación."
+        )
         if tipo_lic and tipo_lic.descripcion.strip().lower() == "vacaciones":
             if fecha_desde_dt.month < 10:
-                advertencia_vac = "Está solicitando vacaciones fuera del período recomendado (octubre-abril). Preferiblemente no se debe hacer, pero la solicitud fue enviada igualmente."
+                advertencia_vac = (
+                    "Está solicitando vacaciones fuera del período recomendado (octubre-abril). "
+                    "Preferiblemente no se debe hacer, pero la solicitud fue enviada igualmente."
+                )
                 if mensaje_advertencia:
                     mensaje_advertencia += "<br>" + advertencia_vac
                 else:
@@ -865,13 +921,13 @@ def solicitar_licencia(request):
         "dias_por_licencia": json.dumps(dias_por_licencia),
         "vacaciones_info": vacaciones_info_list,
         "vacaciones_info_json": json.dumps(vacaciones_info_json),
-    "year": year,
-    "prev_available": prev_available,
-    "prev_consumed": prev_consumed,
-    "prev_diff": max(prev_available - prev_consumed, 0),
-    "curr_available": curr_available,
-    "curr_consumed": curr_consumed,
-    "curr_diff": max(curr_available - curr_consumed, 0),
+        "year": year,
+        "prev_available": prev_available,
+        "prev_consumed": prev_consumed,
+        "prev_diff": max(prev_available - prev_consumed, 0),
+        "curr_available": curr_available,
+        "curr_consumed": curr_consumed,
+        "curr_diff": max(curr_available - curr_consumed, 0),
         "mensaje_exito": mensaje_exito,
         "mensaje_error": mensaje_error,
         "mensaje_advertencia": mensaje_advertencia,
