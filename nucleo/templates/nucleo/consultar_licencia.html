@@ -3,23 +3,20 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'nucleo/css/consultar_licencia.css' %}">
 {% endblock %}
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.btn-eliminar').forEach(function(b) {
-        var form = b.closest('form');
-        if (!form) return;
-        form.addEventListener('submit', function(e) {
-            var ok = confirm('¿Confirma que desea eliminar/cancelar esta solicitud?');
-            if (!ok) e.preventDefault();
-        });
-    });
-});
-</script>
 {% block main %}
 <div class="consultar-licencia-container">
     <div class="consultar-licencia-box">
         <h2>Mis solicitudes de licencia</h2>
-        {% if messages %}
+        {% if request.GET.msg_exito or request.GET.msg_error %}
+            <div style="margin-top:10px;" id="mensajes-django">
+                {% if request.GET.msg_exito %}
+                    <div class="mensaje-exito mensaje-cerrable"><span style="float:right;cursor:pointer;font-weight:bold;font-size:1.2em;" class="cerrar-mensaje">&times;</span>{{ request.GET.msg_exito }}</div>
+                {% endif %}
+                {% if request.GET.msg_error %}
+                    <div class="mensaje-error mensaje-cerrable"><span style="float:right;cursor:pointer;font-weight:bold;font-size:1.2em;" class="cerrar-mensaje">&times;</span>{{ request.GET.msg_error }}</div>
+                {% endif %}
+            </div>
+        {% elif messages %}
             <div style="margin-top:10px;" id="mensajes-django">
                 {% for message in messages %}
                     {% if message.tags == 'success' or message.tags == 'exito' %}
@@ -31,9 +28,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     {% endif %}
                 {% endfor %}
             </div>
-            <script>
-            document.querySelectorAll('.cerrar-mensaje').forEach(function(btn) { btn.onclick = function(){ this.parentElement.style.display='none'; }; });
-            </script>
         {% endif %}
         
         <!-- Formulario de Filtros -->
@@ -52,7 +46,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         <option value="">Todos los tipos...</option>
                         <option value="vacaciones" {% if filtros_get.tipo_licencia == 'vacaciones' %}selected{% endif %}>Vacaciones</option>
                         {% for tipo in tipos_licencia %}
-                            <option value="{{ tipo.id_licencia }}" {% if filtros_get.tipo_licencia == tipo.id_licencia|stringformat:"s" %}selected{% endif %}>{{ tipo.descripcion }}</option>
+                            {% if tipo.descripcion|lower != "vacaciones" %}
+                                <option value="{{ tipo.id_licencia }}" {% if filtros_get.tipo_licencia == tipo.id_licencia|stringformat:"s" %}selected{% endif %}>{{ tipo.descripcion }}</option>
+                            {% endif %}
                         {% endfor %}
                     </select>
                 </div>
@@ -243,9 +239,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     </td>
                     <td>
                         {# Botón eliminar para el dueño si la solicitud está en espera o aceptada/aprobada #}
-                        <form method="post" action="{% url 'nucleo:eliminar_solicitud' %}" style="display:inline;">
+                        <form method="post" action="{% url 'nucleo:eliminar_solicitud' %}" style="display:inline;" class="form-eliminar" data-solicitud-id="{{ s.pk }}">
                             {% csrf_token %}
                             <input type="hidden" name="solicitud_id" value="{{ s.pk }}">
+                            <input type="hidden" name="redirect_url" value="{{ request.get_full_path }}">
+                            {% if filtros_get.tipo_licencia %}<input type="hidden" name="filter_tipo_licencia" value="{{ filtros_get.tipo_licencia }}">{% endif %}
+                            {% if filtros_get.tipo_fecha %}<input type="hidden" name="filter_tipo_fecha" value="{{ filtros_get.tipo_fecha }}">{% endif %}
+                            {% if filtros_get.fecha_desde %}<input type="hidden" name="filter_fecha_desde" value="{{ filtros_get.fecha_desde }}">{% endif %}
+                            {% if filtros_get.fecha_hasta %}<input type="hidden" name="filter_fecha_hasta" value="{{ filtros_get.fecha_hasta }}">{% endif %}
+                            {% if filtros_get.rango_fecha %}<input type="hidden" name="filter_rango_fecha" value="{{ filtros_get.rango_fecha }}">{% endif %}
+                            {% if request.GET.page %}<input type="hidden" name="filter_page" value="{{ request.GET.page }}">{% endif %}
                             {% with estado_lower=s.id_estado.estado|lower %}
                                 {% if request.user.is_staff %}
                                     {# Staff puede eliminar solicitudes en cualquier estado #}
@@ -269,7 +272,6 @@ document.addEventListener('DOMContentLoaded', function() {
                             {% endwith %}
                         </form>
                     </td>
-                    </td>
                 </tr>
                 {% empty %}
                 <tr>
@@ -279,5 +281,19 @@ document.addEventListener('DOMContentLoaded', function() {
             </tbody>
         </table>
     </div>
+    <div id="modal-confirmar-eliminacion" class="modal-confirmacion" aria-hidden="true">
+        <div class="modal-contenido">
+            <h3>Confirmar eliminación</h3>
+            <p>¿Desea eliminar esta solicitud? Esta acción no se puede deshacer.</p>
+            <div class="modal-botones">
+                <button type="button" id="cancelar-eliminacion" class="btn-modal-cancelar">Cancelar</button>
+                <button type="button" id="confirmar-eliminacion" class="btn-modal-confirmar">Eliminar</button>
+            </div>
+        </div>
+    </div>
 </div>
+{% endblock %}
+{% block extra_js %}
+    {{ block.super }}
+    <script src="{% static 'nucleo/js/modules/consultar-licencias.js' %}"></script>
 {% endblock %}

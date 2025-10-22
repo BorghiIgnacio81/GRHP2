@@ -8,6 +8,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
 from django.db import models, transaction
 from django.utils import timezone
+from django.utils.http import url_has_allowed_host_and_scheme
 import os
 import json
 import logging
@@ -978,46 +979,51 @@ def consultar_licencia(request):
     })
 
 def _build_redirect_with_filters_from_post(request, message, message_type='success'):
-    """Helper simple para construir redirect con filtros desde POST"""
+    """Construye un redirect preservando filtros y permite overrides seguros."""
     from django.urls import reverse
-    from urllib.parse import urlencode
-    
+    from urllib.parse import urlencode, urlparse, parse_qsl, urlunparse
+
+    # Base por defecto
+    default_base = reverse('nucleo:gestion_reporte_licencias')
+    target_url = default_base
+    accumulated_params = {}
+
+    redirect_override = request.POST.get('redirect_url')
+    if redirect_override and url_has_allowed_host_and_scheme(
+        redirect_override,
+        allowed_hosts={request.get_host()},
+        require_https=request.is_secure(),
+    ):
+        target_url = redirect_override
+        parsed = urlparse(target_url)
+        accumulated_params = dict(parse_qsl(parsed.query, keep_blank_values=True))
+    else:
+        parsed = urlparse(target_url)
+
     # Extraer filtros de los campos hidden del POST
-    filter_params = {}
-    
-    if request.POST.get('filter_anio'):
-        filter_params['anio'] = request.POST.get('filter_anio')
-    if request.POST.get('filter_empleado'):
-        filter_params['empleado'] = request.POST.get('filter_empleado')
-    if request.POST.get('filter_tipo'):
-        filter_params['tipo'] = request.POST.get('filter_tipo')
-    if request.POST.get('filter_estado'):
-        filter_params['estado'] = request.POST.get('filter_estado')
-    if request.POST.get('filter_page'):
-        filter_params['page'] = request.POST.get('filter_page')
-    if request.POST.get('filter_fecha_desde'):
-        filter_params['fecha_desde'] = request.POST.get('filter_fecha_desde')
-    if request.POST.get('filter_fecha_hasta'):
-        filter_params['fecha_hasta'] = request.POST.get('filter_fecha_hasta')
-    if request.POST.get('filter_fecha_rango'):
-        filter_params['fecha_rango'] = request.POST.get('filter_fecha_rango')
-    
+    for key, value in request.POST.items():
+        if not value:
+            continue
+        if key.startswith('filter_'):
+            param_name = key[len('filter_'):]
+            accumulated_params[param_name] = value
+
     # Agregar mensaje según el tipo
     if message:
-        if message_type == 'error':
-            filter_params['msg_error'] = message
-        else:
-            filter_params['msg_exito'] = message
-    
-    # Construir URL final
-    base_url = reverse('nucleo:gestion_reporte_licencias')
-    if filter_params:
-        return f"{base_url}?{urlencode(filter_params)}"
-    else:
-        if message:
-            param_name = 'msg_error' if message_type == 'error' else 'msg_exito'
-            return f"{base_url}?{param_name}={message.replace(' ', '+')}"
-        return base_url
+        param_name = 'msg_error' if message_type == 'error' else 'msg_exito'
+        accumulated_params[param_name] = message
+
+    rebuilt_query = urlencode(accumulated_params, doseq=True)
+    rebuilt_url = urlunparse((
+        parsed.scheme,
+        parsed.netloc,
+        parsed.path,
+        parsed.params,
+        rebuilt_query,
+        parsed.fragment,
+    ))
+
+    return rebuilt_url or default_base
 
 @login_required
 def gestion_reporte_licencias(request):
