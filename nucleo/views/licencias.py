@@ -599,6 +599,8 @@ def solicitar_licencia(request):
         except Exception:
             estado = None
 
+        es_licencia_libre = bool(tipo_lic) and getattr(tipo_lic, "dias", None) is None
+
         archivo_url = None
         if archivo:
             carpeta = os.path.join("media", "licencias")
@@ -629,26 +631,22 @@ def solicitar_licencia(request):
             })
 
         feriados_qs = Feriado.objects.all()
-        feriados_fechas = set(f.fecha for f in feriados_qs)
+        feriados_fechas = {f.fecha for f in feriados_qs}
         # Lista legible de feriados en el rango
         feriados_en_rango = [f.strftime("%d/%m/%Y") for f in sorted(feriados_fechas) if fecha_desde_dt <= f <= fecha_hasta_dt]
         if feriados_en_rango:
-            # Si TODAS las fechas solicitadas son feriados => por defecto se rechaza,
-            # excepto para 'licencia libre' (dias = NULL) donde se permite y sólo se advierte.
             from datetime import timedelta
+
             total_days = (fecha_hasta_dt - fecha_desde_dt).days + 1
-            # Construir conjunto de días solicitados
-            dias_solicitados_set = set(fecha_desde_dt + timedelta(days=i) for i in range(total_days))
-            es_licencia_libre = bool(tipo_lic) and (getattr(tipo_lic, 'dias', None) is None)
-            if dias_solicitados_set.issubset(feriados_fechas):
-                if es_licencia_libre:
-                    aviso = f"Está solicitando una licencia libre en día(s) feriado(s): {', '.join(feriados_en_rango)}. Se permite igualmente."
-                    if mensaje_advertencia:
-                        mensaje_advertencia += "<br>" + aviso
-                    else:
-                        mensaje_advertencia = aviso
-                else:
-                    mensaje_error = f"No es posible solicitar licencia: las fechas indicadas son feriados ({', '.join(feriados_en_rango)})."
+            dias_solicitados_set = {fecha_desde_dt + timedelta(days=i) for i in range(total_days)}
+
+            if es_licencia_libre:
+                mensaje_error = (
+                    "No se puede solicitar una licencia libre en días feriados. "
+                    f"Fechas alcanzadas: {', '.join(feriados_en_rango)}."
+                )
+            elif dias_solicitados_set.issubset(feriados_fechas):
+                mensaje_error = "No se puede solicitar una licencia exclusivamente en días feriados."
             else:
                 # Mezcla de días hábiles y feriados: sólo advertir
                 aviso = f"Atención: Las fechas seleccionadas incluyen feriados: {', '.join(feriados_en_rango)}."
@@ -737,12 +735,6 @@ def solicitar_licencia(request):
                 })
             plan = planes_qs.first() if planes_qs.exists() else None
             if plan:
-                from datetime import timedelta
-                total_days = dias_solicitados
-                dias_no_laborales = 0
-                dias_laborables = 0
-                # Validar solo el primer día seleccionado
-                import logging
                 d = fecha_desde_dt
                 weekday = d.weekday()  # 0=lunes .. 6=domingo
                 works = None
@@ -760,85 +752,59 @@ def solicitar_licencia(request):
                     works = bool(plan.sabado)
                 elif weekday == 6:
                     works = bool(plan.domingo)
+
                 nombre_dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
                 nombre_dia = nombre_dias[weekday]
-                # logging.debug(f"[DEBUG] fecha_desde: {fecha_desde}, fecha_desde_dt: {fecha_desde_dt}, weekday: {weekday}, nombre_dia: {nombre_dia}, works: {works}, empleado: {getattr(empleado_obj, 'idempleado_id', None)}")
-                # Validación especial: licencia de 1 día en día no laborable o feriado
-                primer_dia_feriado = fecha_desde_dt in set(f.fecha for f in Feriado.objects.all())
-                es_licencia_libre = bool(tipo_lic) and (getattr(tipo_lic, 'dias', None) is None)
+                primer_dia_feriado = fecha_desde_dt in feriados_fechas
+
                 if dias_solicitados == 1:
+                    fecha_str = fecha_desde_dt.strftime('%d/%m/%Y')
                     if not works:
                         if es_licencia_libre:
-                            fecha_str = fecha_desde_dt.strftime('%d/%m/%Y')
-                            aviso = f"El {fecha_str} es un día no laborable para usted, pero se permite la licencia libre de un día."
-                            if mensaje_advertencia:
-                                mensaje_advertencia += "<br>" + aviso
-                            else:
-                                mensaje_advertencia = aviso
+                            mensaje_error = (
+                                f"No se puede solicitar una licencia libre el {fecha_str} "
+                                "porque es un día no laborable según su plan de trabajo."
+                            )
                         else:
-                            fecha_str = fecha_desde_dt.strftime('%d/%m/%Y')
-                            mensaje_error = f"No se hizo la solicitud por ser el {fecha_str} un día no laborable para usted y la licencia ser de 1 solo día."
-                            return render(request, "nucleo/solicitar_licencia.html", {
-                                "tipos_licencia": tipos_licencia,
-                                "dias_por_licencia": json.dumps(dias_por_licencia),
-                                "vacaciones_info": vacaciones_info_list,
-                                "vacaciones_info_json": json.dumps(vacaciones_info_json),
-                                "year": year,
-                                "mensaje_error": mensaje_error,
-                                "prev_diff": max(prev_available - prev_consumed, 0),
-                                "curr_diff": max(curr_available - curr_consumed, 0),
-                                "mensaje_advertencia": mensaje_advertencia,
-                                "feriados": feriados,
-                            })
+                            mensaje_error = (
+                                f"No se hizo la solicitud por ser el {fecha_str} un día no laborable "
+                                "para usted y la licencia ser de 1 solo día."
+                            )
                     elif primer_dia_feriado:
                         if es_licencia_libre:
-                            fecha_str = fecha_desde_dt.strftime('%d/%m/%Y')
-                            aviso = f"El {fecha_str} es feriado; la licencia libre de un día se permite igualmente."
-                            if mensaje_advertencia:
-                                mensaje_advertencia += "<br>" + aviso
-                            else:
-                                mensaje_advertencia = aviso
+                            mensaje_error = (
+                                f"No se puede solicitar una licencia libre el {fecha_str} porque es feriado."
+                            )
                         else:
-                            fecha_str = fecha_desde_dt.strftime('%d/%m/%Y')
-                            mensaje_error = f"No se hizo la solicitud por ser el {fecha_str} día feriado y la licencia ser de 1 solo día."
-                            return render(request, "nucleo/solicitar_licencia.html", {
-                                "tipos_licencia": tipos_licencia,
-                                "dias_por_licencia": json.dumps(dias_por_licencia),
-                                "vacaciones_info": vacaciones_info_list,
-                                "vacaciones_info_json": json.dumps(vacaciones_info_json),
-                                "year": year,
-                                "mensaje_error": mensaje_error,
-                                "prev_diff": max(prev_available - prev_consumed, 0),
-                                "curr_diff": max(curr_available - curr_consumed, 0),
-                                "mensaje_advertencia": mensaje_advertencia,
-                                "feriados": feriados,
-                            })
-                es_licencia_libre = bool(tipo_lic) and (getattr(tipo_lic, 'dias', None) is None)
-                # Verificar si el primer día es feriado
-                primer_dia_feriado = fecha_desde_dt in set(f.fecha for f in Feriado.objects.all())
-                nombre_dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
-                nombre_dia = nombre_dias[weekday]
+                            mensaje_error = (
+                                f"No se hizo la solicitud por ser el {fecha_str} día feriado "
+                                "y la licencia ser de 1 solo día."
+                            )
+                    if mensaje_error:
+                        return render(request, "nucleo/solicitar_licencia.html", {
+                            "tipos_licencia": tipos_licencia,
+                            "dias_por_licencia": json.dumps(dias_por_licencia),
+                            "vacaciones_info": vacaciones_info_list,
+                            "vacaciones_info_json": json.dumps(vacaciones_info_json),
+                            "year": year,
+                            "mensaje_error": mensaje_error,
+                            "prev_diff": max(prev_available - prev_consumed, 0),
+                            "curr_diff": max(curr_available - curr_consumed, 0),
+                            "mensaje_advertencia": mensaje_advertencia,
+                            "feriados": feriados,
+                        })
+
                 if tipo_lic and tipo_lic.descripcion.lower() == "vacaciones":
                     if not works:
-                        mensaje_error = f"El día seleccionado es un {nombre_dia}, que no es laborable para este empleado. Por favor, elija un día laborable como inicio de las vacaciones."
+                        mensaje_error = (
+                            f"El día seleccionado es un {nombre_dia}, que no es laborable para este empleado. "
+                            "Por favor, elija un día laborable como inicio de las vacaciones."
+                        )
                     elif primer_dia_feriado:
-                        mensaje_error = f"El día seleccionado es un {nombre_dia}, que es feriado. Por favor, elija un día laborable y no feriado como inicio de las vacaciones."
-                # Nota: comprobación por rango removida. Mantener sólo las validaciones
-                # que bloquean solicitudes en caso de primer día no laborable o feriado.
-                # (El usuario prefirió no mostrar un aviso por días no laborables dentro
-                # del rango, pero sí conservar la validación de primer día y feriados.)
-                es_licencia_libre = bool(tipo_lic) and (getattr(tipo_lic, 'dias', None) is None)
-                if tipo_lic and tipo_lic.descripcion.lower() == "vacaciones":
-                    # Validación simplificada: solo mostrar mensaje genérico si no es laborable o es feriado
-                    primer_dia_feriado = fecha_desde_dt in set(f.fecha for f in Feriado.objects.all())
-                    nombre_dias = ['lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado', 'domingo']
-                    nombre_dia = nombre_dias[weekday]
-                    if not works:
-                        mensaje_error = f"El día seleccionado es un {nombre_dia}, que no es laborable para este empleado. Por favor, elija un día laborable como inicio de las vacaciones."
-                    elif primer_dia_feriado:
-                        mensaje_error = f"El día seleccionado es un {nombre_dia}, que es feriado. Por favor, elija un día laborable y no feriado como inicio de las vacaciones."
-                else:
-                    pass
+                        mensaje_error = (
+                            f"El día seleccionado es un {nombre_dia}, que es feriado. "
+                            "Por favor, elija un día laborable y no feriado como inicio de las vacaciones."
+                        )
         except Exception:
             # Silenciar si no podemos comprobar plan
             pass
