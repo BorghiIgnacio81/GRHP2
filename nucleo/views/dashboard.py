@@ -123,7 +123,7 @@ def _check_employee_status(user):
                 pass
             if estado_id == 2:
                 return (
-                    "Usted a sido dado de baja, por lo que se le ha bloquedado el ingreso, "
+                    "Usted ha sido dado de baja, por lo que se le ha bloqueado el ingreso, "
                     "para mas informacion comuniquese con nosotros a traves de \n"
                     "farmaciagomezdegalarze@gmail.com"
                 )
@@ -302,17 +302,12 @@ def dashboard_empleado(request):
     user = request.user
     empleado = Empleado.objects.get(idempleado=user)
     # Licencias (contar días, no solicitudes)
+    # Licencias (contar solicitudes por estado)
     licencias = Solicitud_licencia.objects.filter(idempleado=empleado)
-    
-    def suma_dias(qs):
-        total = 0
-        for solicitud in qs:
-            total += (solicitud.fecha_hasta - solicitud.fecha_desde).days + 1
-        return total
 
-    lic_aprobadas = suma_dias(licencias.filter(id_estado__estado__iexact="Aceptada"))
-    lic_espera = suma_dias(licencias.filter(id_estado__estado__iexact="En espera"))
-    lic_rechazadas = suma_dias(licencias.filter(id_estado__estado__iexact="Rechazada"))
+    lic_aprobadas = licencias.filter(id_estado__estado__iexact="Aceptada").count()
+    lic_espera = licencias.filter(id_estado__estado__iexact="En espera").count()
+    lic_rechazadas = licencias.filter(id_estado__estado__iexact="Rechazada").count()
 
     # Vacaciones
     year = date.today().year
@@ -449,11 +444,11 @@ def dashboard_gestor(request):
             total += (fecha_hasta - fecha_desde).days + 1
         return total
 
-    # Licencias de toda la plantilla (sumar días por estado)
+    # Licencias de toda la plantilla (contar solicitudes por estado)
     licencias = Solicitud_licencia.objects.all()
-    lic_aprobadas = suma_dias(licencias.filter(id_estado__estado__iexact="Aceptada"))
-    lic_espera = suma_dias(licencias.filter(id_estado__estado__iexact="En espera"))
-    lic_rechazadas = suma_dias(licencias.filter(id_estado__estado__iexact="Rechazada"))
+    lic_aprobadas = licencias.filter(id_estado__estado__iexact="Aceptada").count()
+    lic_espera = licencias.filter(id_estado__estado__iexact="En espera").count()
+    lic_rechazadas = licencias.filter(id_estado__estado__iexact="Rechazada").count()
 
     # Vacaciones de toda la plantilla (año actual)
     year = date.today().year
@@ -520,9 +515,9 @@ def dashboard_gestor(request):
     emp_gestor = Empleado.objects.filter(idempleado=request.user).first()
     if emp_gestor:
         mis_licencias = Solicitud_licencia.objects.filter(idempleado=emp_gestor)
-        mis_lic_aprobadas = suma_dias(mis_licencias.filter(id_estado__estado__iexact="Aceptada"))
-        mis_lic_espera = suma_dias(mis_licencias.filter(id_estado__estado__iexact="En espera"))
-        mis_lic_rechazadas = suma_dias(mis_licencias.filter(id_estado__estado__iexact="Rechazada"))
+        mis_lic_aprobadas = mis_licencias.filter(id_estado__estado__iexact="Aceptada").count()
+        mis_lic_espera = mis_licencias.filter(id_estado__estado__iexact="En espera").count()
+        mis_lic_rechazadas = mis_licencias.filter(id_estado__estado__iexact="Rechazada").count()
         # Mis Vacaciones: sumar por estado y calcular disponibles
         mis_vacaciones = Solicitud_vacaciones.objects.filter(idempleado=emp_gestor, fecha_desde__year=year)
         # Calculamos días en vez de contar solicitudes
