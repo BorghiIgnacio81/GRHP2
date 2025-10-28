@@ -37,9 +37,11 @@ class LogAuditoriaModule {
 
         try {
             if (checkbox && checkbox.checked) {
+                fechaHasta.classList.remove('audit-fecha-hidden');
                 fechaHasta.style.display = '';
                 fechaHasta.disabled = false;
                 fechaHasta.setAttribute('name', 'fecha_hasta');
+
                 setTimeout(() => {
                     try {
                         fechaHasta.focus();
@@ -48,11 +50,12 @@ class LogAuditoriaModule {
                     }
                 }, 100);
             } else {
+                fechaHasta.classList.add('audit-fecha-hidden');
                 fechaHasta.style.display = 'none';
                 fechaHasta.disabled = true;
+                fechaHasta.removeAttribute('name');
                 try {
                     fechaHasta.value = '';
-                    fechaHasta.removeAttribute('name');
                 } catch (e) {
                     console.warn('Error al limpiar fecha_hasta:', e);
                 }

@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
     </div>
     <div class="card-body py-2">
-      <form method="get" class="form-inline" id="audit-filters" style="display:flex;flex-wrap:wrap;align-items:center;gap:10px;">
+      <form method="get" class="form-inline" id="audit-filters">
         <div class="audit-filter" style="display:flex;flex-direction:column;gap:4px;">
           <label for="audit_usuario" class="form-label form-label-sm" style="font-size:0.85rem;">Modificador</label>
           <input type="text" id="audit_usuario" name="usuario" placeholder="Usuario o ID" class="form-control form-control-sm" value="{{ filtros.usuario }}" style="min-width:180px;">
@@ -54,18 +54,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
         <div class="audit-filter" style="display:flex;flex-direction:column;gap:4px;">
           <label for="audit_modificado" class="form-label form-label-sm" style="font-size:0.85rem;">Modificado</label>
-          <input type="text" id="audit_modificado" name="modificado" placeholder="Empleado (nombre o ID)" class="form-control form-control-sm" value="{{ filtros.modificado }}" style="min-width:200px;">
+          <input type="text" id="audit_modificado" name="modificado" placeholder="Empleado (nombre o ID)" class="form-control form-control-sm" value{{ filtros.modificado }} style="min-width:200px;">
         </div>
 
-        <!-- Fecha desde -->
-        <input type="date" name="fecha_desde" id="audit_fecha_desde" class="form-control form-control-sm" value="{{ filtros.fecha_desde }}">
-
-        <!-- Rango checkbox immediately before fecha_hasta for CSS fallback -->
-  <input type="checkbox" name="rango_fecha" id="audit_rango_fecha" {% if filtros.rango_fecha %}checked{% endif %}>
-        <label for="audit_rango_fecha" style="margin-right:8px;">Rango</label>
-
-        <!-- Fecha hasta (hidden/disabled when rango not checked) -->
-        <input type="date" id="audit_fecha_hasta" {% if not filtros.rango_fecha %}style="display:none;" disabled{% else %}name="fecha_hasta"{% endif %} class="form-control form-control-sm" value="{{ filtros.fecha_hasta }}">
+        <div class="audit-filter audit-filter-date">
+          <label for="audit_fecha_desde" class="form-label form-label-sm">Por fecha:</label>
+          <div class="audit-date-row">
+            <input type="date" name="fecha_desde" id="audit_fecha_desde" class="form-control form-control-sm" value="{{ filtros.fecha_desde }}">
+            <label class="audit-rango-toggle">
+              <input
+                type="checkbox"
+                name="rango_fecha"
+                id="audit_rango_fecha"
+                {% if filtros.rango_fecha %}checked{% endif %}>
+              Rango
+            </label>
+            <input
+              type="date"
+              id="audit_fecha_hasta"
+              class="form-control form-control-sm audit-fecha-hasta{% if not filtros.rango_fecha %} audit-fecha-hidden{% endif %}"
+              {% if filtros.rango_fecha %}name="fecha_hasta"{% else %}disabled{% endif %}
+              value="{{ filtros.fecha_hasta }}">
+          </div>
+        </div>
 
         <!-- Action buttons styled like consultar_licencia -->
         <div class="filtros-actions" style="margin-left:auto;">

@@ -187,6 +187,43 @@
 /* Hidden export table (kept but hidden) */
 #export-table { display: none; }
 
+/* Filters section styles */
+#audit-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: flex-end;
+}
+
+#audit-filters .audit-filter-date {
+    min-width: 280px;
+}
+
+#audit-filters .audit-date-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#audit-filters .audit-filter input[type="text"],
+#audit-filters .audit-date-row input[type="date"] {
+    height: 44px;
+    padding: 0 12px;
+    line-height: 44px;
+}
+
+#audit-filters .audit-rango-toggle {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    font-size: 0.85rem;
+}
+
+.audit-fecha-hasta.audit-fecha-hidden {
+    display: none;
+}
+
 /* Responsive adjustments */
 @media (max-width: 900px) {
   .audit-container {
