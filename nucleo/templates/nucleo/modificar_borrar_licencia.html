@@ -50,41 +50,11 @@
 {% if mostrar_modal_protegido %}
 <div class="modal-protegido-bg">
   <div class="modal-protegido">
-    <h3>No se puede eliminar la licencia</h3>
-    <p>Esta licencia tiene <b>{{ solicitudes_relacionadas|length }}</b> solicitudes asociadas,
-      de las cuales <b>{{ solicitudes_aprobadas }}</b> están aprobadas.</p>
-    <p>¿Qué desea hacer?</p>
-    <form method="post">
-      {% csrf_token %}
-      <input type="hidden" name="id_licencia" value="{{ licencia.id_licencia }}">
-      <div class="modal-actions" style="display:flex;gap:8px;justify-content:flex-end;align-items:center;">
-        <button type="submit" name="confirmar_renombrar" value="1" class="btn-actualizar">
-          Renombrar como "{{ licencia.descripcion }} (Discontinuada)"
-        </button>
-        <button type="button" onclick="cerrarModalProtegido()" class="btn-cancelar">
-          Cancelar
-        </button>
-      </div>
-    </form>
-  </div>
-</div>
-{% endif %}
-
-{% if mostrar_modal_confirmar_renombrar %}
-<div class="modal-protegido-bg">
-  <div class="modal-protegido">
-    <h3>Confirmar renombrado</h3>
-    <p>
-      La licencia será marcada como discontinuada.<br>
-      Cuando todas las solicitudes asociadas estén finalizadas, la licencia se eliminará automáticamente.<br>
-      ¿Desea continuar?
-    </p>
-    <form method="post">
-      {% csrf_token %}
-      <input type="hidden" name="id_licencia" value="{{ licencia.id_licencia }}">
-      <button type="submit" name="confirmar_renombrar_si" value="1" class="btn-actualizar completo">Sí, renombrar</button>
-      <button type="button" onclick="cerrarModalProtegido()" class="btn-cancelar">No</button>
-    </form>
+    <h3>La licencia no puede ser eliminada</h3>
+    <p>La licencia no puede ser eliminada. Se encuentra asignada a un empleado.</p>
+    <div class="modal-actions" style="display:flex;justify-content:flex-end;">
+      <button type="button" onclick="cerrarModalProtegido()" class="btn-actualizar completo">OK</button>
+    </div>
   </div>
 </div>
 {% endif %}
