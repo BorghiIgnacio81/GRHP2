@@ -6,8 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, render, redirect
 from django.core.paginator import Paginator
-from django.db import models, transaction
-from django.utils import timezone
+from django.db import models
 from django.utils.http import url_has_allowed_host_and_scheme
 import os
 import json
@@ -456,7 +455,6 @@ def solicitar_licencia(request):
     feriados = [f.fecha.strftime('%Y-%m-%d') for f in feriados_qs]
     # Información de vacaciones real para el usuario actual:
     # total disponible, total consumido y periodos otorgados (inicio/fin/dias)
-    from nucleo.models import Vacaciones_otorgadas
     # Resolver el objeto Empleado de forma robusta: por pk (id), por relación al User
     # o por campos de usuario si fuera necesario. Esto evita que `empleado_obj` quede None
     # y se saltee la validación del Plan_trabajo en la creación de solicitudes.
@@ -550,7 +548,6 @@ def solicitar_licencia(request):
     }
     # DEBUG: Volcar vacaciones_info_json a archivo temporal para inspección (no usar print en producción)
     try:
-        import json, os
         user_id = getattr(empleado_obj, 'idempleado_id', 'anon')
         dump_path = f"/tmp/vacaciones_debug_{user_id}.json"
         with open(dump_path, 'w') as f:
@@ -926,7 +923,7 @@ def solicitar_licencia(request):
         "prev_consumed": prev_consumed,
         "prev_diff": max(prev_available - prev_consumed, 0),
         "curr_available": curr_available,
-        "curr_consumed": curr_consumed,
+    "curr_consumed": curr_consumed,
         "curr_diff": max(curr_available - curr_consumed, 0),
         "mensaje_exito": mensaje_exito,
         "mensaje_error": mensaje_error,
