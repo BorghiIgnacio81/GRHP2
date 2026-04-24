@@ -10,9 +10,9 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
-from pathlib import Path
 import os
 import mimetypes
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,12 +22,19 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vt=usd67mi35!hx4e!5f0zm5)_=ig07-m-3ig(t0%7h7xht3bl'
+SECRET_KEY = os.getenv(
+    'DJANGO_SECRET_KEY',
+    'django-insecure-vt=usd67mi35!hx4e!5f0zm5)_=ig07-m-3ig(t0%7h7xht3bl',
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() in ('1', 'true', 'yes', 'on')
 
-ALLOWED_HOSTS = ['148.230.72.135', '148.230.072.135', 'localhost', '127.0.0.1', 'testserver']
+allowed_hosts_env = os.getenv('DJANGO_ALLOWED_HOSTS', '')
+if allowed_hosts_env:
+    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',') if host.strip()]
+else:
+    ALLOWED_HOSTS = ['148.230.72.135', '148.230.072.135', 'localhost', '127.0.0.1', 'testserver']
 STATIC_URL = '/static/'
 STATIC_ROOT = Path('/srv/static')
 STATICFILES_DIRS = [
@@ -35,7 +42,7 @@ STATICFILES_DIRS = [
 ]
 
 # URL base del sitio para emails
-SITE_URL = 'http://148.230.72.135'
+SITE_URL = os.getenv('SITE_URL', 'http://148.230.72.135')
 
 
 
@@ -88,12 +95,12 @@ WSGI_APPLICATION = 'gestion_rrhh.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'GRHP',     # <-- tu base
-        'USER': 'postgres',            # <-- tu usuario de postgres
-        'PASSWORD': 'C05m05',     # <-- tu pass de postgres
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.getenv('DB_NAME', 'GRHP'),
+        'USER': os.getenv('DB_USER', 'postgres'),
+        'PASSWORD': os.getenv('DB_PASSWORD', 'C05m05'),
+        'HOST': os.getenv('DB_HOST', 'localhost'),
+        'PORT': os.getenv('DB_PORT', '5432'),
     }
 }
 
@@ -149,12 +156,12 @@ SESSION_COOKIE_HTTPONLY = True  # Prevenir acceso por JavaScript
 SESSION_COOKIE_SAMESITE = 'Lax'  # Protección CSRF básica
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'farmaciagomezdegalarze@gmail.com'
-EMAIL_HOST_PASSWORD = 'qtud hldf rcoi itro'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('1', 'true', 'yes', 'on')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'farmaciagomezdegalarze@gmail.com')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'qtud hldf rcoi itro')
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path('/srv/gestion_rrhh_media')
