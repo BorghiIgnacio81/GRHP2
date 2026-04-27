@@ -10,39 +10,96 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+from pathlib import Path
 import os
 import mimetypes
-from pathlib import Path
+from urllib.parse import urlparse
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+
+def env_bool(name, default=False):
+    value = os.environ.get(name)
+    if value is None:
+        return default
+    return value.strip().lower() in {'1', 'true', 'yes', 'on'}
+
+
+def env_list(name):
+    value = os.environ.get(name, '')
+    if not value:
+        return []
+    normalized = value.replace(';', ',')
+    return [item.strip() for item in normalized.split(',') if item.strip()]
+
+
+def host_from_url(raw_value):
+    if not raw_value:
+        return ''
+    candidate = raw_value.strip()
+    if '://' not in candidate:
+        candidate = f'https://{candidate}'
+    return urlparse(candidate).hostname or ''
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv(
-    'DJANGO_SECRET_KEY',
-    'django-insecure-vt=usd67mi35!hx4e!5f0zm5)_=ig07-m-3ig(t0%7h7xht3bl',
-)
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-vt=usd67mi35!hx4e!5f0zm5)_=ig07-m-3ig(t0%7h7xht3bl')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', 'False').lower() in ('1', 'true', 'yes', 'on')
+DJANGO_ENV = os.environ.get('DJANGO_ENV', 'development').lower()
+DEBUG = env_bool('DJANGO_DEBUG', DJANGO_ENV != 'production')
 
-allowed_hosts_env = os.getenv('DJANGO_ALLOWED_HOSTS', '')
-if allowed_hosts_env:
-    ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',') if host.strip()]
-else:
-    ALLOWED_HOSTS = ['148.230.72.135', '148.230.072.135', 'localhost', '127.0.0.1', 'testserver']
-STATIC_URL = '/static/'
-STATIC_ROOT = Path('/srv/static')
-STATICFILES_DIRS = [
-    BASE_DIR / 'nucleo' / 'static',
+default_allowed_hosts = [
+    'localhost',
+    '127.0.0.1',
+    'testserver',
+    '.sslip.io',
 ]
+ALLOWED_HOSTS = env_list('DJANGO_ALLOWED_HOSTS') or env_list('ALLOWED_HOSTS') or default_allowed_hosts
+
+coolify_host = host_from_url(os.environ.get('COOLIFY_FQDN', ''))
+if coolify_host and coolify_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(coolify_host)
+
+site_url_env = os.environ.get('SITE_URL', '')
+site_host = host_from_url(site_url_env)
+if site_host and site_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(site_host)
+
+CSRF_TRUSTED_ORIGINS = env_list('DJANGO_CSRF_TRUSTED_ORIGINS') or env_list('CSRF_TRUSTED_ORIGINS')
+if not CSRF_TRUSTED_ORIGINS:
+    csrf_origins = []
+    for host in ALLOWED_HOSTS:
+        if host in {'*', 'localhost', '127.0.0.1', 'testserver'}:
+            continue
+        clean_host = host.lstrip('.')
+        if not clean_host:
+            continue
+        csrf_origins.append(f'https://{clean_host}')
+        if host.startswith('.'):
+            csrf_origins.append(f'https://*.{clean_host}')
+    CSRF_TRUSTED_ORIGINS = sorted(set(csrf_origins))
+
+USE_X_FORWARDED_HOST = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = env_bool('DJANGO_SECURE_SSL_REDIRECT', not DEBUG)
+
+SESSION_COOKIE_SECURE = env_bool('DJANGO_SESSION_COOKIE_SECURE', not DEBUG)
+CSRF_COOKIE_SECURE = env_bool('DJANGO_CSRF_COOKIE_SECURE', not DEBUG)
+
+STATIC_URL = '/static/'
+
+if DEBUG:
+    STATICFILES_DIRS = [BASE_DIR / 'nucleo' / 'static']
+else:
+    STATIC_ROOT = Path('/srv/static')
 
 # URL base del sitio para emails
-SITE_URL = os.getenv('SITE_URL', 'http://148.230.72.135')
+SITE_URL = site_url_env or (f'https://{coolify_host}' if coolify_host else 'http://localhost:8000')
 
 
 
@@ -95,12 +152,12 @@ WSGI_APPLICATION = 'gestion_rrhh.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': os.getenv('DB_ENGINE', 'django.db.backends.postgresql'),
-        'NAME': os.getenv('DB_NAME', 'GRHP'),
-        'USER': os.getenv('DB_USER', 'postgres'),
-        'PASSWORD': os.getenv('DB_PASSWORD', 'C05m05'),
-        'HOST': os.getenv('DB_HOST', 'localhost'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'ENGINE': os.environ.get('DB_ENGINE', 'django.db.backends.postgresql'),
+        'NAME': os.environ.get('DB_NAME', 'GRHP'),
+        'USER': os.environ.get('DB_USER', 'postgres'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'C05m05'),
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
 
@@ -156,12 +213,12 @@ SESSION_COOKIE_HTTPONLY = True  # Prevenir acceso por JavaScript
 SESSION_COOKIE_SAMESITE = 'Lax'  # Protección CSRF básica
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
-EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
-EMAIL_USE_TLS = os.getenv('EMAIL_USE_TLS', 'True').lower() in ('1', 'true', 'yes', 'on')
-EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', 'farmaciagomezdegalarze@gmail.com')
-EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', 'qtud hldf rcoi itro')
-DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp.gmail.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = env_bool('EMAIL_USE_TLS', True)
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'farmaciagomezdegalarze@gmail.com')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'qtud hldf rcoi itro')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', EMAIL_HOST_USER)
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = Path('/srv/gestion_rrhh_media')

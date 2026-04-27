@@ -11,8 +11,10 @@ fi
 
 python manage.py migrate --noinput
 if [ "$DJANGO_DEBUG" = "True" ] || [ "$DJANGO_DEBUG" = "1" ]; then
+  export DJANGO_ENV="${DJANGO_ENV:-development}"
   python manage.py collectstatic --noinput || true
   python manage.py runserver 0.0.0.0:8000
 else
+  export DJANGO_ENV="${DJANGO_ENV:-production}"
   gunicorn gestion_rrhh.wsgi:application --bind 0.0.0.0:8000 --workers 2
 fi
