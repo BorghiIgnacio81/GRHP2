@@ -25,9 +25,8 @@ urlpatterns = [
     path('', include('nucleo.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# Servir archivos estáticos en desarrollo
-if settings.DEBUG:
-    from django.contrib.staticfiles import views
-    urlpatterns += [
-        path('static/<path:path>', views.serve),
-    ]
+# Fallback de estaticos para evitar 404 de CSS/JS si no se sirven por proxy/middleware.
+from django.contrib.staticfiles import views as staticfiles_views
+urlpatterns += [
+    path('static/<path:path>', staticfiles_views.serve, {'insecure': True}),
+]
