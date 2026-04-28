@@ -16,5 +16,6 @@ if [ "$DJANGO_DEBUG" = "True" ] || [ "$DJANGO_DEBUG" = "1" ]; then
   python manage.py runserver 0.0.0.0:8000
 else
   export DJANGO_ENV="${DJANGO_ENV:-production}"
+  python manage.py collectstatic --noinput
   gunicorn gestion_rrhh.wsgi:application --bind 0.0.0.0:8000 --workers 2
 fi

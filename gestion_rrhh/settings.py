@@ -98,6 +98,8 @@ if DEBUG:
 else:
     STATIC_ROOT = Path('/srv/static')
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 # URL base del sitio para emails
 SITE_URL = site_url_env or (f'https://{coolify_host}' if coolify_host else 'http://localhost:8000')
 
@@ -118,6 +120,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
