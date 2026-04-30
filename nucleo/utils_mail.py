@@ -2,7 +2,7 @@
 def enviar_mail_credenciales_auto(email, username, password):
     from django.core.mail import send_mail
     from django.conf import settings
-    login_url = settings.SITE_URL + "/login/"
+    login_url = "https://grhp-galarze.duckdns.org/nucleo/login/"
     send_mail(
         subject="Tus credenciales de acceso",
         message=f"Usuario: {username}\nContraseña: {password}\n\nAccedé al sistema desde: {login_url}",
